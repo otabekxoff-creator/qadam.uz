@@ -26,7 +26,11 @@ export async function sendEmail(to: string, subject: string, html: string) {
     logger.warn(
       `SMTP configuration is missing. Email to ${to} with subject "${subject}" was not actually sent.`
     );
-    logger.info(`EMAIL_FALLBACK_CONTENT: ${html}`);
+    // Development vaqtida kodni ko'rish uchun logga chiqaramiz
+    const codeMatch = html.match(/>(\d{6})</);
+    if (codeMatch) {
+      logger.info(`Verification code for ${to}: ${codeMatch[1]}`);
+    }
     return;
   }
 

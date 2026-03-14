@@ -66,15 +66,23 @@ export class AuthService {
       },
     });
 
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     const subject = 'Step.uz – Ro‘yxatdan o‘tishni tasdiqlash kodi';
     const html = `
-      <h1>Step.uz</h1>
-      <p>Ro‘yxatdan o‘tishni yakunlash uchun quyidagi tasdiqlash kodini kiriting:</p>
-      <p style="font-size: 24px; font-weight: bold; letter-spacing: 4px;">${code}</p>
-      <p>Kod 15 daqiqa davomida amal qiladi.</p>
-      <p>Agar bu amaliyotni o‘zingiz boshlamagan bo‘lsangiz, ushbu xabarni e'tiborsiz qoldiring.</p>
-      <p><a href="${backendUrl}">Step.uz</a></p>
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; rounded: 8px;">
+        <h1 style="color: #2563eb; text-align: center;">Step.uz</h1>
+        <p style="font-size: 16px; color: #0f172a;">Assalomu alaykum!</p>
+        <p style="font-size: 16px; color: #0f172a;">Ro‘yxatdan o‘tishni yakunlash uchun quyidagi tasdiqlash kodini kiriting:</p>
+        <div style="background-color: #f1f5f9; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
+          <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">${code}</span>
+        </div>
+        <p style="font-size: 14px; color: #64748b;">Kod 15 daqiqa davomida amal qiladi.</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+          Agar bu amaliyotni o‘zingiz boshlamagan bo‘lsangiz, ushbu xabarni e'tiborsiz qoldiring.
+          <br><a href="${frontendUrl}" style="color: #2563eb; text-decoration: none;">Step.uz platformasi</a>
+        </p>
+      </div>
     `;
 
     await sendEmail(user.email, subject, html);
@@ -118,15 +126,23 @@ export class AuthService {
       },
     });
 
-    const backendUrl = process.env.BACKEND_URL || 'http://localhost:5000';
+    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
     const subject = 'Step.uz – Kirish uchun tasdiqlash kodi';
     const html = `
-      <h1>Step.uz</h1>
-      <p>Tizimga kirishni tasdiqlash uchun quyidagi kodni kiriting:</p>
-      <p style="font-size: 24px; font-weight: bold; letter-spacing: 4px;">${code}</p>
-      <p>Kod 10 daqiqa davomida amal qiladi.</p>
-      <p>Agar bu amaliyotni o‘zingiz boshlamagan bo‘lsangiz, hisobingizni himoya qilish choralarini ko‘ring.</p>
-      <p><a href="${backendUrl}">Step.uz</a></p>
+      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
+        <h1 style="color: #2563eb; text-align: center;">Step.uz</h1>
+        <p style="font-size: 16px; color: #0f172a;">Assalomu alaykum!</p>
+        <p style="font-size: 16px; color: #0f172a;">Tizimga kirishni tasdiqlash uchun quyidagi kodni kiriting:</p>
+        <div style="background-color: #f1f5f9; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
+          <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">${code}</span>
+        </div>
+        <p style="font-size: 14px; color: #64748b;">Kod 10 daqiqa davomida amal qiladi.</p>
+        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
+        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
+          Agar bu amaliyotni o‘zingiz boshlamagan bo‘lsangiz, hisobingizni himoya qilish choralarini ko‘ring.
+          <br><a href="${frontendUrl}" style="color: #2563eb; text-decoration: none;">Step.uz platformasi</a>
+        </p>
+      </div>
     `;
 
     await sendEmail(user.email, subject, html);
