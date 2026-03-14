@@ -240,247 +240,181 @@ function ApplicationCard({ application }: { application: Application }) {
 // Main Student Dashboard Page
 // =============================================
 
-export default function StudentDashboardPage() {
+export default function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
 
   return (
-    <main className="min-h-screen bg-background perspective-[1200px]">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Profile Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ rotateX: -6, rotateY: 6, translateY: -8 }}
-              transition={{ duration: 0.4 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <Avatar className="h-20 w-20 mx-auto mb-4">
-                    <AvatarImage src={mockStudent.avatar} />
-                    <AvatarFallback className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-xl">
-                      {mockStudent.firstName[0]}{mockStudent.lastName[0]}
-                    </AvatarFallback>
-                  </Avatar>
-                  <h2 className="font-semibold text-lg">{mockStudent.firstName} {mockStudent.lastName}</h2>
-                  <p className="text-sm text-muted-foreground">{mockStudent.university}</p>
-                  <p className="text-xs text-muted-foreground">{mockStudent.faculty}, {mockStudent.course}-kurs</p>
+    <div className="space-y-10 max-w-7xl mx-auto">
+      {/* Header with Glass Card */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden"
+      >
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+          <div>
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              Xush kelibsiz, Talaba!
+            </h1>
+            <p className="text-muted-foreground mt-2 text-lg">
+              Sizning bugungi karyera holatingiz va yangi imkoniyatlar.
+            </p>
+          </div>
+          <div className="flex gap-4">
+            <Button className="bg-primary hover:bg-primary/80 glow-primary rounded-full px-6" asChild>
+              <Link href="/profile">
+                <Plus className="mr-2 h-4 w-4" />
+                Profilni tahrirlash
+              </Link>
+            </Button>
+            <Button variant="outline" className="glass border-white/10 rounded-full" asChild>
+              <Link href="/settings">
+                <Settings className="mr-2 h-4 w-4" />
+                Sozlamalar
+              </Link>
+            </Button>
+          </div>
+        </div>
+      </motion.div>
 
-                  {/* Profile Completeness */}
-                  <div className="mt-4">
-                    <div className="flex items-center justify-between text-sm mb-2">
-                      <span className="text-muted-foreground">Profil to&apos;liqligi</span>
-                      <span className="font-medium">{mockStudent.profileCompleteness}%</span>
+      {/* Stats Grid with Glowing Effects */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { label: 'Arizalar', value: mockStats.applicationsCount, icon: FileText, color: 'text-blue-400' },
+          { label: 'Suhbatlar', value: mockStats.interviewsCount, icon: Calendar, color: 'text-primary' },
+          { label: 'Takliflar', value: mockStats.offersCount, icon: Award, color: 'text-yellow-400' },
+          { label: 'Ko\'rishlar', value: mockStats.profileViews, icon: Eye, color: 'text-purple-400' },
+        ].map((stat, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className="glass p-6 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group"
+          >
+            <div className="flex items-center justify-between">
+              <div className={`p-3 rounded-2xl bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}>
+                <stat.icon size={24} />
+              </div>
+              <TrendingUp size={20} className="text-primary/40" />
+            </div>
+            <div className="mt-4">
+              <h3 className="text-3xl font-bold">{stat.value}</h3>
+              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        {/* Main Content Area */}
+        <div className="lg:col-span-2 space-y-8">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="bg-white/5 border border-white/10 p-1 rounded-2xl h-14">
+              <TabsTrigger value="overview" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+                Arizalar
+              </TabsTrigger>
+              <TabsTrigger value="saved" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+                Saqlanganlar
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="overview" className="mt-6 space-y-4">
+              {mockApplications.map((app, i) => (
+                <motion.div
+                  key={app.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="glass p-6 rounded-3xl border border-white/10 flex items-center justify-between group hover:bg-white/5 transition-all"
+                >
+                  <div className="flex items-center gap-6">
+                    <div className="h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 text-2xl font-bold group-hover:scale-105 transition-transform">
+                      {app.job?.company?.name?.[0]}
                     </div>
-                    <Progress value={mockStudent.profileCompleteness} className="h-2" />
+                    <div>
+                      <h4 className="text-xl font-semibold">{app.job?.title}</h4>
+                      <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                        <span className="flex items-center gap-1">
+                          <Building2 size={14} /> {app.job?.company?.name}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <MapPin size={14} /> {app.job?.location}
+                        </span>
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="flex gap-2 mt-4">
-                    <Button variant="outline" className="flex-1" size="sm" asChild>
-                      <Link href="/profile">
-                        <Edit className="h-4 w-4 mr-1" />
-                        Tahrirlash
+                  <div className="flex items-center gap-6">
+                    <Badge variant="outline" className={`px-4 py-1.5 rounded-full border-white/10 ${
+                      app.status === 'INTERVIEW' ? 'bg-primary/20 text-primary border-primary/30' :
+                      app.status === 'PENDING' ? 'bg-yellow-400/20 text-yellow-400 border-yellow-400/30' :
+                      'bg-red-400/20 text-red-400 border-red-400/30'
+                    }`}>
+                      {app.status === 'INTERVIEW' ? 'Suhbat' :
+                       app.status === 'PENDING' ? 'Kutilmoqda' : 'Rad etildi'}
+                    </Badge>
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/20 hover:text-primary" asChild>
+                      <Link href={`/jobs/${app.jobId}`}>
+                        <ArrowRight size={20} />
                       </Link>
                     </Button>
-                    <Button variant="outline" size="icon" size-sm asChild>
-                      <Link href="/settings">
-                        <Settings className="h-4 w-4" />
-                      </Link>
-                    </Button>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                </motion.div>
+              ))}
+            </TabsContent>
+            <TabsContent value="saved" className="mt-6 space-y-4">
+              <div className="text-center py-12 border rounded-lg border-dashed">
+                <Briefcase className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-semibold">Saqlangan ishlar yo'q</h3>
+                <p className="text-muted-foreground">Sizga yoqqan ishlarni saqlab qo'ying va keyinroq topshiring.</p>
+                <Button className="mt-4" variant="outline" asChild>
+                  <Link href="/jobs">Ishlarni ko'rish</Link>
+                </Button>
+              </div>
+            </TabsContent>
+          </Tabs>
+        </div>
 
-            {/* Skills */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              whileHover={{ rotateX: -6, rotateY: 6, translateY: -8 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardHeader className="pb-3">
-                  <CardTitle className="text-base">Ko&apos;nikmalar</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex flex-wrap gap-1">
-                    {mockStudent.skills.map((skill) => (
-                      <Badge key={skill} variant="secondary">
-                        {skill}
-                      </Badge>
-                    ))}
-                    <Button variant="outline" size="sm" className="mt-2 w-full">
-                      <Plus className="h-4 w-4 mr-1" />
-                      Qo&apos;shish
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Quick Links */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              whileHover={{ rotateX: -6, rotateY: 6, translateY: -8 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardContent className="p-4">
-                  <nav className="space-y-1">
-                    <Link href="/startups/create" className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted">
-                      <Plus className="h-4 w-4 text-emerald-500" />
-                      <span className="text-sm">Startap yaratish</span>
-                    </Link>
-                    <Link href="/jobs" className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted">
-                      <Briefcase className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm">Ishlarni ko&apos;rish</span>
-                    </Link>
-                    <Link href="/companies" className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted">
-                      <Building2 className="h-4 w-4 text-purple-500" />
-                      <span className="text-sm">Kompaniyalar</span>
-                    </Link>
-                  </nav>
-                </CardContent>
-              </Card>
-            </motion.div>
+        {/* Sidebar/Profile Completeness Area */}
+        <div className="space-y-8">
+          <div className="glass p-8 rounded-[32px] border border-white/10">
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <Award className="text-primary" /> Profil holati
+            </h3>
+            <div className="space-y-6">
+              <div className="flex justify-between text-sm mb-2">
+                <span>To'ldirilgan</span>
+                <span className="text-primary font-bold">{mockStudent.profileCompleteness}%</span>
+              </div>
+              <Progress value={mockStudent.profileCompleteness} className="h-3 bg-white/5" />
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                Profilni 100% to'ldiring va kompaniyalar e'tiborini 2 barobar ko'proq torting.
+              </p>
+              <Button variant="outline" className="w-full glass border-white/10 rounded-2xl h-12" asChild>
+                <Link href="/profile">Davom ettirish</Link>
+              </Button>
+            </div>
           </div>
 
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Stats Grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-950 flex items-center justify-center">
-                      <FileText className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.applicationsCount}</p>
-                      <p className="text-xs text-muted-foreground">Arizalar</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-950 flex items-center justify-center">
-                      <Calendar className="h-5 w-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.interviewsCount}</p>
-                      <p className="text-xs text-muted-foreground">Intervyular</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center">
-                      <Award className="h-5 w-5 text-emerald-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.offersCount}</p>
-                      <p className="text-xs text-muted-foreground">Takliflar</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-orange-100 dark:bg-orange-950 flex items-center justify-center">
-                      <Eye className="h-5 w-5 text-orange-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.profileViews}</p>
-                      <p className="text-xs text-muted-foreground">Ko&apos;rishlar</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Applications */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Arizalarim</CardTitle>
-                    <Button variant="outline" size="sm" asChild>
-                      <Link href="/dashboard/student/applications">
-                        Barchasi
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <Tabs value={activeTab} onValueChange={setActiveTab}>
-                    <TabsList className="mb-4">
-                      <TabsTrigger value="overview">Barchasi</TabsTrigger>
-                      <TabsTrigger value="pending">Kutilmoqda</TabsTrigger>
-                      <TabsTrigger value="interview">Intervyu</TabsTrigger>
-                      <TabsTrigger value="offered">Takliflar</TabsTrigger>
-                    </TabsList>
-
-                    <TabsContent value="overview" className="space-y-3">
-                      {mockApplications.map((app) => (
-                        <ApplicationCard key={app.id} application={app} />
-                      ))}
-                    </TabsContent>
-
-                    <TabsContent value="pending" className="space-y-3">
-                      {mockApplications
-                        .filter((app) => app.status === 'PENDING' || app.status === 'REVIEWING')
-                        .map((app) => (
-                          <ApplicationCard key={app.id} application={app} />
-                        ))}
-                    </TabsContent>
-
-                    <TabsContent value="interview" className="space-y-3">
-                      {mockApplications
-                        .filter((app) => app.status === 'INTERVIEW')
-                        .map((app) => (
-                          <ApplicationCard key={app.id} application={app} />
-                        ))}
-                    </TabsContent>
-
-                    <TabsContent value="offered" className="space-y-3">
-                      {mockApplications
-                        .filter((app) => app.status === 'OFFERED')
-                        .map((app) => (
-                          <ApplicationCard key={app.id} application={app} />
-                        ))}
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-            </motion.div>
+          <div className="glass p-8 rounded-[32px] border border-white/10">
+            <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+              <TrendingUp className="text-primary" /> Tavsiyalar
+            </h3>
+            <div className="space-y-4">
+              {[1, 2].map((_, i) => (
+                <div key={i} className="p-4 rounded-2xl bg-white/5 border border-white/10 hover:border-primary/30 transition-all cursor-pointer">
+                  <h5 className="font-semibold">UX Researcher</h5>
+                  <p className="text-xs text-muted-foreground mt-1">Payme • Toshkent</p>
+                </div>
+              ))}
+              <Button variant="link" className="w-full text-emerald-600 p-0 h-auto" asChild>
+                <Link href="/jobs">Barchasini ko'rish</Link>
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

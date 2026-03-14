@@ -270,197 +270,175 @@ function ApplicationCard({ application }: { application: typeof mockApplications
 // Main Company Dashboard Page
 // =============================================
 
-export default function CompanyDashboardPage() {
-  const [activeTab, setActiveTab] = useState('overview');
+export default function CompanyDashboard() {
+  const [activeTab, setActiveTab] = useState('jobs');
 
   return (
-    <main className="min-h-screen bg-background perspective-[1200px]">
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          {/* Sidebar */}
-          <div className="lg:col-span-1 space-y-6">
-            {/* Company Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              whileHover={{ rotateX: -6, rotateY: 6, translateY: -8 }}
-              transition={{ duration: 0.4 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardContent className="p-6 text-center">
-                  <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-2xl mx-auto mb-4">
-                    {mockCompany.logo ? (
-                      <img src={mockCompany.logo} alt={mockCompany.name} className="h-full w-full rounded-2xl object-cover" />
-                    ) : (
-                      mockCompany.name[0]
-                    )}
-                  </div>
-                  <h2 className="font-semibold text-lg">{mockCompany.name}</h2>
-                  <p className="text-sm text-muted-foreground">{mockCompany.industry}</p>
-                  
-                  {mockCompany.isVerified && (
-                    <Badge className="mt-2 bg-emerald-100 text-emerald-700">
-                      <CheckCircle className="h-3 w-3 mr-1" />
-                      Tasdiqlangan
-                    </Badge>
-                  )}
-
-                  <div className="flex gap-2 mt-4">
-                    <Button variant="outline" className="flex-1" size="sm" asChild>
-                      <Link href="/profile">
-                        <Edit className="h-4 w-4 mr-1" />
-                        Tahrirlash
-                      </Link>
-                    </Button>
-                    <Button variant="outline" size="icon" size-sm="true" asChild>
-                      <Link href="/settings">
-                        <Settings className="h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Quick Actions */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              whileHover={{ rotateX: -6, rotateY: 6, translateY: -8 }}
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardContent className="p-4">
-                  <nav className="space-y-1">
-                    <Link href="/dashboard/company/jobs/create" className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted">
-                      <Plus className="h-4 w-4 text-emerald-500" />
-                      <span className="text-sm">Yangi ish e&apos;lon qilish</span>
-                    </Link>
-                    <Link href="/dashboard/company/applications" className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted">
-                      <FileText className="h-4 w-4 text-blue-500" />
-                      <span className="text-sm">Barcha arizalar</span>
-                    </Link>
-                    <Link href={`/companies/${mockCompany.id}`} className="flex items-center gap-2 p-2 rounded-lg hover:bg-muted">
-                      <Building2 className="h-4 w-4 text-purple-500" />
-                      <span className="text-sm">Kompaniya profili</span>
-                    </Link>
-                  </nav>
-                </CardContent>
-              </Card>
-            </motion.div>
+    <div className="space-y-10 max-w-7xl mx-auto">
+      {/* Header with Glass Card */}
+      <motion.div 
+        initial={{ y: -20, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden"
+      >
+        <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+          <Building2 size={120} className="text-primary" />
+        </div>
+        
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+          <div className="flex items-center gap-6">
+            <div className="h-20 w-20 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 text-3xl font-bold">
+              {mockCompany.name[0]}
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+                {mockCompany.name}
+              </h1>
+              <p className="text-muted-foreground mt-2 text-lg">
+                Kompaniya boshqaruv paneli. Kelajak jamoasini tuzing.
+              </p>
+            </div>
           </div>
+          <div className="flex gap-4">
+            <Button className="bg-primary hover:bg-primary/80 glow-primary rounded-full px-6">
+              <Plus className="mr-2 h-4 w-4" />
+              Yangi ish e'loni
+            </Button>
+            <Button variant="outline" className="glass border-white/10 rounded-full">
+              <Settings className="mr-2 h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </motion.div>
 
-          {/* Main Content */}
-          <div className="lg:col-span-3 space-y-6">
-            {/* Stats Grid */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="grid grid-cols-2 md:grid-cols-4 gap-4"
-              style={{ transformStyle: 'preserve-3d' }}
-            >
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-emerald-100 dark:bg-emerald-950 flex items-center justify-center">
-                      <Briefcase className="h-5 w-5 text-emerald-600" />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {[
+          { label: 'Faol ishlar', value: mockStats.activeJobsCount, icon: Briefcase, color: 'text-blue-400' },
+          { label: 'Arizalar', value: mockStats.totalApplicationsCount, icon: Users, color: 'text-primary' },
+          { label: 'Yangi', value: mockStats.newApplicationsCount, icon: Clock, color: 'text-yellow-400' },
+          { label: 'Ishga olingan', value: mockStats.hiredCount, icon: UserCheck, color: 'text-purple-400' },
+        ].map((stat, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: i * 0.1 }}
+            className="glass p-6 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group"
+          >
+            <div className="flex items-center justify-between">
+              <div className={`p-3 rounded-2xl bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}>
+                <stat.icon size={24} />
+              </div>
+              <TrendingUp size={20} className="text-primary/40" />
+            </div>
+            <div className="mt-4">
+              <h3 className="text-3xl font-bold">{stat.value}</h3>
+              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-8">
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="bg-white/5 border border-white/10 p-1 rounded-2xl h-14 w-fit">
+              <TabsTrigger value="jobs" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+                Ish e'lonlari
+              </TabsTrigger>
+              <TabsTrigger value="applications" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+                So'nggi arizalar
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="jobs" className="mt-6 space-y-4">
+              {mockJobs.map((job, i) => (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="glass p-6 rounded-3xl border border-white/10 flex items-center justify-between group hover:bg-white/5 transition-all"
+                >
+                  <div className="flex items-center gap-6">
+                    <div className={`h-12 w-12 rounded-2xl flex items-center justify-center border border-white/10 ${job.status === 'ACTIVE' ? 'bg-primary/20 text-primary' : 'bg-white/5 text-muted-foreground'}`}>
+                      <Briefcase size={20} />
                     </div>
                     <div>
-                      <p className="text-2xl font-bold">{mockStats.activeJobsCount}</p>
-                      <p className="text-xs text-muted-foreground">Faol ishlar</p>
+                      <h4 className="text-xl font-semibold">{job.title}</h4>
+                      <div className="flex items-center gap-4 text-sm text-muted-foreground mt-1">
+                        <span className="flex items-center gap-1"><Users size={14} /> {job.applicationsCount} ariza</span>
+                        <span className="flex items-center gap-1"><Eye size={14} /> {job.viewsCount} ko'rish</span>
+                      </div>
                     </div>
                   </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-blue-100 dark:bg-blue-950 flex items-center justify-center">
-                      <FileText className="h-5 w-5 text-blue-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.newApplicationsCount}</p>
-                      <p className="text-xs text-muted-foreground">Yangi arizalar</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-purple-100 dark:bg-purple-950 flex items-center justify-center">
-                      <Calendar className="h-5 w-5 text-purple-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.interviewsScheduled}</p>
-                      <p className="text-xs text-muted-foreground">Intervyular</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              <Card>
-                <CardContent className="p-4">
-                  <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-cyan-100 dark:bg-cyan-950 flex items-center justify-center">
-                      <UserCheck className="h-5 w-5 text-cyan-600" />
-                    </div>
-                    <div>
-                      <p className="text-2xl font-bold">{mockStats.hiredCount}</p>
-                      <p className="text-xs text-muted-foreground">Ishga olindi</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
-            {/* Jobs & Applications */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-            >
-              <Card>
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <CardTitle>Boshqaruv</CardTitle>
-                    <Button asChild>
-                      <Link href="/dashboard/company/jobs/create">
-                        <Plus className="h-4 w-4 mr-2" />
-                        Ish e&apos;lon qilish
-                      </Link>
+                  <div className="flex items-center gap-4">
+                    <Badge variant="outline" className={`px-4 py-1 rounded-full ${job.status === 'ACTIVE' ? 'bg-primary/20 text-primary border-primary/30' : 'bg-white/5 text-muted-foreground border-white/10'}`}>
+                      {job.status === 'ACTIVE' ? 'Faol' : 'To\'xtatilgan'}
+                    </Badge>
+                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/20 hover:text-primary">
+                      <Edit size={20} />
                     </Button>
                   </div>
-                </CardHeader>
-                <CardContent>
-                  <Tabs value={activeTab} onValueChange={setActiveTab}>
-                    <TabsList className="mb-4">
-                      <TabsTrigger value="overview">Ish e&apos;lonlari</TabsTrigger>
-                      <TabsTrigger value="applications">Arizalar</TabsTrigger>
-                    </TabsList>
+                </motion.div>
+              ))}
+            </TabsContent>
 
-                    <TabsContent value="overview" className="space-y-3">
-                      {mockJobs.map((job) => (
-                        <JobCard key={job.id} job={job} />
-                      ))}
-                    </TabsContent>
+            <TabsContent value="applications" className="mt-6 space-y-4">
+              {mockApplications.map((app, i) => (
+                <motion.div
+                  key={app.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="glass p-6 rounded-3xl border border-white/10 flex items-center justify-between group hover:bg-white/5 transition-all"
+                >
+                  <div className="flex items-center gap-6">
+                    <Avatar className="h-14 w-14 border border-white/10">
+                      <AvatarFallback className="bg-primary/10 text-primary">
+                        {app.student.firstName[0]}{app.student.lastName[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <h4 className="text-xl font-semibold">{app.student.firstName} {app.student.lastName}</h4>
+                      <p className="text-sm text-muted-foreground">{app.job?.title}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <Badge className="bg-primary/10 text-primary border-primary/20">Yangi</Badge>
+                    <Button size="sm" className="bg-white/5 hover:bg-white/10 rounded-full px-4">
+                      Ko'rish
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </TabsContent>
+          </Tabs>
+        </div>
 
-                    <TabsContent value="applications" className="space-y-3">
-                      {mockApplications.map((app) => (
-                        <ApplicationCard key={app.id} application={app} />
-                      ))}
-                    </TabsContent>
-                  </Tabs>
-                </CardContent>
-              </Card>
-            </motion.div>
+        <div className="space-y-8">
+          <div className="glass p-8 rounded-[32px] border border-white/10">
+            <h3 className="text-xl font-bold mb-6">Yaqinda rejalashtirilgan</h3>
+            <div className="space-y-6">
+              {[1, 2].map((_, i) => (
+                <div key={i} className="flex gap-4 p-4 rounded-2xl bg-white/5 border border-white/10">
+                  <div className="h-12 w-12 rounded-xl bg-primary/20 text-primary flex items-center justify-center shrink-0">
+                    <Calendar size={24} />
+                  </div>
+                  <div>
+                    <h5 className="font-semibold">Intervyu: Aziz K.</h5>
+                    <p className="text-xs text-muted-foreground mt-1">Bugun, 15:00 • Google Meet</p>
+                  </div>
+                </div>
+              ))}
+              <Button variant="link" className="w-full text-primary p-0">
+                Kalendarni ko'rish
+              </Button>
+            </div>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }

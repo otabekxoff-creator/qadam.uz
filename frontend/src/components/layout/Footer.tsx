@@ -54,59 +54,51 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t bg-background">
+    <footer className="border-t border-white/5 bg-background/50 backdrop-blur-xl">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-5">
+      <div className="container mx-auto px-4 py-16">
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Section */}
           <div className="lg:col-span-2">
-            <Link href="/" className="flex items-center space-x-2 mb-4">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-emerald-500 to-teal-600">
-                <GraduationCap className="h-6 w-6 text-white" />
+            <Link href="/" className="flex items-center space-x-2 mb-6 group">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-teal-600 group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
+                <GraduationCap className="h-7 w-7 text-white" />
               </div>
-              <span className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">
+              <span className="text-3xl font-bold bg-gradient-to-r from-primary to-teal-400 bg-clip-text text-transparent">
                 Step.uz
               </span>
             </Link>
-            <p className="text-muted-foreground mb-6 max-w-sm">
-              O'zbekiston yoshlari uchun zamonaviy platforma. Ish topish, 
-              startap yaratish va karyera rivojlantirish uchun ishonchli 
-              yo'lboshchi.
+            <p className="text-muted-foreground mb-8 max-w-sm text-lg leading-relaxed">
+              O'zbekiston yoshlari uchun innovatsion platforma. 
+              Kelajagingizni biz bilan birga quring.
             </p>
             
-            {/* Contact Info */}
-            <div className="space-y-3">
-              <a 
-                href="mailto:info@step.uz" 
-                className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Mail className="h-4 w-4" />
-                <span>info@step.uz</span>
-              </a>
-              <a 
-                href="tel:+998991234567" 
-                className="flex items-center space-x-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
-              >
-                <Phone className="h-4 w-4" />
-                <span>+998 88 001 67 77</span>
-              </a>
-              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                <MapPin className="h-4 w-4" />
-                <span>Yaypan, O'zbekiston</span>
-              </div>
+            {/* Social Links */}
+            <div className="flex space-x-4">
+              {socialLinks.map((social) => (
+                <a
+                  key={social.label}
+                  href={social.href}
+                  className="p-3 rounded-full glass border-white/10 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all hover:-translate-y-1"
+                  aria-label={social.label}
+                >
+                  <social.icon className="h-5 w-5" />
+                </a>
+              ))}
             </div>
           </div>
 
           {/* Platform Links */}
           <div>
-            <h3 className="font-semibold mb-4">Platforma</h3>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-bold mb-6 text-foreground">Platforma</h3>
+            <ul className="space-y-4">
               {footerLinks.platform.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    href={link.href} 
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary mr-0 group-hover:mr-2 transition-all" />
                     {link.label}
                   </Link>
                 </li>
@@ -116,14 +108,15 @@ export function Footer() {
 
           {/* Company Links */}
           <div>
-            <h3 className="font-semibold mb-4">Kompaniya</h3>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-bold mb-6 text-foreground">Kompaniya</h3>
+            <ul className="space-y-4">
               {footerLinks.company.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    href={link.href} 
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary mr-0 group-hover:mr-2 transition-all" />
                     {link.label}
                   </Link>
                 </li>
@@ -133,14 +126,15 @@ export function Footer() {
 
           {/* Support Links */}
           <div>
-            <h3 className="font-semibold mb-4">Qo'llab-quvvatlash</h3>
-            <ul className="space-y-3">
+            <h3 className="text-lg font-bold mb-6 text-foreground">Yordam</h3>
+            <ul className="space-y-4">
               {footerLinks.support.map((link) => (
-                <li key={link.href}>
+                <li key={link.label}>
                   <Link 
-                    href={link.href}
-                    className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                    href={link.href} 
+                    className="text-muted-foreground hover:text-primary transition-colors flex items-center group"
                   >
+                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary mr-0 group-hover:mr-2 transition-all" />
                     {link.label}
                   </Link>
                 </li>
@@ -148,32 +142,19 @@ export function Footer() {
             </ul>
           </div>
         </div>
-      </div>
 
-      {/* Bottom Bar */}
-      <div className="border-t">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            {/* Copyright */}
-            <p className="text-sm text-muted-foreground text-center md:text-left">
-              © {currentYear} Step.uz. Barcha huquqlar himoyalangan.
-            </p>
-
-            {/* Social Links */}
-            <div className="flex items-center space-x-4">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.label}
-                  href={social.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
-                  aria-label={social.label}
-                >
-                  <social.icon className="h-5 w-5" />
-                </a>
-              ))}
-            </div>
+        {/* Bottom Section */}
+        <div className="mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-sm text-muted-foreground">
+            © {currentYear} Step.uz. Barcha huquqlar himoyalangan.
+          </p>
+          <div className="flex items-center gap-8">
+            <a href="mailto:info@step.uz" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-2">
+              <Mail size={16} /> info@step.uz
+            </a>
+            <a href="tel:+998880016777" className="text-sm text-muted-foreground hover:text-primary flex items-center gap-2">
+              <Phone size={16} /> +998 88 001 67 77
+            </a>
           </div>
         </div>
       </div>
