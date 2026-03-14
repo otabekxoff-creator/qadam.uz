@@ -153,35 +153,35 @@ const getTimeAgo = (date: string) => {
 function JobCard({ job }: { job: Job }) {
   return (
     <Link href={`/jobs/${job.id}`}>
-      <Card className="hover:shadow-md transition-all cursor-pointer group">
-        <CardContent className="p-4">
-          <div className="flex items-start justify-between mb-2">
+      <Card className="hover:border-primary/40 transition-all duration-200 cursor-pointer group border-border/60 shadow-sm hover:shadow-md rounded-xl overflow-hidden">
+        <CardContent className="p-5">
+          <div className="flex items-start justify-between mb-4">
             <div>
-              <h3 className="font-semibold group-hover:text-emerald-600 transition-colors">
+              <h3 className="font-bold text-lg text-foreground group-hover:text-primary transition-colors">
                 {job.title}
               </h3>
-              <div className="flex items-center gap-2 text-sm text-muted-foreground mt-1">
+              <div className="flex items-center gap-3 text-xs font-semibold text-muted-foreground mt-1.5 uppercase tracking-wide">
                 <span>{jobTypeLabels[job.jobType]}</span>
                 {job.isRemote && (
                   <>
                     <span>•</span>
-                    <Badge variant="outline" className="text-xs">Masofaviy</Badge>
+                    <Badge variant="outline" className="text-[10px] font-bold border-border/60">Masofaviy</Badge>
                   </>
                 )}
               </div>
             </div>
-            <span className="text-sm text-muted-foreground">{getTimeAgo(job.createdAt)}</span>
+            <span className="text-xs font-bold text-muted-foreground/60">{getTimeAgo(job.createdAt)}</span>
           </div>
           
-          <div className="flex items-center justify-between">
-            <div className="flex flex-wrap gap-1">
+          <div className="flex items-center justify-between mt-6">
+            <div className="flex flex-wrap gap-1.5">
               {job.skills?.slice(0, 3).map((skill) => (
-                <Badge key={skill} variant="secondary" className="text-xs">
+                <Badge key={skill} variant="secondary" className="text-[10px] font-bold bg-secondary/50 border-border/40">
                   {skill}
                 </Badge>
               ))}
             </div>
-            <span className="text-sm font-medium text-emerald-600">
+            <span className="text-sm font-bold text-primary">
               {formatSalary(job.salaryMin, job.salaryMax, job.currency)}
             </span>
           </div>
@@ -208,26 +208,26 @@ export default function CompanyDetailPage({ params }: { params: Promise<{ id: st
   return (
     <main className="min-h-screen bg-background">
       {/* Back Button */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-6">
         <Link 
           href="/companies"
-          className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center text-sm font-bold text-muted-foreground hover:text-primary transition-colors group"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Orqaga
+          <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+          Orqaga qaytish
         </Link>
       </div>
 
       {/* Cover & Header */}
-      <div className="bg-gradient-to-b from-cyan-50 via-blue-50 to-background dark:from-cyan-950/20 dark:via-blue-950/20 dark:to-background">
-        <div className="container mx-auto px-4 pb-8">
+      <div className="bg-secondary/20 border-b border-border/40">
+        <div className="container mx-auto px-4 pb-12">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="flex flex-col md:flex-row items-start gap-6"
+            className="flex flex-col md:flex-row items-start gap-8"
           >
             {/* Logo */}
-            <div className="h-24 w-24 rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-4xl flex-shrink-0 shadow-lg">
+            <div className="h-24 w-24 rounded-2xl bg-secondary flex items-center justify-center text-primary font-bold text-4xl flex-shrink-0 shadow-sm border border-border/50">
               {company.logo ? (
                 <img src={company.logo} alt={company.name} className="h-full w-full rounded-2xl object-cover" />
               ) : (
@@ -238,40 +238,32 @@ export default function CompanyDetailPage({ params }: { params: Promise<{ id: st
             {/* Info */}
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2">
-                <h1 className="text-2xl md:text-3xl font-bold">{company.name}</h1>
+                <h1 className="text-2xl md:text-3xl font-bold text-foreground">{company.name}</h1>
                 {company.isVerified && (
-                  <div className="h-6 w-6 rounded-full bg-emerald-500 flex items-center justify-center">
-                    <Check className="h-4 w-4 text-white" />
-                  </div>
+                  <Badge variant="secondary" className="text-[10px] font-bold uppercase tracking-wider bg-primary/5 text-primary border-primary/10">
+                    Verified
+                  </Badge>
                 )}
               </div>
               
-              <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-4">
-                <div className="flex items-center gap-1">
-                  <Briefcase className="h-4 w-4" />
-                  <span>{company.industry}</span>
+              <div className="flex flex-wrap items-center gap-4 text-muted-foreground mb-4 font-medium text-sm">
+                <div className="flex items-center gap-1.5">
+                  <MapPin className="h-4 w-4 text-muted-foreground/60" />
+                  {company.city}
                 </div>
-                <div className="flex items-center gap-1">
-                  <Users className="h-4 w-4" />
-                  <span>{companySizeLabels[company.companySize || '1-10']}</span>
+                <div className="flex items-center gap-1.5">
+                  <Briefcase className="h-4 w-4 text-muted-foreground/60" />
+                  {company.industry}
                 </div>
-                <div className="flex items-center gap-1">
-                  <MapPin className="h-4 w-4" />
-                  <span>{company.city}</span>
+                <div className="flex items-center gap-1.5">
+                  <Users className="h-4 w-4 text-muted-foreground/60" />
+                  {companySizeLabels[company.companySize || '1-10']}
                 </div>
-                {company.foundedYear && (
-                  <div className="flex items-center gap-1">
-                    <Calendar className="h-4 w-4" />
-                    <span>{company.foundedYear} yildan</span>
-                  </div>
-                )}
               </div>
 
-              {/* Actions */}
-              <div className="flex flex-wrap gap-3">
-                <Button className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700">
-                  <Mail className="mr-2 h-4 w-4" />
-                  Bog'lanish
+              <div className="flex gap-2">
+                <Button className="bg-primary hover:bg-primary/90 text-white font-bold h-10 px-6 rounded-lg shadow-sm shadow-primary/20">
+                  Kompaniyaga ergashish
                 </Button>
                 {company.website && (
                   <Button variant="outline" asChild>
@@ -282,7 +274,7 @@ export default function CompanyDetailPage({ params }: { params: Promise<{ id: st
                     </a>
                   </Button>
                 )}
-                <Button variant="outline" size="icon">
+                <Button variant="outline" size="icon" className="rounded-lg border-border/60 hover:bg-secondary/50 h-10 w-10">
                   <Share2 className="h-4 w-4" />
                 </Button>
               </div>

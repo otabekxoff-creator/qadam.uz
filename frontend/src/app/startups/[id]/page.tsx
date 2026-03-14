@@ -139,29 +139,29 @@ export default function StartupDetailPage({ params }: { params: Promise<{ id: st
   return (
     <main className="min-h-screen bg-background">
       {/* Back Button */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-6">
         <Link 
           href="/startups"
-          className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center text-sm font-bold text-muted-foreground hover:text-primary transition-colors group"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Orqaga
+          <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+          Orqaga qaytish
         </Link>
       </div>
 
-      <div className="container mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div className="container mx-auto px-4 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-10">
             {/* Header Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold text-3xl flex-shrink-0">
+              <Card className="border-border/50 shadow-sm rounded-2xl overflow-hidden">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-6">
+                    <div className="h-24 w-24 rounded-2xl bg-secondary flex items-center justify-center text-primary font-bold text-4xl flex-shrink-0 border border-border/50">
                       {startup.logo ? (
                         <img src={startup.logo} alt={startup.name} className="h-full w-full rounded-2xl object-cover" />
                       ) : (
@@ -171,35 +171,35 @@ export default function StartupDetailPage({ params }: { params: Promise<{ id: st
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <h1 className="text-2xl font-bold mb-2">{startup.name}</h1>
-                          <div className="flex flex-wrap items-center gap-2 mb-2">
-                            <Badge className={stageColors[startup.stage]}>
+                          <h1 className="text-3xl font-bold mb-3 text-foreground tracking-tight">{startup.name}</h1>
+                          <div className="flex flex-wrap items-center gap-2 mb-4">
+                            <Badge className={`${stageColors[startup.stage]} text-[10px] font-bold uppercase tracking-wider border-none`}>
                               {stages.find(s => s.value === startup.stage)?.label}
                             </Badge>
-                            <Badge variant="outline">{startup.industry}</Badge>
+                            <Badge variant="outline" className="text-[10px] font-bold uppercase tracking-wider border-border/60">{startup.industry}</Badge>
                             {startup.status === 'FUNDED' && (
-                              <Badge className="bg-emerald-100 text-emerald-700">Moliyalashtirilgan</Badge>
+                              <Badge className="bg-primary/10 text-primary text-[10px] font-bold uppercase tracking-wider border-none">Moliyalashtirilgan</Badge>
                             )}
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button variant="outline" size="icon">
+                          <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
                             <Heart className="h-4 w-4" />
                           </Button>
-                          <Button variant="outline" size="icon">
+                          <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
                             <Share2 className="h-4 w-4" />
                           </Button>
                         </div>
                       </div>
-                      <p className="text-muted-foreground line-clamp-2">{startup.description}</p>
+                      <p className="text-muted-foreground font-medium leading-relaxed">{startup.description}</p>
                     </div>
                   </div>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mt-6">
+                  <div className="flex flex-wrap gap-2 mt-8">
                     {startup.tags?.map((tag) => (
-                      <Badge key={tag} variant="secondary">
-                        {tag}
+                      <Badge key={tag} variant="secondary" className="text-[11px] font-bold bg-secondary/50 border-border/40">
+                        #{tag}
                       </Badge>
                     ))}
                   </div>
@@ -213,31 +213,33 @@ export default function StartupDetailPage({ params }: { params: Promise<{ id: st
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.05 }}
             >
-              <Card className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30">
-                <CardContent className="p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <h3 className="font-semibold flex items-center gap-2">
-                      <DollarSign className="h-5 w-5 text-purple-600" />
-                      Moliyalashtirish
+              <Card className="bg-primary/5 border-primary/10 shadow-sm rounded-2xl overflow-hidden">
+                <CardContent className="p-8">
+                  <div className="flex items-center justify-between mb-6">
+                    <h3 className="font-bold flex items-center gap-3 text-foreground">
+                      <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                        <DollarSign className="h-5 w-5" />
+                      </div>
+                      Sarmoya yig'ish
                     </h3>
-                    <span className="text-2xl font-bold text-purple-600">{progress}%</span>
+                    <span className="text-3xl font-bold text-primary">{progress}%</span>
                   </div>
-                  <Progress value={progress} className="h-3 mb-4" />
-                  <div className="flex items-center justify-between text-sm">
+                  <Progress value={progress} className="h-2 bg-background border border-border/40" />
+                  <div className="flex items-center justify-between text-sm mt-6">
                     <div>
-                      <p className="text-muted-foreground">Yig'ilgan</p>
-                      <p className="font-semibold">{formatMoney(startup.fundingRaised || 0, startup.fundingCurrency)}</p>
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Yig'ilgan</p>
+                      <p className="text-lg font-bold text-foreground">{formatMoney(startup.fundingRaised || 0, startup.fundingCurrency)}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-muted-foreground">Maqsad</p>
-                      <p className="font-semibold">{formatMoney(startup.fundingNeeded || 0, startup.fundingCurrency)}</p>
+                      <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-1">Maqsad</p>
+                      <p className="text-lg font-bold text-foreground">{formatMoney(startup.fundingNeeded || 0, startup.fundingCurrency)}</p>
                     </div>
                   </div>
-                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-purple-200 dark:border-purple-800">
-                    <span className="text-sm text-muted-foreground">
-                      Taklif qilinadi: <span className="font-medium text-foreground">{startup.equityOffered}%</span> ulush
+                  <div className="flex flex-col sm:flex-row items-center justify-between mt-8 pt-8 border-t border-primary/10 gap-4">
+                    <span className="text-sm font-bold text-muted-foreground">
+                      Taklif qilinadi: <span className="text-primary">{startup.equityOffered}%</span> ulush
                     </span>
-                    <Button className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700">
+                    <Button className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-white font-bold h-12 px-10 rounded-xl shadow-sm shadow-primary/20">
                       Investitsiya qilish
                     </Button>
                   </div>

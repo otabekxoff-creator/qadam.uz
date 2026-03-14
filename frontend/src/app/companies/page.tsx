@@ -186,11 +186,11 @@ const companySizeLabels: Record<string, string> = {
 function CompanyCard({ company }: { company: Company }) {
   return (
     <Link href={`/companies/${company.id}`}>
-      <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
-        <CardHeader className="pb-3">
+      <Card className="h-full border border-border/60 hover:border-primary/40 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer group rounded-xl overflow-hidden flex flex-col">
+        <CardHeader className="pb-4 pt-6 px-6">
           <div className="flex items-start justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="h-14 w-14 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 flex items-center justify-center text-white font-bold text-xl">
+            <div className="flex items-center space-x-4">
+              <div className="h-14 w-14 rounded-xl bg-secondary flex items-center justify-center text-primary font-bold text-xl border border-border/50 group-hover:scale-105 transition-transform">
                 {company.logo ? (
                   <img src={company.logo} alt={company.name} className="h-full w-full rounded-xl object-cover" />
                 ) : (
@@ -199,51 +199,48 @@ function CompanyCard({ company }: { company: Company }) {
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <p className="font-semibold">{company.name}</p>
+                  <p className="font-bold text-foreground group-hover:text-primary transition-colors">{company.name}</p>
                   {company.isVerified && (
-                    <div className="h-5 w-5 rounded-full bg-emerald-500 flex items-center justify-center">
-                      <Check className="h-3 w-3 text-white" />
-                    </div>
+                    <Badge variant="secondary" className="text-[10px] font-bold uppercase tracking-wider bg-primary/5 text-primary border-primary/10">
+                      Verified
+                    </Badge>
                   )}
                 </div>
-                <p className="text-sm text-muted-foreground">{company.industry}</p>
+                <p className="text-xs text-muted-foreground font-medium">{company.industry}</p>
               </div>
             </div>
           </div>
         </CardHeader>
         
-        <CardContent className="pb-3">
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+        <CardContent className="pb-4 px-6 flex-1">
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-5 font-medium leading-relaxed">
             {company.description}
           </p>
 
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <div className="flex items-center">
-              <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
+          <div className="space-y-2.5 text-sm text-muted-foreground mb-2">
+            <div className="flex items-center font-medium">
+              <MapPin className="h-4 w-4 mr-2.5 text-muted-foreground/60" />
               <span>{company.city}</span>
             </div>
-            <div className="flex items-center">
-              <Users className="h-4 w-4 mr-2 flex-shrink-0" />
+            <div className="flex items-center font-medium">
+              <Users className="h-4 w-4 mr-2.5 text-muted-foreground/60" />
               <span>{companySizeLabels[company.companySize || '1-10']}</span>
             </div>
           </div>
         </CardContent>
 
-        <CardFooter className="pt-3 border-t">
+        <CardFooter className="pt-4 pb-6 px-6 border-t border-border/40 bg-secondary/20 group-hover:bg-primary/5 transition-colors">
           <div className="flex items-center justify-between w-full">
-            <div className="flex flex-wrap gap-1">
+            <div className="flex flex-wrap gap-1.5">
               {company.benefits?.slice(0, 2).map((benefit) => (
-                <Badge key={benefit} variant="secondary" className="text-xs">
+                <Badge key={benefit} variant="outline" className="text-[10px] font-bold border-border/60 text-muted-foreground bg-background/50">
                   {benefit}
                 </Badge>
               ))}
-              {company.benefits && company.benefits.length > 2 && (
-                <Badge variant="secondary" className="text-xs">
-                  +{company.benefits.length - 2}
-                </Badge>
-              )}
             </div>
-            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-cyan-600 transition-colors" />
+            <div className="h-8 w-8 rounded-full flex items-center justify-center bg-background border border-border/60 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+              <ArrowRight className="h-4 w-4" />
+            </div>
           </div>
         </CardFooter>
       </Card>

@@ -178,7 +178,7 @@ function ApplyDialog({ jobId }: { jobId: string }) {
 
   if (!isAuthenticated) {
     return (
-      <Button asChild className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700">
+      <Button asChild className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-11 rounded-xl shadow-sm shadow-primary/20">
         <Link href="/login">
           Ariza berish uchun tizimga kiring
         </Link>
@@ -188,7 +188,7 @@ function ApplyDialog({ jobId }: { jobId: string }) {
 
   if (!userIsStudent) {
     return (
-      <Button disabled className="w-full">
+      <Button disabled className="w-full h-11 rounded-xl">
         Faqat talabalar ariza berishi mumkin
       </Button>
     );
@@ -197,58 +197,65 @@ function ApplyDialog({ jobId }: { jobId: string }) {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700">
+        <Button className="w-full bg-primary hover:bg-primary/90 text-white font-bold h-11 rounded-xl shadow-sm shadow-primary/20">
           <Send className="mr-2 h-4 w-4" />
           Ariza berish
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="sm:max-w-lg rounded-2xl border-border/50">
         <DialogHeader>
-          <DialogTitle>Ariza berish</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-xl font-bold">Ariza berish</DialogTitle>
+          <DialogDescription className="font-medium">
             &quot;{mockJob.title}&quot; lavozimiga ariza bermoqchisiz
           </DialogDescription>
         </DialogHeader>
         
         <div className="space-y-4 py-4">
           <div className="space-y-2">
-            <Label htmlFor="coverLetter">Motivatsion xat (ixtiyoriy)</Label>
+            <Label htmlFor="coverLetter" className="text-sm font-bold">Motivatsion xat (ixtiyoriy)</Label>
             <Textarea
               id="coverLetter"
               placeholder="Nima uchun bu lavozimga murojaat qilayotganingiz haqida yozing..."
               value={coverLetter}
               onChange={(e) => setCoverLetter(e.target.value)}
               rows={6}
+              className="resize-none border-border/60 focus:border-primary/50"
             />
           </div>
 
-          <div className="bg-muted/50 rounded-lg p-4">
-            <p className="text-sm text-muted-foreground mb-2">Arizangiz quyidagilarni o&apos;z ichiga oladi:</p>
-            <ul className="space-y-1">
-              <li className="flex items-center text-sm">
-                <Check className="h-4 w-4 mr-2 text-emerald-500" />
+          <div className="bg-secondary/30 rounded-xl p-5 border border-border/40">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider mb-3">Arizangiz quyidagilarni o&apos;z ichiga oladi:</p>
+            <ul className="space-y-2.5">
+              <li className="flex items-center text-sm font-semibold">
+                <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center mr-2.5">
+                  <Check className="h-3 w-3 text-primary" />
+                </div>
                 Sizning profilingiz
               </li>
-              <li className="flex items-center text-sm">
-                <Check className="h-4 w-4 mr-2 text-emerald-500" />
+              <li className="flex items-center text-sm font-semibold">
+                <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center mr-2.5">
+                  <Check className="h-3 w-3 text-primary" />
+                </div>
                 Resume (agar mavjud bo&apos;lsa)
               </li>
-              <li className="flex items-center text-sm">
-                <Check className="h-4 w-4 mr-2 text-emerald-500" />
+              <li className="flex items-center text-sm font-semibold">
+                <div className="h-5 w-5 rounded-full bg-primary/10 flex items-center justify-center mr-2.5">
+                  <Check className="h-3 w-3 text-primary" />
+                </div>
                 Motivatsion xat
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="flex justify-end gap-3">
-          <Button variant="outline" onClick={() => setIsOpen(false)}>
+        <div className="flex justify-end gap-3 pt-2">
+          <Button variant="ghost" onClick={() => setIsOpen(false)} className="font-bold rounded-xl h-11 px-6">
             Bekor qilish
           </Button>
           <Button 
             onClick={handleSubmit}
             disabled={isSubmitting}
-            className="bg-gradient-to-r from-emerald-500 to-teal-600"
+            className="bg-primary hover:bg-primary/90 text-white font-bold h-11 px-8 rounded-xl"
           >
             {isSubmitting ? (
               <>
@@ -284,67 +291,63 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
   return (
     <main className="min-h-screen bg-background">
       {/* Back Button */}
-      <div className="container mx-auto px-4 py-4">
+      <div className="container mx-auto px-4 py-6">
         <Link 
           href="/jobs"
-          className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+          className="inline-flex items-center text-sm font-bold text-muted-foreground hover:text-primary transition-colors group"
         >
-          <ArrowLeft className="h-4 w-4 mr-2" />
-          Orqaga
+          <ArrowLeft className="h-4 w-4 mr-2 transition-transform group-hover:-translate-x-1" />
+          Orqaga qaytish
         </Link>
       </div>
 
-      <div className="container mx-auto px-4 pb-12">
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+      <div className="container mx-auto px-4 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="lg:col-span-2 space-y-10">
             {/* Header Card */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
             >
-              <Card>
-                <CardContent className="p-6">
-                  <div className="flex items-start gap-4">
-                    <div className="h-16 w-16 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-2xl flex-shrink-0">
+              <Card className="border-border/50 shadow-sm rounded-2xl overflow-hidden">
+                <CardContent className="p-8">
+                  <div className="flex items-start gap-6">
+                    <div className="h-20 w-20 rounded-2xl bg-secondary flex items-center justify-center text-primary font-bold text-3xl flex-shrink-0 border border-border/50">
                       {job.company?.name?.[0] || 'C'}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-start justify-between gap-4">
                         <div>
-                          <div className="flex items-center gap-2 mb-1">
-                            <Link href={`/companies/${job.company?.id}`} className="text-muted-foreground hover:text-foreground">
+                          <div className="flex items-center gap-2 mb-2">
+                            <Link href={`/companies/${job.company?.id}`} className="text-sm font-bold text-primary hover:underline">
                               {job.company?.name}
                             </Link>
                             {job.company?.isVerified && (
-                              <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700">
-                                Tasdiqlangan
+                              <Badge variant="secondary" className="text-[10px] font-bold uppercase tracking-wider bg-primary/5 text-primary border-primary/10">
+                                Verified
                               </Badge>
                             )}
                           </div>
-                          <h1 className="text-2xl font-bold mb-2">{job.title}</h1>
-                          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
+                          <h1 className="text-3xl font-bold mb-3 text-foreground tracking-tight">{job.title}</h1>
+                          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground font-medium">
                             <div className="flex items-center">
-                              <MapPin className="h-4 w-4 mr-1" />
+                              <MapPin className="h-4 w-4 mr-1.5 text-muted-foreground/60" />
                               {job.location}
                             </div>
                             <div className="flex items-center">
-                              <Briefcase className="h-4 w-4 mr-1" />
+                              <Briefcase className="h-4 w-4 mr-1.5 text-muted-foreground/60" />
                               {jobTypeLabels[job.jobType]}
                             </div>
                             {job.isRemote && (
-                              <Badge variant="outline">Masofaviy</Badge>
-                            )}
-                            {job.isHybrid && (
-                              <Badge variant="outline">Hybrid</Badge>
+                              <Badge variant="outline" className="text-[10px] font-bold border-border/60">Masofaviy</Badge>
                             )}
                           </div>
                         </div>
                         <div className="flex gap-2">
-                          <Button variant="outline" size="icon">
+                          <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
                             <Bookmark className="h-4 w-4" />
                           </Button>
-                          <Button variant="outline" size="icon">
+                          <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
                             <Share2 className="h-4 w-4" />
                           </Button>
                         </div>
@@ -353,21 +356,26 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                   </div>
 
                   {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mt-6">
+                  <div className="flex flex-wrap gap-2 mt-8">
                     {job.skills?.map((skill) => (
-                      <Badge key={skill} variant="secondary">
+                      <Badge key={skill} variant="secondary" className="text-[11px] font-bold bg-secondary/50 border-border/40">
                         {skill}
                       </Badge>
                     ))}
                   </div>
 
                   {/* Salary */}
-                  <div className="mt-6 p-4 bg-emerald-50 dark:bg-emerald-950/30 rounded-xl">
-                    <div className="flex items-center gap-2">
-                      <DollarSign className="h-5 w-5 text-emerald-600" />
-                      <span className="text-lg font-semibold text-emerald-700 dark:text-emerald-400">
-                        {formatSalary(job.salaryMin, job.salaryMax, job.currency)}
-                      </span>
+                  <div className="mt-8 p-5 bg-primary/5 rounded-2xl border border-primary/10">
+                    <div className="flex items-center gap-3">
+                      <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
+                        <DollarSign className="h-5 w-5" />
+                      </div>
+                      <div>
+                        <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">Maosh</p>
+                        <span className="text-xl font-bold text-primary">
+                          {formatSalary(job.salaryMin, job.salaryMax, job.currency)}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </CardContent>
