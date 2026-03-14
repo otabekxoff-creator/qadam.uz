@@ -343,7 +343,7 @@ export default function CompanyDashboard() {
               <TabsTrigger value="jobs" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Ish e'lonlari
               </TabsTrigger>
-              <TabsTrigger value="applications" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+              <TabsTrigger value="applications" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 So'nggi arizalar
               </TabsTrigger>
             </TabsList>
