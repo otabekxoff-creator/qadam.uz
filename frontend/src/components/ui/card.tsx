@@ -3,13 +3,11 @@ import { motion } from "framer-motion"
 
 import { cn } from "@/lib/utils"
 
-const MotionDiv = motion.div
-
 const Card = React.forwardRef<
   HTMLDivElement,
   React.HTMLAttributes<HTMLDivElement>
 >(({ className, ...props }, ref) => (
-  <MotionDiv
+  <motion.div
     ref={ref}
     className={cn(
       "rounded-lg border bg-card text-card-foreground shadow-sm transition-transform duration-300",
@@ -17,7 +15,7 @@ const Card = React.forwardRef<
     )}
     whileHover={{ rotateX: -6, rotateY: 6, translateY: -6 }}
     style={{ transformStyle: "preserve-3d" }}
-    {...props}
+    {...(props as any)}
   />
 ))
 Card.displayName = "Card"
