@@ -45,7 +45,10 @@ export const updateProfileSchema = z.object({
   phone: z.string().optional(),
   university: z.string().optional(),
   major: z.string().optional(),
-  gpa: z.string().transform(val => parseFloat(val)).optional(),
+  gpa: z.preprocess((val) => {
+    if (typeof val === 'string' && val.trim() === '') return undefined;
+    return val;
+  }, z.string().transform(val => parseFloat(val)).optional()),
   about: z.string().optional(),
   skills: z.string().optional(),
   

@@ -65,7 +65,7 @@ export const updateStudentProfile = asyncHandler(async (req: AuthenticatedReques
       major: major?.trim(),
       gpa: gpa !== undefined ? parseFloat(gpa) : undefined,
       about: about?.trim(),
-      skills: skills || undefined,
+      skills: Array.isArray(skills) ? skills : (typeof skills === 'string' ? skills.split(',').map((s: string) => s.trim()) : undefined),
     },
     include: {
       user: {
