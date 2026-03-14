@@ -74,15 +74,15 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-4 left-0 right-0 z-50 flex justify-center px-4">
-      <nav className="container glass rounded-full px-6 py-2 transition-all duration-300 hover:shadow-[0_0_30px_rgba(16,185,129,0.2)]">
+    <header className="fixed top-0 left-0 right-0 z-50 flex justify-center bg-background/80 backdrop-blur-md border-b border-border shadow-sm">
+      <nav className="container px-6 py-3">
         <div className="flex h-12 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center space-x-2 group">
-            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-teal-600 group-hover:rotate-12 transition-transform">
-              <GraduationCap className="h-5 w-5 text-white" />
+            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-white shadow-sm transition-transform active:scale-95">
+              <GraduationCap className="h-5 w-5" />
             </div>
-            <span className="text-xl font-bold bg-gradient-to-r from-primary to-teal-400 bg-clip-text text-transparent group-hover:text-glow-primary transition-all">
+            <span className="text-xl font-bold text-foreground tracking-tight">
               Step.uz
             </span>
           </Link>
@@ -93,7 +93,7 @@ export function Navbar() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="flex items-center space-x-1 text-sm font-medium text-muted-foreground transition-all hover:text-primary hover:scale-105"
+                className="flex items-center space-x-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               >
                 <link.icon className="h-4 w-4" />
                 <span>{link.label}</span>

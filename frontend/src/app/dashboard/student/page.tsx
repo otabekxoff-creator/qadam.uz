@@ -247,27 +247,27 @@ export default function StudentDashboard() {
     <div className="space-y-10 max-w-7xl mx-auto">
       {/* Header with Glass Card */}
       <motion.div 
-        initial={{ y: -20, opacity: 0 }}
+        initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden"
+        className="glass p-8 rounded-2xl border border-border/50 relative overflow-hidden bg-card shadow-sm"
       >
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div>
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl font-bold text-foreground">
               Xush kelibsiz, Talaba!
             </h1>
-            <p className="text-muted-foreground mt-2 text-lg">
+            <p className="text-muted-foreground mt-1 text-base">
               Sizning bugungi karyera holatingiz va yangi imkoniyatlar.
             </p>
           </div>
-          <div className="flex gap-4">
-            <Button className="bg-primary hover:bg-primary/80 glow-primary rounded-full px-6" asChild>
+          <div className="flex gap-3">
+            <Button className="rounded-lg px-5 h-10" asChild>
               <Link href="/profile">
                 <Plus className="mr-2 h-4 w-4" />
                 Profilni tahrirlash
               </Link>
             </Button>
-            <Button variant="outline" className="glass border-white/10 rounded-full" asChild>
+            <Button variant="outline" className="rounded-lg px-5 h-10" asChild>
               <Link href="/settings">
                 <Settings className="mr-2 h-4 w-4" />
                 Sozlamalar
@@ -277,30 +277,30 @@ export default function StudentDashboard() {
         </div>
       </motion.div>
 
-      {/* Stats Grid with Glowing Effects */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Arizalar', value: mockStats.applicationsCount, icon: FileText, color: 'text-blue-400' },
+          { label: 'Arizalar', value: mockStats.applicationsCount, icon: FileText, color: 'text-primary' },
           { label: 'Suhbatlar', value: mockStats.interviewsCount, icon: Calendar, color: 'text-primary' },
-          { label: 'Takliflar', value: mockStats.offersCount, icon: Award, color: 'text-yellow-400' },
-          { label: 'Ko\'rishlar', value: mockStats.profileViews, icon: Eye, color: 'text-purple-400' },
+          { label: 'Takliflar', value: mockStats.offersCount, icon: Award, color: 'text-primary' },
+          { label: 'Ko\'rishlar', value: mockStats.profileViews, icon: Eye, color: 'text-primary' },
         ].map((stat, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="glass p-6 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group"
+            transition={{ delay: i * 0.05 }}
+            className="bg-card p-6 rounded-xl border border-border shadow-sm hover:border-primary/30 transition-all"
           >
-            <div className="flex items-center justify-between">
-              <div className={`p-3 rounded-2xl bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}>
-                <stat.icon size={24} />
+            <div className="flex items-center justify-between mb-4">
+              <div className={`p-2 rounded-lg bg-primary/5 ${stat.color}`}>
+                <stat.icon size={20} />
               </div>
-              <TrendingUp size={20} className="text-primary/40" />
+              <TrendingUp size={16} className="text-muted-foreground/30" />
             </div>
-            <div className="mt-4">
-              <h3 className="text-3xl font-bold">{stat.value}</h3>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            <div>
+              <h3 className="text-2xl font-bold">{stat.value}</h3>
+              <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
             </div>
           </motion.div>
         ))}
@@ -310,53 +310,48 @@ export default function StudentDashboard() {
         {/* Main Content Area */}
         <div className="lg:col-span-2 space-y-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="bg-white/5 border border-white/10 p-1 rounded-2xl h-14">
-              <TabsTrigger value="overview" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+            <TabsList className="bg-muted/50 border border-border p-1 rounded-lg h-12">
+              <TabsTrigger value="overview" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Arizalar
               </TabsTrigger>
-              <TabsTrigger value="saved" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+              <TabsTrigger value="saved" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Saqlanganlar
               </TabsTrigger>
             </TabsList>
             
-            <TabsContent value="overview" className="mt-6 space-y-4">
+            <TabsContent value="overview" className="mt-6 space-y-3">
               {mockApplications.map((app, i) => (
                 <motion.div
                   key={app.id}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.1 }}
-                  className="glass p-6 rounded-3xl border border-white/10 flex items-center justify-between group hover:bg-white/5 transition-all"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="bg-card p-5 rounded-xl border border-border flex items-center justify-between group hover:border-primary/30 transition-all shadow-sm"
                 >
-                  <div className="flex items-center gap-6">
-                    <div className="h-16 w-16 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 text-2xl font-bold group-hover:scale-105 transition-transform">
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center border border-border text-lg font-bold text-primary">
                       {app.job?.company?.name?.[0]}
                     </div>
                     <div>
-                      <h4 className="text-xl font-semibold">{app.job?.title}</h4>
-                      <div className="flex items-center gap-3 text-sm text-muted-foreground mt-1">
+                      <h4 className="text-lg font-semibold text-foreground">{app.job?.title}</h4>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
                         <span className="flex items-center gap-1">
-                          <Building2 size={14} /> {app.job?.company?.name}
+                          <Building2 size={12} /> {app.job?.company?.name}
                         </span>
                         <span>•</span>
                         <span className="flex items-center gap-1">
-                          <MapPin size={14} /> {app.job?.location}
+                          <MapPin size={12} /> {app.job?.location}
                         </span>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-6">
-                    <Badge variant="outline" className={`px-4 py-1.5 rounded-full border-white/10 ${
-                      app.status === 'INTERVIEW' ? 'bg-primary/20 text-primary border-primary/30' :
-                      app.status === 'PENDING' ? 'bg-yellow-400/20 text-yellow-400 border-yellow-400/30' :
-                      'bg-red-400/20 text-red-400 border-red-400/30'
-                    }`}>
-                      {app.status === 'INTERVIEW' ? 'Suhbat' :
-                       app.status === 'PENDING' ? 'Kutilmoqda' : 'Rad etildi'}
+                  <div className="flex items-center gap-4">
+                    <Badge variant="secondary" className="px-3 py-1 rounded-md font-medium text-xs">
+                      {statusConfig[app.status].label}
                     </Badge>
-                    <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/20 hover:text-primary" asChild>
+                    <Button variant="ghost" size="sm" className="rounded-lg h-8 w-8 p-0" asChild>
                       <Link href={`/jobs/${app.jobId}`}>
-                        <ArrowRight size={20} />
+                        <ArrowRight size={16} />
                       </Link>
                     </Button>
                   </div>

@@ -277,64 +277,60 @@ export default function CompanyDashboard() {
     <div className="space-y-10 max-w-7xl mx-auto">
       {/* Header with Glass Card */}
       <motion.div 
-        initial={{ y: -20, opacity: 0 }}
+        initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="glass p-8 rounded-[32px] border border-white/10 relative overflow-hidden"
+        className="bg-card p-8 rounded-2xl border border-border shadow-sm relative overflow-hidden"
       >
-        <div className="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
-          <Building2 size={120} className="text-primary" />
-        </div>
-        
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
           <div className="flex items-center gap-6">
-            <div className="h-20 w-20 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 text-3xl font-bold">
+            <div className="h-16 w-16 rounded-xl bg-secondary flex items-center justify-center border border-border text-2xl font-bold text-primary">
               {mockCompany.name[0]}
             </div>
             <div>
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent">
+              <h1 className="text-3xl font-bold text-foreground">
                 {mockCompany.name}
               </h1>
-              <p className="text-muted-foreground mt-2 text-lg">
+              <p className="text-muted-foreground mt-1 text-base">
                 Kompaniya boshqaruv paneli. Kelajak jamoasini tuzing.
               </p>
             </div>
           </div>
-          <div className="flex gap-4">
-            <Button className="bg-primary hover:bg-primary/80 glow-primary rounded-full px-6">
+          <div className="flex gap-3">
+            <Button className="rounded-lg px-5 h-10 shadow-sm">
               <Plus className="mr-2 h-4 w-4" />
               Yangi ish e'loni
             </Button>
-            <Button variant="outline" className="glass border-white/10 rounded-full">
-              <Settings className="mr-2 h-4 w-4" />
+            <Button variant="outline" className="rounded-lg h-10 w-10 p-0 border-border">
+              <Settings className="h-4 w-4 text-muted-foreground" />
             </Button>
           </div>
         </div>
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {[
-          { label: 'Faol ishlar', value: mockStats.activeJobsCount, icon: Briefcase, color: 'text-blue-400' },
+          { label: 'Faol ishlar', value: mockStats.activeJobsCount, icon: Briefcase, color: 'text-primary' },
           { label: 'Arizalar', value: mockStats.totalApplicationsCount, icon: Users, color: 'text-primary' },
-          { label: 'Yangi', value: mockStats.newApplicationsCount, icon: Clock, color: 'text-yellow-400' },
-          { label: 'Ishga olingan', value: mockStats.hiredCount, icon: UserCheck, color: 'text-purple-400' },
+          { label: 'Yangi', value: mockStats.newApplicationsCount, icon: Clock, color: 'text-primary' },
+          { label: 'Ishga olingan', value: mockStats.hiredCount, icon: UserCheck, color: 'text-primary' },
         ].map((stat, i) => (
           <motion.div
             key={i}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: i * 0.1 }}
-            className="glass p-6 rounded-3xl border border-white/10 hover:border-primary/50 transition-all group"
+            transition={{ delay: i * 0.05 }}
+            className="bg-card p-6 rounded-xl border border-border shadow-sm hover:border-primary/30 transition-all"
           >
-            <div className="flex items-center justify-between">
-              <div className={`p-3 rounded-2xl bg-white/5 ${stat.color} group-hover:scale-110 transition-transform`}>
-                <stat.icon size={24} />
+            <div className="flex items-center justify-between mb-4">
+              <div className={`p-2 rounded-lg bg-primary/5 ${stat.color}`}>
+                <stat.icon size={20} />
               </div>
-              <TrendingUp size={20} className="text-primary/40" />
+              <TrendingUp size={16} className="text-muted-foreground/30" />
             </div>
-            <div className="mt-4">
-              <h3 className="text-3xl font-bold">{stat.value}</h3>
-              <p className="text-sm text-muted-foreground">{stat.label}</p>
+            <div>
+              <h3 className="text-2xl font-bold">{stat.value}</h3>
+              <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
             </div>
           </motion.div>
         ))}
@@ -343,8 +339,8 @@ export default function CompanyDashboard() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <div className="lg:col-span-2 space-y-8">
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="bg-white/5 border border-white/10 p-1 rounded-2xl h-14 w-fit">
-              <TabsTrigger value="jobs" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">
+            <TabsList className="bg-muted/50 border border-border p-1 rounded-lg h-12 w-fit">
+              <TabsTrigger value="jobs" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Ish e'lonlari
               </TabsTrigger>
               <TabsTrigger value="applications" className="rounded-xl data-[state=active]:bg-primary data-[state=active]:text-primary-foreground h-full px-8 text-lg font-medium transition-all">

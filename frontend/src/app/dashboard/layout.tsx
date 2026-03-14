@@ -13,14 +13,13 @@ export default function DashboardLayout({
   return (
     <motion.div
       key={pathname}
-      initial={{ opacity: 0, scale: 0.9, filter: 'blur(10px)' }}
-      animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-      exit={{ opacity: 0, scale: 1.1, filter: 'blur(10px)' }}
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
       transition={{ 
-        duration: 0.6, 
-        ease: [0.22, 1, 0.36, 1] 
+        duration: 0.4, 
+        ease: "easeOut" 
       }}
-      className="min-h-screen pt-24 pb-12"
+      className="min-h-screen pt-24 pb-12 bg-secondary/20"
     >
       <div className="container mx-auto px-4">
         {children}
