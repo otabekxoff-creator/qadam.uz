@@ -119,6 +119,8 @@ export interface Company {
   city?: string;
   industry?: string;
   companySize?: '1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+';
+  location?: string; // Qo'shildi
+  size?: string;     // Qo'shildi
   foundedYear?: number;
   linkedinUrl?: string;
   facebookUrl?: string;
