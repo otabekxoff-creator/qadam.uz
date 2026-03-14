@@ -32,6 +32,8 @@ export interface Student {
   university?: string;
   faculty?: string;
   specialty?: string;
+  major?: string;    // Qo'shildi
+  gpa?: number;      // Qo'shildi
   course?: number;
   graduationYear?: number;
   educationLevel?: 'BACHELOR' | 'MASTER' | 'PHD';
