@@ -256,75 +256,72 @@ const getTimeAgo = (date: string) => {
 function JobCard({ job }: { job: Job }) {
   return (
     <Link href={`/jobs/${job.id}`}>
-      <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
-        <CardHeader className="pb-3">
+      <Card className="h-full border border-border/60 hover:border-primary/40 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer group rounded-xl overflow-hidden">
+        <CardHeader className="pb-4 pt-6 px-6">
           <div className="flex items-start justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white font-bold text-lg">
+            <div className="flex items-center space-x-4">
+              <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-primary font-bold text-xl border border-border/50 group-hover:scale-105 transition-transform">
                 {job.company?.name?.[0] || 'C'}
               </div>
               <div>
                 <div className="flex items-center gap-2">
-                  <p className="font-semibold">{job.company?.name}</p>
+                  <p className="font-bold text-foreground group-hover:text-primary transition-colors">{job.company?.name}</p>
                   {job.company?.isVerified && (
-                    <Badge variant="secondary" className="text-xs bg-emerald-100 text-emerald-700 dark:bg-emerald-950 dark:text-emerald-300">
-                      Tasdiqlangan
+                    <Badge variant="secondary" className="text-[10px] font-bold uppercase tracking-wider bg-primary/5 text-primary border-primary/10">
+                      Verified
                     </Badge>
                   )}
                 </div>
-                <p className="text-xs text-muted-foreground">{getTimeAgo(job.createdAt)}</p>
+                <p className="text-xs text-muted-foreground font-medium">{getTimeAgo(job.createdAt)}</p>
               </div>
             </div>
-            {job.isRemote && (
-              <Badge variant="outline" className="text-xs">
-                Masofaviy
-              </Badge>
-            )}
           </div>
         </CardHeader>
         
-        <CardContent className="pb-3">
-          <h3 className="font-semibold text-lg mb-2 group-hover:text-emerald-600 transition-colors line-clamp-1">
+        <CardContent className="pb-4 px-6">
+          <h3 className="font-bold text-lg mb-3 text-foreground line-clamp-1 group-hover:text-primary transition-colors">
             {job.title}
           </h3>
           
-          <div className="space-y-2 text-sm text-muted-foreground mb-4">
-            <div className="flex items-center">
-              <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
+          <div className="space-y-2.5 text-sm text-muted-foreground mb-5">
+            <div className="flex items-center font-medium">
+              <MapPin className="h-4 w-4 mr-2.5 text-muted-foreground/60" />
               <span>{job.location}</span>
             </div>
-            <div className="flex items-center">
-              <Briefcase className="h-4 w-4 mr-2 flex-shrink-0" />
+            <div className="flex items-center font-medium">
+              <Briefcase className="h-4 w-4 mr-2.5 text-muted-foreground/60" />
               <span>{jobTypes.find(t => t.value === job.jobType)?.label}</span>
             </div>
             {job.experienceLevel && (
-              <div className="flex items-center">
-                <Clock className="h-4 w-4 mr-2 flex-shrink-0" />
+              <div className="flex items-center font-medium">
+                <Clock className="h-4 w-4 mr-2.5 text-muted-foreground/60" />
                 <span>{experienceLevels.find(e => e.value === job.experienceLevel)?.label}</span>
               </div>
             )}
           </div>
 
-          <div className="flex flex-wrap gap-1">
-            {job.skills?.slice(0, 4).map((skill) => (
-              <Badge key={skill} variant="secondary" className="text-xs">
+          <div className="flex flex-wrap gap-1.5">
+            {job.skills?.slice(0, 3).map((skill) => (
+              <Badge key={skill} variant="outline" className="text-[10px] font-bold border-border/60 text-muted-foreground">
                 {skill}
               </Badge>
             ))}
-            {job.skills && job.skills.length > 4 && (
-              <Badge variant="secondary" className="text-xs">
-                +{job.skills.length - 4}
+            {job.skills && job.skills.length > 3 && (
+              <Badge variant="outline" className="text-[10px] font-bold border-border/60 text-muted-foreground">
+                +{job.skills.length - 3}
               </Badge>
             )}
           </div>
         </CardContent>
 
-        <CardFooter className="pt-3 border-t">
+        <CardFooter className="pt-4 pb-6 px-6 border-t border-border/40 bg-secondary/20 group-hover:bg-primary/5 transition-colors">
           <div className="flex items-center justify-between w-full">
-            <p className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+            <p className="text-sm font-bold text-primary">
               {formatSalary(job.salaryMin, job.salaryMax, job.currency)}
             </p>
-            <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-emerald-600 transition-colors" />
+            <div className="h-8 w-8 rounded-full flex items-center justify-center bg-background border border-border/60 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+              <ArrowRight className="h-4 w-4" />
+            </div>
           </div>
         </CardFooter>
       </Card>
@@ -367,13 +364,13 @@ function FilterPanel({
     filters.isRemote;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Job Type */}
       <div>
-        <h4 className="font-medium mb-3">Ish turi</h4>
-        <div className="space-y-2">
+        <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Ish turi</h4>
+        <div className="space-y-3">
           {jobTypes.map((type) => (
-            <div key={type.value} className="flex items-center space-x-2">
+            <div key={type.value} className="flex items-center space-x-3 group">
               <Checkbox
                 id={`type-${type.value}`}
                 checked={filters.jobTypes.includes(type.value)}
@@ -385,8 +382,9 @@ function FilterPanel({
                       : prev.jobTypes.filter((t) => t !== type.value),
                   }));
                 }}
+                className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <Label htmlFor={`type-${type.value}`} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={`type-${type.value}`} className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
                 {type.label}
               </Label>
             </div>
@@ -394,14 +392,14 @@ function FilterPanel({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-border/40" />
 
       {/* Experience Level */}
       <div>
-        <h4 className="font-medium mb-3">Tajriba</h4>
-        <div className="space-y-2">
+        <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Tajriba</h4>
+        <div className="space-y-3">
           {experienceLevels.map((level) => (
-            <div key={level.value} className="flex items-center space-x-2">
+            <div key={level.value} className="flex items-center space-x-3 group">
               <Checkbox
                 id={`exp-${level.value}`}
                 checked={filters.experienceLevels.includes(level.value)}
@@ -413,8 +411,9 @@ function FilterPanel({
                       : prev.experienceLevels.filter((l) => l !== level.value),
                   }));
                 }}
+                className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <Label htmlFor={`exp-${level.value}`} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={`exp-${level.value}`} className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
                 {level.label}
               </Label>
             </div>
@@ -422,14 +421,14 @@ function FilterPanel({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-border/40" />
 
       {/* Location */}
       <div>
-        <h4 className="font-medium mb-3">Joylashuv</h4>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+        <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Joylashuv</h4>
+        <div className="space-y-3 max-h-56 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-border">
           {cities.map((city) => (
-            <div key={city} className="flex items-center space-x-2">
+            <div key={city} className="flex items-center space-x-3 group">
               <Checkbox
                 id={`city-${city}`}
                 checked={filters.locations.includes(city)}
@@ -441,8 +440,9 @@ function FilterPanel({
                       : prev.locations.filter((l) => l !== city),
                   }));
                 }}
+                className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <Label htmlFor={`city-${city}`} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={`city-${city}`} className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
                 {city}
               </Label>
             </div>
@@ -450,10 +450,10 @@ function FilterPanel({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-border/40" />
 
       {/* Remote */}
-      <div className="flex items-center space-x-2">
+      <div className="flex items-center space-x-3 group">
         <Checkbox
           id="remote"
           checked={filters.isRemote}
@@ -463,15 +463,21 @@ function FilterPanel({
               isRemote: checked,
             }));
           }}
+          className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
         />
-        <Label htmlFor="remote" className="text-sm font-normal cursor-pointer">
+        <Label htmlFor="remote" className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
           Faqat masofaviy ishlar
         </Label>
       </div>
 
       {/* Clear Filters */}
       {hasActiveFilters && (
-        <Button variant="outline" className="w-full" onClick={clearFilters}>
+        <Button 
+          variant="outline" 
+          size="sm"
+          className="w-full h-10 font-bold border-border/60 hover:bg-secondary/50 rounded-lg" 
+          onClick={clearFilters}
+        >
           <X className="h-4 w-4 mr-2" />
           Filtrlarni tozalash
         </Button>
@@ -538,60 +544,61 @@ export default function JobsPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Header Section */}
-      <section className="bg-gradient-to-b from-emerald-50 via-teal-50 to-background dark:from-emerald-950/20 dark:via-teal-950/20 dark:to-background py-12">
+      <section className="bg-secondary/20 py-20 border-b border-border/40">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-8"
+            className="text-center mb-12"
           >
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
+            <h1 className="text-4xl md:text-5xl font-bold mb-5 tracking-tight text-foreground">
               Ish e&apos;lonlari
             </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              O&apos;zbekistondagi eng yaxshi kompaniyalardan ish imkoniyatlarini toping
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
+              O&apos;zbekistondagi eng yaxshi kompaniyalardan ish imkoniyatlarini toping. 
+              Sizning professional karyerangiz shu yerdan boshlanadi.
             </p>
           </motion.div>
 
           {/* Search Bar */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="max-w-3xl mx-auto"
           >
             <div className="flex gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/60" />
                 <Input
                   type="text"
                   placeholder="Lavozim, kompaniya yoki skill bo'yicha qidiring..."
                   value={filters.search}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, search: e.target.value })}
-                  className="pl-10 h-12"
+                  className="pl-12 h-14 bg-background border-border/60 focus:border-primary/50 text-base font-medium shadow-sm rounded-xl transition-all"
                 />
               </div>
               
               {/* Mobile Filter Button */}
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="h-12 md:hidden relative">
+                  <Button variant="outline" className="h-14 w-14 md:hidden relative border-border/60 bg-background rounded-xl">
                     <Filter className="h-5 w-5" />
                     {activeFilterCount > 0 && (
-                      <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-emerald-500 text-white text-xs flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
                         {activeFilterCount}
                       </span>
                     )}
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80 overflow-y-auto">
-                  <SheetHeader>
-                    <SheetTitle>Filtrlar</SheetTitle>
-                    <SheetDescription>
+                  <SheetHeader className="text-left pb-6">
+                    <SheetTitle className="text-xl font-bold tracking-tight">Filtrlar</SheetTitle>
+                    <SheetDescription className="font-medium">
                       Ishlarni filtrlash orqali qidiring
                     </SheetDescription>
                   </SheetHeader>
-                  <div className="mt-6">
+                  <div className="mt-2">
                     <FilterPanel filters={filters} setFilters={setFilters} />
                   </div>
                 </SheetContent>
@@ -602,36 +609,33 @@ export default function JobsPage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-8">
+      <section className="py-12 pb-24">
         <div className="container mx-auto px-4">
-          <div className="flex gap-8">
+          <div className="flex gap-10">
             {/* Desktop Sidebar Filters */}
             <aside className="hidden md:block w-72 flex-shrink-0">
-              <Card className="sticky top-24">
-                <CardHeader>
-                  <CardTitle className="text-lg">Filtrlar</CardTitle>
-                </CardHeader>
-                <CardContent>
+              <div className="sticky top-24">
+                <div className="bg-card p-8 rounded-2xl border border-border/50 shadow-sm">
                   <FilterPanel filters={filters} setFilters={setFilters} />
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </aside>
 
             {/* Jobs Grid */}
             <div className="flex-1">
               {/* Results Count */}
-              <div className="flex items-center justify-between mb-6">
-                <p className="text-muted-foreground">
-                  <span className="font-medium text-foreground">{filteredJobs.length}</span> ta ish topildi
+              <div className="flex items-center justify-between mb-8">
+                <p className="text-muted-foreground font-medium">
+                  <span className="font-bold text-foreground">{filteredJobs.length}</span> ta ish topildi
                 </p>
                 <Select defaultValue="newest">
-                  <SelectTrigger className="w-48">
+                  <SelectTrigger className="w-48 h-10 bg-background border-border/60 rounded-lg font-bold text-sm">
                     <SelectValue placeholder="Saralash" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">Eng yangi</SelectItem>
-                    <SelectItem value="salary-high">Maosh bo'yicha (yuqoridan)</SelectItem>
-                    <SelectItem value="salary-low">Maosh bo'yicha (pastdan)</SelectItem>
+                  <SelectContent className="bg-card border-border shadow-xl">
+                    <SelectItem value="newest" className="font-medium cursor-pointer">Eng yangi</SelectItem>
+                    <SelectItem value="salary-high" className="font-medium cursor-pointer">Maosh (yuqori)</SelectItem>
+                    <SelectItem value="salary-low" className="font-medium cursor-pointer">Maosh (past)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -640,12 +644,16 @@ export default function JobsPage() {
               {isLoading ? (
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {[...Array(6)].map((_, i) => (
-                    <Card key={i} className="h-64">
+                    <Card key={i} className="h-64 border-border/60 rounded-xl overflow-hidden shadow-sm">
                       <CardContent className="p-6">
-                        <Skeleton className="h-4 w-1/2 mb-4" />
+                        <Skeleton className="h-6 w-1/2 mb-4" />
                         <Skeleton className="h-4 w-full mb-2" />
                         <Skeleton className="h-4 w-3/4 mb-4" />
-                        <Skeleton className="h-20 w-full" />
+                        <div className="flex gap-2 mb-6">
+                          <Skeleton className="h-6 w-16" />
+                          <Skeleton className="h-6 w-16" />
+                        </div>
+                        <Skeleton className="h-12 w-full" />
                       </CardContent>
                     </Card>
                   ))}
@@ -659,23 +667,26 @@ export default function JobsPage() {
                   {filteredJobs.map((job, index) => (
                     <motion.div
                       key={job.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
+                      transition={{ duration: 0.3, delay: index * 0.03 }}
                     >
                       <JobCard job={job} />
                     </motion.div>
                   ))}
                 </motion.div>
               ) : (
-                <div className="text-center py-12">
-                  <Briefcase className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Ish topilmadi</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Filtrlarni o&apos;zgartirib qayta urinib ko&apos;ring
+                <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed border-border/60">
+                  <div className="h-20 w-20 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border/40">
+                    <Briefcase className="h-10 w-10 text-muted-foreground/40" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">Hech qanday ish topilmadi</h3>
+                  <p className="text-muted-foreground mb-8 max-w-sm mx-auto font-medium">
+                    Tanlangan filtrlarni o&apos;zgartirib yoki qidiruv so'rovini boshqa so'zlar bilan qayta urinib ko&apos;ring.
                   </p>
                   <Button 
                     variant="outline"
+                    className="h-11 px-8 rounded-lg font-bold border-border/60 hover:bg-background transition-all"
                     onClick={() => setFilters({
                       search: '',
                       jobTypes: [],

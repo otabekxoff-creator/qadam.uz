@@ -242,21 +242,12 @@ const getTimeAgo = (date: string) => {
   return `${Math.floor(diffDays / 30)} oy oldin`;
 };
 
-const stageColors: Record<StartupStage, string> = {
-  IDEA: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
-  VALIDATION: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
-  MVP: 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300',
-  GROWTH: 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300',
-  SCALING: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300',
-};
-
-const statusColors: Record<StartupStatus, string> = {
-  DRAFT: 'bg-gray-100 text-gray-700',
-  PENDING: 'bg-yellow-100 text-yellow-700',
-  APPROVED: 'bg-blue-100 text-blue-700',
-  REJECTED: 'bg-red-100 text-red-700',
-  FUNDED: 'bg-emerald-100 text-emerald-700',
-  COMPLETED: 'bg-purple-100 text-purple-700',
+const stageLabels: Record<StartupStage, string> = {
+  IDEA: 'G\'oya',
+  VALIDATION: 'Validatsiya',
+  MVP: 'MVP',
+  GROWTH: 'O\'sish',
+  SCALING: 'Masshtablashtirish',
 };
 
 // =============================================
@@ -268,73 +259,74 @@ function StartupCard({ startup }: { startup: Startup }) {
 
   return (
     <Link href={`/startups/${startup.id}`}>
-      <Card className="h-full hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer group">
-        <CardHeader className="pb-3">
+      <Card className="h-full border border-border/60 hover:border-primary/40 transition-all duration-200 shadow-sm hover:shadow-md cursor-pointer group rounded-xl overflow-hidden flex flex-col">
+        <CardHeader className="pb-4 pt-6 px-6">
           <div className="flex items-start justify-between">
-            <div className="flex items-center space-x-3">
-              <div className="h-12 w-12 rounded-xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold text-lg">
+            <div className="flex items-center space-x-4">
+              <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-primary font-bold text-xl border border-border/50 group-hover:scale-105 transition-transform">
                 {startup.logo ? (
-                  <img src={startup.logo} alt={startup.name} className="h-full w-full rounded-xl object-cover" />
+                  <img src={startup.logo} alt={startup.name} className="h-full w-full rounded-lg object-cover" />
                 ) : (
                   startup.name[0]
                 )}
               </div>
               <div>
-                <div className="flex items-center gap-2">
-                  <p className="font-semibold">{startup.name}</p>
-                </div>
-                <p className="text-xs text-muted-foreground">{startup.industry}</p>
+                <p className="font-bold text-foreground group-hover:text-primary transition-colors">{startup.name}</p>
+                <p className="text-xs text-muted-foreground font-medium">{startup.industry}</p>
               </div>
             </div>
-            <Badge className={stageColors[startup.stage]}>
-              {stages.find(s => s.value === startup.stage)?.label}
+            <Badge variant="secondary" className="text-[10px] font-bold uppercase tracking-wider bg-secondary/80 text-muted-foreground border-border/50">
+              {stageLabels[startup.stage]}
             </Badge>
           </div>
         </CardHeader>
         
-        <CardContent className="pb-3">
-          <p className="text-sm text-muted-foreground line-clamp-2 mb-4">
+        <CardContent className="pb-4 px-6 flex-1">
+          <p className="text-sm text-muted-foreground line-clamp-2 mb-6 font-medium leading-relaxed">
             {startup.description}
           </p>
 
           {/* Funding Progress */}
-          <div className="space-y-2 mb-4">
-            <div className="flex items-center justify-between text-sm">
+          <div className="space-y-2.5 mb-6 bg-secondary/30 p-4 rounded-xl border border-border/40">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-tight">
               <span className="text-muted-foreground">Moliyalashtirish</span>
-              <span className="font-medium">{progress}%</span>
+              <span className="text-primary">{progress}%</span>
             </div>
-            <Progress value={progress} className="h-2" />
-            <div className="flex items-center justify-between text-xs text-muted-foreground">
+            <Progress value={progress} className="h-1.5 bg-background" />
+            <div className="flex items-center justify-between text-[11px] font-bold text-foreground/70">
               <span>{formatMoney(startup.fundingRaised || 0, startup.fundingCurrency)}</span>
+              <span className="text-muted-foreground/50">/</span>
               <span>{formatMoney(startup.fundingNeeded || 0, startup.fundingCurrency)}</span>
             </div>
           </div>
 
           {/* Tags */}
-          <div className="flex flex-wrap gap-1">
+          <div className="flex flex-wrap gap-1.5">
             {startup.tags?.slice(0, 3).map((tag) => (
-              <Badge key={tag} variant="secondary" className="text-xs">
-                {tag}
+              <Badge key={tag} variant="outline" className="text-[10px] font-bold border-border/60 text-muted-foreground">
+                #{tag}
               </Badge>
             ))}
           </div>
         </CardContent>
 
-        <CardFooter className="pt-3 border-t">
+        <CardFooter className="pt-4 pb-6 px-6 border-t border-border/40 bg-secondary/10 group-hover:bg-primary/5 transition-colors">
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-3 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Users className="h-4 w-4" />
+            <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground/70">
+              <span className="flex items-center gap-1.5">
+                <Users className="h-3.5 w-3.5" />
                 {startup.likesCount}
               </span>
-              <span className="flex items-center gap-1">
-                <TrendingUp className="h-4 w-4" />
+              <span className="flex items-center gap-1.5">
+                <TrendingUp className="h-3.5 w-3.5" />
                 {startup.viewsCount}
               </span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-xs text-muted-foreground">{getTimeAgo(startup.createdAt)}</span>
-              <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-emerald-600 transition-colors" />
+              <span className="text-[10px] font-bold text-muted-foreground/50 uppercase">{getTimeAgo(startup.createdAt)}</span>
+              <div className="h-7 w-7 rounded-full flex items-center justify-center bg-background border border-border/60 group-hover:bg-primary group-hover:text-white group-hover:border-primary transition-all">
+                <ArrowRight className="h-3.5 w-3.5" />
+              </div>
             </div>
           </div>
         </CardFooter>
@@ -375,13 +367,13 @@ function FilterPanel({
     filters.status;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       {/* Stage */}
       <div>
-        <h4 className="font-medium mb-3">Bosqich</h4>
-        <div className="space-y-2">
+        <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Bosqich</h4>
+        <div className="space-y-3">
           {stages.map((stage) => (
-            <div key={stage.value} className="flex items-center space-x-2">
+            <div key={stage.value} className="flex items-center space-x-3 group">
               <Checkbox
                 id={`stage-${stage.value}`}
                 checked={filters.stages.includes(stage.value)}
@@ -393,8 +385,9 @@ function FilterPanel({
                       : prev.stages.filter((s) => s !== stage.value),
                   }));
                 }}
+                className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <Label htmlFor={`stage-${stage.value}`} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={`stage-${stage.value}`} className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
                 {stage.label}
               </Label>
             </div>
@@ -402,14 +395,14 @@ function FilterPanel({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-border/40" />
 
       {/* Industry */}
       <div>
-        <h4 className="font-medium mb-3">Soxa</h4>
-        <div className="space-y-2 max-h-48 overflow-y-auto">
+        <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Soxa</h4>
+        <div className="space-y-3 max-h-56 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-border">
           {industries.map((industry) => (
-            <div key={industry} className="flex items-center space-x-2">
+            <div key={industry} className="flex items-center space-x-3 group">
               <Checkbox
                 id={`ind-${industry}`}
                 checked={filters.industries.includes(industry)}
@@ -421,8 +414,9 @@ function FilterPanel({
                       : prev.industries.filter((i) => i !== industry),
                   }));
                 }}
+                className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <Label htmlFor={`ind-${industry}`} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={`ind-${industry}`} className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
                 {industry}
               </Label>
             </div>
@@ -430,14 +424,14 @@ function FilterPanel({
         </div>
       </div>
 
-      <Separator />
+      <Separator className="bg-border/40" />
 
       {/* Status */}
       <div>
-        <h4 className="font-medium mb-3">Holati</h4>
-        <div className="space-y-2">
+        <h4 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Holati</h4>
+        <div className="space-y-3">
           {statuses.map((s) => (
-            <div key={s.value} className="flex items-center space-x-2">
+            <div key={s.value} className="flex items-center space-x-3 group">
               <Checkbox
                 id={`status-${s.value}`}
                 checked={filters.status === s.value}
@@ -447,8 +441,9 @@ function FilterPanel({
                     status: checked ? s.value : '',
                   }));
                 }}
+                className="border-border/60 data-[state=checked]:bg-primary data-[state=checked]:border-primary"
               />
-              <Label htmlFor={`status-${s.value}`} className="text-sm font-normal cursor-pointer">
+              <Label htmlFor={`status-${s.value}`} className="text-sm font-semibold text-muted-foreground group-hover:text-foreground cursor-pointer transition-colors">
                 {s.label}
               </Label>
             </div>
@@ -458,7 +453,12 @@ function FilterPanel({
 
       {/* Clear Filters */}
       {hasActiveFilters && (
-        <Button variant="outline" className="w-full" onClick={clearFilters}>
+        <Button 
+          variant="outline" 
+          size="sm"
+          className="w-full h-10 font-bold border-border/60 hover:bg-secondary/50 rounded-lg" 
+          onClick={clearFilters}
+        >
           <X className="h-4 w-4 mr-2" />
           Filtrlarni tozalash
         </Button>
@@ -517,64 +517,64 @@ export default function StartupsPage() {
   return (
     <main className="min-h-screen bg-background">
       {/* Header Section */}
-      <section className="bg-gradient-to-b from-purple-50 via-pink-50 to-background dark:from-purple-950/20 dark:via-pink-950/20 dark:to-background py-12">
+      <section className="bg-secondary/20 py-20 border-b border-border/40">
         <div className="container mx-auto px-4">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-8"
+            className="text-center mb-12"
           >
-            <div className="inline-flex items-center rounded-full border border-purple-200 bg-purple-50 px-4 py-1.5 text-sm text-purple-700 dark:border-purple-800 dark:bg-purple-950 dark:text-purple-300 mb-4">
-              <Rocket className="mr-2 h-4 w-4" />
-              <span>Startap ekotizimi</span>
+            <div className="inline-flex items-center justify-center h-16 w-16 bg-primary/10 rounded-2xl mb-6 shadow-sm border border-primary/10">
+              <Rocket className="h-8 w-8 text-primary" />
             </div>
-            <h1 className="text-3xl md:text-4xl font-bold mb-4">
-              Startaplar
+            <h1 className="text-4xl md:text-5xl font-bold mb-5 tracking-tight text-foreground">
+              Startaplar Ekotizimi
             </h1>
-            <p className="text-muted-foreground max-w-2xl mx-auto">
-              O&apos;zbekiston yoshlari yaratgan innovatsion startaplarni kashf eting va moliyalashtiring
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto leading-relaxed font-medium">
+              O&apos;zbekistonning eng istiqbolli yosh startaplari bilan tanishing. 
+              G&apos;oyalardan yirik loyihalargacha - innovatsiyalar markazi.
             </p>
           </motion.div>
 
           {/* Search Bar */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
             className="max-w-3xl mx-auto"
           >
             <div className="flex gap-3">
               <div className="relative flex-1">
-                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground/60" />
                 <Input
                   type="text"
-                  placeholder="Startap nomi, tavsifi yoki teg bo'yicha qidiring..."
+                  placeholder="Loyixa nomi, g'oya yoki soxa bo'yicha qidiring..."
                   value={filters.search}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFilters({ ...filters, search: e.target.value })}
-                  className="pl-10 h-12"
+                  className="pl-12 h-14 bg-background border-border/60 focus:border-primary/50 text-base font-medium shadow-sm rounded-xl transition-all"
                 />
               </div>
               
               {/* Mobile Filter Button */}
               <Sheet>
                 <SheetTrigger asChild>
-                  <Button variant="outline" className="h-12 md:hidden relative">
+                  <Button variant="outline" className="h-14 w-14 md:hidden relative border-border/60 bg-background rounded-xl">
                     <Filter className="h-5 w-5" />
                     {activeFilterCount > 0 && (
-                      <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-purple-500 text-white text-xs flex items-center justify-center">
+                      <span className="absolute -top-1 -right-1 h-5 w-5 rounded-full bg-primary text-white text-[10px] font-bold flex items-center justify-center shadow-sm">
                         {activeFilterCount}
                       </span>
                     )}
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="left" className="w-80 overflow-y-auto">
-                  <SheetHeader>
-                    <SheetTitle>Filtrlar</SheetTitle>
-                    <SheetDescription>
+                  <SheetHeader className="text-left pb-6">
+                    <SheetTitle className="text-xl font-bold tracking-tight">Filtrlar</SheetTitle>
+                    <SheetDescription className="font-medium">
                       Startaplarni filtrlash orqali qidiring
                     </SheetDescription>
                   </SheetHeader>
-                  <div className="mt-6">
+                  <div className="mt-2">
                     <FilterPanel filters={filters} setFilters={setFilters} />
                   </div>
                 </SheetContent>
@@ -585,67 +585,67 @@ export default function StartupsPage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-8">
+      <section className="py-12 pb-24">
         <div className="container mx-auto px-4">
-          <div className="flex gap-8">
+          <div className="flex gap-10">
             {/* Desktop Sidebar Filters */}
             <aside className="hidden md:block w-72 flex-shrink-0">
-              <Card className="sticky top-24">
-                <CardHeader>
-                  <h3 className="font-semibold">Filtrlar</h3>
-                </CardHeader>
-                <CardContent>
+              <div className="sticky top-24">
+                <div className="bg-card p-8 rounded-2xl border border-border/50 shadow-sm">
                   <FilterPanel filters={filters} setFilters={setFilters} />
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </aside>
 
             {/* Startups Grid */}
             <div className="flex-1">
               {/* Results Count */}
-              <div className="flex items-center justify-between mb-6">
-                <p className="text-muted-foreground">
-                  <span className="font-medium text-foreground">{filteredStartups.length}</span> ta startap topildi
+              <div className="flex items-center justify-between mb-8">
+                <p className="text-muted-foreground font-medium">
+                  <span className="font-bold text-foreground">{filteredStartups.length}</span> ta loyixa topildi
                 </p>
                 <Select defaultValue="newest">
-                  <SelectTrigger className="w-48">
+                  <SelectTrigger className="w-48 h-10 bg-background border-border/60 rounded-lg font-bold text-sm">
                     <SelectValue placeholder="Saralash" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="newest">Eng yangi</SelectItem>
-                    <SelectItem value="funding">Moliyalashtirish bo&apos;yicha</SelectItem>
-                    <SelectItem value="popular">Eng ommabop</SelectItem>
+                  <SelectContent className="bg-card border-border shadow-xl">
+                    <SelectItem value="newest" className="font-medium cursor-pointer">Eng yangi</SelectItem>
+                    <SelectItem value="views" className="font-medium cursor-pointer">Ko'p ko'rilganlar</SelectItem>
+                    <SelectItem value="funding" className="font-medium cursor-pointer">Sarmoya (yuqori)</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* Startups */}
+              {/* Grid */}
               {filteredStartups.length > 0 ? (
                 <motion.div 
-                  className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                  className="grid grid-cols-1 lg:grid-cols-2 gap-8"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                 >
                   {filteredStartups.map((startup, index) => (
                     <motion.div
                       key={startup.id}
-                      initial={{ opacity: 0, y: 20 }}
+                      initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      transition={{ delay: index * 0.05 }}
+                      transition={{ duration: 0.3, delay: index * 0.03 }}
                     >
                       <StartupCard startup={startup} />
                     </motion.div>
                   ))}
                 </motion.div>
               ) : (
-                <div className="text-center py-12">
-                  <Rocket className="h-16 w-16 mx-auto text-muted-foreground/50 mb-4" />
-                  <h3 className="text-lg font-medium mb-2">Startap topilmadi</h3>
-                  <p className="text-muted-foreground mb-4">
-                    Filtrlarni o&apos;zgartirib qayta urinib ko&apos;ring
+                <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed border-border/60">
+                  <div className="h-20 w-20 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border/40">
+                    <Rocket className="h-10 w-10 text-muted-foreground/40" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">Loyixa topilmadi</h3>
+                  <p className="text-muted-foreground mb-8 max-w-sm mx-auto font-medium">
+                    Filtrlarni o&apos;zgartirib yoki qidiruv so'rovini boshqa so'zlar bilan qayta urinib ko&apos;ring.
                   </p>
                   <Button 
                     variant="outline"
+                    className="h-11 px-8 rounded-lg font-bold border-border/60 hover:bg-background transition-all"
                     onClick={() => setFilters({
                       search: '',
                       stages: [],
