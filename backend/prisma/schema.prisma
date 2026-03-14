@@ -1,0 +1,147 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum StartupStatus {
+  PENDING    // Ko'rib chiqilmoqda
+  APPROVED   // Tasdiqlangan
+  REJECTED   // Rad etilgan
+}
+
+enum UserRole {
+  STUDENT
+  COMPANY
+  ADMIN
+}
+
+enum JobStatus {
+  ACTIVE
+  CLOSED
+  DRAFT
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  ACCEPTED
+  REJECTED
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  role      UserRole
+  isActive  Boolean  @default(true)
+  // Email tasdiqlash va kirish kodi uchun maydonlar
+  emailVerifiedAt          DateTime?
+  verificationCode         String?
+  verificationCodeExpiresAt DateTime?
+  loginCode                String?
+  loginCodeExpiresAt       DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  student   Student?
+  company   Company?
+  @@map("users")
+}
+
+model Student {
+  id           String        @id @default(uuid())
+  userId       String        @unique
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  firstName    String
+  lastName     String
+  phone        String?
+  university   String?
+  major        String?
+  gpa          Float?
+  about        String?       @db.Text
+  avatar       String?
+  resume       String?
+  skills       String[]
+  applications Application[]
+  
+  // SHU QATOR QO'SHILDI (Startaplar bilan bog'lanish uchun)
+  startups     Startup[]     
+  
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  @@map("students")
+}
+
+model Company {
+  id          String   @id @default(uuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  description String?  @db.Text
+  industry    String
+  website     String?
+  location    String
+  size        String
+  logo        String?
+  verified    Boolean  @default(false)
+  jobs        Job[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  @@map("companies")
+}
+
+model Job {
+  id               String        @id @default(uuid())
+  companyId        String
+  company          Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  title            String
+  description      String        @db.Text
+  requirements     String        @db.Text
+  responsibilities String?       @db.Text
+  location         String
+  type             String
+  salaryMin        Int?
+  salaryMax        Int?
+  currency         String        @default("UZS")
+  skills           String[]
+  status           JobStatus     @default(ACTIVE)
+  deadline         DateTime?
+  applications     Application[]
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
+  @@map("jobs")
+}
+
+model Application {
+  id          String            @id @default(uuid())
+  jobId       String
+  job         Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  studentId   String
+  student     Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  coverLetter String?           @db.Text
+  resume      String?
+  status      ApplicationStatus @default(PENDING)
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+  @@unique([jobId, studentId])
+  @@map("applications")
+}
+
+model Startup {
+  id          String        @id @default(uuid())
+  title       String
+  description String        @db.Text
+  goalAmount  Float         // Kerakli sarmoya miqdori (so'mda yoki dollarda)
+  status      StartupStatus @default(PENDING)
+  
+  studentId   String
+  student     Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  @@map("startups")
+}

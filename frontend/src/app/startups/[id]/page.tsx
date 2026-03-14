@@ -1,0 +1,491 @@
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { 
+  ArrowLeft, Share2, Bookmark, ExternalLink, Check,
+  Users, TrendingUp, Globe, Mail, MapPin, DollarSign,
+  Calendar, Target, Lightbulb, BarChart3, Rocket,
+  Heart, MessageCircle
+} from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
+import { Separator } from '@/components/ui/separator';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import type { Startup, StartupStage } from '@/types';
+
+// =============================================
+// Mock Data
+// =============================================
+
+const mockStartup: Startup = {
+  id: '1',
+  studentId: '1',
+  name: 'EduTech Uzbekistan',
+  logo: undefined,
+  description: 'Online ta\'lim platformasi - maktab o\'quvchilari uchun interaktiv darslar va testlar. Bizning maqsadimiz - O\'zbekistonda sifatli ta\'limni har bir bolaga yetkazish.',
+  problem: 'O\'zbekistonda sifatli online ta\'lim resurslari yetishmasligi. Ayniqsa, qishloq joylarda yashovchi o\'quvchilar uchun yaxshi ta\'lim olish imkoniyatlari cheklangan.',
+  solution: 'Interaktiv video darslar va AI yordamida shaxsiy o\'quv rejasi. Har bir o\'quvchi o\'z bilim darajasiga mos dastur oladi va rivojlanish yo\'lini ko\'radi.',
+  marketAnalysis: 'O\'zbekistonda 5 milliondan ortiq maktab o\'quvchisi mavjud. Online ta\'lim bozori yiliga 30% o\'sishda. 2025 yilga borib bozor hajmi 500 million dollarga yetishi kutilmoqda.',
+  businessModel: 'Freemium modeli - bepul asosiy funksiyalar va pulli premium obuna. Maktablar uchun maxsus litsenziyalar. Korporativ treninglar uchun B2B yechimlar.',
+  competitiveAdvantage: 'Mahalliy tildagi kontent, O\'zbekiston ta\'lim dasturiga moslashtirilgan, AI asosida shaxsiy yondashuv, arzon narxlar.',
+  industry: 'EdTech',
+  stage: 'MVP' as StartupStage,
+  fundingNeeded: 500000000,
+  fundingCurrency: 'UZS',
+  fundingRaised: 150000000,
+  equityOffered: 15,
+  status: 'APPROVED',
+  viewsCount: 1250,
+  likesCount: 89,
+  tags: ['Education', 'AI', 'SaaS', 'Mobile', 'Video'],
+  createdAt: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString(),
+  updatedAt: new Date().toISOString(),
+  student: {
+    id: '1',
+    userId: '1',
+    firstName: 'Aziz',
+    lastName: 'Karimov',
+    avatar: undefined,
+    university: 'TATU',
+    faculty: 'Kompyuter injiniringi',
+    about: '3 yillik dasturlash tajribasiga ega Full Stack developer. EdTech sohasida ishlashni orzu qilaman.',
+    isLookingForJob: true,
+    createdAt: '',
+    updatedAt: '',
+  },
+  team: [
+    {
+      id: '1',
+      name: 'Aziz Karimov',
+      role: 'CEO & Founder',
+      bio: 'Full Stack Developer, TATU bitiruvchisi',
+    },
+    {
+      id: '2',
+      name: 'Nilufar Rahimova',
+      role: 'CTO',
+      bio: 'AI/ML mutaxassisi, 5 yillik tajriba',
+    },
+    {
+      id: '3',
+      name: 'Bobur Toshmatov',
+      role: 'CMO',
+      bio: 'Marketing bo\'yicha 4 yillik tajriba',
+    },
+  ],
+};
+
+// =============================================
+// Constants
+// =============================================
+
+const stages: { value: StartupStage; label: string }[] = [
+  { value: 'IDEA', label: 'G\'oya' },
+  { value: 'VALIDATION', label: 'Validatsiya' },
+  { value: 'MVP', label: 'MVP' },
+  { value: 'GROWTH', label: 'O\'sish' },
+  { value: 'SCALING', label: 'Masshtablashtirish' },
+];
+
+const stageColors: Record<StartupStage, string> = {
+  IDEA: 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+  VALIDATION: 'bg-blue-100 text-blue-700 dark:bg-blue-900 dark:text-blue-300',
+  MVP: 'bg-purple-100 text-purple-700 dark:bg-purple-900 dark:text-purple-300',
+  GROWTH: 'bg-orange-100 text-orange-700 dark:bg-orange-900 dark:text-orange-300',
+  SCALING: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900 dark:text-emerald-300',
+};
+
+// =============================================
+// Helper Functions
+// =============================================
+
+const formatMoney = (amount: number, currency?: string) => {
+  const format = (n: number) => n.toLocaleString('uz-UZ');
+  const curr = currency === 'USD' ? '$' : 'so\'m';
+  return `${format(amount)} ${curr}`;
+};
+
+const getFundingProgress = (raised?: number, needed?: number) => {
+  if (!raised || !needed) return 0;
+  return Math.min(Math.round((raised / needed) * 100), 100);
+};
+
+const formatDate = (date: string) => {
+  return new Date(date).toLocaleDateString('uz-UZ', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};
+
+// =============================================
+// Main Startup Detail Page
+// =============================================
+
+export default function StartupDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
+  
+  useEffect(() => {
+    params.then(setResolvedParams);
+  }, [params]);
+  
+  const startup = mockStartup;
+  const progress = getFundingProgress(startup.fundingRaised, startup.fundingNeeded);
+
+  return (
+    <main className="min-h-screen bg-background">
+      {/* Back Button */}
+      <div className="container mx-auto px-4 py-4">
+        <Link 
+          href="/startups"
+          className="inline-flex items-center text-muted-foreground hover:text-foreground transition-colors"
+        >
+          <ArrowLeft className="h-4 w-4 mr-2" />
+          Orqaga
+        </Link>
+      </div>
+
+      <div className="container mx-auto px-4 pb-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Main Content */}
+          <div className="lg:col-span-2 space-y-6">
+            {/* Header Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <Card>
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4">
+                    <div className="h-20 w-20 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-white font-bold text-3xl flex-shrink-0">
+                      {startup.logo ? (
+                        <img src={startup.logo} alt={startup.name} className="h-full w-full rounded-2xl object-cover" />
+                      ) : (
+                        startup.name[0]
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <h1 className="text-2xl font-bold mb-2">{startup.name}</h1>
+                          <div className="flex flex-wrap items-center gap-2 mb-2">
+                            <Badge className={stageColors[startup.stage]}>
+                              {stages.find(s => s.value === startup.stage)?.label}
+                            </Badge>
+                            <Badge variant="outline">{startup.industry}</Badge>
+                            {startup.status === 'FUNDED' && (
+                              <Badge className="bg-emerald-100 text-emerald-700">Moliyalashtirilgan</Badge>
+                            )}
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Button variant="outline" size="icon">
+                            <Heart className="h-4 w-4" />
+                          </Button>
+                          <Button variant="outline" size="icon">
+                            <Share2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                      <p className="text-muted-foreground line-clamp-2">{startup.description}</p>
+                    </div>
+                  </div>
+
+                  {/* Tags */}
+                  <div className="flex flex-wrap gap-2 mt-6">
+                    {startup.tags?.map((tag) => (
+                      <Badge key={tag} variant="secondary">
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Funding Progress */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+            >
+              <Card className="bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/30 dark:to-pink-950/30">
+                <CardContent className="p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold flex items-center gap-2">
+                      <DollarSign className="h-5 w-5 text-purple-600" />
+                      Moliyalashtirish
+                    </h3>
+                    <span className="text-2xl font-bold text-purple-600">{progress}%</span>
+                  </div>
+                  <Progress value={progress} className="h-3 mb-4" />
+                  <div className="flex items-center justify-between text-sm">
+                    <div>
+                      <p className="text-muted-foreground">Yig'ilgan</p>
+                      <p className="font-semibold">{formatMoney(startup.fundingRaised || 0, startup.fundingCurrency)}</p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-muted-foreground">Maqsad</p>
+                      <p className="font-semibold">{formatMoney(startup.fundingNeeded || 0, startup.fundingCurrency)}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-purple-200 dark:border-purple-800">
+                    <span className="text-sm text-muted-foreground">
+                      Taklif qilinadi: <span className="font-medium text-foreground">{startup.equityOffered}%</span> ulush
+                    </span>
+                    <Button className="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700">
+                      Investitsiya qilish
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Problem & Solution */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Target className="h-5 w-5 text-red-500" />
+                    Muammo
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{startup.problem}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.15 }}
+            >
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Lightbulb className="h-5 w-5 text-yellow-500" />
+                    Yechim
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-muted-foreground">{startup.solution}</p>
+                </CardContent>
+              </Card>
+            </motion.div>
+
+            {/* Market Analysis */}
+            {startup.marketAnalysis && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <BarChart3 className="h-5 w-5 text-blue-500" />
+                      Bozor tahlili
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{startup.marketAnalysis}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+
+            {/* Business Model */}
+            {startup.businessModel && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+              >
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <DollarSign className="h-5 w-5 text-green-500" />
+                      Biznes modeli
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{startup.businessModel}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+
+            {/* Team */}
+            {startup.team && startup.team.length > 0 && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="flex items-center gap-2">
+                      <Users className="h-5 w-5 text-purple-500" />
+                      Jamoa
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {startup.team.map((member) => (
+                        <div key={member.id} className="flex items-start gap-3 p-3 rounded-lg bg-muted/50">
+                          <Avatar className="h-12 w-12">
+                            <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-600 text-white">
+                              {member.name.split(' ').map(n => n[0]).join('')}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <p className="font-medium">{member.name}</p>
+                            <p className="text-sm text-purple-600 dark:text-purple-400">{member.role}</p>
+                            {member.bio && (
+                              <p className="text-xs text-muted-foreground mt-1">{member.bio}</p>
+                            )}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="space-y-6">
+            {/* Stats Card */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.1 }}
+              className="lg:sticky lg:top-24"
+            >
+              <Card>
+                <CardContent className="p-6">
+                  <div className="grid grid-cols-2 gap-4 mb-6">
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <EyeIcon className="h-4 w-4 text-muted-foreground" />
+                        <span className="text-2xl font-bold">{startup.viewsCount}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Ko&apos;rishlar</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="flex items-center justify-center gap-1 mb-1">
+                        <Heart className="h-4 w-4 text-red-500" />
+                        <span className="text-2xl font-bold">{startup.likesCount}</span>
+                      </div>
+                      <p className="text-xs text-muted-foreground">Layklar</p>
+                    </div>
+                  </div>
+
+                  <Separator className="my-4" />
+
+                  <div className="space-y-3 text-sm">
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Yaratilgan</span>
+                      <span className="font-medium">{formatDate(startup.createdAt)}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Bosqich</span>
+                      <Badge className={stageColors[startup.stage]}>
+                        {stages.find(s => s.value === startup.stage)?.label}
+                      </Badge>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-muted-foreground">Soxa</span>
+                      <span className="font-medium">{startup.industry}</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Founder Card */}
+              <Card className="mt-6">
+                <CardHeader>
+                  <CardTitle className="text-base">Asoschi</CardTitle>
+                </CardHeader>
+                <CardContent className="space-y-4">
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-14 w-14">
+                      <AvatarImage src={startup.student?.avatar} />
+                      <AvatarFallback className="bg-gradient-to-br from-purple-500 to-pink-600 text-white text-lg">
+                        {startup.student?.firstName?.[0]}{startup.student?.lastName?.[0]}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="font-medium">{startup.student?.firstName} {startup.student?.lastName}</p>
+                      <p className="text-sm text-muted-foreground">{startup.student?.university}</p>
+                    </div>
+                  </div>
+
+                  {startup.student?.about && (
+                    <p className="text-sm text-muted-foreground">
+                      {startup.student.about}
+                    </p>
+                  )}
+
+                  <div className="flex gap-2">
+                    <Button variant="outline" className="flex-1" asChild>
+                      <Link href={`/students/${startup.student?.id}`}>
+                        Profil
+                        <ExternalLink className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                    <Button variant="outline" size="icon">
+                      <Mail className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Contact Card */}
+              <Card className="mt-6">
+                <CardContent className="p-6">
+                  <Button className="w-full bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 mb-3">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Jamoa bilan bog'lanish
+                  </Button>
+                  <p className="text-xs text-center text-muted-foreground">
+                    Investitsiya yoki hamkorlik uchun murojaat qiling
+                  </p>
+                </CardContent>
+              </Card>
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
+}
+
+// Eye icon component
+function EyeIcon({ className }: { className?: string }) {
+  return (
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      viewBox="0 0 24 24" 
+      fill="none" 
+      stroke="currentColor" 
+      strokeWidth="2" 
+      strokeLinecap="round" 
+      strokeLinejoin="round"
+      className={className}
+    >
+      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+      <circle cx="12" cy="12" r="3" />
+    </svg>
+  );
+}

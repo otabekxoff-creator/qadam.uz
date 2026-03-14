@@ -1,0 +1,46 @@
+# Dependencies
+backend/node_modules/
+frontend/node_modules/
+node_modules/
+
+# Environment variables
+backend/.env
+frontend/.env
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Next.js build files
+frontend/.next/
+frontend/out/
+frontend/dist/
+frontend/build/
+
+# Prisma
+backend/prisma/*.db
+frontend/prisma/*.db
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Testing
+coverage/
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
