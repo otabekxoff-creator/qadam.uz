@@ -16,7 +16,7 @@ import { useAuthStore } from '@/stores/authStore';
 export default function ProfilePage() {
   const router = useRouter();
   const { toast } = useToast();
-  const { user, student, company, token, isAuthenticated, updateProfile } = useAuthStore();
+  const { user, student, company, token, isAuthenticated, updateStudent, updateCompany } = useAuthStore();
   
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -82,7 +82,12 @@ export default function ProfilePage() {
       if (!res.ok) throw new Error(data.message || 'Saqlashda xatolik');
 
       // Update Zustand state
-      updateProfile(data.data);
+      if (user?.role === 'STUDENT') {
+        updateStudent(data.data);
+      } else if (user?.role === 'COMPANY') {
+        updateCompany(data.data);
+      }
+      
       toast({ title: 'Muvaffaqiyatli!', description: 'Profil yangilandi' });
       setIsEditing(false);
       setAvatarFile(null);
@@ -116,7 +121,7 @@ export default function ProfilePage() {
               <Avatar className="h-32 w-32 mx-auto mb-4 border shadow-sm">
                 <AvatarImage src={displayAvatar} />
                 <AvatarFallback className="bg-gradient-to-br from-emerald-500 to-teal-600 text-white text-3xl">
-                  {isStudent ? formData.firstName[0] : formData.companyName[0]}
+                  {isStudent ? formData.firstName?.[0] : formData.companyName?.[0]}
                 </AvatarFallback>
               </Avatar>
               {isEditing && (
