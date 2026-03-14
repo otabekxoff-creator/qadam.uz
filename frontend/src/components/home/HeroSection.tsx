@@ -113,7 +113,7 @@ export function HeroSection() {
                 className="flex flex-col sm:flex-row gap-6 justify-center"
               >
                 <Button 
-                  size="xl" 
+                  size="lg" 
                   className="bg-primary text-primary-foreground hover:scale-105 transition-transform glow-primary rounded-full px-10 h-14 text-lg font-bold"
                   asChild
                 >
@@ -124,7 +124,7 @@ export function HeroSection() {
                   </Link>
                 </Button>
                 <Button 
-                  size="xl" 
+                  size="lg" 
                   variant="outline" 
                   className="glass border-white/10 hover:bg-white/5 rounded-full px-10 h-14 text-lg font-bold transition-all"
                   asChild
