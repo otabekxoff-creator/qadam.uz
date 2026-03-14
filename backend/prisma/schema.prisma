@@ -11,6 +11,7 @@ enum StartupStatus {
   PENDING    // Ko'rib chiqilmoqda
   APPROVED   // Tasdiqlangan
   REJECTED   // Rad etilgan
+  FUNDED     // Moliyalashtirilgan
 }
 
 enum UserRole {
@@ -30,6 +31,8 @@ enum ApplicationStatus {
   REVIEWING
   ACCEPTED
   REJECTED
+  INTERVIEW
+  OFFERED
 }
 
 model User {

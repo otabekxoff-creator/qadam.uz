@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app.ts",
     "build": "tsc && tsc-alias",
-    "start": "npx prisma db push && node dist/app.js",
+    "start": "npx prisma db push --accept-data-loss && node dist/app.js",
     "db:push": "npx prisma db push --force-reset",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
