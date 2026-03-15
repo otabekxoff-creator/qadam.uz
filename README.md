@@ -1,217 +1,217 @@
-# 🚀 Step.uz - Career Platform for Uzbekistan Youth
+# 🚀 Step.uz - O'zbekiston Yoshlari uchun Karyera Platformasi
 
 <div align="center">
 
-![Step.uz Logo](https://img.shields.io/badge/Step.uz-Career%20Platform-blue?style=for-the-badge&logo=next.js)
-![Version](https://img.shields.io/badge/version-1.0.0-green?style=for-the-badge)
-![License](https://img.shields.io/badge/license-MIT-purple?style=for-the-badge)
+![Step.uz Logotipi](https://img.shields.io/badge/Step.uz-Karyera%20Platformasi-blue?style=for-the-badge&logo=next.js)
+![Versiya](https://img.shields.io/badge/versiya-1.0.0-green?style=for-the-badge)
+![Litsenziya](https://img.shields.io/badge/litsenziya-MIT-purple?style=for-the-badge)
 ![Node.js](https://img.shields.io/badge/node.js-18%2B-brightgreen?style=for-the-badge&logo=node.js)
 ![TypeScript](https://img.shields.io/badge/typescript-5%2B-blue?style=for-the-badge&logo=typescript)
 
-**Connecting Uzbekistan's talented youth with opportunities**
+**O'zbekistonning iqtidorli yoshlarini imkoniyatlar bilan bog'laydigan platforma**
 
-[🌐 Live Demo](https://step.uz) • [📖 Documentation](#documentation) • [🐛 Report Bug](issues) • [💡 Request Feature](issues)
+[🌐 Sayt](https://step.uz) • [📖 Hujjatlar](#hujjatlar) • [🐛 Xatolik haqida xabar berish](issues) • [💡 Yangi funktsiya so'rash](issues)
 
 </div>
 
-## 📋 Table of Contents
+## 📋 Mundarija
 
-- [🌟 About](#-about)
-- [✨ Features](#-features)
-- [🏗️ Architecture](#️-architecture)
-- [🛠️ Tech Stack](#️-tech-stack)
-- [🚀 Quick Start](#-quick-start)
-- [⚙️ Configuration](#️-configuration)
-- [📁 Project Structure](#-project-structure)
-- [🔧 Development](#-development)
-- [🐳 Docker Deployment](#-docker-deployment)
-- [📚 API Documentation](#-api-documentation)
-- [🧪 Testing](#-testing)
-- [🤝 Contributing](#-contributing)
-- [📄 License](#-license)
+- [🌟 Loyiha haqida](#-loyiha-haqida)
+- [✨ Imkoniyatlar](#-imkoniyatlar)
+- [🏗️ Arxitektura](#️-arxitektura)
+- [🛠️ Texnologik to'plam](#️-texnologik-to'plam)
+- [🚀 Tezkor boshlash](#-tezkor-boshlash)
+- [⚙️ Konfiguratsiya](#️-konfiguratsiya)
+- [📁 Loyiha tuzilishi](#-loyiha-tuzilishi)
+- [🔧 Ishlab chiqarish](#-ishlab-chiqarish)
+- [🐳 Docker orqali deployment](#-docker-orqali-deployment)
+- [📚 API hujjatlari](#-api-hujjatlari)
+- [🧪 Testlash](#-testlash)
+- [🤝 Hissa qo'shish](#-hissa-qoshish)
+- [📄 Litsenziya](#-litsenziya)
 
-## 🌟 About
+## 🌟 Loyiha haqida
 
-**Step.uz** is a comprehensive career platform designed specifically for Uzbekistan's youth, bridging the gap between talented students, innovative startups, and forward-thinking companies. Our platform empowers young professionals to discover opportunities, showcase their skills, and take their first steps towards successful careers.
+**Step.uz** - bu O'zbekiston yoshlari uchun maxsus yaratilgan keng qamrovli karyera platformasi. U iqtidorli talabalarni, innovatsion startuplarni va istiqbolli kompaniyalari birlashtirib, yosh mutaxassislarning o'z imkoniyatlarini kashf etishlari, ko'nikmalarini namoyon qilishlari va muvaffaqiyatli karyera yo'liga birinchi qadamni tashlashlariga yordam beradi.
 
-### 🎯 Mission
+### 🎯 Missiyamiz
 
-To democratize career opportunities in Uzbekistan by providing a unified platform where:
-- Students can find internships, jobs, and startup opportunities
-- Companies can discover and recruit top talent
-- Startups can connect with investors and skilled team members
-- Educational institutions can track graduate employment outcomes
+O'zbekistonda karyera imkoniyatlarini demokratlashtirish orqali yagona platforma taqdim etish:
+- Talabalar stajirovka, ish va startup imkoniyatlarini topa oladi
+- Kompaniyalar eng yaxshi talantlarni topish va yollashi mumkin
+- Startuplar investorlar va malakali jamoa a'zolari bilan bog'lanishi mumkin
+- Ta'lim muassasalari bitiruvchilarning ishga joylashishini kuzatishi mumkin
 
-## ✨ Features
+## ✨ Imkoniyatlar
 
-### 👥 For Students
-- **📝 Smart Profile Creation** - AI-powered resume builder and portfolio showcase
-- **💼 Job Discovery** - Personalized job recommendations based on skills and preferences
-- **🚀 Startup Hub** - Connect with startups and explore entrepreneurial opportunities
-- **📊 Skill Assessment** - Automated skill gap analysis and learning recommendations
-- **🎓 Career Path Guidance** - AI-driven career trajectory planning
+### 👥 Talabalar uchun
+- **📝 Aqlli profil yaratish** - AI bilan ishga olish qog'ozi va portfel yaratish
+- **💼 Ishlarni topish** - Ko'nikmalar va afzalliklarga asoslangan shaxsiy tavsiyalar
+- **🚀 Startup markazi** - Startuplar bilan bog'lanish va tadbirkorlik imkoniyatlarini o'rganish
+- **📊 Ko'nikmalarni baholash** - Avtomatik ko'nikma bo'shliqlarini tahlil qilish va o'rganish tavsiyalari
+- **🎓 Karyera yo'nalishi bo'yicha yo'riqnoma** - AI bilan boshqariladigan karyera traektoriyasi rejalashtirish
 
-### 🏢 For Companies
-- **🔍 Talent Discovery** - Advanced filtering and matching algorithms
-- **📈 Analytics Dashboard** - Real-time recruitment metrics and insights
-- **🤝 Collaboration Tools** - Streamlined interview scheduling and communication
-- **📱 Mobile-First Design** - Seamless experience across all devices
+### 🏢 Kompaniyalar uchun
+- **🔍 Talantlarni topish** - Kengaytirilgan filtrlash va moslashtirish algoritmlari
+- **📈 Analitika paneli** - Real vaqtli yollash metrikalari va tushunchalar
+- **🤝 Hamkorlik vositalari** - Suxbatlashgan intervyu jadvallashtirish va aloqa
+- **📱 Mobil birinchi dizayn** - Barcha qurilmalarda uzluksiz tajriba
 
-### 🚀 For Startups
-- **💡 Pitch Platform** - Showcase your startup to potential investors
-- **👥 Team Building** - Find co-founders and skilled team members
-- **📊 Funding Tracking** - Manage investment rounds and investor relations
-- **🌐 Community Hub** - Connect with mentors and fellow entrepreneurs
+### 🚀 Startuplar uchun
+- **💡 Pitch platformasi** - Startupidingizni potensial investorlarga namoyish eting
+- **👥 Jamoa qurish** - Ham-asoschilar va malakali jamoa a'zolarini toping
+- **📊 Mablag'ni kuzatish** - Investitsiya raundlarini va investor aloqalarini boshqaring
+- **🌐 Jamiyat markazi** - Mentorlar va boshqa tadbirkorlar bilan bog'laning
 
-### 🛡️ Security & Performance
-- **🔐 Enterprise Security** - End-to-end encryption and GDPR compliance
-- **⚡ Lightning Fast** - Optimized performance with 99.9% uptime
-- **🌍 Multilingual Support** - Uzbek, Russian, and English interfaces
-- **📱 Responsive Design** - Perfect experience on any device
+### 🛡️ Xavfsizlik va Performans
+- **🔐 Korporativ xavfsizlik** - Uchun shifrlash va GDPR muvofiqligi
+- **⚡ Chaqqon tezlik** - 99.9% ish vahti bilan optimallashtirilgan performans
+- **🌍 Ko'p tilli qo'llab-quvvatlash** - O'zbek, rus va ingliz tillaridagi interfeyslar
+- **📱 Moslashuvchan dizayn** - Har qanday qurilmada mukammal tajriba
 
-## 🏗️ Architecture
+## 🏗️ Arxitektura
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │    Backend      │    │   Database      │
-│   (Next.js)     │◄──►│   (Express)     │◄──►│  (PostgreSQL)   │
-│                 │    │                 │    │                 │
-│ • React 19      │    │ • REST API      │    │ • Prisma ORM    │
-│ • TypeScript    │    │ • JWT Auth      │    │ • Redis Cache   │
-│ • Tailwind      │    │ • Rate Limiting │    │ • Backups       │
+│   Frontend     │    │    Backend     │    │   Ma'lumotlar  │
+│   (Next.js)    │◄──►│   (Express)    │◄──►│   Bazasi      │
+│                 │    │                 │    │   (PostgreSQL) │
+│ • React 19     │    │ • REST API     │    │                 │
+│ • TypeScript   │    │ • JWT Auth     │    │ • Prisma ORM   │
+│ • Tailwind     │    │ • Rate Limiting│    │ • Redis Cache   │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
          └───────────────────────┼───────────────────────┘
                                  │
                     ┌─────────────────┐
-                    │   External     │
-                    │   Services     │
+                    │   Tashqi      │
+                    │   Xizmatlar    │
                     │                 │
                     │ • Email (SMTP) │
-                    │ • Cloud Storage│
-                    │ • Analytics    │
+                    │ • Bulut Saqlash│
+                    │ • Analitika    │
                     └─────────────────┘
 ```
 
-## 🛠️ Tech Stack
+## 🛠️ Texnologik to'plam
 
 ### Frontend
-- **Framework**: [Next.js 16](https://nextjs.org/) - React framework with SSR/SSG
-- **Language**: [TypeScript 5](https://www.typescriptlang.org/) - Type-safe development
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/) - Utility-first CSS framework
-- **UI Components**: [Radix UI](https://www.radix-ui.com/) - Accessible component library
-- **State Management**: [Zustand](https://zustand-demo.pmnd.rs/) - Lightweight state management
-- **Forms**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) - Form validation
-- **Animations**: [Framer Motion](https://www.framer.com/motion/) - Smooth animations
-- **Data Fetching**: [TanStack Query](https://tanstack.com/query) - Server state management
+- **Framework**: [Next.js 16](https://nextjs.org/) - SSR/SSG bilan React framework
+- **Til**: [TypeScript 5](https://www.typescriptlang.org/) - Tip xavfli ishlab chiqarish
+- **Stil**: [Tailwind CSS 4](https://tailwindcss.com/) - Utility-first CSS framework
+- **UI Komponentlar**: [Radix UI](https://www.radix-ui.com/) - Kirish imkoniyatli komponentlar kutubxonasi
+- **Holatni boshqarish**: [Zustand](https://zustand-demo.pmnd.rs/) - Yengil holatni boshqarish
+- **Shakllar**: [React Hook Form](https://react-hook-form.com/) + [Zod](https://zod.dev/) - Shakl validatsiyasi
+- **Animatsiyalar**: [Framer Motion](https://www.framer.com/motion/) - Yumshoq animatsiyalar
+- **Ma'lumotlarni olish**: [TanStack Query](https://tanstack.com/query) - Server holatini boshqarish
 
 ### Backend
 - **Runtime**: [Node.js 18+](https://nodejs.org/) - JavaScript runtime
-- **Framework**: [Express.js](https://expressjs.com/) - Web application framework
-- **Language**: [TypeScript 5](https://www.typescriptlang.org/) - Type-safe development
-- **Database**: [PostgreSQL 15](https://www.postgresql.org/) - Relational database
-- **ORM**: [Prisma](https://www.prisma.io/) - Type-safe database toolkit
-- **Authentication**: [JWT](https://jwt.io/) - Secure token-based authentication
-- **Security**: [Helmet](https://helmetjs.github.io/) + [bcrypt](https://www.npmjs.com/package/bcryptjs)
-- **Validation**: [Zod](https://zod.dev/) - Schema validation
+- **Framework**: [Express.js](https://expressjs.com/) - Veb-ilova framework
+- **Til**: [TypeScript 5](https://www.typescriptlang.org/) - Tip xavfli ishlab chiqarish
+- **Ma'lumotlar bazasi**: [PostgreSQL 15](https://www.postgresql.org/) - Bog'lanishli ma'lumotlar bazasi
+- **ORM**: [Prisma](https://www.prisma.io/) - Tip xavfli ma'lumotlar bazasi to'plami
+- **Autentifikatsiya**: [JWT](https://jwt.io/) - Xavfsiz tokenga asoslangan autentifikatsiya
+- **Xavfsizlik**: [Helmet](https://helmetjs.github.io/) + [bcrypt](https://www.npmjs.com/package/bcryptjs)
+- **Validatsiya**: [Zod](https://zod.dev/) - Shema validatsiyasi
 
-### DevOps & Infrastructure
-- **Containerization**: [Docker](https://www.docker.com/) + [Docker Compose](https://docs.docker.com/compose/)
-- **Database Management**: [Prisma Studio](https://www.prisma.io/studio)
-- **Code Quality**: [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)
-- **Version Control**: [Git](https://git-scm.com/) + [GitHub](https://github.com/)
+### DevOps va Infrastruktura
+- **Konteynerlashtirish**: [Docker](https://www.docker.com/) + [Docker Compose](https://docs.docker.com/compose/)
+- **Ma'lumotlar bazasini boshqarish**: [Prisma Studio](https://www.prisma.io/studio)
+- **Kod sifati**: [ESLint](https://eslint.org/) + [Prettier](https://prettier.io/)
+- **Versiyani nazorat qilish**: [Git](https://git-scm.com/) + [GitHub](https://github.com/)
 
-## 🚀 Quick Start
+## 🚀 Tezkor boshlash
 
-### Prerequisites
+### Talablar
 
-Ensure you have the following installed:
-- [Node.js](https://nodejs.org/) (v18 or higher)
-- [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
-- [Docker](https://www.docker.com/) and [Docker Compose](https://docs.docker.com/compose/)
+Quyi dasturlarning o'rnatilganligiga ishonch hosil qiling:
+- [Node.js](https://nodejs.org/) (v18 yoki yuqori)
+- [npm](https://www.npmjs.com/) yoki [yarn](https://yarnpkg.com/)
+- [Docker](https://www.docker.com/) va [Docker Compose](https://docs.docker.com/compose/)
 - [Git](https://git-scm.com/)
 
-### One-Click Setup (Recommended)
+### Bir bosish bilan o'rnatish (Tavsiya etiladi)
 
 ```bash
-# Clone the repository
+# Repozitoriyani klonlash
 git clone https://github.com/otabekxoff-creator/step.uz.git
 cd step.uz
 
-# Start all services with Docker
+# Barcha xizmatlarni Docker bilan ishga tushirish
 docker-compose up -d
 
-# Access the application
+# Ilovani kirish
 # Frontend: http://localhost:3000
 # Backend: http://localhost:5000
-# Database: localhost:5432
+# Ma'lumotlar bazasi: localhost:5432
 ```
 
-### Manual Setup
+### Qo'lb bilan o'rnatish
 
-#### 1. Clone and Install
+#### 1. Klonlash va o'rnatish
 
 ```bash
-# Clone the repository
+# Repozitoriyani klonlash
 git clone https://github.com/otabekxoff-creator/step.uz.git
 cd step.uz
 
-# Install dependencies
+# Bog'liqliklarni o'rnatish
 cd frontend && npm install
 cd ../backend && npm install
 ```
 
-#### 2. Database Setup
+#### 2. Ma'lumotlar bazasini o'rnatish
 
 ```bash
-# Start PostgreSQL (using Docker)
+# PostgreSQL ni ishga tushirish (Docker yordamida)
 docker run --name step_db -e POSTGRES_PASSWORD=password -e POSTGRES_DB=step_uz -p 5432:5432 -d postgres:15-alpine
 
-# Run database migrations
+# Ma'lumotlar bazasi migratsiyalarini ishga tushirish
 cd backend
 npx prisma migrate dev
 npx prisma generate
 ```
 
-#### 3. Environment Configuration
+#### 3. Muhit konfiguratsiyasi
 
-Create environment files:
+Muhit fayllarini yarating:
 
 ```bash
-# Backend environment
+# Backend muhiti
 cd backend
 cp .env.example .env
-# Edit .env with your configuration
+# .env faylni o'z konfiguratsiyangiz bilan tahrirlang
 
-# Frontend environment  
+# Frontend muhiti  
 cd ../frontend
 cp .env.example .env.local
-# Edit .env.local with your configuration
+# .env.local faylni o'z konfiguratsiyangiz bilan tahrirlang
 ```
 
-#### 4. Start Development Servers
+#### 4. Ishlab chiqarish serverlarini ishga tushirish
 
 ```bash
-# Start backend (terminal 1)
+# Backendni ishga tushirish (terminal 1)
 cd backend
 npm run dev
 
-# Start frontend (terminal 2)
+# Frontendni ishga tushirish (terminal 2)
 cd frontend
 npm run dev
 ```
 
-Visit [http://localhost:3000](http://localhost:3000) to see the application.
+Ilovani ko'rish uchun [http://localhost:3000](http://localhost:3000) manziliga tashrif buyuring.
 
-## ⚙️ Configuration
+## ⚙️ Konfiguratsiya
 
-### Backend Environment Variables
+### Backend muhit o'zgaruvchilari
 
 ```env
-# Database
+# Ma'lumotlar bazasi
 DATABASE_URL="postgresql://postgres:password@localhost:5432/step_uz"
 
-# Authentication
+# Autentifikatsiya
 JWT_SECRET="your_super_secret_key_change_this_in_production"
 JWT_EXPIRES_IN="7d"
 
@@ -220,296 +220,296 @@ NODE_ENV="development"
 PORT="5000"
 FRONTEND_URL="http://localhost:3000"
 
-# Email (optional)
+# Email (ixtiyoriy)
 SMTP_HOST="smtp.gmail.com"
 SMTP_PORT="587"
 SMTP_USER="your-email@gmail.com"
 SMTP_PASS="your-app-password"
 
-# File Upload
+# Faylni yuklash
 UPLOAD_DIR="./uploads"
 MAX_FILE_SIZE="10485760" # 10MB
 ```
 
-### Frontend Environment Variables
+### Frontend muhit o'zgaruvchilari
 
 ```env
 NEXT_PUBLIC_API_URL="http://localhost:5000/api"
 NEXT_PUBLIC_APP_URL="http://localhost:3000"
 ```
 
-## 📁 Project Structure
+## 📁 Loyiha tuzilishi
 
 ```
 step.uz/
-├── 📂 frontend/                 # Next.js frontend application
+├── 📂 frontend/                 # Next.js frontend ilovasi
 │   ├── 📂 src/
-│   │   ├── 📂 app/             # App Router pages
-│   │   ├── 📂 components/      # Reusable UI components
-│   │   ├── 📂 hooks/           # Custom React hooks
-│   │   ├── 📂 lib/             # Utility functions
-│   │   ├── 📂 stores/          # Zustand state management
-│   │   ├── 📂 types/           # TypeScript type definitions
-│   │   └── 📂 config/          # Configuration files
-│   ├── 📂 public/              # Static assets
+│   │   ├── 📂 app/             # App Router sahifalari
+│   │   ├── 📂 components/      # Qayta ishlatiladigan UI komponentlari
+│   │   ├── 📂 hooks/           # Maxsus React hooklari
+│   │   ├── 📂 lib/             # Yordamchi funktsiyalar
+│   │   ├── 📂 stores/          # Zustand holatni boshqarish
+│   │   ├── 📂 types/           # TypeScript tip ta'riflari
+│   │   └── 📂 config/          # Konfiguratsiya fayllari
+│   ├── 📂 public/              # Statik resurslar
 │   ├── 📄 package.json
 │   └── 📄 Dockerfile
 ├── 📂 backend/                  # Express.js backend API
 │   ├── 📂 src/
-│   │   ├── 📂 controllers/     # Route controllers
+│   │   ├── 📂 controllers/     # Route kontrollerlari
 │   │   ├── 📂 middleware/      # Express middleware
-│   │   ├── 📂 routes/          # API routes
-│   │   ├── 📂 services/        # Business logic
-│   │   ├── 📂 utils/           # Utility functions
-│   │   └── 📄 app.ts           # Application entry point
-│   ├── 📂 prisma/              # Database schema and migrations
+│   │   ├── 📂 routes/          # API marshrutlari
+│   │   ├── 📂 services/        # Biznes mantiq
+│   │   ├── 📂 utils/           # Yordamchi funktsiyalar
+│   │   └── 📄 app.ts           # Ilova kirish nuqtasi
+│   ├── 📂 prisma/              # Ma'lumotlar bazasi sxemasi va migratsiyalar
 │   ├── 📄 package.json
 │   └── 📄 Dockerfile
-├── 📄 docker-compose.yml        # Docker development environment
-├── 📄 README.md                 # This file
-└── 📄 .gitignore               # Git ignore rules
+├── 📄 docker-compose.yml        # Docker ishlab chiqarish muhiti
+├── 📄 README.md                 # Bu fayl
+└── 📄 .gitignore               # Git ignore qoidalari
 ```
 
-## 🔧 Development
+## 🔧 Ishlab chiqarish
 
-### Available Scripts
+### Mavjud skriptlar
 
 #### Frontend
 
 ```bash
-npm run dev          # Start development server
-npm run build        # Build for production
-npm run start        # Start production server
-npm run lint         # Run ESLint
-npm run db:push      # Push database schema
-npm run db:generate  # Generate Prisma client
-npm run db:migrate   # Run database migrations
+npm run dev          # Ishlab chiqarish serverini ishga tushirish
+npm run build        # Production uchun build qilish
+npm run start        # Production serverini ishga tushirish
+npm run lint         # ESLint ni ishga tushirish
+npm run db:push      # Ma'lumotlar bazasi sxemasini yuborish
+npm run db:generate  # Prisma clientini yaratish
+npm run db:migrate   # Ma'lumotlar bazasi migratsiyalarini ishga tushirish
 ```
 
 #### Backend
 
 ```bash
-npm run dev          # Start development server with hot reload
-npm run build        # Build TypeScript to JavaScript
-npm run start        # Start production server
-npm run db:push      # Push database schema
-npm run db:generate  # Generate Prisma client
-npm run db:migrate   # Run database migrations
-npm run db:studio    # Open Prisma Studio
+npm run dev          # Ishlab chiqarish serverini hot reload bilan ishga tushirish
+npm run build        # TypeScriptni JavaScriptga kompilatsiya qilish
+npm run start        # Production serverini ishga tushirish
+npm run db:push      # Ma'lumotlar bazasi sxemasini yuborish
+npm run db:generate  # Prisma clientini yaratish
+npm run db:migrate   # Ma'lumotlar bazasi migratsiyalarini ishga tushirish
+npm run db:studio    # Prisma Studioni ochish
 ```
 
-### Code Quality
+### Kod sifati
 
-We maintain high code quality standards:
+Yuqori kod sifati standartlarini saqlaymiz:
 
-- **TypeScript**: Strict type checking enabled
-- **ESLint**: Custom rules for consistent code style
-- **Prettier**: Automatic code formatting
-- **Husky**: Pre-commit hooks for quality assurance
-- **Conventional Commits**: Standardized commit messages
+- **TypeScript**: Qattiq tip tekshiruvi yoqilgan
+- **ESLint**: Izchil kod uslubi uchun maxsus qoidalar
+- **Prettier**: Avtomatik kod formatlash
+- **Husky**: Sifatni ta'minlash uchun pre-commit hooklari
+- **Conventional Commits**: Standartlashtirilgan commit xabarlari
 
-### Git Workflow
+### Git ish jarayoni
 
 ```bash
-# Create feature branch
+# Xususiyat shoxini yaratish
 git checkout -b feature/amazing-feature
 
-# Make changes and commit
+# O'zgarishlarni amalga oshirish va commit qilish
 git add .
-git commit -m "feat: add amazing feature"
+git commit -m "feat: amazing feature qo'shish"
 
-# Push and create pull request
+# Push qilish va pull request yaratish
 git push origin feature/amazing-feature
 ```
 
-## 🐳 Docker Deployment
+## 🐳 Docker orqali deployment
 
-### Development Environment
+### Ishlab chiqarish muhiti
 
 ```bash
-# Start all services
+# Barcha xizmatlarni ishga tushirish
 docker-compose up -d
 
-# View logs
+# Loglarni ko'rish
 docker-compose logs -f
 
-# Stop services
+# Xizmatlarni to'xtatish
 docker-compose down
 ```
 
-### Production Deployment
+### Production deployment
 
 ```bash
-# Build and deploy
+# Build qilish va deployment qilish
 docker-compose -f docker-compose.prod.yml up -d --build
 ```
 
-### Docker Commands
+### Docker buyruqlari
 
 ```bash
-# Access backend container
+# Backend konteyneriga kirish
 docker exec -it step_backend bash
 
-# Access database
+# Ma'lumotlar bazasiga kirish
 docker exec -it step_db psql -U postgres -d step_uz
 
-# View container status
+# Konteyner holatini ko'rish
 docker ps
 ```
 
-## 📚 API Documentation
+## 📚 API hujjatlari
 
-### Authentication Endpoints
-
-```http
-POST /api/auth/register     # User registration
-POST /api/auth/login        # User login
-POST /api/auth/logout       # User logout
-GET  /api/auth/me           # Get current user
-```
-
-### User Management
+### Autentifikatsiya endpointlari
 
 ```http
-GET    /api/users           # Get all users (admin)
-GET    /api/users/:id       # Get user by ID
-PUT    /api/users/:id       # Update user profile
-DELETE /api/users/:id       # Delete user (admin)
+POST /api/auth/register     # Foydalanuvchi ro'yxatdan o'tishi
+POST /api/auth/login        # Foydalanuvchi tizimga kirishi
+POST /api/auth/logout       # Foydalanuvchi chiqishi
+GET  /api/auth/me           # Joriy foydalanuvchini olish
 ```
 
-### Jobs & Applications
+### Foydalanuvchini boshqarish
 
 ```http
-GET    /api/jobs            # Get all jobs
-POST   /api/jobs            # Create job (company)
-GET    /api/jobs/:id        # Get job details
-PUT    /api/jobs/:id        # Update job (company)
-DELETE /api/jobs/:id        # Delete job (company)
-
-POST   /api/jobs/:id/apply  # Apply for job
-GET    /api/applications     # Get user applications
+GET    /api/users           # Barcha foydalanuvchilarni olish (admin)
+GET    /api/users/:id       # ID bo'yicha foydalanuvchini olish
+PUT    /api/users/:id       # Foydalanuvchi profilini yangilash
+DELETE /api/users/:id       # Foydalanuvchini o'chirish (admin)
 ```
 
-### Startups
+### Ishlar va Arizalar
 
 ```http
-GET    /api/startups        # Get all startups
-POST   /api/startups        # Create startup
-GET    /api/startups/:id    # Get startup details
-PUT    /api/startups/:id    # Update startup
-DELETE /api/startups/:id    # Delete startup
+GET    /api/jobs            # Barcha ishlarni olish
+POST   /api/jobs            # Ish yaratish (kompaniya)
+GET    /api/jobs/:id        # Ish tafsilotlarini olish
+PUT    /api/jobs/:id        # Ishni yangilash (kompaniya)
+DELETE /api/jobs/:id        # Ishni o'chirish (kompaniya)
+
+POST   /api/jobs/:id/apply  # Ishga ariza topshirish
+GET    /api/applications     # Foydalanuvchi arizalarini olish
 ```
 
-For detailed API documentation, visit `/api/docs` in development mode.
+### Startuplar
 
-## 🧪 Testing
+```http
+GET    /api/startups        # Barcha startuplarni olish
+POST   /api/startups        # Startup yaratish
+GET    /api/startups/:id    # Startup tafsilotlarini olish
+PUT    /api/startups/:id    # Startupni yangilash
+DELETE /api/startups/:id    # Startupni o'chirish
+```
 
-### Running Tests
+Batafsil API hujjatlari uchun ishlab chiqarish rejimida `/api/docs` manziliga tashrif buyuring.
+
+## 🧪 Testlash
+
+### Testlarni ishga tushirish
 
 ```bash
-# Frontend tests
+# Frontend testlari
 cd frontend
-npm test                    # Run all tests
-npm run test:watch         # Watch mode
-npm run test:coverage      # Coverage report
+npm test                    # Barcha testlarni ishga tushirish
+npm run test:watch         # Kuzatish rejimi
+npm run test:coverage      # Yopishqoq hisoboti
 
-# Backend tests
+# Backend testlari
 cd backend
-npm test                   # Run all tests
-npm run test:watch        # Watch mode
-npm run test:e2e          # End-to-end tests
+npm test                   # Barcha testlarni ishga tushirish
+npm run test:watch        # Kuzatish rejimi
+npm run test:e2e          # Oxir-oqibat testlari
 ```
 
-### Test Structure
+### Test tuzilishi
 
 ```
 tests/
-├── 📂 unit/               # Unit tests
-├── 📂 integration/        # Integration tests
-├── 📂 e2e/               # End-to-end tests
-└── 📂 fixtures/           # Test data
+├── 📂 unit/               # Unit testlar
+├── 📂 integration/        # Integratsiya testlari
+├── 📂 e2e/               # Oxir-oqibat testlari
+└── 📂 fixtures/           # Test ma'lumotlari
 ```
 
-### Coverage Goals
+### Yopishqoq maqsadlari
 
-- **Unit Tests**: 80%+ coverage
-- **Integration Tests**: 70%+ coverage
-- **E2E Tests**: Critical user flows
+- **Unit Testlar**: 80%+ yopishqoq
+- **Integratsiya Testlari**: 70%+ yopishqoq
+- **Oxir-oqibat Testlari**: Muhim foydalanuvchi oqimlari
 
-## 🤝 Contributing
+## 🤝 Hissa qo'shish
 
-We welcome contributions from the community! Here's how you can help:
+Jamiyatdan hissa qo'shishni qutqinamiz! Bu siz yordam berishingiz mumkin:
 
-### Getting Started
+### Boshlash
 
-1. **Fork** the repository
-2. **Clone** your fork locally
-3. **Create** a feature branch
-4. **Make** your changes
-5. **Test** thoroughly
-6. **Submit** a pull request
+1. **Fork** qiling repozitoriyani
+2. **Klon** qiling o'z forkingizni mahalliy ravishda
+3. **Yarat** xususiyat shoxini
+4. **Qiling** o'zgarishlaringiz
+5. **Test** qiling chuqurlik bilan
+6. **Yuboring** pull request
 
-### Contribution Guidelines
+### Hissa qo'shish qoidalari
 
-- Follow the [Code of Conduct](CODE_OF_CONDUCT.md)
-- Write clear, descriptive commit messages
-- Add tests for new features
-- Update documentation as needed
-- Ensure all tests pass before submitting
+- [Xulq-atvora qoidalariga](CODE_OF_CONDUCT.md) amal qiling
+- Aniq, tavsiflovchi commit xabarlari yozing
+- Yangi funktsiyalar uchun testlar qo'shing
+- Zarur bo'lsa, hujjatlarni yangilang
+- Yuborishdan oldin barcha testlardan o'tganligiga ishonch hosil qiling
 
-### Development Areas
+### Ishlab chiqarish sohalari
 
-We're looking for help in:
+Biz quyidagi sohalarda yordam qidiramiz:
 
-- 🎨 **UI/UX Improvements** - Design and user experience enhancements
-- 🔧 **Backend Features** - API development and business logic
-- 📱 **Mobile App** - React Native mobile application
-- 🤖 **AI Features** - Smart recommendations and automation
-- 🌍 **Internationalization** - Language support and localization
-- 📊 **Analytics** - Data insights and reporting
+- 🎨 **UI/UX Yaxshilanishlari** - Dizayn va foydalanuvchi tajribasini yaxshilash
+- 🔧 **Backend Funktsiyalari** - API ishlab chiqarish va biznes mantiq
+- 📱 **Mobil Ilova** - React Native mobil ilovasi
+- 🤖 **AI Funktsiyalari** - Aqlli tavsiyalar va avtomatlashtirish
+- 🌍 **Xalqarolashtirish** - Til qo'llab-quvvatlash va lokalizatsiya
+- 📊 **Analitika** - Ma'lumot tushunchalari va hisobotlash
 
-### Reporting Issues
+### Muammolarni xabar qilish
 
-When reporting bugs, please include:
+Xatoliklarni xabar qilishda quyidagilarni kiriting:
 
-- **Clear description** of the issue
-- **Steps to reproduce** the problem
-- **Expected vs actual** behavior
-- **Environment details** (OS, browser, version)
-- **Screenshots** if applicable
+- **Muammoning aniq tavsifi**
+- **Muammoni takrorlash bosqichlari**
+- **Kutilgan va haqiqiy xulq-atvora**
+- **Muhit tafsilotlari** (OS, brauzer, versiya)
+- **Rasmlar** agar mavjud bo'lsa
 
-## 📄 License
+## 📄 Litsenziya
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+Bu loyiha MIT Litsenziyasi ostida litsenziyalangan - [LICENSE](LICENSE) faylini ko'ring.
 
 ```
-MIT License
+MIT Litsenziyasi
 
 Copyright (c) 2024 Step.uz
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+Bu dastur dasturiy nusxasini olish uchun litsenziyasiz bepul taqdim etilgan,
+shu dasturiy nusxani va bog'liq hujjatlarni istalgan shaklda
+foydalanish, ko'chirish, o'zgartirish, birlashtirish, nashr etish,
+ko'paytirish, quyi litsenziya ostida tarqatish va/yoki nusxalash huquqi
+berilgan, shunda dasturiy nusxani olgan shaxslar quyidagi shartlarga
+rioya qilishlari shart:
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+Yuqoridagi mualliflik huquqi va ruxsatnomasi dasturiy nusxaning barcha
+nusxalari yoki muhim qismlariga kiritilishi kerak.
 ```
 
-## 🙏 Acknowledgments
+## 🙏 Tashakkurlar
 
-Special thanks to:
+Quyidagilarga maxsus tashakkur:
 
-- **Uzbekistan's IT Community** for inspiration and support
-- **Contributors** who have helped build this platform
-- **Educational Institutions** for their valuable feedback
-- **Early Adopters** for testing and improvements
+- **O'zbekiston IT Jamiyati** - ilhom va qo'llab-quvvatlash uchun
+- **Hissa qo'shuvchilar** - bu platformani qurishga yordam berganlar
+- **Ta'lim muassasalari** - qimmatli fikr-mulohazalari uchun
+- **Dastlabki foydalanuvchilar** - testlash va yaxshilanishlar uchun
 
-## 📞 Contact
+## 📞 Aloqa
 
-- **Website**: [step.uz](https://step.uz)
+- **Veb-sayt**: [step.uz](https://step.uz)
 - **Email**: [info@step.uz](mailto:info@step.uz)
 - **GitHub**: [@otabekxoff-creator](https://github.com/otabekxoff-creator)
 - **LinkedIn**: [Step.uz](https://linkedin.com/company/step-uz)
@@ -518,10 +518,10 @@ Special thanks to:
 
 <div align="center">
 
-**⭐ Star this repository if it helped you!**
+**⭐ Agar bu repozitoriya sizga yordam berdi bo'lsa, yulduzcha bosing!**
 
-Made with ❤️ in Uzbekistan
+O'zbekistonda ❤️ bilan yaratilgan
 
-[🔝 Back to top](#-step-uz---career-platform-for-uzbekistan-youth)
+[🔝 Yuqoriga qaytish](#-step-uz---ozbekiston-yoshlari-uchun-karyera-platformasi)
 
 </div>
