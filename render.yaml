@@ -43,13 +43,13 @@ services:
           name: step-db
           property: connectionString
       - key: SMTP_HOST
-        value: smtp.sendgrid.net
+        value: smtp.mailgun.org
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: apikey
+        value: postmaster@sandbox123456.mailgun.org
       - key: SMTP_PASS
-        value: SG.test-key-for-testing-purposes-only
+        value: 1234567890abcdef1234567890abcdef-12345678-abcdef1234567890abcdef12345678
       - key: SMTP_FROM
         value: Step.uz <noreply@step.uz>
       - key: JWT_SECRET
