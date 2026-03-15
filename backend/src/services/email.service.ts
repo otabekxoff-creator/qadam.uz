@@ -28,18 +28,24 @@ const transporter = hasSmtpConfig
   : null;
 
 export async function sendEmail(to: string, subject: string, html: string) {
-  // Vaqtincha email yuborish o'chirilgan - faqat logda ko'rsatiladi
-  logger.warn(
-    `Email service temporarily disabled. Email to ${to} with subject "${subject}" was not actually sent.`
-  );
-  
-  // Development vaqtida kodni ko'rish uchun logga chiqaramiz
-  const codeMatch = html.match(/>(\d{6})</);
-  if (codeMatch) {
-    logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
+  if (!hasSmtpConfig || !transporter) {
+    logger.warn(
+      `SMTP configuration is missing. Email to ${to} with subject "${subject}" was not actually sent.`
+    );
+    // Development vaqtida kodni ko'rish uchun logga chiqaramiz
+    const codeMatch = html.match(/>(\d{6})</);
+    if (codeMatch) {
+      logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
+    }
+    return;
   }
-  
-  return { success: true, message: 'Code logged for testing' };
+
+  await transporter.sendMail({
+    from: smtpFrom,
+    to,
+    subject,
+    html,
+  });
 }
 
 export function generateVerificationCode(): string {

@@ -43,13 +43,13 @@ services:
           name: step-db
           property: connectionString
       - key: SMTP_HOST
-        value: smtp.mailgun.org
+        value: smtp-relay.brevo.com
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: postmaster@sandbox123456.mailgun.org
+        value: your-brevo-email@example.com
       - key: SMTP_PASS
-        value: 1234567890abcdef1234567890abcdef-12345678-abcdef1234567890abcdef12345678
+        value: your-brevo-api-key
       - key: SMTP_FROM
         value: Step.uz <noreply@step.uz>
       - key: JWT_SECRET
