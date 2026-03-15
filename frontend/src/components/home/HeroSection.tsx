@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-[80vh] flex items-center justify-center pt-20 overflow-hidden bg-background">
+    <section className="relative min-h-[80vh] flex items-center justify-center pt-8 overflow-hidden bg-background">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 z-0 opacity-[0.03] pointer-events-none">
         <div className="absolute inset-0 bg-[radial-gradient(#000_1px,transparent_1px)] [background-size:20px_20px]" />

@@ -86,14 +86,14 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+    <header className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-300 ${scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'}`}>
       <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center space-x-2.5 group transition-opacity hover:opacity-90">
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-sm active:scale-95 transition-transform">
             <GraduationCap className="h-6 w-6" />
           </div>
-          <span className={`text-xl font-bold text-foreground tracking-tight transition-all duration-300 ${scrolled ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
+          <span className="text-xl font-bold text-foreground tracking-tight">
             Step.uz
           </span>
         </Link>
