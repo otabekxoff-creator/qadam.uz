@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { 
   MapPin, Briefcase, Clock, DollarSign, Building2, 
   ArrowLeft, Share2, Bookmark, ExternalLink, Check,
-  Calendar, Users, Globe, Send, Loader2
+  Calendar, Users, Globe, Send, Loader2, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,6 +15,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import {
   Dialog,
   DialogContent,
@@ -25,6 +26,49 @@ import {
 } from '@/components/ui/dialog';
 import { useAuthStore, isStudent } from '@/stores';
 import type { Job, JobType, ExperienceLevel } from '@/types';
+
+// =============================================
+// Skeleton Component
+// =============================================
+
+function JobDetailsSkeleton() {
+  return (
+    <div className="min-h-screen bg-background pb-20">
+      <div className="bg-secondary/20 border-b border-border/40 py-12">
+        <div className="container mx-auto px-4">
+          <Skeleton className="h-10 w-32 mb-8" />
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            <div className="flex items-center gap-6">
+              <Skeleton className="h-20 w-20 rounded-2xl" />
+              <div className="space-y-3">
+                <Skeleton className="h-8 w-64" />
+                <div className="flex gap-2">
+                  <Skeleton className="h-5 w-24" />
+                  <Skeleton className="h-5 w-24" />
+                </div>
+              </div>
+            </div>
+            <div className="flex gap-3">
+              <Skeleton className="h-12 w-32 rounded-xl" />
+              <Skeleton className="h-12 w-40 rounded-xl" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="container mx-auto px-4 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="lg:col-span-2 space-y-10">
+            <Skeleton className="h-64 w-full rounded-2xl" />
+            <Skeleton className="h-48 w-full rounded-2xl" />
+          </div>
+          <div className="space-y-8">
+            <Skeleton className="h-80 w-full rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // =============================================
 // Mock Data
@@ -281,15 +325,33 @@ function ApplyDialog({ jobId }: { jobId: string }) {
 
 export default function JobDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    params.then(setResolvedParams);
+    params.then((p) => {
+      setResolvedParams(p);
+      // Yuklanish simulyatsiyasi
+      const timer = setTimeout(() => setIsLoading(false), 1000);
+      return () => clearTimeout(timer);
+    });
   }, [params]);
   
   const job = mockJob;
 
+  if (isLoading) {
+    return <JobDetailsSkeleton />;
+  }
+
   return (
     <main className="min-h-screen bg-background">
+      {/* SEO Meta Tags Simulation */}
+      <head>
+        <title>{`${job.title} | Step.uz Ish e'loni`}</title>
+        <meta name="description" content={job.description.substring(0, 160)} />
+        <meta property="og:title" content={`${job.title} - ${job.company?.name}`} />
+        <meta property="og:description" content={job.description.substring(0, 160)} />
+        <meta property="og:type" content="website" />
+      </head>
       {/* Back Button */}
       <div className="container mx-auto px-4 py-6">
         <Link 

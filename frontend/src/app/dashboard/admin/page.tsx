@@ -6,13 +6,45 @@ import { motion } from 'framer-motion';
 import { 
   Users, Briefcase, Building2, Rocket, FileText, Eye,
   TrendingUp, Clock, CheckCircle, XCircle, AlertCircle,
-  Settings, Shield, BarChart3
+  Settings, Shield, BarChart3, PieChart as PieChartIcon
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { 
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, 
+  LineChart, Line, AreaChart, Area, PieChart, Cell, Pie
+} from 'recharts';
+
+// =============================================
+// Mock Data
+// =============================================
+
+const userGrowthData = [
+  { name: 'Yan', students: 400, companies: 40 },
+  { name: 'Fev', students: 700, companies: 60 },
+  { name: 'Mar', students: 1200, companies: 100 },
+  { name: 'Apr', students: 1800, companies: 150 },
+  { name: 'May', students: 2500, companies: 220 },
+  { name: 'Iyun', students: 3890, companies: 633 },
+];
+
+const startupStatusData = [
+  { name: 'Tasdiqlangan', value: 85, color: '#10b981' },
+  { name: 'Kutilmoqda', value: 23, color: '#f59e0b' },
+  { name: 'Rad etilgan', value: 12, color: '#ef4444' },
+  { name: 'Moliyalashtirilgan', value: 25, color: '#6366f1' },
+];
+
+const jobCategoryData = [
+  { name: 'Frontend', jobs: 450 },
+  { name: 'Backend', jobs: 380 },
+  { name: 'Design', jobs: 220 },
+  { name: 'Marketing', jobs: 120 },
+  { name: 'Data', jobs: 86 },
+];
 
 // =============================================
 // Mock Data
@@ -228,6 +260,102 @@ export default function AdminDashboardPage() {
 
                 {/* Overview Tab */}
                 <TabsContent value="overview" className="space-y-6">
+                  {/* Charts Row */}
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* User Growth Chart */}
+                    <Card className="border-border/50 shadow-sm">
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center gap-2">
+                          <TrendingUp className="h-4 w-4 text-primary" />
+                          Foydalanuvchilar o'sishi
+                        </CardTitle>
+                        <CardDescription>Oxirgi 6 oylik ko'rsatkichlar</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="h-[300px] w-full">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <AreaChart data={userGrowthData}>
+                              <defs>
+                                <linearGradient id="colorStudents" x1="0" y1="0" x2="0" y2="1">
+                                  <stop offset="5%" stopColor="#2563eb" stopOpacity={0.1}/>
+                                  <stop offset="95%" stopColor="#2563eb" stopOpacity={0}/>
+                                </linearGradient>
+                              </defs>
+                              <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                              <XAxis 
+                                dataKey="name" 
+                                axisLine={false} 
+                                tickLine={false} 
+                                tick={{fill: '#64748b', fontSize: 12}}
+                                dy={10}
+                              />
+                              <YAxis 
+                                axisLine={false} 
+                                tickLine={false} 
+                                tick={{fill: '#64748b', fontSize: 12}}
+                              />
+                              <Tooltip 
+                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                              />
+                              <Area 
+                                type="monotone" 
+                                dataKey="students" 
+                                stroke="#2563eb" 
+                                strokeWidth={3}
+                                fillOpacity={1} 
+                                fill="url(#colorStudents)" 
+                                name="Talabalar"
+                              />
+                            </AreaChart>
+                          </ResponsiveContainer>
+                        </div>
+                      </CardContent>
+                    </Card>
+
+                    {/* Startup Status Pie Chart */}
+                    <Card className="border-border/50 shadow-sm">
+                      <CardHeader>
+                        <CardTitle className="text-base flex items-center gap-2">
+                          <PieChartIcon className="h-4 w-4 text-primary" />
+                          Startaplar holati
+                        </CardTitle>
+                        <CardDescription>Barcha startaplar taqsimoti</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="h-[300px] w-full">
+                          <ResponsiveContainer width="100%" height="100%">
+                            <PieChart>
+                              <Pie
+                                data={startupStatusData}
+                                cx="50%"
+                                cy="50%"
+                                innerRadius={60}
+                                outerRadius={80}
+                                paddingAngle={5}
+                                dataKey="value"
+                              >
+                                {startupStatusData.map((entry, index) => (
+                                  <Cell key={`cell-${index}`} fill={entry.color} />
+                                ))}
+                              </Pie>
+                              <Tooltip 
+                                contentStyle={{ borderRadius: '12px', border: 'none', boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.1)' }}
+                              />
+                            </PieChart>
+                          </ResponsiveContainer>
+                          <div className="grid grid-cols-2 gap-4 mt-4">
+                            {startupStatusData.map((entry) => (
+                              <div key={entry.name} className="flex items-center gap-2">
+                                <div className="h-3 w-3 rounded-full" style={{ backgroundColor: entry.color }} />
+                                <span className="text-xs font-medium text-muted-foreground">{entry.name}</span>
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+
                   <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {/* Recent Users */}
                     <Card>

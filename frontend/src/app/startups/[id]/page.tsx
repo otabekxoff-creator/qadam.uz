@@ -7,7 +7,7 @@ import {
   ArrowLeft, Share2, Bookmark, ExternalLink, Check,
   Users, TrendingUp, Globe, Mail, MapPin, DollarSign,
   Calendar, Target, Lightbulb, BarChart3, Rocket,
-  Heart, MessageCircle
+  Heart, MessageCircle, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -15,7 +15,48 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { Startup, StartupStage } from '@/types';
+
+// =============================================
+// Skeleton Component
+// =============================================
+
+function StartupDetailsSkeleton() {
+  return (
+    <div className="min-h-screen bg-background pb-20">
+      <div className="container mx-auto px-4 py-6">
+        <Skeleton className="h-10 w-32 mb-8" />
+      </div>
+      <div className="container mx-auto px-4 pb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+          <div className="lg:col-span-2 space-y-10">
+            <Card className="border-border/50 shadow-sm rounded-2xl overflow-hidden">
+              <CardContent className="p-8">
+                <div className="flex items-start gap-6">
+                  <Skeleton className="h-24 w-24 rounded-2xl flex-shrink-0" />
+                  <div className="flex-1 space-y-4">
+                    <Skeleton className="h-10 w-1/2" />
+                    <div className="flex gap-2">
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                      <Skeleton className="h-6 w-20 rounded-full" />
+                    </div>
+                    <Skeleton className="h-20 w-full rounded-xl" />
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+            <Skeleton className="h-64 w-full rounded-2xl" />
+            <Skeleton className="h-80 w-full rounded-2xl" />
+          </div>
+          <div className="space-y-8">
+            <Skeleton className="h-96 w-full rounded-2xl" />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 // =============================================
 // Mock Data
@@ -128,16 +169,34 @@ const formatDate = (date: string) => {
 
 export default function StartupDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const [resolvedParams, setResolvedParams] = useState<{ id: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   useEffect(() => {
-    params.then(setResolvedParams);
+    params.then((p) => {
+      setResolvedParams(p);
+      // Yuklanish simulyatsiyasi
+      const timer = setTimeout(() => setIsLoading(false), 1000);
+      return () => clearTimeout(timer);
+    });
   }, [params]);
   
   const startup = mockStartup;
   const progress = getFundingProgress(startup.fundingRaised, startup.fundingNeeded);
 
+  if (isLoading) {
+    return <StartupDetailsSkeleton />;
+  }
+
   return (
     <main className="min-h-screen bg-background">
+      {/* SEO Meta Tags Simulation (Dynamic metadata would normally be in a separate layout or generateMetadata) */}
+      <head>
+        <title>{`${startup.name} | Step.uz Startap`}</title>
+        <meta name="description" content={startup.description} />
+        <meta property="og:title" content={`${startup.name} - Investitsiya imkoniyati`} />
+        <meta property="og:description" content={startup.description} />
+        <meta property="og:type" content="website" />
+      </head>
       {/* Back Button */}
       <div className="container mx-auto px-4 py-6">
         <Link 

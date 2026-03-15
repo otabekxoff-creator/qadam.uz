@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, MapPin, Briefcase, Building2, Filter, X, 
-  ArrowRight, Clock, DollarSign, ChevronDown 
+  ArrowRight, Clock, DollarSign, ChevronDown, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,6 +31,43 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Skeleton } from '@/components/ui/skeleton';
 import type { Job, JobType, ExperienceLevel } from '@/types';
+
+// =============================================
+// Skeleton Components
+// =============================================
+
+function JobCardSkeleton() {
+  return (
+    <Card className="h-full border border-border/60 shadow-sm rounded-xl overflow-hidden">
+      <CardHeader className="pb-4 pt-6 px-6">
+        <div className="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-lg" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="pb-4 px-6">
+        <Skeleton className="h-6 w-3/4 mb-4" />
+        <div className="space-y-3 mb-6">
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-4 w-2/3" />
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="h-5 w-16 rounded-full" />
+          <Skeleton className="h-5 w-16 rounded-full" />
+        </div>
+      </CardContent>
+      <CardFooter className="pt-4 pb-6 px-6 border-t border-border/40 bg-secondary/10">
+        <div className="flex items-center justify-between w-full">
+          <Skeleton className="h-5 w-24" />
+          <Skeleton className="h-8 w-8 rounded-full" />
+        </div>
+      </CardFooter>
+    </Card>
+  );
+}
 
 // =============================================
 // Mock Data
@@ -498,7 +535,13 @@ export default function JobsPage() {
     locations: [],
     isRemote: false,
   });
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Yuklanish simulyatsiyasi (Skeletonni ko'rish uchun)
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredJobs = useMemo(() => {
     return mockJobs.filter((job) => {
@@ -641,64 +684,67 @@ export default function JobsPage() {
               </div>
 
               {/* Jobs */}
-              {isLoading ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {[...Array(6)].map((_, i) => (
-                    <Card key={i} className="h-64 border-border/60 rounded-xl overflow-hidden shadow-sm">
-                      <CardContent className="p-6">
-                        <Skeleton className="h-6 w-1/2 mb-4" />
-                        <Skeleton className="h-4 w-full mb-2" />
-                        <Skeleton className="h-4 w-3/4 mb-4" />
-                        <div className="flex gap-2 mb-6">
-                          <Skeleton className="h-6 w-16" />
-                          <Skeleton className="h-6 w-16" />
-                        </div>
-                        <Skeleton className="h-12 w-full" />
-                      </CardContent>
-                    </Card>
-                  ))}
-                </div>
-              ) : filteredJobs.length > 0 ? (
-                <motion.div 
-                  className="grid grid-cols-1 lg:grid-cols-2 gap-6"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {filteredJobs.map((job, index) => (
-                    <motion.div
-                      key={job.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.03 }}
-                    >
-                      <JobCard job={job} />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed border-border/60">
-                  <div className="h-20 w-20 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border/40">
-                    <Briefcase className="h-10 w-10 text-muted-foreground/40" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">Hech qanday ish topilmadi</h3>
-                  <p className="text-muted-foreground mb-8 max-w-sm mx-auto font-medium">
-                    Tanlangan filtrlarni o&apos;zgartirib yoki qidiruv so'rovini boshqa so'zlar bilan qayta urinib ko&apos;ring.
-                  </p>
-                  <Button 
-                    variant="outline"
-                    className="h-11 px-8 rounded-lg font-bold border-border/60 hover:bg-background transition-all"
-                    onClick={() => setFilters({
-                      search: '',
-                      jobTypes: [],
-                      experienceLevels: [],
-                      locations: [],
-                      isRemote: false,
-                    })}
+              <AnimatePresence mode="wait">
+                {isLoading ? (
+                  <motion.div 
+                    key="skeleton-grid"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6"
                   >
-                    Filtrlarni tozalash
-                  </Button>
-                </div>
-              )}
+                    {[...Array(6)].map((_, i) => (
+                      <JobCardSkeleton key={i} />
+                    ))}
+                  </motion.div>
+                ) : filteredJobs.length > 0 ? (
+                  <motion.div 
+                    key="jobs-grid"
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {filteredJobs.map((job, index) => (
+                      <motion.div
+                        key={job.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.03 }}
+                      >
+                        <JobCard job={job} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="no-results"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed border-border/60"
+                  >
+                    <div className="h-20 w-20 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border/40">
+                      <Briefcase className="h-10 w-10 text-muted-foreground/40" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">Hech qanday ish topilmadi</h3>
+                    <p className="text-muted-foreground mb-8 max-w-sm mx-auto font-medium">
+                      Tanlangan filtrlarni o&apos;zgartirib yoki qidiruv so'rovini boshqa so'zlar bilan qayta urinib ko&apos;ring.
+                    </p>
+                    <Button 
+                      variant="outline"
+                      className="h-11 px-8 rounded-lg font-bold border-border/60 hover:bg-background transition-all"
+                      onClick={() => setFilters({
+                        search: '',
+                        jobTypes: [],
+                        experienceLevels: [],
+                        locations: [],
+                        isRemote: false,
+                      })}
+                    >
+                      Filtrlarni tozalash
+                    </Button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, Rocket, MapPin, DollarSign, Filter, X,
-  ArrowRight, Users, TrendingUp, Lightbulb, Building
+  ArrowRight, Users, TrendingUp, Lightbulb, Building, Sparkles
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -30,7 +30,50 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
+import { Skeleton } from '@/components/ui/skeleton';
 import type { Startup, StartupStage, StartupStatus } from '@/types';
+
+// =============================================
+// Skeleton Components
+// =============================================
+
+function StartupCardSkeleton() {
+  return (
+    <Card className="h-full border border-border/60 shadow-sm rounded-xl overflow-hidden flex flex-col">
+      <CardHeader className="pb-4 pt-6 px-6">
+        <div className="flex items-center space-x-4">
+          <Skeleton className="h-12 w-12 rounded-lg" />
+          <div className="space-y-2">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-3 w-16" />
+          </div>
+        </div>
+      </CardHeader>
+      <CardContent className="pb-4 px-6 flex-1">
+        <Skeleton className="h-4 w-full mb-2" />
+        <Skeleton className="h-4 w-2/3 mb-6" />
+        <div className="space-y-3 mb-6 bg-secondary/20 p-4 rounded-xl">
+          <Skeleton className="h-3 w-1/4" />
+          <Skeleton className="h-2 w-full" />
+          <Skeleton className="h-3 w-1/2" />
+        </div>
+        <div className="flex gap-2">
+          <Skeleton className="h-5 w-14 rounded-full" />
+          <Skeleton className="h-5 w-14 rounded-full" />
+        </div>
+      </CardContent>
+      <CardFooter className="pt-4 pb-6 px-6 border-t border-border/40 bg-secondary/10">
+        <div className="flex items-center justify-between w-full">
+          <div className="flex gap-4">
+            <Skeleton className="h-4 w-8" />
+            <Skeleton className="h-4 w-8" />
+          </div>
+          <Skeleton className="h-8 w-8 rounded-full" />
+        </div>
+      </CardFooter>
+    </Card>
+  );
+}
 
 // =============================================
 // Mock Data
@@ -478,6 +521,13 @@ export default function StartupsPage() {
     industries: [],
     status: '',
   });
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Yuklanish simulyatsiyasi
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoading(false), 1200);
+    return () => clearTimeout(timer);
+  }, []);
 
   const filteredStartups = useMemo(() => {
     return mockStartups.filter((startup) => {
@@ -617,33 +667,52 @@ export default function StartupsPage() {
               </div>
 
               {/* Grid */}
-              {filteredStartups.length > 0 ? (
-                <motion.div 
-                  className="grid grid-cols-1 lg:grid-cols-2 gap-8"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  {filteredStartups.map((startup, index) => (
-                    <motion.div
-                      key={startup.id}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.3, delay: index * 0.03 }}
-                    >
-                      <StartupCard startup={startup} />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              ) : (
-                <div className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed border-border/60">
-                  <div className="h-20 w-20 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border/40">
-                    <Rocket className="h-10 w-10 text-muted-foreground/40" />
-                  </div>
-                  <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">Loyixa topilmadi</h3>
-                  <p className="text-muted-foreground mb-8 max-w-sm mx-auto font-medium">
-                    Filtrlarni o&apos;zgartirib yoki qidiruv so'rovini boshqa so'zlar bilan qayta urinib ko&apos;ring.
-                  </p>
-                  <Button 
+              <AnimatePresence mode="wait">
+                {isLoading ? (
+                  <motion.div 
+                    key="skeleton-grid"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+                  >
+                    {[...Array(6)].map((_, i) => (
+                      <StartupCardSkeleton key={i} />
+                    ))}
+                  </motion.div>
+                ) : filteredStartups.length > 0 ? (
+                  <motion.div 
+                    key="startups-grid"
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-8"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                  >
+                    {filteredStartups.map((startup, index) => (
+                      <motion.div
+                        key={startup.id}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.3, delay: index * 0.03 }}
+                      >
+                        <StartupCard startup={startup} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                ) : (
+                  <motion.div 
+                    key="no-results"
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-20 bg-secondary/10 rounded-3xl border border-dashed border-border/60"
+                  >
+                    <div className="h-20 w-20 bg-background rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-sm border border-border/40">
+                      <Rocket className="h-10 w-10 text-muted-foreground/40" />
+                    </div>
+                    <h3 className="text-xl font-bold mb-3 text-foreground tracking-tight">Loyixa topilmadi</h3>
+                    <p className="text-muted-foreground mb-8 max-w-sm mx-auto font-medium">
+                      Filtrlarni o&apos;zgartirib yoki qidiruv so'rovini boshqa so'zlar bilan qayta urinib ko&apos;ring.
+                    </p>
+                    <Button 
                     variant="outline"
                     className="h-11 px-8 rounded-lg font-bold border-border/60 hover:bg-background transition-all"
                     onClick={() => setFilters({
@@ -655,8 +724,9 @@ export default function StartupsPage() {
                   >
                     Filtrlarni tozalash
                   </Button>
-                </div>
-              )}
+                  </motion.div>
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </div>
