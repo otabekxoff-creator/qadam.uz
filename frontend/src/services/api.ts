@@ -71,7 +71,14 @@ class ApiClient {
         throw new Error(error.message || 'Xatolik yuz berdi');
       }
 
-      return response.json();
+      const jsonResponse = await response.json();
+      
+      // Agar backend data wrapper qaytarsa, uni ochamiz
+      if (jsonResponse && typeof jsonResponse === 'object' && 'data' in jsonResponse) {
+        return jsonResponse.data;
+      }
+      
+      return jsonResponse;
     } catch (error: any) {
       clearTimeout(timeoutId);
       if (error.name === 'AbortError') {
