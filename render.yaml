@@ -43,13 +43,13 @@ services:
           name: step-db
           property: connectionString
       - key: SMTP_HOST
-        value: smtp.elasticemail.com
+        value: smtp.sendgrid.net
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: otabekxoff@gmail.com
+        value: apikey
       - key: SMTP_PASS
-        value: 8D7C3A3E7F1E4C2A9E1D5B8C6F2A4E3C7B9A5D2E8A1C6B3D7F9E2A4C8B1D5F3A7
+        value: SG.test-key-for-testing-purposes-only
       - key: SMTP_FROM
         value: Step.uz <noreply@step.uz>
       - key: JWT_SECRET
