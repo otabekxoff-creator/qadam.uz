@@ -72,9 +72,16 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                O'zbekiston, Toshkent shahri, <br />
-                Yunusobod tumani, Amir Temur ko'chasi, 105A
+                Farg'ona viloyati, O'zbekiston tumani, Yaypon shahri<br />
+                Hokimiyat ko'chasi
               </p>
+              <div className="mt-4 space-y-2">
+                <p className="text-sm text-muted-foreground">
+                  <strong>Koordinatalar:</strong><br />
+                  40°22'30.3"N 70°48'42.7"E<br />
+                  40.37509, 70.81185
+                </p>
+              </div>
             </CardContent>
           </Card>
         </div>
