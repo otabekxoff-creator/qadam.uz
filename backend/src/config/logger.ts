@@ -22,6 +22,14 @@ if (process.env.NODE_ENV !== 'production') {
       winston.format.simple()
     )
   }));
+} else {
+  // Production da ham console log qo'shamiz (Render loglarini ko'rish uchun)
+  logger.add(new winston.transports.Console({
+    format: winston.format.combine(
+      winston.format.colorize(),
+      winston.format.simple()
+    )
+  }));
 }
 
 export default logger;
