@@ -28,6 +28,8 @@ export default function LoginPage() {
   const [code, setCode] = useState('');
   const [emailForVerify, setEmailForVerify] = useState('');
 
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -38,8 +40,8 @@ export default function LoginPage() {
       setEmailForVerify(response.email);
       setStep('code');
       toast.success('Tasdiqlash kodi yuborildi!');
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Kirishda xatolik yuz berdi';
+    } catch (err: any) {
+      const msg = err.message || 'Kirishda xatolik yuz berdi';
       setLocalError(msg);
       toast.error(msg);
     } finally {
@@ -58,21 +60,22 @@ export default function LoginPage() {
       setToken(result.token);
       setUser(result.user, result.student, result.company);
       toast.success('Muvaffaqiyatli kirdingiz!');
+      setIsRedirecting(true);
 
-      if (result.user.role === 'STUDENT') {
+      const role = result.user.role;
+      if (role === 'STUDENT') {
         router.push('/dashboard/student');
-      } else if (result.user.role === 'COMPANY') {
+      } else if (role === 'COMPANY') {
         router.push('/dashboard/company');
-      } else if (result.user.role === 'ADMIN') {
+      } else if (role === 'ADMIN') {
         router.push('/dashboard/admin');
       } else {
         router.push('/');
       }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Kirishni tasdiqlashda xatolik yuz berdi';
+    } catch (err: any) {
+      const msg = err.message || 'Kirishni tasdiqlashda xatolik yuz berdi';
       setLocalError(msg);
       toast.error(msg);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -192,9 +195,14 @@ export default function LoginPage() {
               <Button 
                 type="submit" 
                 className="w-full h-11 bg-primary hover:bg-primary/95 text-white font-bold rounded-lg shadow-sm shadow-primary/20 transition-all active:scale-[0.98]"
-                disabled={isLoading}
+                disabled={isLoading || isRedirecting}
               >
-                {isLoading ? (
+                {isRedirecting ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Yo'naltirilmoqda...
+                  </>
+                ) : isLoading ? (
                   <>
                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                     {step === 'credentials' ? 'Kirilmoqda...' : 'Tasdiqlanmoqda...'}

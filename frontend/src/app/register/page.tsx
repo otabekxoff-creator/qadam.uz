@@ -104,6 +104,7 @@ function RegistrationForm({
   const [step, setStep] = useState<'form' | 'code'>('form');
   const [emailForVerify, setEmailForVerify] = useState('');
   const [code, setCode] = useState('');
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   const isStudent = role === 'STUDENT';
   const isCompany = role === 'COMPANY';
@@ -146,8 +147,8 @@ function RegistrationForm({
       setEmailForVerify(response.email);
       setStep('code');
       toast.success('Tasdiqlash kodi yuborildi!');
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Ro\'yxatdan o\'tishda xatolik yuz berdi';
+    } catch (err: any) {
+      const msg = err.message || 'Ro\'yxatdan o\'tishda xatolik yuz berdi';
       setError(msg);
       toast.error(msg);
     } finally {
@@ -166,6 +167,7 @@ function RegistrationForm({
       setToken(result.token);
       setUser(result.user, result.student, result.company);
       toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
+      setIsRedirecting(true);
 
       if (isStudent) {
         router.push('/dashboard/student');
@@ -174,11 +176,10 @@ function RegistrationForm({
       } else {
         router.push('/');
       }
-    } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Tasdiqlashda xatolik yuz berdi';
+    } catch (err: any) {
+      const msg = err.message || 'Tasdiqlashda xatolik yuz berdi';
       setError(msg);
       toast.error(msg);
-    } finally {
       setIsLoading(false);
     }
   };
@@ -316,9 +317,14 @@ function RegistrationForm({
         <Button 
           type="submit" 
           className="w-full h-11 bg-primary hover:bg-primary/95 text-white font-bold rounded-lg shadow-sm shadow-primary/20 active:scale-[0.98] transition-all"
-          disabled={isLoading}
+          disabled={isLoading || isRedirecting}
         >
-          {isLoading ? (
+          {isRedirecting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Yo'naltirilmoqda...
+            </>
+          ) : isLoading ? (
             <>
               <Loader2 className="mr-2 h-4 w-4 animate-spin" />
               Tasdiqlanmoqda...

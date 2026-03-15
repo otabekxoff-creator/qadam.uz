@@ -40,7 +40,7 @@ class ApiClient {
     return headers;
   }
 
-  async get<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined>): Promise<T> {
+  private async request<T>(method: string, endpoint: string, data?: unknown, params?: Record<string, string | number | boolean | undefined>): Promise<T> {
     let url = `${this.baseUrl}${endpoint}`;
     if (params) {
       const searchParams = new URLSearchParams();
@@ -50,81 +50,55 @@ class ApiClient {
         }
       });
       const queryString = searchParams.toString();
-      if (queryString) {
-        url += `?${queryString}`;
+      if (queryString) url += `?${queryString}`;
+    }
+
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 soniya timeout
+
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: this.getHeaders(),
+        body: data ? JSON.stringify(data) : undefined,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+        const error = await response.json().catch(() => ({ message: 'Serverda xatolik yuz berdi' }));
+        throw new Error(error.message || 'Xatolik yuz berdi');
       }
+
+      return response.json();
+    } catch (error: any) {
+      clearTimeout(timeoutId);
+      if (error.name === 'AbortError') {
+        throw new Error('So\'rov vaqti tugadi (Timeout). Internet aloqasini tekshiring.');
+      }
+      throw error;
     }
+  }
 
-    const response = await fetch(url, {
-      method: 'GET',
-      headers: this.getHeaders(),
-    });
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-      throw new Error(error.message || 'An error occurred');
-    }
-
-    return response.json();
+  async get<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined>): Promise<T> {
+    return this.request<T>('GET', endpoint, undefined, params);
   }
 
   async post<T>(endpoint: string, data?: unknown): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'POST',
-      headers: this.getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
-    });
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-      throw new Error(error.message || 'An error occurred');
-    }
-
-    return response.json();
+    return this.request<T>('POST', endpoint, data);
   }
 
   async put<T>(endpoint: string, data?: unknown): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'PUT',
-      headers: this.getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
-    });
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-      throw new Error(error.message || 'An error occurred');
-    }
-
-    return response.json();
+    return this.request<T>('PUT', endpoint, data);
   }
 
   async patch<T>(endpoint: string, data?: unknown): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'PATCH',
-      headers: this.getHeaders(),
-      body: data ? JSON.stringify(data) : undefined,
-    });
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-      throw new Error(error.message || 'An error occurred');
-    }
-
-    return response.json();
+    return this.request<T>('PATCH', endpoint, data);
   }
 
   async delete<T>(endpoint: string): Promise<T> {
-    const response = await fetch(`${this.baseUrl}${endpoint}`, {
-      method: 'DELETE',
-      headers: this.getHeaders(),
-    });
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'An error occurred' }));
-      throw new Error(error.message || 'An error occurred');
-    }
-
-    return response.json();
+    return this.request<T>('DELETE', endpoint);
   }
 }
 
