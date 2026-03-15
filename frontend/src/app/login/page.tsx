@@ -36,10 +36,23 @@ export default function LoginPage() {
     setLocalError(null);
 
     try {
-      const response = await authApi.login(email, password);
-      setEmailForVerify(response.email);
-      setStep('code');
-      toast.success('Tasdiqlash kodi yuborildi!');
+      const result = await authApi.login(email, password);
+      
+      setToken(result.token);
+      setUser(result.user, result.student, result.company);
+      toast.success('Muvaffaqiyatli kirdingiz!');
+      setIsRedirecting(true);
+
+      const role = result.user.role;
+      if (role === 'STUDENT') {
+        router.push('/dashboard/student');
+      } else if (role === 'COMPANY') {
+        router.push('/dashboard/company');
+      } else if (role === 'ADMIN') {
+        router.push('/dashboard/admin');
+      } else {
+        router.push('/');
+      }
     } catch (err: any) {
       const msg = err.message || 'Kirishda xatolik yuz berdi';
       setLocalError(msg);

@@ -114,7 +114,7 @@ export const api = new ApiClient(API_BASE_URL);
 
 export const authApi = {
   login: (email: string, password: string) =>
-    api.post<{ email: string }>('/auth/login', { email, password }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/login', { email, password }),
 
   register: (data: { email: string; password: string; role: import('@/types').UserRole; firstName?: string; lastName?: string; name?: string }) =>
     api.post<{ email: string }>('/auth/register', data),
