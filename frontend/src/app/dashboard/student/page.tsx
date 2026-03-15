@@ -15,6 +15,7 @@ import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { useAuthStore } from '@/stores';
 import type { Application, ApplicationStatus } from '@/types';
 
 // =============================================
@@ -243,6 +244,7 @@ function ApplicationCard({ application }: { application: Application }) {
 
 export default function StudentDashboard() {
   const [activeTab, setActiveTab] = useState('overview');
+  const { student } = useAuthStore();
 
   return (
     <div className="space-y-10 max-w-7xl mx-auto">
@@ -255,22 +257,22 @@ export default function StudentDashboard() {
         <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
           <div className="flex items-center gap-6">
             <Avatar className="h-24 w-24 border-4 border-background shadow-xl rounded-2xl">
-              <AvatarImage src={mockStudent.avatar} />
+              <AvatarImage src={student?.avatar} />
               <AvatarFallback className="bg-primary/10 text-primary text-3xl font-bold rounded-2xl">
-                {mockStudent.firstName[0]}{mockStudent.lastName[0]}
+                {student?.firstName?.[0]}{student?.lastName?.[0]}
               </AvatarFallback>
             </Avatar>
             <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tight">Salom, {mockStudent.firstName}! 👋</h1>
+              <h1 className="text-3xl font-bold tracking-tight">Salom, {student?.firstName || 'Talaba'}! 👋</h1>
               <div className="flex flex-wrap items-center gap-3 text-muted-foreground font-medium">
                 <div className="flex items-center gap-1.5">
                   <Building2 className="h-4 w-4" />
-                  {mockStudent.university}
+                  {student?.university || 'Universitet'}
                 </div>
                 <div className="h-1 w-1 rounded-full bg-border" />
                 <div className="flex items-center gap-1.5">
                   <Award className="h-4 w-4" />
-                  {mockStudent.course}-kurs
+                  {student?.course || '1'}-kurs
                 </div>
               </div>
             </div>

@@ -4,12 +4,19 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/stores';
 
 // =============================================
 // CTA Section Component
 // =============================================
 
 export function CTASection() {
+  const { user } = useAuthStore();
+
+  // Agar user kirgan bo'lsa, CTA sectionni ko'rsatmaymiz
+  if (user) {
+    return null;
+  }
   return (
     <section className="py-24 relative overflow-hidden bg-primary">
       {/* Subtle Background Overlay */}
