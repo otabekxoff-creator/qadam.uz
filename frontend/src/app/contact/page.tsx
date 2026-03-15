@@ -35,7 +35,6 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <Button 
-                asChild 
                 className="w-full"
                 onClick={() => window.location.href = 'tel:+998880016777'}
               >
@@ -54,7 +53,6 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <Button 
-                asChild 
                 variant="outline"
                 className="w-full"
                 onClick={() => window.location.href = 'mailto:info@step.uz'}
