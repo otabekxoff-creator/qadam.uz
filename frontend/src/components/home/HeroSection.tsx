@@ -21,7 +21,6 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-6 text-balance">
-              Step.uz <br />
               <span className="text-primary">Kelajak shu yerda</span>
             </h1>
             

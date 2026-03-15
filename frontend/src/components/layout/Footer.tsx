@@ -56,7 +56,7 @@ export function Footer() {
   return (
     <footer className="border-t border-white/5 bg-background/50 backdrop-blur-xl">
       {/* Main Footer Content */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-5">
           {/* Brand Section */}
           <div className="lg:col-span-2">
@@ -64,9 +64,6 @@ export function Footer() {
               <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-primary to-teal-600 group-hover:rotate-12 transition-transform shadow-lg shadow-primary/20">
                 <GraduationCap className="h-7 w-7 text-white" />
               </div>
-              <span className="text-3xl font-bold bg-gradient-to-r from-primary to-teal-400 bg-clip-text text-transparent">
-                Step.uz
-              </span>
             </Link>
             <p className="text-muted-foreground mb-8 max-w-sm text-lg leading-relaxed">
               O'zbekiston yoshlari uchun innovatsion platforma. 
