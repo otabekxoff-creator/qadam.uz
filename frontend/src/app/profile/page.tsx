@@ -108,11 +108,8 @@ export default function ProfilePage() {
   return (
     <div className="min-h-[calc(100vh-8rem)] bg-muted/30 py-8">
       <div className="container mx-auto px-4 max-w-4xl">
-        <div className="flex items-center justify-between mb-6">
+        <div className="mb-6">
           <h1 className="text-3xl font-bold">Profil</h1>
-          <Button variant={isEditing ? 'default' : 'outline'} onClick={() => setIsEditing(!isEditing)} className={isEditing ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : ''}>
-            {isEditing ? <><Save className="h-4 w-4 mr-2" /> Bekor qilish</> : <><Edit2 className="h-4 w-4 mr-2" /> Tahrirlash</>}
-          </Button>
         </div>
 
         <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -181,6 +178,13 @@ export default function ProfilePage() {
               )}
             </CardContent>
           </Card>
+
+          {/* Tahrirlash tugmasi */}
+          <div className="lg:col-span-2">
+            <Button variant={isEditing ? 'default' : 'outline'} onClick={() => setIsEditing(!isEditing)} className={isEditing ? 'bg-emerald-500 hover:bg-emerald-600 text-white' : ''}>
+              {isEditing ? <><Save className="h-4 w-4 mr-2" /> Bekor qilish</> : <><Edit2 className="h-4 w-4 mr-2" /> Tahrirlash</>}
+            </Button>
+          </div>
         </form>
       </div>
     </div>
