@@ -20,7 +20,7 @@ export default function SettingsPage() {
   const [formData, setFormData] = useState({
     firstName: student?.firstName || '',
     lastName: student?.lastName || '',
-    email: student?.email || company?.email || user?.email || '',
+    email: user?.email || '',
     phone: student?.phone || company?.phone || '',
     currentPassword: '',
     newPassword: '',
@@ -48,11 +48,9 @@ export default function SettingsPage() {
           ...student,
           firstName: formData.firstName,
           lastName: formData.lastName,
-          email: formData.email,
           phone: formData.phone
         } : undefined, company ? {
           ...company,
-          email: formData.email,
           phone: formData.phone
         } : undefined);
       }

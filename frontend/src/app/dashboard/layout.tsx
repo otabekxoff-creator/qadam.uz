@@ -26,13 +26,7 @@ export default function DashboardLayout({
   };
 
   const getUserEmail = () => {
-    if (student) {
-      return student.email || user?.email;
-    }
-    if (company) {
-      return company.email || user?.email;
-    }
-    return user?.email;
+    return user?.email || '';
   };
 
   const handleLogout = () => {
