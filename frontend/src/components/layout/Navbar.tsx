@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -46,6 +46,7 @@ const navLinks = [
 export function Navbar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   
   const { isAuthenticated, user, student, company, logout } = useAuthStore();
   const fullName = getUserFullName();
@@ -56,6 +57,16 @@ export function Navbar() {
     logout();
     router.push('/');
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const getDashboardPath = () => {
     if (userIsStudent) return '/dashboard/student';
@@ -82,7 +93,7 @@ export function Navbar() {
           <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-sm active:scale-95 transition-transform">
             <GraduationCap className="h-6 w-6" />
           </div>
-          <span className="text-xl font-bold text-foreground tracking-tight">
+          <span className={`text-xl font-bold text-foreground tracking-tight transition-all duration-300 ${scrolled ? 'opacity-0 scale-95' : 'opacity-100 scale-100'}`}>
             Step.uz
           </span>
         </Link>

@@ -254,7 +254,7 @@ export default function StudentDashboard() {
         animate={{ y: 0, opacity: 1 }}
         className="relative overflow-hidden bg-card border border-border/50 rounded-3xl p-8 shadow-sm"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+        <div className="flex flex-col lg:flex-col lg:items-start justify-between gap-8 relative z-10">
           <div className="flex items-center gap-6">
             <Avatar className="h-24 w-24 border-4 border-background shadow-xl rounded-2xl">
               <AvatarImage src={student?.avatar} />
