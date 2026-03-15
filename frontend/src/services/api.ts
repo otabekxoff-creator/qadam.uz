@@ -54,7 +54,7 @@ class ApiClient {
     }
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 soniya timeout
+    const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 soniya timeout
 
     try {
       const response = await fetch(url, {
@@ -68,6 +68,7 @@ class ApiClient {
 
       if (!response.ok) {
         const error = await response.json().catch(() => ({ message: 'Serverda xatolik yuz berdi' }));
+        console.error('API Error:', error);
         throw new Error(error.message || 'Xatolik yuz berdi');
       }
 
