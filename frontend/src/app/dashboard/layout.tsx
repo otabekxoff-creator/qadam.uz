@@ -13,11 +13,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { user, setToken, setUser } = useAuthStore();
+  const { user } = useAuthStore();
 
   const handleLogout = () => {
-    setToken(null);
-    setUser(null, null, null);
+    const { logout } = useAuthStore.getState();
+    logout();
     window.location.href = '/';
   };
 
@@ -111,14 +111,13 @@ export default function DashboardLayout({
           </div>
           
           <div className="flex items-center gap-1 lg:gap-2">
-            <div className="container mx-auto">
+            <div className="container mx-auto flex items-center gap-2">
               <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
                 {user?.firstName} {user?.lastName}
               </span>
               <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
               </div>
-              <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
             </div>
           </div>
         </div>

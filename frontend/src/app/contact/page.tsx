@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Phone, Mail, MapPin, MessageCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
+import { contactConfig } from '@/config/contact';
 
 export default function ContactPage() {
   return (
@@ -36,10 +37,10 @@ export default function ContactPage() {
             <CardContent>
               <Button 
                 className="w-full"
-                onClick={() => window.location.href = 'tel:+998880016777'}
+                onClick={() => window.location.href = `tel:${contactConfig.phone}`}
               >
                 <Phone className="h-4 w-4 mr-2" />
-                +998 88 001 6777
+                {contactConfig.phone}
               </Button>
             </CardContent>
           </Card>
@@ -55,10 +56,10 @@ export default function ContactPage() {
               <Button 
                 variant="outline"
                 className="w-full"
-                onClick={() => window.location.href = 'mailto:info@step.uz'}
+                onClick={() => window.location.href = `mailto:${contactConfig.email}`}
               >
                 <Mail className="h-4 w-4 mr-2" />
-                info@step.uz
+                {contactConfig.email}
               </Button>
             </CardContent>
           </Card>
@@ -71,15 +72,14 @@ export default function ContactPage() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-muted-foreground">
-                Farg'ona viloyati, O'zbekiston tumani<br />
-                Ziyokor ko'chasi
+              <p className="text-muted-foreground whitespace-pre-line">
+                {contactConfig.address.full}
               </p>
               <div className="mt-4 space-y-2">
                 <p className="text-sm text-muted-foreground">
                   <strong>Koordinatalar:</strong><br />
-                  40°22'30.3"N 70°48'42.7"E<br />
-                  40.37509, 70.81185
+                  {contactConfig.address.coordinates.dms}<br />
+                  {contactConfig.address.coordinates.decimal}
                 </p>
               </div>
             </CardContent>
@@ -93,12 +93,12 @@ export default function ContactPage() {
           <CardContent>
             <div className="grid md:grid-cols-2 gap-4 text-muted-foreground">
               <div>
-                <p><strong>Dushanba - Juma:</strong> 09:00 - 18:00</p>
-                <p><strong>Shanba:</strong> 10:00 - 16:00</p>
+                <p><strong>{contactConfig.workingHours.weekdays}</strong></p>
+                <p><strong>{contactConfig.workingHours.saturday}</strong></p>
               </div>
               <div>
-                <p><strong>Yakshanba:</strong> Dam olish kuni</p>
-                <p><strong>Toshkent vaqti:</strong> UTC+5</p>
+                <p><strong>{contactConfig.workingHours.sunday}</strong></p>
+                <p><strong>{contactConfig.workingHours.timezone}</strong></p>
               </div>
             </div>
           </CardContent>

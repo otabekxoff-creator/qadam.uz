@@ -16,7 +16,7 @@ interface AuthState {
   error: string | null;
 
   // Actions
-  setUser: (user: User, student?: Student, company?: Company) => void;
+  setUser: (user: User | null, student?: Student | null, company?: Company | null) => void;
   setToken: (token: string) => void;
   setLoading: (loading: boolean) => void;
   setError: (error: string | null) => void;
@@ -42,7 +42,7 @@ export const useAuthStore = create<AuthState>()(
 
       setUser: (user, student, company) => {
         const token = get().token;
-        if (token) {
+        if (token && user) {
           localStorage.setItem('token', token);
         }
 
@@ -50,7 +50,7 @@ export const useAuthStore = create<AuthState>()(
           user,
           student: student || null,
           company: company || null,
-          isAuthenticated: true,
+          isAuthenticated: !!user,
           isLoading: false,
           error: null,
         });
@@ -66,17 +66,10 @@ export const useAuthStore = create<AuthState>()(
       setError: (error) => set({ error, isLoading: false }),
 
       logout: () => {
-        localStorage.removeItem('token');
-        set({
-          user: null as any,
-          student: null,
-          company: null,
-          token: null,
-          isAuthenticated: false,
-          isLoading: false,
-          error: null,
-        });
-      },
+    localStorage.removeItem('token');
+    const { setUser } = get();
+    setUser(null, null, null);
+  },
 
       updateStudent: (studentData) => {
         const currentStudent = get().student;

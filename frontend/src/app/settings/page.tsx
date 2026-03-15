@@ -13,6 +13,7 @@ import { toast } from 'sonner';
 export default function SettingsPage() {
   const { user, setUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
+  const [isDownloading, setIsDownloading] = useState<string | null>(null);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   
@@ -65,6 +66,36 @@ export default function SettingsPage() {
     setIsLoading(true);
 
     try {
+      // Parol tekshiruvi
+      if (!formData.currentPassword) {
+        toast.error('Joriy parolni kiriting');
+        return;
+      }
+
+      if (!formData.newPassword) {
+        toast.error('Yangi parolni kiriting');
+        return;
+      }
+
+      if (formData.newPassword.length < 8) {
+        toast.error('Yangi parol kamida 8 ta belgidan iborat bo\'lishi kerak');
+        return;
+      }
+
+      if (formData.newPassword !== formData.confirmPassword) {
+        toast.error('Parollar mos kelmadi');
+        return;
+      }
+
+      // Parol kuchini tekshirish (kamida bitta harf va bitta raqam)
+      const hasLetter = /[a-zA-Z]/.test(formData.newPassword);
+      const hasNumber = /\d/.test(formData.newPassword);
+      
+      if (!hasLetter || !hasNumber) {
+        toast.error('Parolda kamida bitta harf va bitta raqam bo\'lishi kerak');
+        return;
+      }
+
       // Simulate API call
       await new Promise(resolve => setTimeout(resolve, 1000));
       
@@ -82,22 +113,60 @@ export default function SettingsPage() {
     }
   };
 
-  const downloadPrivacyPolicy = () => {
-    // Simulate PDF download
-    const link = document.createElement('a');
-    link.href = '/documents/privacy-policy.pdf';
-    link.download = 'maxfiylik-siyosati.pdf';
-    link.click();
-    toast.success('Maxfiylik siyosati yuklanmoqda...');
+  const downloadPrivacyPolicy = async () => {
+    setIsDownloading('privacy');
+    try {
+      const response = await fetch('/documents/privacy-policy.pdf');
+      
+      if (!response.ok) {
+        throw new Error('Hujjat topilmadi');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'maxfiylik-siyosati.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      toast.success('Maxfiylik siyosati muvaffaqiyatli yuklandi!');
+    } catch (error) {
+      console.error('Download error:', error);
+      toast.error('Maxfiylik siyosatini yuklab bo\'lmadi. Iltimos, keyinroq urinib ko\'ring.');
+    } finally {
+      setIsDownloading(null);
+    }
   };
 
-  const downloadTerms = () => {
-    // Simulate PDF download
-    const link = document.createElement('a');
-    link.href = '/documents/terms-of-service.pdf';
-    link.download = 'foydalanish-shartlari.pdf';
-    link.click();
-    toast.success('Foydalanish shartlari yuklanmoqda...');
+  const downloadTerms = async () => {
+    setIsDownloading('terms');
+    try {
+      const response = await fetch('/documents/terms-of-service.pdf');
+      
+      if (!response.ok) {
+        throw new Error('Hujjat topilmadi');
+      }
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'foydalanish-shartlari.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+      
+      toast.success('Foydalanish shartlari muvaffaqiyatli yuklandi!');
+    } catch (error) {
+      console.error('Download error:', error);
+      toast.error('Foydalanish shartlarini yuklab bo\'lmadi. Iltimos, keyinroq urinib ko\'ring.');
+    } finally {
+      setIsDownloading(null);
+    }
   };
 
   return (
@@ -306,18 +375,38 @@ export default function SettingsPage() {
                   variant="outline" 
                   className="w-full"
                   onClick={downloadPrivacyPolicy}
+                  disabled={isDownloading === 'privacy'}
                 >
-                  <Download className="h-4 w-4 mr-2" />
-                  Maxfiylik siyosati (PDF)
+                  {isDownloading === 'privacy' ? (
+                    <>
+                      <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      Yuklanmoqda...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="h-4 w-4 mr-2" />
+                      Maxfiylik siyosati (PDF)
+                    </>
+                  )}
                 </Button>
                 
                 <Button 
                   variant="outline" 
                   className="w-full"
                   onClick={downloadTerms}
+                  disabled={isDownloading === 'terms'}
                 >
-                  <Download className="h-4 w-4 mr-2" />
-                  Foydalanish shartlari (PDF)
+                  {isDownloading === 'terms' ? (
+                    <>
+                      <div className="h-4 w-4 mr-2 animate-spin rounded-full border-2 border-primary border-t-transparent" />
+                      Yuklanmoqda...
+                    </>
+                  ) : (
+                    <>
+                      <Download className="h-4 w-4 mr-2" />
+                      Foydalanish shartlari (PDF)
+                    </>
+                  )}
                 </Button>
               </CardContent>
             </Card>
