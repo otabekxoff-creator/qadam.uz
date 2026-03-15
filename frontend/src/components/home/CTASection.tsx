@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useAuthStore } from '@/stores';
+import { useState, useEffect } from 'react';
 
 // =============================================
 // CTA Section Component
@@ -12,13 +13,25 @@ import { useAuthStore } from '@/stores';
 
 export function CTASection() {
   const { user } = useAuthStore();
+  const [scrolled, setScrolled] = useState(false);
+
+  // Scroll detection
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 400; // CTA section uchun keyinroq
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Agar user kirgan bo'lsa, CTA sectionni ko'rsatmaymiz
   if (user) {
     return null;
   }
   return (
-    <section className="py-16 relative overflow-hidden bg-primary">
+    <section className={`py-16 relative overflow-hidden bg-primary transition-all duration-500 ${scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10 pointer-events-none'}`}>
       {/* Subtle Background Overlay */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.1)_0%,transparent_100%)]" />
       
