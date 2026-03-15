@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   Search, Rocket, MapPin, DollarSign, Filter, X,
@@ -306,9 +307,9 @@ function StartupCard({ startup }: { startup: Startup }) {
         <CardHeader className="pb-4 pt-6 px-6">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-4">
-              <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-primary font-bold text-xl border border-border/50 group-hover:scale-105 transition-transform">
+              <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center text-primary font-bold text-xl border border-border/50 group-hover:scale-105 transition-transform relative overflow-hidden">
                 {startup.logo ? (
-                  <img src={startup.logo} alt={startup.name} className="h-full w-full rounded-lg object-cover" />
+                  <Image src={startup.logo} alt={startup.name} fill className="object-cover" />
                 ) : (
                   startup.name[0]
                 )}

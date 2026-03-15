@@ -16,6 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Textarea } from '@/components/ui/textarea';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ShareButtons } from '@/components/common/ShareButtons';
 import {
   Dialog,
   DialogContent,
@@ -409,9 +410,7 @@ export default function JobDetailPage({ params }: { params: Promise<{ id: string
                           <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
                             <Bookmark className="h-4 w-4" />
                           </Button>
-                          <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
-                            <Share2 className="h-4 w-4" />
-                          </Button>
+                          <ShareButtons title={job.title} />
                         </div>
                       </div>
                     </div>

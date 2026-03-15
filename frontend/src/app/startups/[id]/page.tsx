@@ -16,6 +16,7 @@ import { Progress } from '@/components/ui/progress';
 import { Separator } from '@/components/ui/separator';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ShareButtons } from '@/components/common/ShareButtons';
 import type { Startup, StartupStage } from '@/types';
 
 // =============================================
@@ -245,9 +246,7 @@ export default function StartupDetailPage({ params }: { params: Promise<{ id: st
                           <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
                             <Heart className="h-4 w-4" />
                           </Button>
-                          <Button variant="outline" size="icon" className="rounded-xl border-border/60 hover:bg-secondary/50">
-                            <Share2 className="h-4 w-4" />
-                          </Button>
+                          <ShareButtons title={startup.name} />
                         </div>
                       </div>
                       <p className="text-muted-foreground font-medium leading-relaxed">{startup.description}</p>

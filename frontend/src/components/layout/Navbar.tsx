@@ -18,6 +18,7 @@ import {
   LayoutDashboard,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/layout/ThemeToggle';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
   DropdownMenu,
@@ -101,6 +102,7 @@ export function Navbar() {
 
         {/* Desktop Auth/User Menu */}
         <div className="hidden md:flex items-center space-x-3">
+          <ThemeToggle />
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>

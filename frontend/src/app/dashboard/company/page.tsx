@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Progress } from '@/components/ui/progress';
 import type { Job, Application, ApplicationStatus } from '@/types';
 
 // =============================================
@@ -274,34 +275,57 @@ export default function CompanyDashboard() {
   const [activeTab, setActiveTab] = useState('jobs');
 
   return (
-    <div className="space-y-10 max-w-7xl mx-auto">
+    <div className="container mx-auto px-4 py-8 space-y-8">
       {/* Header with Glass Card */}
       <motion.div 
         initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="bg-card p-8 rounded-2xl border border-border shadow-sm relative overflow-hidden"
+        className="relative overflow-hidden bg-card border border-border/50 rounded-3xl p-8 shadow-sm"
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
           <div className="flex items-center gap-6">
-            <div className="h-16 w-16 rounded-xl bg-secondary flex items-center justify-center border border-border text-2xl font-bold text-primary">
-              {mockCompany.name[0]}
-            </div>
-            <div>
-              <h1 className="text-3xl font-bold text-foreground">
-                {mockCompany.name}
-              </h1>
-              <p className="text-muted-foreground mt-1 text-base">
-                Kompaniya boshqaruv paneli. Kelajak jamoasini tuzing.
-              </p>
+            <Avatar className="h-24 w-24 border-4 border-background shadow-xl rounded-2xl">
+              <AvatarImage src={mockCompany.logo} />
+              <AvatarFallback className="bg-primary/10 text-primary text-3xl font-bold rounded-2xl">
+                {mockCompany.name[0]}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-2">
+              <div className="flex items-center gap-2">
+                <h1 className="text-3xl font-bold tracking-tight">{mockCompany.name}</h1>
+                {mockCompany.isVerified && (
+                  <Badge variant="secondary" className="bg-emerald-100 text-emerald-700 hover:bg-emerald-200 border-none px-2 py-0 h-5 flex items-center gap-1">
+                    <UserCheck className="h-3 w-3" />
+                    Tasdiqlangan
+                  </Badge>
+                )}
+              </div>
+              <div className="flex flex-wrap items-center gap-3 text-muted-foreground font-medium">
+                <div className="flex items-center gap-1.5">
+                  <Building2 className="h-4 w-4" />
+                  {mockCompany.industry}
+                </div>
+                <div className="h-1 w-1 rounded-full bg-border" />
+                <div className="flex items-center gap-1.5">
+                  <Users className="h-4 w-4" />
+                  {mockCompany.companySize} xodim
+                </div>
+              </div>
             </div>
           </div>
-          <div className="flex gap-3">
-            <Button className="rounded-lg px-5 h-10 shadow-sm">
-              <Plus className="mr-2 h-4 w-4" />
-              Yangi ish e'loni
-            </Button>
-            <Button variant="outline" className="rounded-lg h-10 w-10 p-0 border-border">
-              <Settings className="h-4 w-4 text-muted-foreground" />
+
+          {/* Profile Completeness */}
+          <div className="w-full lg:w-72 space-y-3 bg-secondary/20 p-5 rounded-2xl border border-border/40">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-bold text-foreground/80 uppercase tracking-tight">Kompaniya profili</span>
+              <span className="font-bold text-primary">85%</span>
+            </div>
+            <Progress value={85} className="h-2 bg-background" />
+            <p className="text-[11px] font-medium text-muted-foreground">
+              To'liq profil ko'proq iqtidorli talabalarni jalb qiladi!
+            </p>
+            <Button variant="link" className="p-0 h-auto text-xs font-bold text-primary" asChild>
+              <Link href="/dashboard/company/profile">Tahrirlash →</Link>
             </Button>
           </div>
         </div>

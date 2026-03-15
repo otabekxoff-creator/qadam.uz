@@ -2,11 +2,12 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { 
   Briefcase, FileText, Eye, Clock, CheckCircle, XCircle,
   TrendingUp, Calendar, MapPin, Building2, ArrowRight,
-  Plus, Edit, Settings, Award
+  Plus, Edit, Settings, Award, Download
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -249,29 +250,60 @@ export default function StudentDashboard() {
       <motion.div 
         initial={{ y: -10, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        className="glass p-8 rounded-2xl border border-border/50 relative overflow-hidden bg-card shadow-sm"
+        className="relative overflow-hidden bg-card border border-border/50 rounded-3xl p-8 shadow-sm"
       >
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 relative z-10">
-          <div>
-            <h1 className="text-3xl font-bold text-foreground">
-              Xush kelibsiz, Talaba!
-            </h1>
-            <p className="text-muted-foreground mt-1 text-base">
-              Sizning bugungi karyera holatingiz va yangi imkoniyatlar.
-            </p>
+        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+          <div className="flex items-center gap-6">
+            <Avatar className="h-24 w-24 border-4 border-background shadow-xl rounded-2xl">
+              <AvatarImage src={mockStudent.avatar} />
+              <AvatarFallback className="bg-primary/10 text-primary text-3xl font-bold rounded-2xl">
+                {mockStudent.firstName[0]}{mockStudent.lastName[0]}
+              </AvatarFallback>
+            </Avatar>
+            <div className="space-y-2">
+              <h1 className="text-3xl font-bold tracking-tight">Salom, {mockStudent.firstName}! 👋</h1>
+              <div className="flex flex-wrap items-center gap-3 text-muted-foreground font-medium">
+                <div className="flex items-center gap-1.5">
+                  <Building2 className="h-4 w-4" />
+                  {mockStudent.university}
+                </div>
+                <div className="h-1 w-1 rounded-full bg-border" />
+                <div className="flex items-center gap-1.5">
+                  <Award className="h-4 w-4" />
+                  {mockStudent.course}-kurs
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="flex gap-3">
-            <Button className="rounded-lg px-5 h-10" asChild>
+
+          {/* Profile Completeness */}
+          <div className="w-full lg:w-72 space-y-3 bg-secondary/20 p-5 rounded-2xl border border-border/40">
+            <div className="flex items-center justify-between text-sm">
+              <span className="font-bold text-foreground/80 uppercase tracking-tight">Profil holati</span>
+              <span className="font-bold text-primary">{mockStudent.profileCompleteness}%</span>
+            </div>
+            <Progress value={mockStudent.profileCompleteness} className="h-2 bg-background" />
+            <p className="text-[11px] font-medium text-muted-foreground">
+              Profilingizni 100% to'ldiring va ish beruvchilar e'tiborini torting!
+            </p>
+            <Button variant="link" className="p-0 h-auto text-xs font-bold text-primary" asChild>
+              <Link href="/profile">To'ldirishni davom ettirish →</Link>
+            </Button>
+          </div>
+          <div className="flex gap-3 mt-6 lg:mt-0">
+            <Button className="rounded-xl h-12 px-6 font-bold shadow-sm shadow-primary/20" asChild>
               <Link href="/profile">
-                <Plus className="mr-2 h-4 w-4" />
-                Profilni tahrirlash
+                <Edit className="h-4 w-4 mr-2" />
+                Tahrirlash
               </Link>
             </Button>
-            <Button variant="outline" className="rounded-lg px-5 h-10" asChild>
-              <Link href="/settings">
-                <Settings className="mr-2 h-4 w-4" />
-                Sozlamalar
-              </Link>
+            <Button 
+              variant="outline" 
+              className="rounded-xl h-12 px-6 font-bold border-border/60"
+              onClick={() => window.print()}
+            >
+              <Download className="h-4 w-4 mr-2" />
+              CV yuklab olish
             </Button>
           </div>
         </div>

@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuthStore } from '@/stores';
 import { authApi } from '@/services/api';
+import { toast } from 'sonner';
 import type { UserRole } from '@/types';
 
 // =============================================
@@ -112,12 +113,16 @@ function RegistrationForm({
     setError(null);
 
     if (formData.password !== formData.confirmPassword) {
-      setError('Parollar mos kelmaydi');
+      const msg = 'Parollar mos kelmaydi';
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
     if (formData.password.length < 8) {
-      setError('Parol kamida 8 ta belgidan iborat bo\'lishi kerak');
+      const msg = 'Parol kamida 8 ta belgidan iborat bo\'lishi kerak';
+      setError(msg);
+      toast.error(msg);
       return;
     }
 
@@ -140,8 +145,11 @@ function RegistrationForm({
       const response = await authApi.register(requestData);
       setEmailForVerify(response.email);
       setStep('code');
+      toast.success('Tasdiqlash kodi yuborildi!');
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Ro\'yxatdan o\'tishda xatolik yuz berdi');
+      const msg = err instanceof Error ? err.message : 'Ro\'yxatdan o\'tishda xatolik yuz berdi';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
@@ -157,6 +165,7 @@ function RegistrationForm({
 
       setToken(result.token);
       setUser(result.user, result.student, result.company);
+      toast.success("Muvaffaqiyatli ro'yxatdan o'tdingiz!");
 
       if (isStudent) {
         router.push('/dashboard/student');
@@ -166,7 +175,9 @@ function RegistrationForm({
         router.push('/');
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Tasdiqlashda xatolik yuz berdi');
+      const msg = err instanceof Error ? err.message : 'Tasdiqlashda xatolik yuz berdi';
+      setError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }

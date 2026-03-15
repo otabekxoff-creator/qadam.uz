@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Checkbox } from '@/components/ui/checkbox';
 import { useAuthStore } from '@/stores';
 import { authApi } from '@/services/api';
+import { toast } from 'sonner';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -36,8 +37,11 @@ export default function LoginPage() {
       const response = await authApi.login(email, password);
       setEmailForVerify(response.email);
       setStep('code');
+      toast.success('Tasdiqlash kodi yuborildi!');
     } catch (err) {
-      setLocalError(err instanceof Error ? err.message : 'Kirishda xatolik yuz berdi');
+      const msg = err instanceof Error ? err.message : 'Kirishda xatolik yuz berdi';
+      setLocalError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
@@ -53,6 +57,7 @@ export default function LoginPage() {
 
       setToken(result.token);
       setUser(result.user, result.student, result.company);
+      toast.success('Muvaffaqiyatli kirdingiz!');
 
       if (result.user.role === 'STUDENT') {
         router.push('/dashboard/student');
@@ -64,7 +69,9 @@ export default function LoginPage() {
         router.push('/');
       }
     } catch (err) {
-      setLocalError(err instanceof Error ? err.message : 'Kirishni tasdiqlashda xatolik yuz berdi');
+      const msg = err instanceof Error ? err.message : 'Kirishni tasdiqlashda xatolik yuz berdi';
+      setLocalError(msg);
+      toast.error(msg);
     } finally {
       setIsLoading(false);
     }
