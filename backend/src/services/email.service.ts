@@ -18,6 +18,12 @@ const transporter = hasSmtpConfig
         user: smtpUser,
         pass: smtpPass,
       },
+      tls: {
+        rejectUnauthorized: false // Render uchun TLS ni o'chirish
+      },
+      connectionTimeout: 10000, // 10 sekund
+      greetingTimeout: 10000,
+      socketTimeout: 10000,
     })
   : null;
 

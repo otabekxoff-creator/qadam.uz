@@ -42,6 +42,16 @@ services:
         fromDatabase:
           name: step-db
           property: connectionString
+      - key: SMTP_HOST
+        value: smtp.resend.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        value: resend
+      - key: SMTP_PASS
+        value: re_your_api_key_here
+      - key: SMTP_FROM
+        value: Step.uz <noreply@step.uz>
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN
