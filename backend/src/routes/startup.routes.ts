@@ -103,7 +103,7 @@ router.patch(
   authenticate, 
   authorize('ADMIN'),
   validate(updateStatusSchema),
-  startupController.updateStartupStatus
+  startupController.updateStatus
 );
 
 export default router;
