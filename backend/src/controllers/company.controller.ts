@@ -48,17 +48,6 @@ export const updateCompanyProfile = asyncHandler(async (req: AuthenticatedReques
     throw new NotFoundError('Kompaniya profili topilmadi');
   }
 
-  // Website URL validatsiyasi
-  if (website && !/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/.test(website)) {
-    throw new ValidationError('Website URL noto\'g\'ri formatda');
-  }
-
-  // Kompaniya hajmi validatsiyasi
-  const validSizes = ['1-10', '11-50', '51-200', '201-500', '500+'];
-  if (size && !validSizes.includes(size)) {
-    throw new ValidationError(`Kompaniya hajmi quyidagilardan biri bo'lishi kerak: ${validSizes.join(', ')}`);
-  }
-
   const updatedCompany = await prisma.company.update({
     where: { userId: req.user!.userId },
     data: {

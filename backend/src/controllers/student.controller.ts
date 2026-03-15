@@ -45,16 +45,6 @@ export const updateStudentProfile = asyncHandler(async (req: AuthenticatedReques
     throw new NotFoundError('Talaba profili topilmadi');
   }
 
-  // GPA validatsiyasi
-  if (gpa !== undefined && (gpa < 0 || gpa > 5)) {
-    throw new ValidationError('GPA 0 dan 5 gacha bo\'lishi kerak');
-  }
-
-  // Telefon raqam validatsiyasi
-  if (phone && !/^\+?998\d{9}$/.test(phone.replace(/\s/g, ''))) {
-    throw new ValidationError('Telefon raqam noto\'g\'ri formatda (+998XXXXXXXXX)');
-  }
-
   const updatedStudent = await prisma.student.update({
     where: { userId: req.user!.userId },
     data: {
@@ -63,7 +53,7 @@ export const updateStudentProfile = asyncHandler(async (req: AuthenticatedReques
       phone: phone?.trim(),
       university: university?.trim(),
       major: major?.trim(),
-      gpa: gpa !== undefined ? parseFloat(gpa) : undefined,
+      gpa: gpa !== undefined ? (typeof gpa === 'string' ? parseFloat(gpa) : gpa) : undefined,
       about: about?.trim(),
       skills: Array.isArray(skills) ? skills : (typeof skills === 'string' ? skills.split(',').map((s: string) => s.trim()) : undefined),
     },
