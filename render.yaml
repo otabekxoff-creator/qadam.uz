@@ -43,15 +43,15 @@ services:
           name: step-db
           property: connectionString
       - key: SMTP_HOST
-        value: smtp-relay.brevo.com
+        value: smtp.gmail.com
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: your-brevo-email@example.com
+        value: otabekxoff@gmail.com
       - key: SMTP_PASS
-        value: your-brevo-api-key
+        value: acyf sae vlob wblq
       - key: SMTP_FROM
-        value: Step.uz <noreply@step.uz>
+        value: Step.uz <otabekxoff@gmail.com>
       - key: JWT_SECRET
         generateValue: true
       - key: JWT_EXPIRES_IN

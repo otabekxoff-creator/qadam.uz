@@ -1,5 +1,4 @@
 import nodemailer from 'nodemailer';
-import { sendGmailEmail } from './gmail.service';
 import logger from '@/config/logger';
 
 const smtpHost = process.env.SMTP_HOST;
@@ -9,7 +8,6 @@ const smtpPass = process.env.SMTP_PASS;
 const smtpFrom = process.env.SMTP_FROM || 'no-reply@step.uz';
 
 const hasSmtpConfig = smtpHost && smtpUser && smtpPass;
-const hasGmailConfig = process.env.GMAIL_CLIENT_ID && process.env.GMAIL_CLIENT_SECRET && process.env.GMAIL_REFRESH_TOKEN;
 
 const transporter = hasSmtpConfig
   ? nodemailer.createTransport({
@@ -23,49 +21,41 @@ const transporter = hasSmtpConfig
       tls: {
         rejectUnauthorized: false // Render uchun TLS ni o'chirish
       },
-      connectionTimeout: 10000, // 10 sekund
-      greetingTimeout: 10000,
-      socketTimeout: 10000,
+      connectionTimeout: 15000, // 15 sekund
+      greetingTimeout: 15000,
+      socketTimeout: 15000,
     })
   : null;
 
 export async function sendEmail(to: string, subject: string, html: string) {
-  // Gmail API dan foydalanish (eng ishonchli)
-  if (hasGmailConfig) {
-    try {
-      await sendGmailEmail(to, subject, html);
-      logger.info(`✅ Email sent via Gmail API to ${to}`);
-      return;
-    } catch (error) {
-      logger.warn(`Gmail API failed, trying SMTP: ${error}`);
+  if (!hasSmtpConfig || !transporter) {
+    logger.warn(
+      `SMTP configuration is missing. Email to ${to} with subject "${subject}" was not actually sent.`
+    );
+    // Development vaqtida kodni ko'rish uchun logga chiqaramiz
+    const codeMatch = html.match(/>(\d{6})</);
+    if (codeMatch) {
+      logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
     }
+    return;
   }
 
-  // SMTP orqali yuborish
-  if (hasSmtpConfig && transporter) {
-    try {
-      await transporter.sendMail({
-        from: smtpFrom,
-        to,
-        subject,
-        html,
-      });
-      logger.info(`✅ Email sent via SMTP to ${to}`);
-      return;
-    } catch (error) {
-      logger.warn(`SMTP failed: ${error}`);
+  try {
+    await transporter.sendMail({
+      from: smtpFrom,
+      to,
+      subject,
+      html,
+    });
+    logger.info(`✅ Email sent via SMTP to ${to}`);
+  } catch (error) {
+    logger.error(`SMTP failed: ${error}`);
+    
+    // Fallback: logda kod ko'rsatish
+    const codeMatch = html.match(/>(\d{6})</);
+    if (codeMatch) {
+      logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
     }
-  }
-
-  // Hech qaysi usul ishlamasa
-  logger.warn(
-    `All email methods failed. Email to ${to} with subject "${subject}" was not sent.`
-  );
-  
-  // Development vaqtida kodni ko'rish uchun logga chiqaramiz
-  const codeMatch = html.match(/>(\d{6})</);
-  if (codeMatch) {
-    logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
   }
 }
 
