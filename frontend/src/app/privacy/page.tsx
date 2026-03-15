@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Shield, Eye, Lock, UserCheck } from 'lucide-react';
+import { Shield, Eye, Lock, UserCheck, Download } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function PrivacyPage() {
   return (
@@ -88,16 +89,16 @@ export default function PrivacyPage() {
 
           <Card>
             <CardHeader>
-              <CardTitle>Aloqa</CardTitle>
+              <CardTitle>Hujjatni yuklab olish</CardTitle>
             </CardHeader>
             <CardContent>
-              <p>
-                Maxfiylik siyosati bo'yicha savollaringiz bo'lsa, biz bilan bog'laning:
+              <p className="text-muted-foreground mb-4">
+                Maxfiylik siyosatini PDF formatida yuklab olishingiz mumkin
               </p>
-              <div className="mt-4 space-y-2">
-                <p><strong>Email:</strong> privacy@step.uz</p>
-                <p><strong>Telefon:</strong> +998 88 001 6777</p>
-              </div>
+              <Button className="w-full">
+                <Download className="h-4 w-4 mr-2" />
+                Maxfiylik siyosatini yuklab olish (PDF)
+              </Button>
             </CardContent>
           </Card>
         </div>

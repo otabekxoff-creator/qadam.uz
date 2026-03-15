@@ -1,8 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FileText, Users, Shield, AlertCircle } from 'lucide-react';
+import { FileText, Users, Shield, AlertCircle, Download } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 export default function TermsPage() {
   return (
@@ -119,6 +120,21 @@ export default function TermsPage() {
               <p className="text-muted-foreground">
                 Platformadan foydalanish davom ettirish ushbu shartlarni qabul qilishini anglatadi.
               </p>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Hujjatni yuklab olish</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground mb-4">
+                Foydalanish shartlarini PDF formatida yuklab olishingiz mumkin
+              </p>
+              <Button className="w-full">
+                <Download className="h-4 w-4 mr-2" />
+                Foydalanish shartlarini yuklab olish (PDF)
+              </Button>
             </CardContent>
           </Card>
         </div>

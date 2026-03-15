@@ -72,8 +72,8 @@ export default function ContactPage() {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground">
-                Farg'ona viloyati, O'zbekiston tumani, Yaypon shahri<br />
-                Hokimiyat ko'chasi
+                Farg'ona viloyati, O'zbekiston tumani<br />
+                Ziyokor ko'chasi
               </p>
               <div className="mt-4 space-y-2">
                 <p className="text-sm text-muted-foreground">

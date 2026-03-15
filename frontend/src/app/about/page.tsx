@@ -32,17 +32,17 @@ const values = [
 
 const team = [
   {
-    name: "Aziz Karimov",
-    role: "CEO & Founder",
+    name: "Otabek Ravshanov",
+    role: "CEO",
     description: "10+ yil IT tajribasi"
   },
   {
-    name: "Dilnoza Raximova",
+    name: "Baxodirov Baxtiyor",
     role: "CTO",
     description: "8+ yil dasturlash tajribasi"
   },
   {
-    name: "Javohir Toshmatov",
+    name: "Yunusaliyev Shukurjon",
     role: "Head of Operations",
     description: "6+ yil operatsion boshqaruvi"
   }
@@ -141,19 +141,22 @@ export default function AboutPage() {
         >
           <Card className="bg-primary text-primary-foreground">
             <CardContent className="text-center p-12">
-              <h2 className="text-3xl font-bold mb-6">Biz bilan bog'laning</h2>
+              <h2 className="text-3xl font-bold mb-6">Kompaniya haqida</h2>
               <p className="text-lg mb-8 opacity-90">
-                Hamkorlik yoki savollaringiz bo'lsa, biz bilan bog'laning
+                Bizning kompaniya va boshqa loyihalarimiz haqida to'liq ma'lumot
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Button variant="secondary" asChild>
+                  <a href="https://baxa-tech.vercel.app/" target="_blank" rel="noopener noreferrer">
+                    Kompaniya sayti
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </a>
+                </Button>
                 <Button variant="secondary" asChild>
                   <a href="/contact">Aloqa</a>
                 </Button>
                 <Button variant="secondary" asChild>
                   <a href="/careers">Karyera</a>
-                </Button>
-                <Button variant="secondary" asChild>
-                  <a href="mailto:info@step.uz">Email yuborish</a>
                 </Button>
               </div>
             </CardContent>
