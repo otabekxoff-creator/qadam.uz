@@ -107,13 +107,17 @@ export default function DashboardLayout({
                 <ArrowLeft className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-2" />
                 <span className="hidden sm:block">Asosiy sahifa</span>
               </Link>
-            </div>
+            </Button>
+          </div>
           
           <div className="flex items-center gap-1 lg:gap-2">
-            <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
-              {user?.firstName} {user?.lastName}
-            </span>
-            <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
+            <div className="container mx-auto">
+              <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
+                {user?.firstName} {user?.lastName}
+              </span>
+              <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
+              </div>
               <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
             </div>
           </div>
