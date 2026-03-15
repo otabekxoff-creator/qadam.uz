@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import { sendGmailEmail } from './gmail.service';
 import logger from '@/config/logger';
 
 const smtpHost = process.env.SMTP_HOST;
@@ -8,6 +9,7 @@ const smtpPass = process.env.SMTP_PASS;
 const smtpFrom = process.env.SMTP_FROM || 'no-reply@step.uz';
 
 const hasSmtpConfig = smtpHost && smtpUser && smtpPass;
+const hasGmailConfig = process.env.GMAIL_CLIENT_ID && process.env.GMAIL_CLIENT_SECRET && process.env.GMAIL_REFRESH_TOKEN;
 
 const transporter = hasSmtpConfig
   ? nodemailer.createTransport({
@@ -28,24 +30,43 @@ const transporter = hasSmtpConfig
   : null;
 
 export async function sendEmail(to: string, subject: string, html: string) {
-  if (!hasSmtpConfig || !transporter) {
-    logger.warn(
-      `SMTP configuration is missing. Email to ${to} with subject "${subject}" was not actually sent.`
-    );
-    // Development vaqtida kodni ko'rish uchun logga chiqaramiz
-    const codeMatch = html.match(/>(\d{6})</);
-    if (codeMatch) {
-      logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
+  // Gmail API dan foydalanish (eng ishonchli)
+  if (hasGmailConfig) {
+    try {
+      await sendGmailEmail(to, subject, html);
+      logger.info(`✅ Email sent via Gmail API to ${to}`);
+      return;
+    } catch (error) {
+      logger.warn(`Gmail API failed, trying SMTP: ${error}`);
     }
-    return;
   }
 
-  await transporter.sendMail({
-    from: smtpFrom,
-    to,
-    subject,
-    html,
-  });
+  // SMTP orqali yuborish
+  if (hasSmtpConfig && transporter) {
+    try {
+      await transporter.sendMail({
+        from: smtpFrom,
+        to,
+        subject,
+        html,
+      });
+      logger.info(`✅ Email sent via SMTP to ${to}`);
+      return;
+    } catch (error) {
+      logger.warn(`SMTP failed: ${error}`);
+    }
+  }
+
+  // Hech qaysi usul ishlamasa
+  logger.warn(
+    `All email methods failed. Email to ${to} with subject "${subject}" was not sent.`
+  );
+  
+  // Development vaqtida kodni ko'rish uchun logga chiqaramiz
+  const codeMatch = html.match(/>(\d{6})</);
+  if (codeMatch) {
+    logger.info(`🔢 Verification code for ${to}: ${codeMatch[1]}`);
+  }
 }
 
 export function generateVerificationCode(): string {
