@@ -25,6 +25,9 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Render proxy uchun sozlash
+app.set('trust proxy', true);
+
 app.use(helmet());
 const allowedOrigins = [
   process.env.FRONTEND_URL,
