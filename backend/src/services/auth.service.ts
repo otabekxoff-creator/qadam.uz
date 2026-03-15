@@ -85,7 +85,10 @@ export class AuthService {
       </div>
     `;
 
-    await sendEmail(user.email, subject, html);
+    // Emailni fonda yuboramiz (UI qotib qolmasligi uchun)
+    sendEmail(user.email, subject, html).catch(err => {
+      console.error(`Email yuborishda xatolik (${user.email}):`, err);
+    });
 
     return {
       email: user.email,
@@ -145,7 +148,10 @@ export class AuthService {
       </div>
     `;
 
-    await sendEmail(user.email, subject, html);
+    // Emailni fonda yuboramiz (UI qotib qolmasligi uchun)
+    sendEmail(user.email, subject, html).catch(err => {
+      console.error(`Email yuborishda xatolik (${user.email}):`, err);
+    });
 
     return { email: user.email };
   }
