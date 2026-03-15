@@ -11,17 +11,17 @@ import { useAuthStore } from '@/stores';
 import { toast } from 'sonner';
 
 export default function SettingsPage() {
-  const { user, setUser } = useAuthStore();
+  const { user, student, company, setUser } = useAuthStore();
   const [isLoading, setIsLoading] = useState(false);
   const [isDownloading, setIsDownloading] = useState<string | null>(null);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
   
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
+    firstName: student?.firstName || '',
+    lastName: student?.lastName || '',
+    email: student?.email || company?.email || user?.email || '',
+    phone: student?.phone || company?.phone || '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
@@ -44,13 +44,17 @@ export default function SettingsPage() {
       
       // Update user in store
       if (user) {
-        setUser({
-          ...user,
+        setUser(user, student ? {
+          ...student,
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
           phone: formData.phone
-        });
+        } : undefined, company ? {
+          ...company,
+          email: formData.email,
+          phone: formData.phone
+        } : undefined);
       }
 
       toast.success('Sozlamalar saqlandi!');

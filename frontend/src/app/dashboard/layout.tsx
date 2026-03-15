@@ -13,7 +13,27 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { user } = useAuthStore();
+  const { user, student, company } = useAuthStore();
+
+  const getUserName = () => {
+    if (student) {
+      return `${student.firstName} ${student.lastName}`;
+    }
+    if (company) {
+      return company.name;
+    }
+    return 'Foydalanuvchi';
+  };
+
+  const getUserEmail = () => {
+    if (student) {
+      return student.email || user?.email;
+    }
+    if (company) {
+      return company.email || user?.email;
+    }
+    return user?.email;
+  };
 
   const handleLogout = () => {
     const { logout } = useAuthStore.getState();
@@ -79,8 +99,8 @@ export default function DashboardLayout({
                 <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
               </div>
               <div className="flex-1 min-w-0 hidden lg:block">
-                <p className="text-xs lg:text-sm font-medium truncate">{user?.firstName} {user?.lastName}</p>
-                <p className="text-xs lg:text-xs text-muted-foreground truncate">{user?.email}</p>
+                <p className="text-xs lg:text-sm font-medium truncate">{getUserName()}</p>
+                <p className="text-xs lg:text-xs text-muted-foreground truncate">{getUserEmail()}</p>
               </div>
             </div>
             
@@ -113,7 +133,7 @@ export default function DashboardLayout({
           <div className="flex items-center gap-1 lg:gap-2">
             <div className="container mx-auto flex items-center gap-2">
               <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
-                {user?.firstName} {user?.lastName}
+                {getUserName()}
               </span>
               <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
                 <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
