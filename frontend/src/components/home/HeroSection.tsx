@@ -20,11 +20,11 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-6 text-balance">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-4 text-balance">
               <span className="text-primary">Kelajak shu yerda</span>
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed text-balance">
+            <p className="text-lg md:text-xl text-muted-foreground mb-8 max-w-2xl mx-auto leading-relaxed text-balance">
               Talabalar va startaplar uchun professional ekotizim. 
               O'z yo'lingizni biz bilan birga quring va yuksak natijalarga erishing.
             </p>
@@ -60,7 +60,7 @@ export function HeroSection() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-20 pt-10 border-t border-border/50 grid grid-cols-2 md:grid-cols-4 gap-8"
+            className="mt-12 pt-8 border-t border-border/50 grid grid-cols-2 md:grid-cols-4 gap-8"
           >
             {[
               { label: 'Talabalar', value: '10,000+' },
