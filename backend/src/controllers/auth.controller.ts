@@ -15,12 +15,19 @@ export const register = asyncHandler(async (req: Request, res: Response) => {
 
 export const login = asyncHandler(async (req: Request, res: Response) => {
   const { email, password } = req.body;
-  const result = await authService.login(email, password);
+  const result = await authService.loginDirect(email, password);
+
+  res.cookie('token', result.token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 
   res.json({
     success: true,
     data: result,
-    message: 'Kirish kodi emailingizga yuborildi',
+    message: 'Muvaffaqiyatli kirish',
   });
 });
 

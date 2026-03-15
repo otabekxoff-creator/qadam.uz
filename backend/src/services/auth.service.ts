@@ -95,7 +95,7 @@ export class AuthService {
     };
   }
 
-  async login(email: string, password: string) {
+  async loginDirect(email: string, password: string) {
     const user = await prisma.user.findUnique({
       where: { email },
       include: {
@@ -118,42 +118,21 @@ export class AuthService {
       throw new UnauthorizedError('Email yoki parol noto\'g\'ri');
     }
 
-    const code = generateVerificationCode();
-    const expiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 daqiqa
+    const token = generateToken({
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    });
 
-    await prisma.user.update({
-      where: { id: user.id },
-      data: {
-        loginCode: code,
-        loginCodeExpiresAt: expiresAt,
+    return {
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        profile: user.student || user.company,
       },
-    });
-
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const subject = 'Step.uz – Kirish uchun tasdiqlash kodi';
-    const html = `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; border-radius: 8px;">
-        <h1 style="color: #2563eb; text-align: center;">Step.uz</h1>
-        <p style="font-size: 16px; color: #0f172a;">Assalomu alaykum!</p>
-        <p style="font-size: 16px; color: #0f172a;">Tizimga kirishni tasdiqlash uchun quyidagi kodni kiriting:</p>
-        <div style="background-color: #f1f5f9; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
-          <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">${code}</span>
-        </div>
-        <p style="font-size: 14px; color: #64748b;">Kod 10 daqiqa davomida amal qiladi.</p>
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
-        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
-          Agar bu amaliyotni o‘zingiz boshlamagan bo‘lsangiz, hisobingizni himoya qilish choralarini ko‘ring.
-          <br><a href="${frontendUrl}" style="color: #2563eb; text-decoration: none;">Step.uz platformasi</a>
-        </p>
-      </div>
-    `;
-
-    // Emailni fonda yuboramiz (UI qotib qolmasligi uchun)
-    sendEmail(user.email, subject, html).catch(err => {
-      console.error(`Email yuborishda xatolik (${user.email}):`, err);
-    });
-
-    return { email: user.email };
+      token,
+    };
   }
 
   async verifyRegisterCode(email: string, code: string) {
