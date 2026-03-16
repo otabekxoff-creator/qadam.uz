@@ -102,7 +102,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
 
   const getParticipantName = () => {
     if (!chat) return '';
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
     return participant?.student 
       ? `${participant.student.firstName} ${participant.student.lastName}`
       : participant?.company?.name || 'Unknown';
@@ -110,7 +110,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
 
   const getParticipantAvatar = () => {
     if (!chat) return '';
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
     return participant?.student?.avatar || participant?.company?.logo || '';
   };
 
