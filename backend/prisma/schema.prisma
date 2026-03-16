@@ -113,8 +113,8 @@ model User {
   // Relations
   student     Student?
   company     Company?
-  applications Application[]
-  startups    Startup[]
+  applications Application[] @relation("UserApplications")
+  startups    Startup[] @relation("StartupOwner")
   chatsAsParticipant1 Chat[] @relation("ChatParticipant1")
   chatsAsParticipant2 Chat[] @relation("ChatParticipant2")
   messages    Message[]
@@ -233,6 +233,8 @@ model Application {
   student     Student          @relation(fields: [studentId], references: [id])
   companyId   String
   company     Company          @relation(fields: [companyId], references: [id])
+  userId      String
+  user        User             @relation("UserApplications", fields: [userId], references: [id])
 
   @@unique([jobId, studentId])
   @@map("applications")
@@ -274,7 +276,7 @@ model Startup {
 
   // Relations
   student              Student        @relation(fields: [studentId], references: [id])
-  user                 User           @relation(fields: [studentId], references: [id])
+  user                 User           @relation(name: "StartupOwner", fields: [studentId], references: [id])
   team                 StartupTeamMember[]
 
   @@map("startups")
@@ -431,7 +433,7 @@ model JobPreferences {
   updatedAt       DateTime  @updatedAt
 
   // Relations
-  studentId       String
+  studentId       String   @unique
   student         Student   @relation(fields: [studentId], references: [id])
 
   @@map("job_preferences")

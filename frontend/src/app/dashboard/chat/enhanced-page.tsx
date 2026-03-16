@@ -365,10 +365,13 @@ export default function EnhancedChatPage() {
                   <div key={date}>
                     <div className="flex items-center justify-center my-4">
                       <div className="bg-muted px-3 py-1 rounded-full text-xs text-muted-foreground">
-                        {new Date(dateMessages[0].createdAt).toLocaleDateString('uz-UZ', { 
-                          day: 'numeric', 
-                          month: 'long' 
-                        })}
+                        {dateMessages[0]?.createdAt ? 
+                          new Date(dateMessages[0].createdAt).toLocaleDateString('uz-UZ', { 
+                            day: 'numeric', 
+                            month: 'long' 
+                          }) : 
+                          date
+                        }
                       </div>
                     </div>
 
