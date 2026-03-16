@@ -36,7 +36,7 @@ class SecurePrismaClient {
       });
 
       // 🔒 Security Event Logging
-      this.instance.$on('query', (e) => {
+      this.instance.$on('query', (e: any) => {
         // Log slow queries (potential DoS)
         if (e.duration > 1000) {
           logger.warn('Slow query detected', {
@@ -62,21 +62,21 @@ class SecurePrismaClient {
         }
       });
 
-      this.instance.$on('error', (e) => {
+      this.instance.$on('error', (e: any) => {
         logger.error('Database error', {
           message: e.message,
           target: e.target,
         });
       });
 
-      this.instance.$on('info', (e) => {
+      this.instance.$on('info', (e: any) => {
         logger.info('Database info', {
           message: e.message,
           target: e.target,
         });
       });
 
-      this.instance.$on('warn', (e) => {
+      this.instance.$on('warn', (e: any) => {
         logger.warn('Database warning', {
           message: e.message,
           target: e.target,
@@ -246,8 +246,8 @@ export class DatabaseSecurity {
       const orphanedApplications = await client.application.count({
         where: {
           OR: [
-            { job: null },
-            { student: null },
+            { job: undefined },
+            { student: undefined },
           ],
         },
       });
