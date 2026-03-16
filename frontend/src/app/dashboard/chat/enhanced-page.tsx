@@ -21,6 +21,7 @@ import {
 import { chatApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import type { Chat, Message } from '@/types';
+import { logger } from '@/utils/logger';
 
 export default function EnhancedChatPage() {
   const [chats, setChats] = useState<Chat[]>([]);
@@ -65,7 +66,7 @@ export default function EnhancedChatPage() {
       const response = await chatApi.getChats({ limit: 50 });
       setChats(response || []);
     } catch (error) {
-      console.error('Failed to fetch chats:', error);
+      logger.error('Failed to fetch chats', { error: error?.message || 'Unknown error' }, 'EnhancedChatPage');
     } finally {
       setLoading(false);
     }
@@ -76,7 +77,7 @@ export default function EnhancedChatPage() {
       const response = await chatApi.getMessages(chatId, { limit: 100 });
       setMessages(response || []);
     } catch (error) {
-      console.error('Failed to fetch messages:', error);
+      logger.error('Failed to fetch messages', { error: error?.message || 'Unknown error', chatId }, 'EnhancedChatPage');
     }
   };
 
@@ -85,7 +86,7 @@ export default function EnhancedChatPage() {
       const response = await chatApi.getUnreadCount();
       setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
-      console.error('Failed to fetch unread count:', error);
+      logger.error('Failed to fetch unread count', { error: error?.message || 'Unknown error' }, 'EnhancedChatPage');
     }
   };
 
@@ -114,7 +115,7 @@ export default function EnhancedChatPage() {
           : chat
       ));
     } catch (error) {
-      console.error('Failed to send message:', error);
+      logger.error('Failed to send message', { error: error?.message || 'Unknown error', message: newMessage, chatId: selectedChat?.id }, 'EnhancedChatPage');
     } finally {
       setSending(false);
     }
@@ -134,7 +135,7 @@ export default function EnhancedChatPage() {
       
       fetchUnreadCount();
     } catch (error) {
-      console.error('Failed to mark as read:', error);
+      logger.error('Failed to mark as read', { error: error?.message || 'Unknown error', chatId: selectedChat?.id }, 'EnhancedChatPage');
     }
   };
 

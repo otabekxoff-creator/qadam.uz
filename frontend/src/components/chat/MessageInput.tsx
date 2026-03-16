@@ -66,13 +66,13 @@ export default function MessageInput({
       recordingInterval.current = null;
     }
     
-    // TODO: Implement voice recording logic
+    // TODO: Implement voice recording logic - will be added in future version
     logger.info(`Recording stopped after ${recordingTime} seconds`);
     setRecordingTime(0);
   };
 
   const handleFileUpload = () => {
-    // TODO: Implement file upload
+    // TODO: Implement file upload - will be added in future version
     logger.info('File upload clicked');
   };
 

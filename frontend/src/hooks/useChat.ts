@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import { chatApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import type { Chat, Message } from '@/types';
+import { logger } from '@/utils/logger';
 
 interface UseChatOptions {
   chatId?: string;
@@ -29,7 +30,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       const response = await chatApi.getChats({ limit: 50 });
       setChats(response.data || []);
     } catch (error) {
-      console.error('Failed to fetch chats:', error);
+      logger.error('Failed to fetch chats', { error: error.message, userId: user?.userId }, 'useChat');
     } finally {
       setLoading(false);
     }
@@ -42,7 +43,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       const response = await chatApi.getMessages(chatId, { limit: 100 });
       setMessages(response.data || []);
     } catch (error) {
-      console.error('Failed to fetch messages:', error);
+      logger.error('Failed to fetch messages', { error: error.message, chatId }, 'useChat');
     } finally {
       setLoading(false);
     }
@@ -74,7 +75,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
 
       return newMessage;
     } catch (error) {
-      console.error('Failed to send message:', error);
+      logger.error('Failed to send message', { error: error.message, chatId, content }, 'useChat');
       throw error;
     } finally {
       setSending(false);
@@ -97,7 +98,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       
       fetchUnreadCount();
     } catch (error) {
-      console.error('Failed to mark as read:', error);
+      logger.error('Failed to mark as read', { error: error.message, chatId }, 'useChat');
     }
   }, [user]);
 
@@ -107,7 +108,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       const response = await chatApi.getUnreadCount();
       setUnreadCount(response.data?.unreadCount || 0);
     } catch (error) {
-      console.error('Failed to fetch unread count:', error);
+      logger.error('Failed to fetch unread count', { error: error.message }, 'useChat');
     }
   }, []);
 
@@ -120,7 +121,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       setChats(prev => [newChat, ...prev]);
       return newChat;
     } catch (error) {
-      console.error('Failed to create chat:', error);
+      logger.error('Failed to create chat', { error: error.message, participant2Id }, 'useChat');
       throw error;
     }
   }, []);
@@ -135,7 +136,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       wsRef.current = new WebSocket(wsUrl);
       
       wsRef.current.onopen = () => {
-        console.log('WebSocket connected');
+        logger.info('WebSocket connected', { userId: user?.userId }, 'useChat');
         setIsConnected(true);
         reconnectAttempts.current = 0;
       };
@@ -174,12 +175,12 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
               break;
           }
         } catch (error) {
-          console.error('WebSocket message error:', error);
+          logger.error('WebSocket message error', { error: error.message, data: event.data }, 'useChat');
         }
       };
       
       wsRef.current.onclose = () => {
-        console.log('WebSocket disconnected');
+        logger.info('WebSocket disconnected', { userId: user?.userId, reconnectAttempts: reconnectAttempts.current }, 'useChat');
         setIsConnected(false);
         
         // Attempt to reconnect
@@ -192,11 +193,11 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       };
       
       wsRef.current.onerror = (error) => {
-        console.error('WebSocket error:', error);
+        logger.error('WebSocket error', { error: error?.message || 'Unknown WebSocket error', userId: user?.userId }, 'useChat');
       };
       
     } catch (error) {
-      console.error('Failed to connect WebSocket:', error);
+      logger.error('Failed to connect WebSocket', { error: error.message, wsUrl, userId: user?.userId }, 'useChat');
     }
   }, [enableRealTime, user?.userId, chatId, fetchUnreadCount]);
 
