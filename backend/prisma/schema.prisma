@@ -8,7 +8,97 @@ datasource db {
 }
 
 // =============================================
-// User Models
+// Enums
+// =============================================
+
+enum UserRole {
+  STUDENT
+  COMPANY
+  ADMIN
+}
+
+enum Gender {
+  MALE
+  FEMALE
+}
+
+enum EducationLevel {
+  BACHELOR
+  MASTER
+  PHD
+}
+
+enum CompanySize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  CONTRACT
+  INTERNSHIP
+  REMOTE
+  HYBRID
+}
+
+enum JobLevel {
+  ENTRY_LEVEL
+  MID_LEVEL
+  SENIOR_LEVEL
+  EXECUTIVE
+}
+
+enum ApplicationStatus {
+  PENDING
+  REVIEWING
+  ACCEPTED
+  REJECTED
+  WITHDRAWN
+}
+
+enum StartupStage {
+  IDEA
+  VALIDATION
+  MVP
+  GROWTH
+  SCALING
+}
+
+enum StartupStatus {
+  DRAFT
+  PENDING
+  APPROVED
+  REJECTED
+  FUNDED
+  COMPLETED
+}
+
+enum MessageType {
+  TEXT
+  VOICE
+  IMAGE
+  FILE
+}
+
+enum NotificationType {
+  APPLICATION
+  MESSAGE
+  JOB_ALERT
+  STARTUP_UPDATE
+  SYSTEM
+}
+
+enum FundingCurrency {
+  UZS
+  USD
+}
+
+// =============================================
+// Models
 // =============================================
 
 model User {
@@ -25,8 +115,8 @@ model User {
   company     Company?
   applications Application[]
   startups    Startup[]
-  chats       Chat[] @relation("ChatParticipant1")
-  chats       Chat[] @relation("ChatParticipant2")
+  chatsAsParticipant1 Chat[] @relation("ChatParticipant1")
+  chatsAsParticipant2 Chat[] @relation("ChatParticipant2")
   messages    Message[]
   notifications Notification[]
 
@@ -49,9 +139,9 @@ model Student {
   faculty         String?
   specialty       String?
   major           String?
-  gpa             Number?
-  course          Number?
-  graduationYear  Number?
+  gpa             Float?
+  course          Int?
+  graduationYear  Int?
   educationLevel  EducationLevel
   skills          String[]
   experience      Experience[]
@@ -73,6 +163,11 @@ model Student {
   user          User         @relation(fields: [userId], references: [id])
   applications   Application[]
   startups       Startup[]
+  experience     Experience[]
+  education      Education[]
+  languages      Language[]
+  certifications Certification[]
+  jobPreferences JobPreferences?
 
   @@map("students")
 }
@@ -100,10 +195,6 @@ model Company {
 
   @@map("companies")
 }
-
-// =============================================
-// Job Models
-// =============================================
 
 model Job {
   id          String     @id @default(cuid())
@@ -152,10 +243,6 @@ model Application {
   @@map("applications")
 }
 
-// =============================================
-// Startup Models
-// =============================================
-
 model Startup {
   id                   String        @id @default(cuid())
   studentId            String
@@ -168,13 +255,12 @@ model Startup {
   marketAnalysis       String?
   businessModel        String?
   competitiveAdvantage String?
-  team                 StartupTeamMember[]
   industry             String?
   stage                StartupStage
-  fundingNeeded        Number?
+  fundingNeeded        Float?
   fundingCurrency      FundingCurrency @default(USD)
-  fundingRaised        Number?
-  equityOffered        Number?
+  fundingRaised        Float?
+  equityOffered        Float?
   status               StartupStatus @default(DRAFT)
   rejectionReason      String?
   viewsCount           Int?          @default(0)
@@ -194,6 +280,7 @@ model Startup {
   // Relations
   student              Student        @relation(fields: [studentId], references: [id])
   user                 User           @relation(fields: [studentId], references: [id])
+  team                 StartupTeamMember[]
 
   @@map("startups")
 }
@@ -213,10 +300,6 @@ model StartupTeamMember {
 
   @@map("startup_team_members")
 }
-
-// =============================================
-// Chat Models
-// =============================================
 
 model Chat {
   id            String    @id @default(cuid())
@@ -239,30 +322,122 @@ model Chat {
 }
 
 model Message {
-  id        String        @id @default(uuid())
+  id        String      @id @default(uuid())
   chatId    String
   senderId  String
-  content   String        @db.Text
-  type      MessageType  @default(TEXT)
-  isRead    Boolean       @default(false)
-  metadata  Json?         // For voice messages (duration, url), images (url, size), etc.
-  createdAt DateTime      @default(now())
-  updatedAt DateTime      @updatedAt
+  content   String      @db.Text
+  type      MessageType @default(TEXT)
+  isRead    Boolean     @default(false)
+  metadata  Json?       // For voice messages (duration, url), images (url, size), etc.
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
 
-  chat      Chat          @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  sender    User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  // Relations
+  chat      Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender    User        @relation(fields: [senderId], references: [id], onDelete: Cascade)
 
   @@map("messages")
 }
 
-enum MessageType {
-  TEXT
-  VOICE
-  IMAGE
-  FILE
+model Notification {
+  id        String           @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  // Relations
+  userId    String
+  user      User             @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
 }
 
-enum FundingCurrency {
-  UZS
-  USD
+// Supporting Models
+model Experience {
+  id          String    @id @default(cuid())
+  company     String
+  position    String
+  startDate   String
+  endDate     String?
+  isCurrent   Boolean   @default(false)
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id])
+
+  @@map("experiences")
+}
+
+model Education {
+  id          String    @id @default(cuid())
+  institution String
+  degree      String
+  field       String
+  startDate   String
+  endDate     String?
+  gpa         Float?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id])
+
+  @@map("education")
+}
+
+model Language {
+  id        String   @id @default(cuid())
+  language  String
+  level     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
+
+  @@map("languages")
+}
+
+model Certification {
+  id          String    @id @default(cuid())
+  name        String
+  issuer      String
+  issueDate   String
+  expiryDate  String?
+  credentialUrl String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id])
+
+  @@map("certifications")
+}
+
+model JobPreferences {
+  id              String    @id @default(cuid())
+  preferredRoles  String[]
+  preferredTypes  JobType[]
+  preferredLevels JobLevel[]
+  preferredLocations String[]
+  salaryMin       Float?
+  salaryMax       Float?
+  remoteOnly      Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  studentId       String
+  student         Student   @relation(fields: [studentId], references: [id])
+
+  @@map("job_preferences")
 }
