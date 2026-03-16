@@ -19,6 +19,7 @@ import startupRoutes from '@/routes/startup.routes';
 import adminRoutes from '@/routes/admin.routes';
 import studentRoutes from '@/routes/student.routes';
 import companyRoutes from '@/routes/company.routes';
+import notificationRoutes from '@/routes/notification.routes';
 
 dotenv.config();
 
@@ -111,6 +112,7 @@ app.use('/api/startups', startupRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/companies', companyRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
