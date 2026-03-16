@@ -101,17 +101,25 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
   };
 
   const getParticipantName = () => {
-    if (!chat) return '';
-    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
-    return participant?.student 
-      ? `${participant.student.firstName} ${participant.student.lastName}`
-      : participant?.company?.name || 'Unknown';
+    if (!chat || !user) return '';
+    
+    // Find the other participant (not the current user)
+    const otherParticipant = chat.participant1?.id === user.id ? chat.participant2 : chat.participant1;
+    
+    if (!otherParticipant) return 'Unknown';
+    
+    // Return participant's email as name for now (since we don't have student/company data in User type)
+    return otherParticipant.email || 'Unknown';
   };
 
   const getParticipantAvatar = () => {
-    if (!chat) return '';
-    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
-    return participant?.student?.avatar || participant?.company?.logo || '';
+    if (!chat || !user) return '';
+    
+    // Find the other participant
+    const otherParticipant = chat.participant1?.id === user.id ? chat.participant2 : chat.participant1;
+    
+    // Return empty string for now (no avatar in User type)
+    return '';
   };
 
   const formatTime = (dateString: string) => {
