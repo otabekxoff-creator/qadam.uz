@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "env": {
+    "NEXT_PUBLIC_API_URL": "https://step-backend.vercel.app/api",
+    "NEXT_PUBLIC_APP_NAME": "Step.uz",
+    "NEXT_PUBLIC_APP_DESCRIPTION": "O'zbekiston yoshlari uchun karyera platformasi",
+    "NEXT_PUBLIC_ENABLE_CHAT": "true",
+    "NEXT_PUBLIC_ENABLE_NOTIFICATIONS": "true",
+    "NEXT_PUBLIC_ENABLE_VOICE_MESSAGES": "true"
+  }
+}
