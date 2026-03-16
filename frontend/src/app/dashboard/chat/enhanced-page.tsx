@@ -172,10 +172,8 @@ export default function EnhancedChatPage() {
   };
 
   const filteredChats = chats.filter(chat => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
-    const searchName = participant?.student 
-      ? `${participant.student.firstName} ${participant.student.lastName}`
-      : participant?.company?.name || '';
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
+    const searchName = participant?.email || '';
     
     return searchName.toLowerCase().includes(searchQuery.toLowerCase());
   });
