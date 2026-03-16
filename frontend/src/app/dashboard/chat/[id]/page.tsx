@@ -41,7 +41,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
     try {
       setLoading(true);
       const response = await chatApi.getChatById(params.id);
-      setChat(response.data);
+      setChat(response);
     } catch (error) {
       console.error('Failed to fetch chat:', error);
       router.push('/dashboard/chat');
@@ -53,7 +53,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
   const fetchMessages = async () => {
     try {
       const response = await chatApi.getMessages(params.id, { limit: 100 });
-      setMessages(response.data || []);
+      setMessages(response || []);
     } catch (error) {
       console.error('Failed to fetch messages:', error);
     }
@@ -70,7 +70,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
       });
 
       const newMsg: Message = {
-        ...response.data,
+        ...response,
         sender: user
       };
 
