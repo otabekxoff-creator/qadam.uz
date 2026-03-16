@@ -1,9 +1,11 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { ArrowLeft, Home, User, Settings, LogOut, MessageCircle } from 'lucide-react';
+import { ArrowLeft, Home, User, Settings, LogOut, MessageCircle, Bell } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores';
 
@@ -14,6 +16,25 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const { user, student, company } = useAuthStore();
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [notificationCount, setNotificationCount] = useState(0);
+
+  useEffect(() => {
+    // Fetch unread counts
+    const fetchCounts = async () => {
+      try {
+        // TODO: Implement API calls
+        // const chatResponse = await chatApi.getUnreadCount();
+        // const notificationResponse = await notificationsApi.getUnreadCount();
+        // setUnreadCount(chatResponse.data?.unreadCount || 0);
+        // setNotificationCount(notificationResponse.data?.unreadCount || 0);
+      } catch (error) {
+        console.error('Failed to fetch counts:', error);
+      }
+    };
+
+    fetchCounts();
+  }, []);
 
   const getUserName = () => {
     if (student) {
@@ -66,11 +87,32 @@ export default function DashboardLayout({
             <Link href="/dashboard/chat">
               <Button
                 variant={pathname?.includes('/chat') ? 'default' : 'ghost'}
-                className="w-full justify-start h-8 lg:h-10 text-xs lg:text-sm"
+                className="w-full justify-start h-8 lg:h-10 text-xs lg:text-sm relative"
                 size="sm"
               >
                 <MessageCircle className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-3" />
                 <span className="hidden sm:block">Xabarlar</span>
+                {unreadCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs bg-red-500">
+                    {unreadCount > 99 ? '99+' : unreadCount}
+                  </Badge>
+                )}
+              </Button>
+            </Link>
+            
+            <Link href="/dashboard/notifications">
+              <Button
+                variant={pathname?.includes('/notifications') ? 'default' : 'ghost'}
+                className="w-full justify-start h-8 lg:h-10 text-xs lg:text-sm relative"
+                size="sm"
+              >
+                <Bell className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-3" />
+                <span className="hidden sm:block">Bildirishnomalar</span>
+                {notificationCount > 0 && (
+                  <Badge className="absolute -top-1 -right-1 h-5 w-5 p-0 flex items-center justify-center text-xs bg-red-500">
+                    {notificationCount > 99 ? '99+' : notificationCount}
+                  </Badge>
+                )}
               </Button>
             </Link>
             
