@@ -47,7 +47,7 @@
     "@types/jsonwebtoken": "^9.0.5",
     "@types/morgan": "^1.9.9",
     "@types/multer": "^1.4.11",
-    "@types/node": "^20.10.4",
+    "@types/node": "^22.0.0",
     "@types/nodemailer": "^6.4.14",
     "@types/supertest": "^2.0.15",
     "@types/swagger-jsdoc": "^6.0.4",
@@ -60,21 +60,7 @@
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.3.3",
-    "uuid": "^9.0.1"
-  },
-  "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app.ts",
-    "build": "npx prisma generate && tsc && tsc-alias",
-    "start": "node dist/app.js",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage",
-    "db:push": "npx prisma db push --force-reset",
-    "db:generate": "prisma generate",
-    "db:migrate": "prisma migrate dev",
-    "db:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio"
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"
