@@ -21,6 +21,7 @@ import studentRoutes from '@/routes/student.routes';
 import companyRoutes from '@/routes/company.routes';
 import notificationRoutes from '@/routes/notification.routes';
 import chatRoutes from '@/routes/chat.routes';
+import audioRoutes from '@/routes/audio.routes';
 
 dotenv.config();
 
@@ -115,6 +116,7 @@ app.use('/api/students', studentRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/notifications', notificationRoutes);
 app.use('/api/chats', chatRoutes);
+app.use('/api/audio', audioRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);
