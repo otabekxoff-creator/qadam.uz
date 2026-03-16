@@ -125,7 +125,7 @@ export default function EnhancedChatPage() {
       await chatApi.markAsRead(chatId);
       
       setMessages(prev => prev.map(msg => 
-        msg.senderId !== user?.userId ? { ...msg, isRead: true } : msg
+        msg.senderId !== user?.id ? { ...msg, isRead: true } : msg
       ));
       
       setChats(prev => prev.map(chat => 
