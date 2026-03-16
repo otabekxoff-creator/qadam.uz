@@ -1,5 +1,6 @@
 import prisma from '@/config/database';
 import { MessageType } from '@prisma/client';
+import { notificationService } from './notification.service';
 
 export interface CreateChatData {
   participant1Id: string;
@@ -32,8 +33,12 @@ export class ChatService {
         isActive: true,
       },
       include: {
-        participant1: true,
-        participant2: true,
+        participant1: {
+          include: { student: true, company: true },
+        },
+        participant2: {
+          include: { student: true, company: true },
+        },
         messages: {
           orderBy: { createdAt: 'desc' },
           take: 1,
@@ -45,6 +50,20 @@ export class ChatService {
       return existingChat;
     }
 
+    // Get participant info for notifications
+    const participants = await prisma.user.findMany({
+      where: {
+        id: { in: [chatData.participant1Id, chatData.participant2Id] },
+      },
+      include: {
+        student: true,
+        company: true,
+      },
+    });
+
+    const participant1 = participants.find(p => p.id === chatData.participant1Id);
+    const participant2 = participants.find(p => p.id === chatData.participant2Id);
+
     // Create new chat
     const chat = await prisma.chat.create({
       data: {
@@ -52,11 +71,52 @@ export class ChatService {
         participant2Id: chatData.participant2Id,
       },
       include: {
-        participant1: true,
-        participant2: true,
+        participant1: {
+          include: { student: true, company: true },
+        },
+        participant2: {
+          include: { student: true, company: true },
+        },
         messages: true,
       },
     });
+
+    // Send notifications to both participants
+    if (participant1 && participant2) {
+      const participant1Name = participant1.student 
+        ? `${participant1.student.firstName} ${participant1.student.lastName}`
+        : participant1.company?.name || 'Foydalanuvchi';
+
+      const participant2Name = participant2.student 
+        ? `${participant2.student.firstName} ${participant2.student.lastName}`
+        : participant2.company?.name || 'Foydalanuvchi';
+
+      // Notify participant1
+      await notificationService.create({
+        userId: chatData.participant1Id,
+        type: 'CHAT_CREATED',
+        title: 'Yangi chat',
+        message: `${participant2Name} bilan chat ochildi`,
+        data: {
+          chatId: chat.id,
+          otherParticipantId: chatData.participant2Id,
+          otherParticipantName: participant2Name,
+        },
+      });
+
+      // Notify participant2
+      await notificationService.create({
+        userId: chatData.participant2Id,
+        type: 'CHAT_CREATED',
+        title: 'Yangi chat',
+        message: `${participant1Name} bilan chat ochildi`,
+        data: {
+          chatId: chat.id,
+          otherParticipantId: chatData.participant1Id,
+          otherParticipantName: participant1Name,
+        },
+      });
+    }
 
     return chat;
   }
@@ -156,6 +216,37 @@ export class ChatService {
       },
     });
 
+    // Get chat info to determine recipient
+    const chat = await prisma.chat.findUnique({
+      where: { id: messageData.chatId },
+      select: { participant1Id: true, participant2Id: true },
+    });
+
+    if (chat) {
+      const recipientId = chat.participant1Id === messageData.senderId 
+        ? chat.participant2Id 
+        : chat.participant1Id;
+
+      // Get sender name for notification
+      const senderName = message.sender.student 
+        ? `${message.sender.student.firstName} ${message.sender.student.lastName}`
+        : message.sender.company?.name || 'Foydalanuvchi';
+
+      // Send notification to recipient
+      await notificationService.create({
+        userId: recipientId,
+        type: 'NEW_MESSAGE',
+        title: 'Yangi xabar',
+        message: `${senderName}: ${messageData.content.substring(0, 50)}${messageData.content.length > 50 ? '...' : ''}`,
+        data: {
+          chatId: messageData.chatId,
+          messageId: message.id,
+          senderId: messageData.senderId,
+          messageType: message.type,
+        },
+      });
+    }
+
     return message;
   }
 
@@ -192,6 +283,21 @@ export class ChatService {
   }
 
   async markMessagesAsRead(chatId: string, userId: string) {
+    // Get unread messages before marking as read
+    const unreadMessages = await prisma.message.findMany({
+      where: {
+        chatId,
+        senderId: { not: userId },
+        isRead: false,
+      },
+      include: {
+        sender: {
+          include: { student: true, company: true },
+        },
+      },
+    });
+
+    // Mark messages as read
     await prisma.message.updateMany({
       where: {
         chatId,
@@ -201,7 +307,47 @@ export class ChatService {
       data: { isRead: true },
     });
 
-    return { success: true };
+    // Send read receipt notification to message sender(s)
+    if (unreadMessages.length > 0) {
+      const uniqueSenders = [...new Set(unreadMessages.map(msg => msg.senderId))];
+      
+      for (const senderId of uniqueSenders) {
+        const sender = unreadMessages.find(msg => msg.senderId === senderId)?.sender;
+        const senderName = sender?.student 
+          ? `${sender.student.firstName} ${sender.student.lastName}`
+          : sender?.company?.name || 'Foydalanuvchi';
+
+        // Get current user name
+        const chat = await prisma.chat.findUnique({
+          where: { id: chatId },
+          include: {
+            participant1: { include: { student: true, company: true } },
+            participant2: { include: { student: true, company: true } },
+          },
+        });
+
+        if (chat) {
+          const currentUser = chat.participant1Id === userId ? chat.participant1 : chat.participant2;
+          const currentUserName = currentUser.student 
+            ? `${currentUser.student.firstName} ${currentUser.student.lastName}`
+            : currentUser.company?.name || 'Foydalanuvchi';
+
+          await notificationService.create({
+            userId: senderId,
+            type: 'MESSAGE_READ',
+            title: 'Xabar o\'qildi',
+            message: `${currentUserName} xabarlaringizni o'qidi (${unreadMessages.length} ta)`,
+            data: {
+              chatId,
+              readerId: userId,
+              messageCount: unreadMessages.length,
+            },
+          });
+        }
+      }
+    }
+
+    return { success: true, readCount: unreadMessages.length };
   }
 
   async deleteChat(chatId: string, userId: string) {
