@@ -61,21 +61,6 @@ export const getStartupById = asyncHandler(async (req: Request, res: Response) =
 });
 
 /**
- * @desc    Yangi startap yaratish
- * @route   POST /api/startups
- * @access  Private (Faqat Student)
- */
-export const createStartup = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-  const startup = await startupService.create(req.user!.userId, req.body);
-
-  res.status(201).json({
-    success: true,
-    data: startup,
-    message: 'Startap muvaffaqiyatli yuborildi. Admin tomonidan ko\'rib chiqiladi.',
-  });
-});
-
-/**
  * @desc    Talabaning o'z startaplarini ko'rish
  * @route   GET /api/startups/my-startups
  * @access  Private (Faqat Student)

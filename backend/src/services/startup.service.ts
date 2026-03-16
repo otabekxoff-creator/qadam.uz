@@ -18,7 +18,6 @@ export class StartupService {
       data: {
         title: data.name,
         description: data.description,
-        industry: data.industry,
         stage: data.stage,
         fundingGoal: data.fundingGoal,
         teamSize: data.teamSize,
@@ -78,7 +77,7 @@ export class StartupService {
         skip,
         take: limit,
       }),
-      prisma.startup.count({ where: whereClause }),
+      prisma.startup.count({ where: whereClause })
     ]);
 
     return {
@@ -87,8 +86,8 @@ export class StartupService {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit),
-      },
+        pages: Math.ceil(total / limit)
+      }
     };
   }
 
@@ -97,14 +96,12 @@ export class StartupService {
       where: { id },
       include: {
         student: {
-          select: {
+          select: { 
             id: true,
-            firstName: true,
-            lastName: true,
-            university: true,
-            major: true,
-            avatar: true,
-            phone: true,
+            firstName: true, 
+            lastName: true, 
+            university: true, 
+            avatar: true 
           }
         }
       }
@@ -113,44 +110,6 @@ export class StartupService {
     if (!startup) {
       throw new NotFoundError('Startap topilmadi');
     }
-
-    return startup;
-  }
-
-  async create(userId: string, data: { title: string; description: string; goalAmount: number }) {
-    const student = await prisma.student.findUnique({ 
-      where: { userId } 
-    });
-
-    if (!student) {
-      throw new NotFoundError('Talaba profili topilmadi');
-    }
-
-    const existingStartup = await prisma.startup.findFirst({
-      where: { 
-        studentId: student.id,
-        title: { equals: data.title, mode: 'insensitive' }
-      }
-    });
-
-    if (existingStartup) {
-      throw new ValidationError('Bu sarlavha bilan startap allaqachon mavjud');
-    }
-
-    const startup = await prisma.startup.create({
-      data: {
-        title: data.title.trim(),
-        description: data.description.trim(),
-        goalAmount: data.goalAmount,
-        studentId: student.id,
-        status: StartupStatus.PENDING,
-      },
-      include: {
-        student: {
-          select: { firstName: true, lastName: true }
-        }
-      }
-    });
 
     return startup;
   }
@@ -164,13 +123,20 @@ export class StartupService {
       throw new NotFoundError('Talaba profili topilmadi');
     }
 
-    return prisma.startup.findMany({
+    const startups = await prisma.startup.findMany({
       where: { studentId: student.id },
-      orderBy: { createdAt: 'desc' },
+      include: {
+        student: {
+          select: { firstName: true, lastName: true }
+        }
+      },
+      orderBy: { createdAt: 'desc' }
     });
+
+    return startups;
   }
 
-  async update(id: string, userId: string, data: { title?: string; description?: string; goalAmount?: number }) {
+  async update(id: string, userId: string, data: any) {
     const student = await prisma.student.findUnique({ 
       where: { userId } 
     });
@@ -179,28 +145,25 @@ export class StartupService {
       throw new NotFoundError('Talaba profili topilmadi');
     }
 
-    const startup = await prisma.startup.findUnique({ where: { id } });
+    const startup = await prisma.startup.findFirst({
+      where: { id, studentId: student.id }
+    });
 
     if (!startup) {
       throw new NotFoundError('Startap topilmadi');
     }
 
-    if (startup.studentId !== student.id) {
-      throw new ForbiddenError('Bu startapni tahrirlash huquqingiz yo\'q');
-    }
-
-    if (startup.status !== StartupStatus.PENDING) {
-      throw new ValidationError('Faqat ko\'rib chiqilayotgan startaplarni tahrirlash mumkin');
-    }
-
-    return prisma.startup.update({
+    const updatedStartup = await prisma.startup.update({
       where: { id },
-      data: {
-        ...data,
-        title: data.title?.trim(),
-        description: data.description?.trim(),
-      },
+      data,
+      include: {
+        student: {
+          select: { firstName: true, lastName: true }
+        }
+      }
     });
+
+    return updatedStartup;
   }
 
   async delete(id: string, userId: string) {
@@ -212,38 +175,42 @@ export class StartupService {
       throw new NotFoundError('Talaba profili topilmadi');
     }
 
-    const startup = await prisma.startup.findUnique({ where: { id } });
+    const startup = await prisma.startup.findFirst({
+      where: { id, studentId: student.id }
+    });
 
     if (!startup) {
       throw new NotFoundError('Startap topilmadi');
     }
 
-    if (startup.studentId !== student.id) {
-      throw new ForbiddenError('Bu startapni o\'chirish huquqingiz yo\'q');
-    }
-
-    await prisma.startup.delete({ where: { id } });
-    return { success: true };
+    await prisma.startup.delete({
+      where: { id }
+    });
   }
 
   async findAllForAdmin(page: number = 1, limit: number = 10, status?: StartupStatus) {
     const skip = (page - 1) * limit;
-    const where: any = {};
-    if (status) where.status = status;
+    const whereClause: any = status ? { status } : {};
 
     const [startups, total] = await Promise.all([
       prisma.startup.findMany({
-        where,
+        where: whereClause,
         include: {
           student: {
-            select: { firstName: true, lastName: true, email: true }
-          } as any
+            select: { 
+              id: true,
+              firstName: true, 
+              lastName: true, 
+              university: true, 
+              email: true 
+            }
+          }
         },
         orderBy: { createdAt: 'desc' },
         skip,
         take: limit,
       }),
-      prisma.startup.count({ where }),
+      prisma.startup.count({ where: whereClause })
     ]);
 
     return {
@@ -252,37 +219,46 @@ export class StartupService {
         page,
         limit,
         total,
-        totalPages: Math.ceil(total / limit),
-      },
+        pages: Math.ceil(total / limit)
+      }
     };
   }
 
   async updateStatus(id: string, status: StartupStatus) {
-    const startup = await prisma.startup.findUnique({ where: { id } });
-    if (!startup) throw new NotFoundError('Startap topilmadi');
+    const startup = await prisma.startup.findUnique({
+      where: { id }
+    });
 
-    return prisma.startup.update({
+    if (!startup) {
+      throw new NotFoundError('Startap topilmadi');
+    }
+
+    const updatedStartup = await prisma.startup.update({
       where: { id },
       data: { status },
+      include: {
+        student: {
+          select: { firstName: true, lastName: true, email: true }
+        }
+      }
     });
+
+    return updatedStartup;
   }
 
   async getStats() {
-    const [total, approved, pending, totalGoal] = await Promise.all([
+    const [total, pending, approved, rejected] = await Promise.all([
       prisma.startup.count(),
-      prisma.startup.count({ where: { status: StartupStatus.APPROVED } }),
       prisma.startup.count({ where: { status: StartupStatus.PENDING } }),
-      prisma.startup.aggregate({
-        _sum: { goalAmount: true },
-        where: { status: StartupStatus.APPROVED }
-      }),
+      prisma.startup.count({ where: { status: StartupStatus.APPROVED } }),
+      prisma.startup.count({ where: { status: StartupStatus.REJECTED } })
     ]);
 
     return {
       total,
-      approved,
       pending,
-      totalGoalAmount: totalGoal._sum.goalAmount || 0,
+      approved,
+      rejected
     };
   }
 }
