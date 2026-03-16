@@ -275,8 +275,8 @@ model Startup {
   category             String?
 
   // Relations
-  student              Student        @relation(fields: [studentId], references: [id])
-  user                 User           @relation(name: "StartupOwner", fields: [studentId], references: [id])
+  student              Student        @relation(fields: [studentId], references: [id], map: "startups_student_fkey")
+  user                 User           @relation(name: "StartupOwner", fields: [studentId], references: [id], map: "startups_user_fkey")
   team                 StartupTeamMember[]
 
   @@map("startups")
