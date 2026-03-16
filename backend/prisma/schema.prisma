@@ -144,17 +144,12 @@ model Student {
   graduationYear  Int?
   educationLevel  EducationLevel
   skills          String[]
-  experience      Experience[]
-  education       Education[]
-  languages       Language[]
-  certifications  Certification[]
   resumeUrl       String?
   portfolioUrl    String?
   linkedinUrl     String?
   githubUrl       String?
   telegramUrl     String?
   about           String?
-  jobPreferences  JobPreferences?
   isLookingForJob Boolean   @default(true)
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt

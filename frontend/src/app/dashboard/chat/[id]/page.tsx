@@ -239,7 +239,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
               {/* Date Separator */}
               <div className="flex items-center justify-center my-4">
                 <div className="bg-muted px-3 py-1 rounded-full text-xs text-muted-foreground">
-                  {formatDate(dateMessages[0].createdAt)}
+                  {dateMessages[0]?.createdAt ? formatDate(dateMessages[0].createdAt) : date}
                 </div>
               </div>
 
