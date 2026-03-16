@@ -20,6 +20,7 @@ import adminRoutes from '@/routes/admin.routes';
 import studentRoutes from '@/routes/student.routes';
 import companyRoutes from '@/routes/company.routes';
 import notificationRoutes from '@/routes/notification.routes';
+import chatRoutes from '@/routes/chat.routes';
 
 dotenv.config();
 
@@ -113,6 +114,7 @@ app.use('/api/admin', adminRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/companies', companyRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/chats', chatRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

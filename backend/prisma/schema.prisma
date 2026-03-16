@@ -52,6 +52,9 @@ model User {
   student   Student?
   company   Company?
   notifications Notification[]
+  chatsAsParticipant1 Chat[] @relation("ChatParticipant1")
+  chatsAsParticipant2 Chat[] @relation("ChatParticipant2")
+  sentMessages Message[]
 
   @@map("users")
 }
@@ -177,4 +180,45 @@ model Notification {
   user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("notifications")
+}
+
+model Chat {
+  id              String        @id @default(uuid())
+  participant1Id  String        // First participant (e.g., student)
+  participant2Id  String        // Second participant (e.g., company)
+  lastMessage     String?       @db.Text
+  lastMessageAt   DateTime?
+  isActive        Boolean       @default(true)
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  participant1    User          @relation("ChatParticipant1", fields: [participant1Id], references: [id], onDelete: Cascade)
+  participant2    User          @relation("ChatParticipant2", fields: [participant2Id], references: [id], onDelete: Cascade)
+  messages        Message[]
+
+  @@map("chats")
+}
+
+model Message {
+  id        String        @id @default(uuid())
+  chatId    String
+  senderId  String
+  content   String        @db.Text
+  type      MessageType  @default(TEXT)
+  isRead    Boolean       @default(false)
+  metadata  Json?         // For voice messages (duration, url), images (url, size), etc.
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  chat      Chat          @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  sender    User          @relation(fields: [senderId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+enum MessageType {
+  TEXT
+  VOICE
+  IMAGE
+  FILE
 }
