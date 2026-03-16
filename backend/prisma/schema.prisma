@@ -68,6 +68,7 @@ model Student {
   avatar       String?
   resume       String?
   skills       String[]
+  email        String?        // User email dan olish uchun
   applications Application[]
   
   // SHU QATOR QO'SHILDI (Startaplar bilan bog'lanish uchun)
@@ -134,17 +135,28 @@ model Application {
 }
 
 model Startup {
-  id          String        @id @default(uuid())
-  title       String
-  description String        @db.Text
-  goalAmount  Float         // Kerakli sarmoya miqdori (so'mda yoki dollarda)
-  status      StartupStatus @default(PENDING)
+  id               String        @id @default(uuid())
+  title            String
+  description      String        @db.Text
+  stage            String        @default("IDEA")
+  fundingGoal      String?
+  teamSize         String?
+  website          String?
+  pitch            String?       @db.Text
+  lookingFor       String?       @db.Text
+  timeline         String?       @db.Text
+  goalAmount       Float?        // Kerakli sarmoya miqdori (so'mda yoki dollarda)
+  status           StartupStatus @default(PENDING)
+  logo             String?
+  founderName      String
+  founderEmail     String
+  founderUniversity String?
   
-  studentId   String
-  student     Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  studentId        String
+  student          Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
   
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 
   @@map("startups")
 }
