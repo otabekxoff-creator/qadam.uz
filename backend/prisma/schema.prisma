@@ -172,7 +172,7 @@ model Startup {
   industry             String?
   stage                StartupStage
   fundingNeeded        Number?
-  fundingCurrency      'UZS' | 'USD' @default('USD')
+  fundingCurrency      FundingCurrency @default(USD)
   fundingRaised        Number?
   equityOffered        Number?
   status               StartupStatus @default(DRAFT)
@@ -260,4 +260,9 @@ enum MessageType {
   VOICE
   IMAGE
   FILE
+}
+
+enum FundingCurrency {
+  UZS
+  USD
 }
