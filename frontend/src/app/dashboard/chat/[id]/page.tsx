@@ -163,7 +163,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
   };
 
   const isOwnMessage = (message: Message) => {
-    return message.senderId === user?.userId;
+    return message.senderId === user?.id;
   };
 
   if (loading) {
