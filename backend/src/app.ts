@@ -51,7 +51,23 @@ const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
   max: 100,
   message: 'Too many requests from this IP, please try again later',
+  standardHeaders: true,
+  legacyHeaders: false,
+  skip: (req) => {
+    // Health check va static files uchun limit qo'llanilmasin
+    return req.path === '/health' || req.path.startsWith('/uploads');
+  }
 });
+
+// Auth endpointlar uchun qattiqroq limit
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 5,
+  message: 'Too many authentication attempts, please try again later',
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
 app.use('/api/', limiter);
 
 app.use(express.json({ limit: '10mb' }));
@@ -63,12 +79,32 @@ app.use(morgan('combined', { stream: { write: message => logger.info(message.tri
 
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
-app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+app.get('/health', async (req, res) => {
+  try {
+    const { checkDatabaseHealth } = await import('@/config/database');
+    const dbHealthy = await checkDatabaseHealth();
+    
+    const health = {
+      status: dbHealthy ? 'ok' : 'error',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      environment: process.env.NODE_ENV,
+      database: dbHealthy ? 'connected' : 'disconnected',
+      memory: process.memoryUsage(),
+    };
+
+    res.status(dbHealthy ? 200 : 503).json(health);
+  } catch (error) {
+    res.status(503).json({
+      status: 'error',
+      timestamp: new Date().toISOString(),
+      error: 'Health check failed',
+    });
+  }
 });
 
 // Barcha API marshrutlari
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', authLimiter, authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
 app.use('/api/startups', startupRoutes); 
