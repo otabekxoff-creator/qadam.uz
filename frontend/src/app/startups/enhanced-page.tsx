@@ -272,7 +272,7 @@ export default function EnhancedStartupsPage() {
 
   const filteredStartups = useMemo(() => {
     let filtered = startups.filter(startup => {
-      const matchesSearch = startup.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      const matchesSearch = startup.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            startup.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            startup.founderName.toLowerCase().includes(searchQuery.toLowerCase());
 
