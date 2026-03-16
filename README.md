@@ -1,12 +1,848 @@
-# 🚀 Step.uz - O'zbekiston Yoshlari uchun Karyera Platformasi
+# 🚀 Step.uz - O'zbekiston yoshlari uchun karyera platformasi
 
 <div align="center">
 
-![Step.uz Logotipi](https://img.shields.io/badge/Step.uz-Karyera%20Platformasi-blue?style=for-the-badge&logo=next.js)
-![Versiya](https://img.shields.io/badge/versiya-1.0.0-green?style=for-the-badge)
-![Litsenziya](https://img.shields.io/badge/litsenziya-MIT-purple?style=for-the-badge)
-![Node.js](https://img.shields.io/badge/node.js-18%2B-brightgreen?style=for-the-badge&logo=node.js)
-![TypeScript](https://img.shields.io/badge/typescript-5%2B-blue?style=for-the-badge&logo=typescript)
+![Step.uz Logo](https://via.placeholder.com/200x80/1e40af/ffffff?text=Step.uz)
+
+**O'zbekistonning eng zamonaviy karyera platformasi**
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen)](https://nodejs.org/)
+[![Next.js Version](https://img.shields.io/badge/next.js-%5E14.0.0-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/typescript-%5E5.0.0-blue)](https://www.typescriptlang.org/)
+
+[▶️ Demo](https://step.uz) • [📚 Hujjatlar](https://docs.step.uz) • [🐛 Bug Report](https://github.com/otabekxoff-creator/step.uz/issues) • [💡 Feature Request](https://github.com/otabekxoff-creator/step.uz/issues/new)
+
+</div>
+
+---
+
+## 📋 **Jadval**
+
+- [🌟 Haqida](#-haqida)
+- [🚀 Xususiyatlar](#-xususiyatlar)
+- [🛠️ Texnologiyalar](#️-texnologiyalar)
+- [📦 O'rnatish](#-ornatish)
+- [🔧 Konfiguratsiya](#-konfiguratsiya)
+- [🚀 Ishga tushirish](#-ishga-tushirish)
+- [📚 API Hujjatlari](#-api-hujjatlari)
+- [🎨 UI Komponentlari](#-ui-komponentlari)
+- [🔒 Xavfsizlik](#-xavfsizlik)
+- [📊 Monitoring](#-monitoring)
+- [🧪 Testlash](#-testlash)
+- [🚀 Deployment](#-deployment)
+- [🤝 Hamkorlik](#-hamkorlik)
+- [📄 Litsenziya](#-litsenziya)
+
+---
+
+## 🌟 **Haqida**
+
+**Step.uz** - O'zbekiston yoshlari uchun yaratilgan to'liq funktsional karyera platformasi. Talabalar, bitiruvchilar va yosh professionallar uchun yagona platforma:
+
+- 🎓 **Talabalar** - Ish topish, startap yaratish, karyera rivojlantirish
+- 🏢 **Kompaniyalar** - Ishchi qidirish, startaplar bilan hamkorlik
+- 🚀 **Startaplar** - Moliyalashtirish topish, jamoa yig'ish
+- 💼 **Vakansiyalar** - Zamonaviy ish o'rinlari ro'yxati
+
+### 🎯 **Bizning Missiyamiz**
+
+O'zbekiston yoshlari uchun zamonaviy, qulay va samarali karyera imkoniyatlarini yaratish orqali ularning professional rivojlanishiga hissa qo'shish.
+
+---
+
+## 🚀 **Xususiyatlar**
+
+### 👥 **Foydalanuvchilar uchun**
+
+#### 🎓 **Talaba imkoniyatlari**
+- 👤 **Professional Profil** - To'liq resume va portfolio
+- 💼 **Ish qidirish** - Smart matching sistema
+- 🚀 **Startap yaratish** - Innovatsion g'oyalar amalga oshirish
+- 💬 **Real-time Chat** - Kompaniyalar bilan bevosita aloqa
+- 📊 **Karyera tracking** - Arizalar holatini kuzatish
+- 🔔 **Bildirishnomalar** - Muhim yangiliklar va eslatmalar
+
+#### 🏢 **Kompaniya imkoniyatlari**
+- 📋 **Vakansiya joylash** - Zamonaviy ish o'rinlari e'lon qilish
+- 👥 **Jamoa boshqaruvi** - Ishchi qidirish va tanlash
+- 🚀 **Startap investitsiyasi** - Innovatsion loyihalarni qo'llab-quvvatlash
+- 📈 **Analitika** - Ishga qabul qilish statistikasi
+- 💬 **To'g'ridan-to'g'ri aloqa** - Talabalar bilan suhbat
+- 🔍 **Ishchi bazasi** - O'zbekistonning eng iqtidorli yoshlari
+
+#### 👑 **Admin imkoniyatlari**
+- 📊 **Platforma monitoring** - Real-time statistika
+- 👥 **Foydalanuvchilarni boshqarish** - To'liq nazorat
+- 🚀 **Startaplar tasdiqlash** - Loyihalarni tekshirish
+- 📋 **Vakansiyalar moderatsiyasi** - Sifat nazorati
+- 🔍 **System logs** - Barcha harakatlar kuzatuvi
+- 📈 **Business Intelligence** - Advanced analytics
+
+### 💬 **Real-time Chat Sistemi**
+- 📱 **Zamonaviy interfeys** - Mobile-first design
+- 🟢 **Online status** - Foydalanuvchi holati
+- ⌨️ **Typing indicators** - Yozish holati
+- ✅ **Read receipts** - O'qilgan bildirishnomalar
+- 📎 **File attachments** - Hujjatlar almashinuvi
+- 🎙️ **Voice messages** - Ovozli xabarlar
+- 🔍 **Advanced search** - Xabarlarni qidirish
+
+### 🚀 **Startap Platformasi**
+- 💡 **Innovatsion g'oyalar** - Zamonaviy startaplar
+- 💰 **Moliyalashtirish** - Investorlar bilan aloqa
+- 📊 **Progress tracking** - Yutuqlarni kuzatish
+- 👥 **Jamoa yig'ish** - Professional jamoa
+- 🎯 **Kategoriya bo'yicha** - Easy navigation
+- 💬 **Investor chat** - To'g'ridan-to'g'ri muzokaralar
+
+---
+
+## 🛠️ **Texnologiyalar**
+
+### 🏗️ **Backend Architecture**
+```
+📦 Backend Stack
+├── 🟢 Node.js (v18+)
+├── 🟦 TypeScript
+├── 🗄️ PostgreSQL (Prisma ORM)
+├── 🚀 Express.js
+├── 🔐 JWT Authentication
+├── 📊 Winston Logger
+├── 🛡️ Helmet Security
+├── 🚦 Rate Limiting
+├── 🔄 CORS Configuration
+└── 📁 File Upload (Multer)
+```
+
+### 🎨 **Frontend Architecture**
+```
+📦 Frontend Stack
+├── ⚛️ Next.js 14 (App Router)
+├── 🟦 TypeScript
+├── 🎨 Tailwind CSS
+├── 🎭 Framer Motion
+├── 🗃️ Zustand State Management
+├── 🎨 Shadcn/ui Components
+├── 📱 Responsive Design
+├── 🔍 Real-time Search
+└── 📊 Data Visualization
+```
+
+### 🗄️ **Database**
+- **🐘 PostgreSQL** - Asosiy ma'lumotlar bazasi
+- **🔍 Prisma ORM** - Type-safe database access
+- **🔄 Migrations** - Versiyalarni boshqarish
+- **📊 Seeding** - Test ma'lumotlari
+
+---
+
+## 📦 **O'rnatish**
+
+### 📋 **Talablar**
+- Node.js 18.0.0 yoki undan yuqori versiyasi
+- PostgreSQL 13.0 yoki undan yuqori versiyasi
+- Git versiyani boshqaruv tizimi
+
+### 🚀 **Quick Start**
+
+```bash
+# 1. Repository ni klonlash
+git clone https://github.com/otabekxoff-creator/step.uz.git
+cd step.uz
+
+# 2. Backend o'rnatish
+cd backend
+npm install
+
+# 3. Environment faylini yaratish
+cp .env.example .env
+# .env faylini to'ldiring (quyida ko'ring)
+
+# 4. Database ni o'rnatish
+npx prisma migrate dev
+npx prisma generate
+npx prisma db seed
+
+# 5. Backend ni ishga tushirish
+npm run dev
+
+# 6. Yangi terminal oching va frontend o'rnatish
+cd ../frontend
+npm install
+
+# 7. Frontend environment
+cp .env.example .env
+# .env faylini to'ldiring
+
+# 8. Frontend ni ishga tushirish
+npm run dev
+```
+
+### 🌐 **Kirish adreslari**
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:5000
+- **API Documentation**: http://localhost:5000/api-docs
+
+---
+
+## 🔧 **Konfiguratsiya**
+
+### 📝 **Backend Environment (.env)**
+```bash
+# Database
+DATABASE_URL="postgresql://username:password@localhost:5432/step_uz"
+
+# JWT
+JWT_SECRET="sizning-jwt-maxfiy-kalitingiz"
+JWT_EXPIRES_IN="7d"
+
+# Server
+PORT=5000
+NODE_ENV="development"
+
+# CORS
+FRONTEND_URL="http://localhost:3000"
+
+# Email (ixtiyoriy)
+SMTP_HOST="smtp.gmail.com"
+SMTP_PORT=587
+SMTP_USER="your-email@gmail.com"
+SMTP_PASS="your-app-password"
+
+# File Upload
+UPLOAD_DIR="uploads"
+MAX_FILE_SIZE="5MB"
+
+# Redis (ixtiyoriy)
+REDIS_URL="redis://localhost:6379"
+```
+
+### 📝 **Frontend Environment (.env)**
+```bash
+# API
+NEXT_PUBLIC_API_URL="http://localhost:5000/api"
+
+# App
+NEXT_PUBLIC_APP_NAME="Step.uz"
+NEXT_PUBLIC_APP_DESCRIPTION="O'zbekiston yoshlari uchun karyera platformasi"
+
+# Social Links
+NEXT_PUBLIC_FACEBOOK_URL="https://facebook.com/step.uz"
+NEXT_PUBLIC_INSTAGRAM_URL="https://instagram.com/step.uz"
+NEXT_PUBLIC_LINKEDIN_URL="https://linkedin.com/company/step.uz"
+NEXT_PUBLIC_TELEGRAM_URL="https://t.me/step.uz"
+
+# Features
+NEXT_PUBLIC_ENABLE_CHAT="true"
+NEXT_PUBLIC_ENABLE_STARTUPS="true"
+NEXT_PUBLIC_ENABLE_NOTIFICATIONS="true"
+
+# Analytics (ixtiyoriy)
+NEXT_PUBLIC_GA_ID="your-google-analytics-id"
+NEXT_PUBLIC_HOTJAR_ID="your-hotjar-id"
+```
+
+---
+
+## 🚀 **Ishga tushirish**
+
+### 🏃 **Development Mode**
+```bash
+# Backend
+cd backend
+npm run dev
+
+# Frontend (boshqa terminal)
+cd frontend
+npm run dev
+```
+
+### 🏭 **Production Mode**
+```bash
+# Build
+npm run build
+
+# Start
+npm start
+```
+
+### 🐳 **Docker**
+```bash
+# Build and run
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+```
+
+---
+
+## 📚 **API Hujjatlari**
+
+### 🔐 **Authentication**
+```typescript
+// Login
+POST /api/auth/login
+{
+  "email": "user@example.com",
+  "password": "password123"
+}
+
+// Register
+POST /api/auth/register
+{
+  "email": "user@example.com",
+  "password": "password123",
+  "role": "STUDENT",
+  "firstName": "John",
+  "lastName": "Doe"
+}
+```
+
+### 👤 **User Management**
+```typescript
+// Get Profile
+GET /api/users/profile
+Headers: Authorization: Bearer <token>
+
+// Update Profile
+PUT /api/users/profile
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "university": "TUIT",
+  "major": "Software Engineering"
+}
+```
+
+### 💼 **Jobs API**
+```typescript
+// Get Jobs
+GET /api/jobs?page=1&limit=10&category=IT&location=Tashkent
+
+// Create Job
+POST /api/jobs
+{
+  "title": "Senior Frontend Developer",
+  "description": "React, TypeScript, Next.js",
+  "jobType": "FULL_TIME",
+  "location": "Tashkent",
+  "salaryMin": 8000000,
+  "salaryMax": 15000000,
+  "skills": ["React", "TypeScript", "Next.js"]
+}
+```
+
+### 🚀 **Startups API**
+```typescript
+// Get Startups
+GET /api/startups?page=1&limit=10&stage=SEED
+
+// Create Startup
+POST /api/startups
+{
+  "title": "EduTech Platform",
+  "description": "AI-powered education platform",
+  "stage": "SEED",
+  "fundingGoal": "$50,000",
+  "teamSize": "3-5"
+}
+```
+
+### 💬 **Chat API**
+```typescript
+// Get Chats
+GET /api/chats
+
+// Get Messages
+GET /api/chats/:chatId/messages
+
+// Send Message
+POST /api/chats/:chatId/messages
+{
+  "content": "Hello!",
+  "type": "TEXT"
+}
+```
+
+---
+
+## 🎨 **UI Komponentlari**
+
+### 🎯 **Design System**
+```typescript
+// Color Palette
+const colors = {
+  primary: '#1e40af',
+  secondary: '#64748b',
+  success: '#16a34a',
+  warning: '#ea580c',
+  error: '#dc2626',
+  info: '#0ea5e9'
+};
+
+// Typography
+const typography = {
+  h1: 'text-4xl font-bold',
+  h2: 'text-3xl font-semibold',
+  h3: 'text-2xl font-medium',
+  body: 'text-base',
+  small: 'text-sm'
+};
+
+// Spacing
+const spacing = {
+  xs: '0.5rem',
+  sm: '1rem',
+  md: '1.5rem',
+  lg: '2rem',
+  xl: '3rem'
+};
+```
+
+### 📱 **Responsive Design**
+```css
+/* Mobile First Approach */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding: 0 3rem;
+  }
+}
+```
+
+---
+
+## 🔒 **Xavfsizlik**
+
+### 🛡️ **Security Features**
+- 🔐 **JWT Authentication** - Token-based authentication
+- 🚦 **Rate Limiting** - DDoS protection
+- 🛡️ **CORS Configuration** - Cross-origin security
+- 🔍 **Input Validation** - XSS/SQL injection prevention
+- 📝 **Audit Logging** - Security event tracking
+- 🔒 **Data Encryption** - Sensitive data protection
+- 🚨 **Security Headers** - HTTP security headers
+- 📊 **Security Monitoring** - Real-time threat detection
+
+### 🔐 **Security Best Practices**
+```typescript
+// Password validation
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+// Input sanitization
+const sanitizeInput = (input: string) => {
+  return input
+    .trim()
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+    .replace(/javascript:/gi, '')
+    .slice(0, 1000);
+};
+
+// Rate limiting
+const rateLimit = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // limit each IP to 100 requests per windowMs
+  message: 'Too many requests from this IP'
+});
+```
+
+---
+
+## 📊 **Monitoring**
+
+### 📈 **Performance Monitoring**
+```typescript
+// Response time tracking
+app.use((req, res, next) => {
+  const start = Date.now();
+  res.on('finish', () => {
+    const duration = Date.now() - start;
+    logger.info(`${req.method} ${req.path} - ${res.statusCode} - ${duration}ms`);
+  });
+  next();
+});
+
+// Error tracking
+app.use((err, req, res, next) => {
+  logger.error('Error occurred:', {
+    message: err.message,
+    stack: err.stack,
+    url: req.url,
+    method: req.method,
+    user: req.user?.userId
+  });
+  next(err);
+});
+```
+
+### 🔍 **Health Check**
+```typescript
+app.get('/health', async (req, res) => {
+  try {
+    // Database health
+    await prisma.$queryRaw`SELECT 1`;
+    
+    // Redis health (if configured)
+    // await redis.ping();
+    
+    res.status(200).json({
+      status: 'healthy',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      environment: process.env.NODE_ENV
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: 'unhealthy',
+      error: error.message
+    });
+  }
+});
+```
+
+---
+
+## 🧪 **Testlash**
+
+### 🧪 **Unit Testing**
+```typescript
+// Example test
+import { describe, it, expect } from '@jest/globals';
+import { authService } from '../services/auth.service';
+
+describe('AuthService', () => {
+  it('should register a new user', async () => {
+    const userData = {
+      email: 'test@example.com',
+      password: 'Password123!',
+      role: 'STUDENT',
+      firstName: 'Test',
+      lastName: 'User'
+    };
+    
+    const result = await authService.register(userData);
+    
+    expect(result.user.email).toBe(userData.email);
+    expect(result.user.role).toBe(userData.role);
+    expect(result.token).toBeDefined();
+  });
+});
+```
+
+### 🧪 **Integration Testing**
+```typescript
+// Example API test
+import request from 'supertest';
+import { app } from '../app';
+
+describe('Auth API', () => {
+  it('POST /api/auth/login should authenticate user', async () => {
+    const response = await request(app)
+      .post('/api/auth/login')
+      .send({
+        email: 'test@example.com',
+        password: 'Password123!'
+      });
+    
+    expect(response.status).toBe(200);
+    expect(response.body.success).toBe(true);
+    expect(response.body.data.token).toBeDefined();
+  });
+});
+```
+
+### 🧪 **E2E Testing**
+```typescript
+// Example Playwright test
+import { test, expect } from '@playwright/test';
+
+test('user can login and view dashboard', async ({ page }) => {
+  await page.goto('/login');
+  
+  await page.fill('input[name="email"]', 'test@example.com');
+  await page.fill('input[name="password"]', 'Password123!');
+  await page.click('button[type="submit"]');
+  
+  await expect(page).toHaveURL('/dashboard');
+  await expect(page.locator('h1')).toContainText('Dashboard');
+});
+```
+
+---
+
+## 🚀 **Deployment**
+
+### 🌐 **Production Deployment**
+
+#### 🐳 **Docker Deployment**
+```dockerfile
+# Dockerfile (Backend)
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci --only=production
+
+COPY . .
+RUN npx prisma generate
+
+EXPOSE 5000
+
+CMD ["npm", "start"]
+```
+
+```dockerfile
+# Dockerfile (Frontend)
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+FROM node:18-alpine AS runner
+
+WORKDIR /app
+
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/.next/standalone ./
+COPY --from=builder /app/.next/static ./.next/static
+
+EXPOSE 3000
+
+CMD ["node", "server.js"]
+```
+
+#### 🐳 **Docker Compose**
+```yaml
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/step_uz
+    depends_on:
+      - db
+      - redis
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://backend:5000/api
+    depends_on:
+      - backend
+
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=step_uz
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  postgres_data:
+```
+
+#### ☁️ **Cloud Deployment**
+
+##### **Render.com**
+```bash
+# Backend deploy
+cd backend
+npm install -g @render/cli
+render init
+
+# Frontend deploy
+cd frontend
+npm run build
+npm install -g @render/cli
+render init
+```
+
+##### **Vercel**
+```bash
+# Frontend deploy
+cd frontend
+npm install -g vercel
+vercel --prod
+```
+
+##### **Heroku**
+```bash
+# Backend deploy
+cd backend
+heroku create step-uz-backend
+git push heroku main
+
+# Frontend deploy
+cd frontend
+heroku create step-uz-frontend
+heroku buildpacks:set heroku/nodejs
+git push heroku main
+```
+
+---
+
+## 🤝 **Hamkorlik**
+
+### 🤝 **Qanday qatnashish mumkin**
+
+1. 🍴 **Repository ni fork qiling**
+2. 🌿 **O'z branch'ingizni yarating** (`git checkout -b feature/amazing-feature`)
+3. 📝 **O'zgarishlarni qo'shing** (`git commit -m 'Add amazing feature'`)
+4. 📤 **Branch'ingizni push qiling** (`git push origin feature/amazing-feature`)
+5. 🔃 **Pull Request yarating**
+
+### 📋 **Contribution Guidelines**
+- 🎨 **UI/UX** - Yangi dizayn yoki komponentlar
+- 🚀 **Features** - Yangi funksiyalar
+- 🐛 **Bug Fixes** - Xatoliklarni tuzatish
+- 📚 **Documentation** - Hujjatlarni yaxshilash
+- 🧪 **Testing** - Testlarni qo'shish
+- 🔒 **Security** - Xavfsizlikni yaxshilash
+
+### 👥 **Development Team**
+- **👨‍💻 Lead Developer** - [Otabek Xoffiev](https://github.com/otabekxoff-creator)
+- **🎨 UI/UX Designer** - [Your Name]
+- **🔒 Security Expert** - [Your Name]
+- **📊 DevOps Engineer** - [Your Name]
+
+---
+
+## 📄 **Litsenziya**
+
+Bu loyiha MIT litsenziyasi ostida tarqatiladi. Batafsil ma'lumot uchun [LICENSE](LICENSE) faylini ko'ring.
+
+```
+MIT License
+
+Copyright (c) 2024 Step.uz Team
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+```
+
+---
+
+## 🙏 **Tashakkur**
+
+### 🌟 **Special Thanks**
+- O'zbekiston Respublikasi Yoshlar ishlari vazirligiga
+- Inha universiteti dasturiy injinering fakultetiga
+- Hamma hamkorlar va qo'llab-quvvatlovchilarga
+
+### 🤝 **Hamkorlar**
+- [Ministry of Youth Affairs](https://youth.gov.uz)
+- [Inha University](https://inha.uz)
+- [IT Park Uzbekistan](https://it-park.uz)
+- [Digital Uzbekistan](https://digital.uz)
+
+---
+
+## 📞 **Aloqa**
+
+### 📧 **Contact Information**
+- 📧 **Email**: [info@step.uz](mailto:info@step.uz)
+- 📱 **Phone**: +998 (90) 123-45-67
+- 📍 **Address**: Toshkent shahar, Yunusobod tumani
+- 🌐 **Website**: [https://step.uz](https://step.uz)
+
+### 📱 **Social Media**
+- [Facebook](https://facebook.com/step.uz)
+- [Instagram](https://instagram.com/step.uz)
+- [LinkedIn](https://linkedin.com/company/step.uz)
+- [Telegram](https://t.me/step.uz)
+- [Twitter](https://twitter.com/step_uz)
+
+### 💬 **Community**
+- [Telegram Group](https://t.me/stepuz_community)
+- [Discord Server](https://discord.gg/stepuz)
+- [YouTube Channel](https://youtube.com/@stepuz)
+
+---
+
+## 🚀 **Roadmap**
+
+### 📅 **2024 Q1**
+- ✅ Platform asosini yaratish
+- ✅ Authentication system
+- ✅ Real-time chat
+- ✅ Startap platform
+
+### 📅 **2024 Q2**
+- 🔄 Mobile application (React Native)
+- 🔄 AI-powered job matching
+- 🔄 Video interview system
+- 🔄 Advanced analytics
+
+### 📅 **2024 Q3**
+- 📱 iOS & Android apps
+- 🤖 AI assistant
+- 🌍 International expansion
+- 💳 Payment integration
+
+### 📅 **2024 Q4**
+- 🎓 Education platform
+- 🏢 Corporate solutions
+- 🤝 Partnership program
+- 📊 Advanced BI tools
+
+---
+
+<div align="center">
+
+**🇺🇿 O'zbekiston yoshlari uchun yaratilmoqda**
+
+**Made with ❤️ by Step.uz Team**
+
+[⭐ Give us a star](https://github.com/otabekxoff-creator/step.uz) • [🐛 Report Bug](https://github.com/otabekxoff-creator/step.uz/issues) • [💡 Suggest Feature](https://github.com/otabekxoff-creator/step.uz/issues/new)
+
+</div>
 
 **O'zbekistonning iqtidorli yoshlarini imkoniyatlar bilan bog'laydigan platforma**
 
