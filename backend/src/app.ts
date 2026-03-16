@@ -100,7 +100,7 @@ const allowedOrigins = [
 ].filter(Boolean) as string[];
 
 app.use(cors({
-  origin: (origin, callback) => {
+  origin: (origin: any, callback: any) => {
     // Allow requests with no origin (mobile apps, curl, etc.)
     if (!origin) return callback(null, true);
     
@@ -145,7 +145,7 @@ app.use('/uploads', express.static('uploads', {
   maxAge: '1d',
   etag: true,
   lastModified: true,
-  setHeaders: (res, path, stat) => {
+  setHeaders: (res: any, path: any, stat: any) => {
     // Security headers for static files
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('X-Frame-Options', 'DENY');
@@ -162,7 +162,7 @@ app.use('/api/auth', authRateLimit);
 app.use('/api/audio/upload', uploadRateLimit);
 
 // 🏥 Health Check (barcha security'dan oldin)
-app.get('/health', (req, res) => {
+app.get('/health', (req: any, res: any) => {
   res.status(200).json({
     success: true,
     message: 'Server is healthy',
@@ -171,76 +171,6 @@ app.get('/health', (req, res) => {
     environment: process.env.NODE_ENV,
     version: process.env.npm_package_version || '1.0.0'
   });
-});
-
-// 🛡️ API Routes with security
-app.use('/api/auth', authRoutes);
-app.use('/api/jobs', jobRoutes);
-app.use('/api/applications', applicationRoutes);
-app.use('/api/startups', startupRoutes);
-app.use('/api/admin', adminRoutes);
-app.use('/api/students', studentRoutes);
-app.use('/api/companies', companyRoutes);
-app.use('/api/notifications', notificationRoutes);
-app.use('/api/chats', chatRoutes);
-app.use('/api/audio', audioRoutes);
-
-// 🚨 Error Handling
-app.use(errorHandler);
-app.use(notFoundHandler);
-}));
-
-const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
-  message: 'Too many requests from this IP, please try again later',
-  standardHeaders: true,
-  legacyHeaders: false,
-  skip: (req) => {
-    // Health check va static files uchun limit qo'llanilmasin
-    return req.path === '/health' || req.path.startsWith('/uploads');
-  }
-});
-
-// Auth endpointlar uchun qattiqroq limit
-const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 5,
-  message: 'Too many authentication attempts, please try again later',
-  standardHeaders: true,
-  legacyHeaders: false,
-});
-
-app.use('/api/', limiter);
-
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
-app.use(cookieParser());
-app.use(compression());
-
-app.use(morgan('combined', { stream: { write: message => logger.info(message.trim()) } }));
-app.get('/health', async (req, res) => {
-  try {
-    const { checkDatabaseHealth } = await import('@/config/database');
-    const dbHealthy = await checkDatabaseHealth();
-    
-    const health = {
-      status: dbHealthy ? 'ok' : 'error',
-      timestamp: new Date().toISOString(),
-      uptime: process.uptime(),
-      environment: process.env.NODE_ENV,
-      database: dbHealthy ? 'connected' : 'disconnected',
-      memory: process.memoryUsage(),
-    };
-
-    res.status(dbHealthy ? 200 : 503).json(health);
-  } catch (error) {
-    res.status(503).json({
-      status: 'error',
-      timestamp: new Date().toISOString(),
-      error: 'Health check failed',
-    });
-  }
 });
 
 // 🛡️ API Routes with security
