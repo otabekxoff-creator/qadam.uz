@@ -36,7 +36,7 @@ class SecurePrismaClient {
       });
 
       // 🔒 Security Event Logging
-      this.instance.$on('query', (e: any) => {
+      (this.instance as any).$on('query', (e: any) => {
         // Log slow queries (potential DoS)
         if (e.duration > 1000) {
           logger.warn('Slow query detected', {
@@ -62,21 +62,21 @@ class SecurePrismaClient {
         }
       });
 
-      this.instance.$on('error', (e: any) => {
+      (this.instance as any).$on('error', (e: any) => {
         logger.error('Database error', {
           message: e.message,
           target: e.target,
         });
       });
 
-      this.instance.$on('info', (e: any) => {
+      (this.instance as any).$on('info', (e: any) => {
         logger.info('Database info', {
           message: e.message,
           target: e.target,
         });
       });
 
-      this.instance.$on('warn', (e: any) => {
+      (this.instance as any).$on('warn', (e: any) => {
         logger.warn('Database warning', {
           message: e.message,
           target: e.target,
