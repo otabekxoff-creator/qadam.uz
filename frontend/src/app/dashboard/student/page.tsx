@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { 
   Briefcase, FileText, Eye, Clock, CheckCircle, XCircle,
   TrendingUp, Calendar, MapPin, Building2, ArrowRight,
-  Plus, Edit, Settings, Award, Download
+  Plus, Edit, Settings, Award, Download, Rocket
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -351,6 +351,9 @@ export default function StudentDashboard() {
               <TabsTrigger value="saved" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Saqlanganlar
               </TabsTrigger>
+              <TabsTrigger value="startup" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
+                Startap
+              </TabsTrigger>
             </TabsList>
             
             <TabsContent value="overview" className="mt-6 space-y-3">
@@ -400,6 +403,28 @@ export default function StudentDashboard() {
                 <Button className="mt-4" variant="outline" asChild>
                   <Link href="/jobs">Ishlarni ko'rish</Link>
                 </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="startup" className="mt-6 space-y-4">
+              <div className="text-center py-12 border rounded-lg border-dashed">
+                <Rocket className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-semibold">Startap loyihasini yarating</h3>
+                <p className="text-muted-foreground mb-6">O'z startap loyihangizni platformada joylashtiring va investorlarni jalb qiling.</p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button className="bg-primary" asChild>
+                    <Link href="/startups/create">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Yangi startap
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="/startups">
+                      <Rocket className="h-4 w-4 mr-2" />
+                      Startaplar
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </TabsContent>
           </Tabs>
