@@ -124,8 +124,8 @@ export const authApi = {
   login: (email: string, password: string) =>
     api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/login', { email, password }),
 
-  register: (data: { email: string; password: string; role: import('@/types').UserRole; firstName?: string; lastName?: string; name?: string }) =>
-    api.post<{ email: string }>('/auth/register', data),
+  register: (data: { email: string; password: string; role: import('@/types').UserRole; firstName?: string; lastName?: string; companyName?: string; industry?: string; location?: string }) =>
+    api.post<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company; token: string }>('/auth/register', data),
 
   verifyRegister: (email: string, code: string) =>
     api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/register/verify', { email, code }),
