@@ -217,7 +217,7 @@ const formatDate = (date: string) => {
 // =============================================
 
 function JobCard({ job }: { job: Job }) {
-  const config = jobStatusConfig[job.status];
+  const config = jobStatusConfig[job.status] || { label: 'Noma\'lum', color: 'bg-gray-100 text-gray-700' };
 
   return (
     <Card className="hover:shadow-md transition-all">
