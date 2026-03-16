@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { usePathname } from 'next/navigation';
-import { ArrowLeft, Home, User, Settings, LogOut } from 'lucide-react';
+import { ArrowLeft, Home, User, Settings, LogOut, MessageCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores';
@@ -60,6 +60,17 @@ export default function DashboardLayout({
               >
                 <Home className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-3" />
                 <span className="hidden sm:block">Bosh sahifa</span>
+              </Button>
+            </Link>
+            
+            <Link href="/dashboard/chat">
+              <Button
+                variant={pathname?.includes('/chat') ? 'default' : 'ghost'}
+                className="w-full justify-start h-8 lg:h-10 text-xs lg:text-sm"
+                size="sm"
+              >
+                <MessageCircle className="h-3 w-3 lg:h-4 lg:w-4 mr-1 lg:mr-3" />
+                <span className="hidden sm:block">Xabarlar</span>
               </Button>
             </Link>
             
