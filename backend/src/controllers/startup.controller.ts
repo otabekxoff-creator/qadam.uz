@@ -5,6 +5,27 @@ import asyncHandler from '@/utils/asyncHandler';
 import { StartupStatus } from '@prisma/client';
 
 /**
+ * @desc    Yangi startap yaratish (Faqat talabalar uchun)
+ * @route   POST /api/startups
+ * @access  Private (Student)
+ */
+export const createStartup = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+  const startupData = {
+    ...req.body,
+    founderId: req.user?.userId,
+    status: StartupStatus.PENDING
+  };
+
+  const startup = await startupService.create(startupData);
+
+  res.status(201).json({
+    success: true,
+    data: startup,
+    message: 'Startap muvaffaqiyatli yaratildi. Tasdiqlash uchun ariza yuborildi.'
+  });
+});
+
+/**
  * @desc    Barcha tasdiqlangan startaplarni olish (Ochiq)
  * @route   GET /api/startups
  * @access  Public

@@ -3,6 +3,52 @@ import { NotFoundError, ForbiddenError, ValidationError } from '@/utils/errors';
 import { StartupStatus } from '@prisma/client';
 
 export class StartupService {
+  async create(data: any) {
+    // Check if student exists
+    const student = await prisma.student.findUnique({
+      where: { id: data.studentId }
+    });
+
+    if (!student) {
+      throw new NotFoundError('Talaba topilmadi');
+    }
+
+    // Create startup
+    const startup = await prisma.startup.create({
+      data: {
+        title: data.name,
+        description: data.description,
+        industry: data.industry,
+        stage: data.stage,
+        fundingGoal: data.fundingGoal,
+        teamSize: data.teamSize,
+        website: data.website,
+        pitch: data.pitch,
+        lookingFor: data.lookingFor,
+        timeline: data.timeline,
+        studentId: data.studentId,
+        founderName: data.founderName,
+        founderEmail: data.founderEmail,
+        founderUniversity: data.founderUniversity,
+        status: StartupStatus.PENDING,
+        logo: data.logo || null
+      },
+      include: {
+        student: {
+          select: { 
+            id: true,
+            firstName: true, 
+            lastName: true, 
+            university: true, 
+            avatar: true 
+          }
+        }
+      }
+    });
+
+    return startup;
+  }
+
   async findAllApproved(page: number = 1, limit: number = 10, search?: string) {
     const skip = (page - 1) * limit;
     const whereClause: any = { status: StartupStatus.APPROVED };
