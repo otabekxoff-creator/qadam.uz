@@ -44,7 +44,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
       const response = await chatApi.getChatById(params.id);
       setChat(response);
     } catch (error) {
-      logger.error('Failed to fetch chat', { error: error?.message || 'Unknown error', chatId: params.id }, 'ChatPage');
+      logger.error('Failed to fetch chat', { error: error instanceof Error ? error.message : 'Unknown error', chatId: params.id }, 'ChatPage');
       router.push('/dashboard/chat');
     } finally {
       setLoading(false);
@@ -56,7 +56,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
       const response = await chatApi.getMessages(params.id, { limit: 100 });
       setMessages(response || []);
     } catch (error) {
-      logger.error('Failed to fetch messages', { error: error?.message || 'Unknown error', chatId: params.id }, 'ChatPage');
+      logger.error('Failed to fetch messages', { error: error instanceof Error ? error.message : 'Unknown error', chatId: params.id }, 'ChatPage');
     }
   };
 
@@ -87,7 +87,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
         });
       }
     } catch (error) {
-      logger.error('Failed to send message', { error: error?.message || 'Unknown error', chatId: params.id, content }, 'ChatPage');
+      logger.error('Failed to send message', { error: error instanceof Error ? error.message : 'Unknown error', chatId: params.id, content: newMessage }, 'ChatPage');
     } finally {
       setSending(false);
     }
@@ -97,7 +97,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
     try {
       await chatApi.markAsRead(params.id);
     } catch (error) {
-      logger.error('Failed to mark as read', { error: error?.message || 'Unknown error', chatId: params.id }, 'ChatPage');
+      logger.error('Failed to mark as read', { error: error instanceof Error ? error.message : 'Unknown error', chatId: params.id }, 'ChatPage');
     }
   };
 

@@ -88,7 +88,7 @@ class ApiClient {
         }
       }
     } catch (error) {
-      logger.warn('Token retrieval failed', { error: error?.message || 'Unknown error' }, 'SecureAPI');
+      logger.warn('Token retrieval failed', { error: error instanceof Error ? error.message : 'Unknown error' }, 'SecureAPI');
     }
     return null;
   }
@@ -126,7 +126,7 @@ class ApiClient {
           this.removeToken();
         }
       } catch (error) {
-        logger.warn('Token storage failed', { error: error?.message || 'Unknown error' }, 'SecureAPI');
+        logger.warn('Token storage failed', { error: error instanceof Error ? error.message : 'Unknown error' }, 'SecureAPI');
       }
     }
   }
@@ -139,7 +139,7 @@ class ApiClient {
       // Remove backup cookie
       document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict;';
     } catch (error) {
-      logger.warn('Token removal failed', { error: error?.message || 'Unknown error' }, 'SecureAPI');
+      logger.warn('Token removal failed', { error: error instanceof Error ? error.message : 'Unknown error' }, 'SecureAPI');
     }
   }
 

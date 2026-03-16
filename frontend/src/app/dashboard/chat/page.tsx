@@ -31,7 +31,7 @@ export default function ChatPage() {
       const response = await chatApi.getChats({ limit: 50 });
       setChats(response || []);
     } catch (error) {
-      logger.error('Failed to fetch chats', { error: error?.message || 'Unknown error' }, 'ChatPage');
+      logger.error('Failed to fetch chats', { error: error instanceof Error ? error.message : 'Unknown error' }, 'ChatPage');
     } finally {
       setLoading(false);
     }
@@ -42,7 +42,7 @@ export default function ChatPage() {
       const response = await chatApi.getUnreadCount();
       setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
-      logger.error('Failed to fetch unread count', { error: error?.message || 'Unknown error' }, 'ChatPage');
+      logger.error('Failed to fetch unread count', { error: error instanceof Error ? error.message : 'Unknown error' }, 'ChatPage');
     }
   };
 
