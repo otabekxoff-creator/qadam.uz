@@ -71,7 +71,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
 
       const newMsg: Message = {
         ...response,
-        sender: user
+        sender: user || undefined
       };
 
       setMessages(prev => [...prev, newMsg]);
