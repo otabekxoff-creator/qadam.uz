@@ -3,7 +3,7 @@
     "target": "es2020",
     "module": "commonjs",
     "lib": ["es2020"],
-    "types": ["node"],
+    "typeRoots": ["./node_modules/@types"],
     "outDir": "./dist",
     "rootDir": "./src",
     "strict": true,

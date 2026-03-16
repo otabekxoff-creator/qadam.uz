@@ -5,47 +5,30 @@ const nextConfig: NextConfig = {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
   },
   images: {
-    domains: ['localhost', 'step-backend.onrender.com', 'step-uz.onrender.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'localhost',
+      },
+      {
+        protocol: 'https',
+        hostname: 'step-uz.onrender.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'stepuz-frontend.onrender.com',
+      },
+    ],
     formats: ['image/webp', 'image/avif'],
-    minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
-  compress: true,
+  turbopack: {},
   poweredByHeader: false,
-  reactStrictMode: true,
-  swcMinify: true,
-
-  // Bundle analyzer
-  webpack: (config, { dev, isServer }) => {
-    // Optimize bundle size
-    if (!dev && !isServer) {
-      config.optimization = {
-        ...config.optimization,
-        splitChunks: {
-          chunks: 'all',
-          cacheGroups: {
-            vendor: {
-              test: /[\\/]node_modules[\\/]/,
-              name: 'vendors',
-              chunks: 'all',
-            },
-            common: {
-              name: 'common',
-              minChunks: 2,
-              chunks: 'all',
-              enforce: true,
-            },
-          },
-        },
-      };
-    }
-    
-    return config;
+  compress: true,
+  generateEtags: false,
+  httpAgentOptions: {
+    keepAlive: true,
   },
-  
-  // Static optimization
-  staticPageGenerationTimeout: 60,
-  
-  // Headers for security and caching
+  // Security headers
   async headers() {
     return [
       {
