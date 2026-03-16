@@ -4,7 +4,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    branch: production
+    branch: main
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm run start
@@ -32,9 +32,9 @@ services:
     runtime: node
     region: oregon
     plan: free
-    branch: production
+    branch: main
     rootDir: backend
-    buildCommand: npm install && npx prisma generate && npm run build
+    buildCommand: npm install && npx prisma generate && tsc
     startCommand: npm start
     healthCheckPath: /health
     envVars:

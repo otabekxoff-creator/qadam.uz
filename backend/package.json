@@ -5,13 +5,16 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app.ts",
-    "build": "npx prisma generate && tsc && tsc-alias",
+    "build": "npx prisma generate && tsc",
     "start": "node dist/app.js",
     "db:push": "npx prisma db push --force-reset",
     "db:generate": "prisma generate",
     "db:migrate": "prisma migrate dev",
     "db:deploy": "prisma migrate deploy",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",
