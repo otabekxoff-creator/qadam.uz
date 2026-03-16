@@ -4,7 +4,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    branch: main
+    branch: master
     rootDir: frontend
     buildCommand: npm install && npm run build
     startCommand: npm run start
@@ -26,7 +26,7 @@ services:
     runtime: node
     region: oregon
     plan: free
-    branch: main
+    branch: master
     rootDir: backend
     buildCommand: npm install && npm run build
     startCommand: npm start
