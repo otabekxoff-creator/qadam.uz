@@ -3,7 +3,6 @@ import { hashPassword, comparePassword, generateToken } from '@/utils/helpers';
 import { ConflictError, UnauthorizedError, NotFoundError } from '@/utils/errors';
 import { UserRole } from '@prisma/client';
 import { RegisterInput } from '@/validators/auth.validator';
-import { generateVerificationCode, sendEmail } from '@/services/email.service';
 import fs from 'fs';
 import path from 'path';
 
@@ -31,16 +30,14 @@ export class AuthService {
 
     const hashedPassword = await hashPassword(data.password);
 
-    const code = generateVerificationCode();
-    const expiresAt = new Date(Date.now() + 15 * 60 * 1000); // 15 daqiqa
-
+    // Email tasdiqlashsiz to'g'ridan-to'g'ri ro'yxatdan o'tkazish
     const user = await prisma.user.create({
       data: {
         email: data.email,
         password: hashedPassword,
         role: data.role,
-        verificationCode: code,
-        verificationCodeExpiresAt: expiresAt,
+        emailVerifiedAt: new Date(), // To'g'ridan-to'g'ri tasdiqlash
+        isActive: true,
         ...(data.role === UserRole.STUDENT && {
           student: {
             create: {
@@ -66,32 +63,22 @@ export class AuthService {
       },
     });
 
-    const frontendUrl = process.env.FRONTEND_URL || 'http://localhost:3000';
-    const subject = 'Step.uz – Ro‘yxatdan o‘tishni tasdiqlash kodi';
-    const html = `
-      <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e2e8f0; rounded: 8px;">
-        <h1 style="color: #2563eb; text-align: center;">Step.uz</h1>
-        <p style="font-size: 16px; color: #0f172a;">Assalomu alaykum!</p>
-        <p style="font-size: 16px; color: #0f172a;">Ro‘yxatdan o‘tishni yakunlash uchun quyidagi tasdiqlash kodini kiriting:</p>
-        <div style="background-color: #f1f5f9; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
-          <span style="font-size: 32px; font-weight: bold; letter-spacing: 8px; color: #2563eb;">${code}</span>
-        </div>
-        <p style="font-size: 14px; color: #64748b;">Kod 15 daqiqa davomida amal qiladi.</p>
-        <hr style="border: 0; border-top: 1px solid #e2e8f0; margin: 20px 0;">
-        <p style="font-size: 12px; color: #94a3b8; text-align: center;">
-          Agar bu amaliyotni o‘zingiz boshlamagan bo‘lsangiz, ushbu xabarni e'tiborsiz qoldiring.
-          <br><a href="${frontendUrl}" style="color: #2563eb; text-decoration: none;">Step.uz platformasi</a>
-        </p>
-      </div>
-    `;
-
-    // Emailni fonda yuboramiz (UI qotib qolmasligi uchun)
-    sendEmail(user.email, subject, html).catch(err => {
-      console.error(`Email yuborishda xatolik (${user.email}):`, err);
-    });
-
+    // Return user data without email verification
     return {
-      email: user.email,
+      user: {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        isActive: user.isActive,
+        emailVerifiedAt: user.emailVerifiedAt,
+        student: user.student,
+        company: user.company,
+      },
+      token: generateToken({
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      }),
     };
   }
 
@@ -109,118 +96,144 @@ export class AuthService {
     }
 
     if (!user.isActive) {
-      throw new UnauthorizedError('Hisob faolsizlantirilgan');
+      throw new UnauthorizedError('Hisob faol emas');
     }
 
-    const isValidPassword = await comparePassword(password, user.password);
-
-    if (!isValidPassword) {
+    const isPasswordValid = await comparePassword(password, user.password);
+    if (!isPasswordValid) {
       throw new UnauthorizedError('Email yoki parol noto\'g\'ri');
     }
-
-    const token = generateToken({
-      userId: user.id,
-      email: user.email,
-      role: user.role,
-    });
 
     return {
       user: {
         id: user.id,
         email: user.email,
         role: user.role,
-        profile: user.student || user.company,
+        isActive: user.isActive,
+        emailVerifiedAt: user.emailVerifiedAt,
+        student: user.student,
+        company: user.company,
       },
-      token,
+      token: generateToken({
+        userId: user.id,
+        email: user.email,
+        role: user.role,
+      }),
     };
   }
 
   async verifyRegisterCode(email: string, code: string) {
     const user = await prisma.user.findUnique({
       where: { email },
-      include: { student: true, company: true },
+      include: {
+        student: true,
+        company: true,
+      },
     });
 
-    if (!user || !user.verificationCode || !user.verificationCodeExpiresAt) {
-      throw new UnauthorizedError('Tasdiqlash kodi topilmadi');
+    if (!user) {
+      throw new NotFoundError('Foydalanuvchi topilmadi');
     }
 
-    if (user.verificationCode !== code) {
-      throw new UnauthorizedError('Tasdiqlash kodi noto‘g‘ri');
+    if (user.emailVerifiedAt) {
+      throw new ConflictError('Email allaqachon tasdiqlangan');
+    }
+
+    if (!user.verificationCode || !user.verificationCodeExpiresAt) {
+      throw new UnauthorizedError('Tasdiqlash kodi yuborilmagan');
     }
 
     if (user.verificationCodeExpiresAt < new Date()) {
-      throw new UnauthorizedError('Tasdiqlash kodi muddati tugagan');
+      throw new UnauthorizedError('Tasdiqlash kodi muddati o\'tgan');
     }
 
-    const updated = await prisma.user.update({
+    if (user.verificationCode !== code) {
+      throw new UnauthorizedError('Tasdiqlash kodi noto\'g\'ri');
+    }
+
+    const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
         emailVerifiedAt: new Date(),
         verificationCode: null,
         verificationCodeExpiresAt: null,
       },
-      include: { student: true, company: true },
-    });
-
-    const token = generateToken({
-      userId: updated.id,
-      email: updated.email,
-      role: updated.role,
+      include: {
+        student: true,
+        company: true,
+      },
     });
 
     return {
       user: {
-        id: updated.id,
-        email: updated.email,
-        role: updated.role,
-        profile: updated.student || updated.company,
+        id: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        isActive: updatedUser.isActive,
+        emailVerifiedAt: updatedUser.emailVerifiedAt,
+        student: updatedUser.student,
+        company: updatedUser.company,
       },
-      token,
+      token: generateToken({
+        userId: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      }),
     };
   }
 
   async verifyLoginCode(email: string, code: string) {
     const user = await prisma.user.findUnique({
       where: { email },
-      include: { student: true, company: true },
+      include: {
+        student: true,
+        company: true,
+      },
     });
 
-    if (!user || !user.loginCode || !user.loginCodeExpiresAt) {
-      throw new UnauthorizedError('Kirish kodi topilmadi');
+    if (!user) {
+      throw new NotFoundError('Foydalanuvchi topilmadi');
     }
 
-    if (user.loginCode !== code) {
-      throw new UnauthorizedError('Kirish kodi noto‘g‘ri');
+    if (!user.loginCode || !user.loginCodeExpiresAt) {
+      throw new UnauthorizedError('Kirish kodi yuborilmagan');
     }
 
     if (user.loginCodeExpiresAt < new Date()) {
-      throw new UnauthorizedError('Kirish kodi muddati tugagan');
+      throw new UnauthorizedError('Kirish kodi muddati o\'tgan');
     }
 
-    const updated = await prisma.user.update({
+    if (user.loginCode !== code) {
+      throw new UnauthorizedError('Kirish kodi noto\'g\'ri');
+    }
+
+    const updatedUser = await prisma.user.update({
       where: { id: user.id },
       data: {
         loginCode: null,
         loginCodeExpiresAt: null,
       },
-      include: { student: true, company: true },
-    });
-
-    const token = generateToken({
-      userId: updated.id,
-      email: updated.email,
-      role: updated.role,
+      include: {
+        student: true,
+        company: true,
+      },
     });
 
     return {
       user: {
-        id: updated.id,
-        email: updated.email,
-        role: updated.role,
-        profile: updated.student || updated.company,
+        id: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+        isActive: updatedUser.isActive,
+        emailVerifiedAt: updatedUser.emailVerifiedAt,
+        student: updatedUser.student,
+        company: updatedUser.company,
       },
-      token,
+      token: generateToken({
+        userId: updatedUser.id,
+        email: updatedUser.email,
+        role: updatedUser.role,
+      }),
     };
   }
 
@@ -241,63 +254,92 @@ export class AuthService {
       id: user.id,
       email: user.email,
       role: user.role,
-      profile: user.student || user.company,
+      isActive: user.isActive,
+      emailVerifiedAt: user.emailVerifiedAt,
+      student: user.student,
+      company: user.company,
     };
   }
 
   async updateProfile(userId: string, data: any, files?: any) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
-      include: { student: true, company: true }
+      include: {
+        student: true,
+        company: true,
+      },
     });
 
-    if (!user) throw new NotFoundError('Foydalanuvchi topilmadi');
-
-    let avatarPath = files?.avatar?.[0]?.filename ? `/uploads/${files.avatar[0].filename}` : undefined;
-    let resumePath = files?.resume?.[0]?.filename ? `/uploads/${files.resume[0].filename}` : undefined;
-    let logoPath = files?.logo?.[0]?.filename ? `/uploads/${files.logo[0].filename}` : undefined;
-
-    if (user.role === 'STUDENT') {
-      if (avatarPath && user.student?.avatar) deleteOldFile(user.student.avatar);
-      if (resumePath && user.student?.resume) deleteOldFile(user.student.resume);
-
-      const skillsArray = data.skills ? data.skills.split(',').map((s: string) => s.trim()) : undefined;
-      
-      const updatedStudent = await prisma.student.update({
-        where: { userId: userId },
-        data: {
-          firstName: data.firstName,
-          lastName: data.lastName,
-          phone: data.phone,
-          university: data.university,
-          major: data.major,
-          gpa: data.gpa ? parseFloat(data.gpa) : undefined,
-          about: data.about,
-          ...(skillsArray && { skills: skillsArray }),
-          ...(avatarPath && { avatar: avatarPath }),
-          ...(resumePath && { resume: resumePath }),
-        },
-      });
-      return updatedStudent;
+    if (!user) {
+      throw new NotFoundError('Foydalanuvchi topilmadi');
     }
 
-    if (user.role === 'COMPANY') {
-      if (logoPath && user.company?.logo) deleteOldFile(user.company.logo);
-
-      const updatedCompany = await prisma.company.update({
-        where: { userId: userId },
-        data: {
-          name: data.companyName,
-          description: data.description,
-          industry: data.industry,
-          website: data.website,
-          location: data.location,
-          size: data.size,
-          ...(logoPath && { logo: logoPath }),
-        },
-      });
-      return updatedCompany;
+    // Eski fayllarni o'chirish
+    if (files?.avatar && user.student?.avatar) {
+      deleteOldFile(user.student.avatar);
     }
+    if (files?.resume && user.student?.resume) {
+      deleteOldFile(user.student.resume);
+    }
+    if (files?.logo && user.company?.logo) {
+      deleteOldFile(user.company.logo);
+    }
+
+    // Student ma'lumotlarini yangilash
+    if (user.role === UserRole.STUDENT && user.student) {
+      const studentData: any = {};
+      if (data.firstName) studentData.firstName = data.firstName;
+      if (data.lastName) studentData.lastName = data.lastName;
+      if (data.phone) studentData.phone = data.phone;
+      if (data.university) studentData.university = data.university;
+      if (data.major) studentData.major = data.major;
+      if (data.gpa) studentData.gpa = data.gpa;
+      if (data.about) studentData.about = data.about;
+      if (data.skills) studentData.skills = data.skills;
+      if (files?.avatar) studentData.avatar = files.avatar[0]?.path;
+      if (files?.resume) studentData.resume = files.resume[0]?.path;
+
+      await prisma.student.update({
+        where: { id: user.student.id },
+        data: studentData,
+      });
+    }
+
+    // Company ma'lumotlarini yangilash
+    if (user.role === UserRole.COMPANY && user.company) {
+      const companyData: any = {};
+      if (data.companyName) companyData.name = data.companyName;
+      if (data.description) companyData.description = data.description;
+      if (data.industry) companyData.industry = data.industry;
+      if (data.website) companyData.website = data.website;
+      if (data.location) companyData.location = data.location;
+      if (data.size) companyData.size = data.size;
+      if (files?.logo) companyData.logo = files.logo[0]?.path;
+
+      await prisma.company.update({
+        where: { id: user.company.id },
+        data: companyData,
+      });
+    }
+
+    // Yangilangan ma'lumotlarni qaytarish
+    const updatedUser = await prisma.user.findUnique({
+      where: { id: userId },
+      include: {
+        student: true,
+        company: true,
+      },
+    });
+
+    return {
+      id: updatedUser!.id,
+      email: updatedUser!.email,
+      role: updatedUser!.role,
+      isActive: updatedUser!.isActive,
+      emailVerifiedAt: updatedUser!.emailVerifiedAt,
+      student: updatedUser!.student,
+      company: updatedUser!.company,
+    };
   }
 }
 

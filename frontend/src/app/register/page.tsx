@@ -148,9 +148,18 @@ function RegistrationForm({
       };
 
       const response = await authApi.register(requestData);
-      setEmailForVerify(response.email);
-      setStep('code');
-      toast.success('Tasdiqlash kodi yuborildi!');
+      
+      // To'g'ridan-to'g'ri login qilish
+      setUser(response.user);
+      setToken(response.token);
+      
+      toast.success('Ro\'yxatdan o\'tish muvaffaqiyatli yakunlandi!');
+      setIsRedirecting(true);
+      
+      // Dashboard ga yo'naltirish
+      setTimeout(() => {
+        router.push('/dashboard');
+      }, 1500);
     } catch (err: any) {
       const msg = err.message || 'Ro\'yxatdan o\'tishda xatolik yuz berdi';
       setError(msg);
