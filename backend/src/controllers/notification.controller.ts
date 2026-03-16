@@ -8,6 +8,13 @@ export const getNotifications = asyncHandler(async (req: AuthenticatedRequest, r
   const limit = parseInt(req.query.limit as string) || 20;
   const offset = parseInt(req.query.offset as string) || 0;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   const result = await notificationService.getUserNotifications(userId, limit, offset);
 
   res.json({
@@ -21,6 +28,13 @@ export const markAsRead = asyncHandler(async (req: AuthenticatedRequest, res: Re
   const userId = req.user?.userId;
   const { notificationId } = req.params;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   await notificationService.markAsRead(notificationId, userId);
 
   res.json({
@@ -31,6 +45,13 @@ export const markAsRead = asyncHandler(async (req: AuthenticatedRequest, res: Re
 
 export const markAllAsRead = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
 
   const result = await notificationService.markAllAsRead(userId);
 
@@ -45,6 +66,13 @@ export const deleteNotification = asyncHandler(async (req: AuthenticatedRequest,
   const userId = req.user?.userId;
   const { notificationId } = req.params;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   await notificationService.deleteNotification(notificationId, userId);
 
   res.json({
@@ -55,6 +83,13 @@ export const deleteNotification = asyncHandler(async (req: AuthenticatedRequest,
 
 export const getUnreadCount = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
 
   const result = await notificationService.getUserNotifications(userId, 1, 0);
 

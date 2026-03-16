@@ -115,7 +115,7 @@ export class NotificationService {
   }
 
   async sendApplicationStatusNotification(studentUserId: string, applicationData: any) {
-    const statusMessages = {
+    const statusMessages: Record<string, string> = {
       'PENDING': 'Arizangiz ko\'rib chiqilmoqda',
       'REVIEWING': 'Arizangiz ko\'rib chiqilmoqda',
       'INTERVIEW': 'Siz intervyuga taklif qilindingiz!',
@@ -123,11 +123,13 @@ export class NotificationService {
       'REJECTED': 'Arizangiz rad etildi',
     };
 
+    const message = statusMessages[applicationData.status] || 'Arizangiz holati o\'zgartirildi';
+
     const notification = await this.create({
       userId: studentUserId,
       type: 'APPLICATION_STATUS_CHANGED',
       title: 'Ariza holati o\'zgarti',
-      message: statusMessages[applicationData.status] || 'Arizangiz holati o\'zgartirildi',
+      message,
       data: {
         applicationId: applicationData.id,
         jobId: applicationData.jobId,

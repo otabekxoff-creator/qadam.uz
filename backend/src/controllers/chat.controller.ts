@@ -7,6 +7,13 @@ export const createChat = asyncHandler(async (req: AuthenticatedRequest, res: Re
   const userId = req.user?.userId;
   const { participant2Id } = req.body;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   const chat = await chatService.createChat({
     participant1Id: userId,
     participant2Id,
@@ -24,6 +31,13 @@ export const getChats = asyncHandler(async (req: AuthenticatedRequest, res: Resp
   const limit = parseInt(req.query.limit as string) || 20;
   const offset = parseInt(req.query.offset as string) || 0;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   const chats = await chatService.getUserChats(userId, limit, offset);
 
   res.json({
@@ -36,6 +50,13 @@ export const getChats = asyncHandler(async (req: AuthenticatedRequest, res: Resp
 export const getChatById = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.userId;
   const { chatId } = req.params;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
 
   const chat = await chatService.getChatById(chatId, userId);
 
@@ -56,6 +77,13 @@ export const getChatById = asyncHandler(async (req: AuthenticatedRequest, res: R
 export const createMessage = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.userId;
   const { chatId, content, type, metadata } = req.body;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
 
   const message = await chatService.createMessage({
     chatId,
@@ -78,6 +106,13 @@ export const getMessages = asyncHandler(async (req: AuthenticatedRequest, res: R
   const limit = parseInt(req.query.limit as string) || 50;
   const offset = parseInt(req.query.offset as string) || 0;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   const messages = await chatService.getMessages(chatId, userId, limit, offset);
 
   res.json({
@@ -91,6 +126,13 @@ export const markMessagesAsRead = asyncHandler(async (req: AuthenticatedRequest,
   const userId = req.user?.userId;
   const { chatId } = req.params;
 
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
+
   await chatService.markMessagesAsRead(chatId, userId);
 
   res.json({
@@ -101,6 +143,13 @@ export const markMessagesAsRead = asyncHandler(async (req: AuthenticatedRequest,
 
 export const getUnreadCount = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.userId;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
 
   const result = await chatService.getUnreadMessageCount(userId);
 
@@ -114,6 +163,13 @@ export const getUnreadCount = asyncHandler(async (req: AuthenticatedRequest, res
 export const deleteChat = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
   const userId = req.user?.userId;
   const { chatId } = req.params;
+
+  if (!userId) {
+    return res.status(401).json({
+      success: false,
+      message: 'User not authenticated',
+    });
+  }
 
   await chatService.deleteChat(chatId, userId);
 

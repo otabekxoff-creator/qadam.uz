@@ -42,11 +42,13 @@
     "@types/multer": "^1.4.11",
     "@types/node": "^20.10.4",
     "@types/nodemailer": "^6.4.14",
+    "@types/uuid": "^9.0.7",
     "prisma": "^5.7.0",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.8",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "uuid": "^9.0.1"
   },
   "engines": {
     "node": ">=18.0.0"
