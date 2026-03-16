@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Send, Mic, Paperclip, Smile, Phone, Video, Info, MoreVertical,
-  Search, UserPlus, Settings, Archive, Trash2, Check, CheckCheck
+  Search, UserPlus, Settings, Archive, Trash2, Check, CheckCheck, MessageCircle
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
