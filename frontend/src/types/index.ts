@@ -240,6 +240,13 @@ export interface Startup {
   viewsCount?: number;
   likesCount?: number;
   tags?: string[];
+  // Additional properties for enhanced functionality
+  website?: string;
+  founderName?: string;
+  founderEmail?: string;
+  founderUniversity?: string;
+  teamSize?: string;
+  category?: string;
   createdAt: string;
   updatedAt: string;
 }
