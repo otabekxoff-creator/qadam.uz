@@ -4,11 +4,23 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, User as UserIcon, LogOut, Briefcase, Building2, Lightbulb, GraduationCap, ChevronDown, Settings } from 'lucide-react';
+import { 
+  Menu, 
+  X, 
+  User as UserIcon, 
+  LogOut, 
+  Briefcase, 
+  Building2, 
+  Lightbulb, 
+  GraduationCap, 
+  ChevronDown, 
+  Settings 
+} from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuthStore } from '@/stores/authStore';
+import { logger } from '@/utils/logger';
 
 export function Header() {
   const router = useRouter();
@@ -26,7 +38,7 @@ export function Header() {
       logout();
       router.push('/login');
     } catch (error) {
-      console.error('Logout error:', error);
+      logger.error('Logout error:', error, 'Header');
     }
   };
 

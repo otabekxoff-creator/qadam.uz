@@ -5,7 +5,7 @@
   "main": "dist/app.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app.ts",
-    "build": "npm install --production=false && npx prisma generate && npx prisma db push --accept-data-loss && tsc && tsc-alias",
+    "build": "npx prisma generate && tsc && tsc-alias",
     "start": "node dist/app.js",
     "db:push": "npx prisma db push --force-reset",
     "db:generate": "prisma generate",
@@ -29,7 +29,8 @@
     "nodemailer": "^6.9.7",
     "googleapis": "^128.0.0",
     "winston": "^3.11.0",
-    "zod": "^3.22.4"
+    "zod": "^3.22.4",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
