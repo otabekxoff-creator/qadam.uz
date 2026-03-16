@@ -25,7 +25,7 @@ export default function NotificationsPage() {
     try {
       setLoading(true);
       const response = await notificationsApi.getNotifications({ limit: 50 });
-      setNotifications(response.data || []);
+      setNotifications(response || []);
     } catch (error) {
       console.error('Failed to fetch notifications:', error);
     } finally {
@@ -36,7 +36,7 @@ export default function NotificationsPage() {
   const fetchUnreadCount = async () => {
     try {
       const response = await notificationsApi.getUnreadCount();
-      setUnreadCount(response.data?.unreadCount || 0);
+      setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
       console.error('Failed to fetch unread count:', error);
     }
