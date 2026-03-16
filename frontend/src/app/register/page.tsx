@@ -141,7 +141,9 @@ function RegistrationForm({
           lastName: formData.lastName,
         }),
         ...(isCompany && {
-          name: formData.name,
+          companyName: formData.companyName,
+          industry: formData.industry,
+          location: formData.location,
         }),
       };
 
