@@ -274,7 +274,7 @@ export default function EnhancedStartupsPage() {
     let filtered = startups.filter(startup => {
       const matchesSearch = startup.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                            startup.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                           startup.founderName.toLowerCase().includes(searchQuery.toLowerCase());
+                           (startup.founderName?.toLowerCase().includes(searchQuery.toLowerCase()) || false);
 
       const matchesCategory = selectedCategory === 'All' || startup.category === selectedCategory;
       const matchesStage = selectedStage === 'All' || startup.stage === selectedStage;
