@@ -9,7 +9,9 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 
 import { connectDatabase } from '@/config/database';
+import redisService from '@/config/redis';
 import logger from '@/config/logger';
+import { setupSwagger } from '@/config/swagger';
 import { errorHandler, notFoundHandler } from '@/middleware/error.middleware';
 import { 
   strictRateLimit, 
@@ -173,7 +175,10 @@ app.get('/health', (req: any, res: any) => {
   });
 });
 
-// 🛡️ API Routes with security
+// � API Documentation
+setupSwagger(app);
+
+// �🛡️ API Routes with security
 app.use('/api/auth', authRoutes);
 app.use('/api/jobs', jobRoutes);
 app.use('/api/applications', applicationRoutes);
@@ -194,12 +199,21 @@ const startServer = async () => {
   try {
     await connectDatabase();
     
+    // Connect to Redis (optional - will continue if Redis fails)
+    try {
+      await redisService.connect();
+    } catch (redisError) {
+      logger.warn('Redis connection failed, continuing without cache:', redisError);
+    }
+    
     app.listen(PORT, () => {
       logger.info(`🚀 Server running on port ${PORT}`);
       logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
       logger.info(`🔒 Security: Enhanced with multiple layers`);
       logger.info(`📊 Rate Limiting: Active`);
       logger.info(`🛡️ CORS: Configured`);
+      logger.info(`🗄️ Database: Connected`);
+      logger.info(`🔴 Redis: ${redisService.isRedisConnected() ? 'Connected' : 'Disconnected'}`);
     });
   } catch (error) {
     logger.error('Failed to start server:', error);
