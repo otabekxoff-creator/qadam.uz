@@ -1,17 +1,19 @@
 {
   "version": 2,
-  "builds": [
-    {
-      "src": "frontend/package.json",
-      "use": "@vercel/next"
+  "name": "step-uz",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "regions": ["iad1"],
+  "functions": {
+    "frontend/src/app/**/*.ts": {
+      "runtime": "nodejs22.x"
+    },
+    "frontend/src/app/**/*.tsx": {
+      "runtime": "nodejs22.x"
     }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "frontend/$1"
-    }
-  ],
+  },
   "env": {
     "NEXT_PUBLIC_API_URL": "https://step-backend.vercel.app/api",
     "NEXT_PUBLIC_APP_NAME": "Step.uz",
@@ -19,5 +21,44 @@
     "NEXT_PUBLIC_ENABLE_CHAT": "true",
     "NEXT_PUBLIC_ENABLE_NOTIFICATIONS": "true",
     "NEXT_PUBLIC_ENABLE_VOICE_MESSAGES": "true"
-  }
+  },
+  "build": {
+    "env": {
+      "NEXT_TELEMETRY_DISABLED": "1"
+    }
+  },
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "DENY"
+        },
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "origin-when-cross-origin"
+        }
+      ]
+    },
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store, must-revalidate"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://step-backend.vercel.app/api/$1"
+    }
+  ]
 }
