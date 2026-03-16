@@ -34,7 +34,7 @@ services:
     plan: free
     branch: main
     rootDir: backend
-    buildCommand: npm install && npx prisma generate && tsc
+    buildCommand: npm install && npx prisma generate && npx tsc
     startCommand: npm start
     healthCheckPath: /health
     envVars:
