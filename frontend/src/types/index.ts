@@ -300,9 +300,59 @@ export interface AdminDashboardStats {
   totalUsers: number;
   totalStudents: number;
   totalCompanies: number;
+  totalStartups: number;
   totalJobs: number;
   totalApplications: number;
-  totalStartups: number;
-  pendingStartups: number;
-  activeJobs: number;
+  activeUsers: number;
+  newUsersToday: number;
+}
+
+// =============================================
+// Chat Types
+// =============================================
+
+export interface Chat {
+  id: string;
+  participant1Id: string;
+  participant2Id: string;
+  participant1?: User;
+  participant2?: User;
+  lastMessage?: string;
+  lastMessageAt?: string;
+  isActive: boolean;
+  unreadCount?: number;
+  createdAt: string;
+  updatedAt: string;
+  messages?: Message[];
+}
+
+export interface Message {
+  id: string;
+  chatId: string;
+  senderId: string;
+  sender?: User;
+  content: string;
+  type: MessageType;
+  isRead: boolean;
+  metadata?: any;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export type MessageType = 'TEXT' | 'VOICE' | 'IMAGE' | 'FILE';
+
+// =============================================
+// Notification Types
+// =============================================
+
+export interface Notification {
+  id: string;
+  userId: string;
+  type: string;
+  title: string;
+  message: string;
+  isRead: boolean;
+  data?: any;
+  createdAt: string;
+  updatedAt: string;
 }

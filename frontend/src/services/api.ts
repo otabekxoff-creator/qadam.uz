@@ -262,3 +262,83 @@ export const studentsApi = {
   getApplications: (params?: { page?: number; limit?: number; status?: string }) =>
     api.get<import('@/types').PaginatedResponse<import('@/types').Application>>('/students/applications', params as Record<string, string | number | boolean | undefined>),
 };
+
+// =============================================
+// Chat API
+// =============================================
+
+export const chatApi = {
+  getChats: (params?: { limit?: number; offset?: number }) =>
+    api.get<import('@/types').Chat[]>('/chats', params as Record<string, string | number | boolean | undefined>),
+
+  getChatById: (chatId: string) =>
+    api.get<import('@/types').Chat>(`/chats/${chatId}`),
+
+  createChat: (data: { participant2Id: string }) =>
+    api.post<import('@/types').Chat>('/chats', data),
+
+  createMessage: (chatId: string, data: { content: string; type?: string; metadata?: any }) =>
+    api.post<import('@/types').Message>(`/chats/${chatId}/messages`, data),
+
+  getMessages: (chatId: string, params?: { limit?: number; offset?: number }) =>
+    api.get<import('@/types').Message[]>(`/chats/${chatId}/messages`, params as Record<string, string | number | boolean | undefined>),
+
+  markAsRead: (chatId: string) =>
+    api.put(`/chats/${chatId}/read`),
+
+  getUnreadCount: () =>
+    api.get<{ unreadCount: number }>('/chats/unread-count'),
+
+  deleteChat: (chatId: string) =>
+    api.delete(`/chats/${chatId}`),
+};
+
+// =============================================
+// Notifications API
+// =============================================
+
+export const notificationsApi = {
+  getNotifications: (params?: { limit?: number; offset?: number }) =>
+    api.get<import('@/types').Notification[]>('/notifications', params as Record<string, string | number | boolean | undefined>),
+
+  markAsRead: (notificationId: string) =>
+    api.put(`/notifications/${notificationId}/read`),
+
+  markAllAsRead: () =>
+    api.put('/notifications/read-all'),
+
+  deleteNotification: (notificationId: string) =>
+    api.delete(`/notifications/${notificationId}`),
+
+  getUnreadCount: () =>
+    api.get<{ unreadCount: number }>('/notifications/unread-count'),
+};
+
+// =============================================
+// Audio API
+// =============================================
+
+export const audioApi = {
+  uploadAudio: (file: File, duration?: number) => {
+    const formData = new FormData();
+    formData.append('audio', file);
+    if (duration) {
+      formData.append('duration', duration.toString());
+    }
+    return api.post<{ id: string; filename: string; url: string }>('/audio/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+
+  getAudio: (filename: string) =>
+    api.get<Blob>(`/audio/${filename}`, undefined, { responseType: 'blob' }),
+
+  getAudioInfo: (filename: string) =>
+    api.get<{ filename: string; size: number; formattedSize: string; uploadedAt: string }>(`/audio/${filename}/info`),
+
+  deleteAudio: (filename: string) =>
+    api.delete(`/audio/${filename}`),
+
+  checkExists: (filename: string) =>
+    api.get<{ exists: boolean }>(`/audio/${filename}/exists`),
+};
