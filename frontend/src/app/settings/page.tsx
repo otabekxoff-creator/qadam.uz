@@ -9,6 +9,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuthStore } from '@/stores';
 import { toast } from 'sonner';
+import { logger } from '@/utils/logger';
 
 export default function SettingsPage() {
   const { user, student, company, setUser } = useAuthStore();
@@ -136,7 +137,7 @@ export default function SettingsPage() {
       
       toast.success('Maxfiylik siyosati muvaffaqiyatli yuklandi!');
     } catch (error) {
-      console.error('Download error:', error);
+      logger.error('Download error:', error, 'Settings');
       toast.error('Maxfiylik siyosatini yuklab bo\'lmadi. Iltimos, keyinroq urinib ko\'ring.');
     } finally {
       setIsDownloading(null);
@@ -164,7 +165,7 @@ export default function SettingsPage() {
       
       toast.success('Foydalanish shartlari muvaffaqiyatli yuklandi!');
     } catch (error) {
-      console.error('Download error:', error);
+      logger.error('Download error:', error, 'Settings');
       toast.error('Foydalanish shartlarini yuklab bo\'lmadi. Iltimos, keyinroq urinib ko\'ring.');
     } finally {
       setIsDownloading(null);

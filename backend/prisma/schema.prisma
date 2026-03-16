@@ -7,195 +7,234 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum StartupStatus {
-  PENDING    // Ko'rib chiqilmoqda
-  APPROVED   // Tasdiqlangan
-  REJECTED   // Rad etilgan
-  FUNDED     // Moliyalashtirilgan
-}
-
-enum UserRole {
-  STUDENT
-  COMPANY
-  ADMIN
-}
-
-enum JobStatus {
-  ACTIVE
-  CLOSED
-  DRAFT
-}
-
-enum ApplicationStatus {
-  PENDING
-  REVIEWING
-  ACCEPTED
-  REJECTED
-  INTERVIEW
-  OFFERED
-}
+// =============================================
+// User Models
+// =============================================
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  role      UserRole
-  isActive  Boolean  @default(true)
-  // Email tasdiqlash va kirish kodi uchun maydonlar
-  emailVerifiedAt          DateTime?
-  verificationCode         String?
-  verificationCodeExpiresAt DateTime?
-  loginCode                String?
-  loginCodeExpiresAt       DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  student   Student?
-  company   Company?
+  id          String   @id @default(cuid())
+  email       String   @unique
+  password    String
+  role        UserRole @default(STUDENT)
+  isVerified  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  student     Student?
+  company     Company?
+  applications Application[]
+  startups    Startup[]
+  chats       Chat[] @relation("ChatParticipant1")
+  chats       Chat[] @relation("ChatParticipant2")
+  messages    Message[]
   notifications Notification[]
-  chatsAsParticipant1 Chat[] @relation("ChatParticipant1")
-  chatsAsParticipant2 Chat[] @relation("ChatParticipant2")
-  sentMessages Message[]
 
   @@map("users")
 }
 
 model Student {
-  id           String        @id @default(uuid())
-  userId       String        @unique
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName    String
-  lastName     String
-  phone        String?
-  university   String?
-  major        String?
-  gpa          Float?
-  about        String?       @db.Text
-  avatar       String?
-  resume       String?
-  skills       String[]
-  email        String?        // User email dan olish uchun
-  applications Application[]
-  
-  // SHU QATOR QO'SHILDI (Startaplar bilan bog'lanish uchun)
-  startups     Startup[]     
-  
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id              String    @id @default(cuid())
+  userId          String    @unique
+  firstName       String
+  lastName        String
+  middleName      String?
+  avatar          String?
+  phone           String?
+  birthDate       String?
+  gender          Gender?
+  city            String?
+  address         String?
+  university      String?
+  faculty         String?
+  specialty       String?
+  major           String?
+  gpa             Number?
+  course          Number?
+  graduationYear  Number?
+  educationLevel  EducationLevel
+  skills          String[]
+  experience      Experience[]
+  education       Education[]
+  languages       Language[]
+  certifications  Certification[]
+  resumeUrl       String?
+  portfolioUrl    String?
+  linkedinUrl     String?
+  githubUrl       String?
+  telegramUrl     String?
+  about           String?
+  jobPreferences  JobPreferences?
+  isLookingForJob Boolean   @default(true)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  // Relations
+  user          User         @relation(fields: [userId], references: [id])
+  applications   Application[]
+  startups       Startup[]
+
   @@map("students")
 }
 
 model Company {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   name        String
-  description String?  @db.Text
-  industry    String
+  email       String   @unique
+  phone       String?
   website     String?
-  location    String
-  size        String
   logo        String?
-  verified    Boolean  @default(false)
-  jobs        Job[]
+  description String?
+  industry    String?
+  size        CompanySize
+  foundedYear Int?
+  isVerified  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  // Relations
+  user        User         @relation(fields: [userId], references: [id])
+  jobs        Job[]
+  applications Application[]
+
   @@map("companies")
 }
 
+// =============================================
+// Job Models
+// =============================================
+
 model Job {
-  id               String        @id @default(uuid())
-  companyId        String
-  company          Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  title            String
-  description      String        @db.Text
-  requirements     String        @db.Text
-  responsibilities String?       @db.Text
-  location         String
-  type             String
-  salaryMin        Int?
-  salaryMax        Int?
-  currency         String        @default("UZS")
-  skills           String[]
-  status           JobStatus     @default(ACTIVE)
-  deadline         DateTime?
-  applications     Application[]
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  requirements String?
+  responsibilities String?
+  benefits    String?
+  salary      String?
+  location    String?
+  type        JobType    @default(FULL_TIME)
+  level       JobLevel   @default(ENTRY_LEVEL)
+  industry    String
+  skills      String[]
+  isActive    Boolean    @default(true)
+  viewsCount  Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relations
+  companyId   String
+  company     Company    @relation(fields: [companyId], references: [id])
+  applications Application[]
+
   @@map("jobs")
 }
 
 model Application {
-  id          String            @id @default(uuid())
-  jobId       String
-  job         Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  studentId   String
-  student     Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  coverLetter String?           @db.Text
-  resume      String?
+  id          String           @id @default(cuid())
   status      ApplicationStatus @default(PENDING)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  coverLetter String?
+  resumeUrl   String?
+  notes       String?
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+
+  // Relations
+  jobId       String
+  job         Job              @relation(fields: [jobId], references: [id])
+  studentId   String
+  student     Student          @relation(fields: [studentId], references: [id])
+  companyId   String
+  company     Company          @relation(fields: [companyId], references: [id])
+
   @@unique([jobId, studentId])
   @@map("applications")
 }
 
+// =============================================
+// Startup Models
+// =============================================
+
 model Startup {
-  id               String        @id @default(uuid())
-  title            String
-  description      String        @db.Text
-  stage            String        @default("IDEA")
-  fundingGoal      String?
-  teamSize         String?
-  website          String?
-  pitch            String?       @db.Text
-  lookingFor       String?       @db.Text
-  timeline         String?       @db.Text
-  goalAmount       Float?        // Kerakli sarmoya miqdori (so'mda yoki dollarda)
-  status           StartupStatus @default(PENDING)
-  logo             String?
-  founderName      String
-  founderEmail     String
-  founderUniversity String?
-  
-  studentId        String
-  student          Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id                   String        @id @default(cuid())
+  studentId            String
+  name                 String
+  logo                 String?
+  pitchDeck            String?
+  description          String
+  problem              String
+  solution             String
+  marketAnalysis       String?
+  businessModel        String?
+  competitiveAdvantage String?
+  team                 StartupTeamMember[]
+  industry             String?
+  stage                StartupStage
+  fundingNeeded        Number?
+  fundingCurrency      'UZS' | 'USD' @default('USD')
+  fundingRaised        Number?
+  equityOffered        Number?
+  status               StartupStatus @default(DRAFT)
+  rejectionReason      String?
+  viewsCount           Int?          @default(0)
+  likesCount           Int?          @default(0)
+  tags                 String[]
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
+
+  // Additional properties for enhanced functionality
+  website              String?
+  founderName          String?
+  founderEmail         String?
+  founderUniversity    String?
+  teamSize             String?
+  category             String?
+
+  // Relations
+  student              Student        @relation(fields: [studentId], references: [id])
+  user                 User           @relation(fields: [studentId], references: [id])
 
   @@map("startups")
 }
 
-model Notification {
-  id           String        @id @default(uuid())
-  userId       String
-  type         String        // JOB_POSTED, APPLICATION_RECEIVED, INTERVIEW_SCHEDULED, etc.
-  title        String
-  message      String        @db.Text
-  isRead       Boolean       @default(false)
-  data         Json?         // Additional data (jobId, applicationId, etc.)
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+model StartupTeamMember {
+  id          String  @id @default(cuid())
+  name        String
+  role        String
+  email       String?
+  linkedinUrl String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  // Relations
+  startupId   String
+  startup     Startup @relation(fields: [startupId], references: [id])
 
-  @@map("notifications")
+  @@map("startup_team_members")
 }
 
+// =============================================
+// Chat Models
+// =============================================
+
 model Chat {
-  id              String        @id @default(uuid())
-  participant1Id  String        // First participant (e.g., student)
-  participant2Id  String        // Second participant (e.g., company)
-  lastMessage     String?       @db.Text
-  lastMessageAt   DateTime?
-  isActive        Boolean       @default(true)
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  id            String    @id @default(cuid())
+  participant1Id String
+  participant2Id String
+  lastMessage   String?
+  lastMessageAt DateTime?
+  isActive      Boolean   @default(true)
+  unreadCount   Int?      @default(0)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  participant1    User          @relation("ChatParticipant1", fields: [participant1Id], references: [id], onDelete: Cascade)
-  participant2    User          @relation("ChatParticipant2", fields: [participant2Id], references: [id], onDelete: Cascade)
-  messages        Message[]
+  // Relations
+  participant1  User      @relation("ChatParticipant1", fields: [participant1Id], references: [id])
+  participant2  User      @relation("ChatParticipant2", fields: [participant2Id], references: [id])
+  messages      Message[]
 
+  @@unique([participant1Id, participant2Id])
   @@map("chats")
 }
 

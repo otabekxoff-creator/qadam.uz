@@ -5,6 +5,7 @@ import { UserRole } from '@prisma/client';
 import { RegisterInput } from '@/validators/auth.validator';
 import fs from 'fs';
 import path from 'path';
+import logger from '@/config/logger';
 
 const deleteOldFile = (fileUrl?: string | null) => {
   if (!fileUrl) return;
@@ -14,7 +15,7 @@ const deleteOldFile = (fileUrl?: string | null) => {
       fs.unlinkSync(filePath);
     }
   } catch (err) {
-    console.error("Eski faylni o'chirishda xatolik:", err);
+    logger.error("Eski faylni o'chirishda xatolik:", err, 'AuthService');
   }
 };
 

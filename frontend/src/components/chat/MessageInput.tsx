@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Send, Mic, Paperclip, Smile, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { logger } from '@/utils/logger';
 
 interface MessageInputProps {
   onSendMessage: (content: string, type: string, metadata?: any) => void;
@@ -66,13 +67,13 @@ export default function MessageInput({
     }
     
     // TODO: Implement voice recording logic
-    console.log(`Recording stopped after ${recordingTime} seconds`);
+    logger.info(`Recording stopped after ${recordingTime} seconds`);
     setRecordingTime(0);
   };
 
   const handleFileUpload = () => {
     // TODO: Implement file upload
-    console.log('File upload clicked');
+    logger.info('File upload clicked');
   };
 
   const formatRecordingTime = (seconds: number) => {

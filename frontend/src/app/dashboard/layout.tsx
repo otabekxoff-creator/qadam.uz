@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores';
+import { logger } from '@/utils/logger';
 
 export default function DashboardLayout({
   children,
@@ -29,7 +30,7 @@ export default function DashboardLayout({
         // setUnreadCount(chatResponse.data?.unreadCount || 0);
         // setNotificationCount(notificationResponse.data?.unreadCount || 0);
       } catch (error) {
-        console.error('Failed to fetch counts:', error);
+        logger.error('Failed to fetch counts:', error, 'Dashboard');
       }
     };
 
