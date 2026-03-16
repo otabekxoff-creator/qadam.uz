@@ -28,7 +28,7 @@ export default function ChatPage() {
     try {
       setLoading(true);
       const response = await chatApi.getChats({ limit: 50 });
-      setChats(response.data || []);
+      setChats(response || []);
     } catch (error) {
       console.error('Failed to fetch chats:', error);
     } finally {
@@ -39,31 +39,27 @@ export default function ChatPage() {
   const fetchUnreadCount = async () => {
     try {
       const response = await chatApi.getUnreadCount();
-      setUnreadCount(response.data?.unreadCount || 0);
+      setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
       console.error('Failed to fetch unread count:', error);
     }
   };
 
   const filteredChats = chats.filter(chat => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
-    const searchName = participant?.student 
-      ? `${participant.student.firstName} ${participant.student.lastName}`
-      : participant?.company?.name || '';
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
+    const searchName = participant?.email || '';
     
     return searchName.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   const getParticipantName = (chat: Chat) => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
-    return participant?.student 
-      ? `${participant.student.firstName} ${participant.student.lastName}`
-      : participant?.company?.name || 'Unknown';
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
+    return participant?.email || 'Unknown';
   };
 
   const getParticipantAvatar = (chat: Chat) => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
-    return participant?.student?.avatar || participant?.company?.logo || '';
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
+    return '';
   };
 
   const formatLastMessage = (message: string) => {
