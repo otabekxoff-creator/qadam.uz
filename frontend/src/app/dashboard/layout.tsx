@@ -34,7 +34,7 @@ export default function DashboardLayout({
         setUnreadCount(0);
         setNotificationCount(0);
       } catch (error) {
-        logger.error('Failed to fetch counts', { error: error?.message || 'Unknown error' }, 'Dashboard');
+        logger.error('Failed to fetch counts', { error: error instanceof Error ? error.message : 'Unknown error' }, 'Dashboard');
       }
     };
 
