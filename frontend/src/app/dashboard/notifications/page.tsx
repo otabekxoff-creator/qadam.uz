@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import { notificationsApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import type { Notification } from '@/types';
+import { logger } from '@/utils/logger';
 
 export default function NotificationsPage() {
   const [notifications, setNotifications] = useState<Notification[]>([]);
@@ -27,7 +28,7 @@ export default function NotificationsPage() {
       const response = await notificationsApi.getNotifications({ limit: 50 });
       setNotifications(response || []);
     } catch (error) {
-      console.error('Failed to fetch notifications:', error);
+      logger.error('Failed to fetch notifications', { error: error?.message || 'Unknown error' }, 'NotificationsPage');
     } finally {
       setLoading(false);
     }
@@ -38,7 +39,7 @@ export default function NotificationsPage() {
       const response = await notificationsApi.getUnreadCount();
       setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
-      console.error('Failed to fetch unread count:', error);
+      logger.error('Failed to fetch unread count', { error: error?.message || 'Unknown error' }, 'NotificationsPage');
     }
   };
 
@@ -50,7 +51,7 @@ export default function NotificationsPage() {
       ));
       setUnreadCount(prev => Math.max(0, prev - 1));
     } catch (error) {
-      console.error('Failed to mark as read:', error);
+      logger.error('Failed to mark as read', { error: error?.message || 'Unknown error', notificationId }, 'NotificationsPage');
     }
   };
 
@@ -60,7 +61,7 @@ export default function NotificationsPage() {
       setNotifications(prev => prev.map(notif => ({ ...notif, isRead: true })));
       setUnreadCount(0);
     } catch (error) {
-      console.error('Failed to mark all as read:', error);
+      logger.error('Failed to mark all as read', { error: error?.message || 'Unknown error' }, 'NotificationsPage');
     }
   };
 
@@ -72,7 +73,7 @@ export default function NotificationsPage() {
         setUnreadCount(prev => Math.max(0, prev - 1));
       }
     } catch (error) {
-      console.error('Failed to delete notification:', error);
+      logger.error('Failed to delete notification', { error: error?.message || 'Unknown error', notificationId }, 'NotificationsPage');
     }
   };
 

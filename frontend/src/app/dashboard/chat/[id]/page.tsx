@@ -9,6 +9,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { chatApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import type { Chat, Message } from '@/types';
+import { logger } from '@/utils/logger';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 
@@ -43,7 +44,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
       const response = await chatApi.getChatById(params.id);
       setChat(response);
     } catch (error) {
-      console.error('Failed to fetch chat:', error);
+      logger.error('Failed to fetch chat', { error: error?.message || 'Unknown error', chatId: params.id }, 'ChatPage');
       router.push('/dashboard/chat');
     } finally {
       setLoading(false);
@@ -55,7 +56,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
       const response = await chatApi.getMessages(params.id, { limit: 100 });
       setMessages(response || []);
     } catch (error) {
-      console.error('Failed to fetch messages:', error);
+      logger.error('Failed to fetch messages', { error: error?.message || 'Unknown error', chatId: params.id }, 'ChatPage');
     }
   };
 
@@ -86,7 +87,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
         });
       }
     } catch (error) {
-      console.error('Failed to send message:', error);
+      logger.error('Failed to send message', { error: error?.message || 'Unknown error', chatId: params.id, content }, 'ChatPage');
     } finally {
       setSending(false);
     }
@@ -96,7 +97,7 @@ export default function ChatWindowPage({ params }: { params: { id: string } }) {
     try {
       await chatApi.markAsRead(params.id);
     } catch (error) {
-      console.error('Failed to mark as read:', error);
+      logger.error('Failed to mark as read', { error: error?.message || 'Unknown error', chatId: params.id }, 'ChatPage');
     }
   };
 

@@ -1,4 +1,5 @@
 import { memo, useState, useEffect, useRef, useCallback } from 'react';
+import { logger } from '@/utils/logger';
 
 // Memo wrapper for expensive components
 export function withMemo<P extends object>(
@@ -88,6 +89,8 @@ export function usePerformanceMonitor(componentName: string) {
       if (startTime.current) {
         const endTime = performance.now();
         console.log(`${componentName} render time: ${endTime - startTime.current}ms`);
+        // Performance logging - keep for development monitoring
+        logger.info(`${componentName} render time`, { duration: endTime - startTime.current, componentName }, 'Performance');
       }
     };
   });
@@ -108,7 +111,7 @@ export class PerformanceErrorBoundary extends React.Component<
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('Performance Error Boundary:', error, errorInfo);
+    logger.error('Performance Error Boundary', { error: error.message, stack: error.stack, errorInfo }, 'Performance');
   }
 
   render() {

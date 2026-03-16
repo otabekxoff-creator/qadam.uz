@@ -2,6 +2,8 @@
 // 🔒 Enhanced API Client with Security
 // =============================================
 
+import { logger } from '@/utils/logger';
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
 
 // 🔒 Security Configuration
@@ -86,7 +88,7 @@ class ApiClient {
         }
       }
     } catch (error) {
-      console.warn('Token retrieval failed:', error);
+      logger.warn('Token retrieval failed', { error: error?.message || 'Unknown error' }, 'SecureAPI');
     }
     return null;
   }
@@ -124,7 +126,7 @@ class ApiClient {
           this.removeToken();
         }
       } catch (error) {
-        console.warn('Token storage failed:', error);
+        logger.warn('Token storage failed', { error: error?.message || 'Unknown error' }, 'SecureAPI');
       }
     }
   }
@@ -137,7 +139,7 @@ class ApiClient {
       // Remove backup cookie
       document.cookie = 'auth_token=; path=/; max-age=0; SameSite=Strict;';
     } catch (error) {
-      console.warn('Token removal failed:', error);
+      logger.warn('Token removal failed', { error: error?.message || 'Unknown error' }, 'SecureAPI');
     }
   }
 
@@ -266,7 +268,7 @@ class ApiClient {
           // Check for potential XSS in response
           const jsonString = JSON.stringify(data);
           if (/<script|javascript:|on\w+=/i.test(jsonString)) {
-            console.warn('Potential XSS detected in response');
+            logger.warn('Potential XSS detected in response', { response: jsonString.substring(0, 100) }, 'SecureAPI');
           }
         }
 

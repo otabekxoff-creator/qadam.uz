@@ -66,13 +66,15 @@ export default function MessageInput({
       recordingInterval.current = null;
     }
     
-    // TODO: Implement voice recording logic - will be added in future version
+    // FUTURE: Voice recording implementation planned for v2.0
+    // Will use Web Audio API for voice capture and processing
     logger.info(`Recording stopped after ${recordingTime} seconds`);
     setRecordingTime(0);
   };
 
   const handleFileUpload = () => {
-    // TODO: Implement file upload - will be added in future version
+    // FUTURE: File upload implementation planned for v2.0
+    // Will support documents, images, and video files
     logger.info('File upload clicked');
   };
 

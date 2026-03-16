@@ -10,6 +10,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { chatApi } from '@/services/api';
 import { useAuthStore } from '@/stores';
 import type { Chat } from '@/types';
+import { logger } from '@/utils/logger';
 import Link from 'next/link';
 
 export default function ChatPage() {
@@ -30,7 +31,7 @@ export default function ChatPage() {
       const response = await chatApi.getChats({ limit: 50 });
       setChats(response || []);
     } catch (error) {
-      console.error('Failed to fetch chats:', error);
+      logger.error('Failed to fetch chats', { error: error?.message || 'Unknown error' }, 'ChatPage');
     } finally {
       setLoading(false);
     }
@@ -41,7 +42,7 @@ export default function ChatPage() {
       const response = await chatApi.getUnreadCount();
       setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
-      console.error('Failed to fetch unread count:', error);
+      logger.error('Failed to fetch unread count', { error: error?.message || 'Unknown error' }, 'ChatPage');
     }
   };
 
