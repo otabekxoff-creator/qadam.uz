@@ -5,8 +5,8 @@
   "description": "Step.uz - Career platform for Uzbekistan youth connecting students with jobs and startups",
   "scripts": {
     "dev": "next dev -p 3000",
-    "build": "next build",
-    "start": "next start",
+    "build": "npx next build",
+    "start": "npx next start",
     "lint": "eslint .",
     "db:push": "prisma db push",
     "db:generate": "prisma generate",
