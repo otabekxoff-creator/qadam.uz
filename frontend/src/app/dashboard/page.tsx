@@ -310,13 +310,6 @@ export default function DashboardPage() {
       </div>
     );
   }
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            {student ? (
-              <>
-                <Link href="/dashboard/student">
-                  <Button className="w-full" size="lg">
 
   // Admin dashboard
   if (user.role === 'ADMIN') {
@@ -505,16 +498,16 @@ export default function DashboardPage() {
         <CardHeader className="text-center">
           <CardTitle className="text-2xl">Dashboard</CardTitle>
           <CardDescription>
-            Xush kelibsiz, {user?.email || 'Foydalanuvchi'}!
+            {user ? `Xush kelibsiz, ${user.email}!` : 'Yuklanmoqda...'}
           </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
-          <div className="space-y-2 text-sm text-muted-foreground">
-            <p>📱 Profil ma'lumotlari</p>
-            <p>🚀 Startap loyihalari</p>
-            <p>💼 Ish e'lonlari</p>
-            <p>📊 Statistika</p>
-          </div>
+          <Link href="/dashboard/student">
+            <Button className="w-full" size="lg">
+              Dashboardga o'tish
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </Link>
         </CardContent>
       </Card>
     </div>
