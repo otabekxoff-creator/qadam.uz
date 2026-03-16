@@ -63,7 +63,7 @@ export default function EnhancedChatPage() {
     try {
       setLoading(true);
       const response = await chatApi.getChats({ limit: 50 });
-      setChats(response.data || []);
+      setChats(response || []);
     } catch (error) {
       console.error('Failed to fetch chats:', error);
     } finally {
@@ -74,7 +74,7 @@ export default function EnhancedChatPage() {
   const fetchMessages = async (chatId: string) => {
     try {
       const response = await chatApi.getMessages(chatId, { limit: 100 });
-      setMessages(response.data || []);
+      setMessages(response || []);
     } catch (error) {
       console.error('Failed to fetch messages:', error);
     }
@@ -83,7 +83,7 @@ export default function EnhancedChatPage() {
   const fetchUnreadCount = async () => {
     try {
       const response = await chatApi.getUnreadCount();
-      setUnreadCount(response.data?.unreadCount || 0);
+      setUnreadCount(response?.unreadCount || 0);
     } catch (error) {
       console.error('Failed to fetch unread count:', error);
     }
@@ -100,8 +100,8 @@ export default function EnhancedChatPage() {
       });
 
       const newMsg: Message = {
-        ...response.data,
-        sender: user
+        ...response,
+        sender: user || undefined
       };
 
       setMessages(prev => [...prev, newMsg]);
@@ -139,19 +139,17 @@ export default function EnhancedChatPage() {
   };
 
   const getParticipantName = (chat: Chat) => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
-    return participant?.student 
-      ? `${participant.student.firstName} ${participant.student.lastName}`
-      : participant?.company?.name || 'Unknown';
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
+    return participant?.email || 'Unknown';
   };
 
   const getParticipantAvatar = (chat: Chat) => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
-    return participant?.student?.avatar || participant?.company?.logo || '';
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
+    return '';
   };
 
   const isOnline = (chat: Chat) => {
-    const participant = chat.participant1?.id === user?.userId ? chat.participant2 : chat.participant1;
+    const participant = chat.participant1?.id === user?.id ? chat.participant2 : chat.participant1;
     return onlineUsers.includes(participant?.id || '');
   };
 
@@ -197,7 +195,7 @@ export default function EnhancedChatPage() {
   };
 
   const isOwnMessage = (message: Message) => {
-    return message.senderId === user?.userId;
+    return message.senderId === user?.id;
   };
 
   return (
