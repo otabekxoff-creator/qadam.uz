@@ -1,7 +1,7 @@
 import prisma from '@/config/database';
 import { hashPassword, comparePassword, generateToken } from '@/utils/helpers';
 import { ConflictError, UnauthorizedError, NotFoundError } from '@/utils/errors';
-import { UserRole } from '@prisma/client';
+import { UserRole, EducationLevel } from '@prisma/client';
 import { RegisterInput } from '@/validators/auth.validator';
 import fs from 'fs';
 import path from 'path';
@@ -44,6 +44,7 @@ export class AuthService {
             create: {
               firstName: data.firstName!,
               lastName: data.lastName!,
+              educationLevel: EducationLevel.BACHELOR,
             },
           },
         }),
