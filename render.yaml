@@ -38,7 +38,7 @@ services:
     plan: free
     branch: main
     rootDir: backend
-    buildCommand: npm install && npx prisma generate && npx tsc --noEmitOnError false --skipLibCheck
+    buildCommand: npm install && npx prisma generate && npx tsc --noEmitOnError false --skipLibCheck && node fix-paths.js
     startCommand: npm start
     healthCheckPath: /health
     envVars:
