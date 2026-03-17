@@ -52,6 +52,7 @@ export class AuthService {
           company: {
             create: {
               name: data.companyName!,
+              email: data.email,
               industry: data.industry!,
               location: data.location!,
               size: '1-10',
