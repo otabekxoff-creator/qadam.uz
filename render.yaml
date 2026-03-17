@@ -15,7 +15,7 @@ services:
       - key: NODE_ENV
         value: production
       - key: NEXT_PUBLIC_API_URL
-        value: https://step-backend.onrender.com/api
+        value: https://step-uz.onrender.com/api
       - key: NEXT_PUBLIC_APP_NAME
         value: Step.uz
       - key: NEXT_PUBLIC_APP_DESCRIPTION
@@ -26,6 +26,10 @@ services:
         value: true
       - key: NEXT_PUBLIC_ENABLE_VOICE_MESSAGES
         value: true
+      - key: NEXT_PUBLIC_EMAIL
+        value: info@step.uz
+      - key: NEXT_PUBLIC_PHONE
+        value: +998880016777
 
   - type: web
     name: step-backend
@@ -62,14 +66,22 @@ services:
         generateValue: true
       - key: JWT_EXPIRES_IN
         value: 7d
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: COOKIE_SECRET
+        generateValue: true
       - key: FRONTEND_URL
-        value: https://step-uz-frontend.onrender.com
+        value: https://step-uz-1.onrender.com
       - key: BACKEND_URL
-        value: https://step-backend.onrender.com
+        value: https://step-uz.onrender.com
       - key: LOG_LEVEL
         value: warn
       - key: MAX_FILE_SIZE
         value: 5242880
+      - key: UPLOAD_DIR
+        value: uploads
       - key: RATE_LIMIT_WINDOW_MS
         value: 900000
       - key: RATE_LIMIT_MAX_REQUESTS
