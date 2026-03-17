@@ -6,7 +6,7 @@ services:
     plan: free
     branch: main
     rootDir: frontend
-    buildCommand: rm -rf node_modules package-lock.json && npm install && npx next build
+    buildCommand: npm install && npm run build
     startCommand: npm run start
     healthCheckPath: /
     envVars:
@@ -34,7 +34,7 @@ services:
     plan: free
     branch: main
     rootDir: backend
-    buildCommand: rm -rf node_modules package-lock.json dist && npm install && npx prisma generate && npm run build
+    buildCommand: npm install && npx prisma generate && npm run build
     startCommand: npm start
     healthCheckPath: /health
     envVars:
