@@ -71,7 +71,7 @@ export default function ProfilePage() {
       }
 
       // To'g'ridan-to'g'ri Express API'ga jo'natamiz
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/auth/profile`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/api/auth/profile`, {
         method: 'PUT',
         headers: { 'Authorization': `Bearer ${token}` },
         body: submitData, // FormData content-type'ni o'zi avtomatik sozlaydi
