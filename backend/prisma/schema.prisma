@@ -179,6 +179,7 @@ model Company {
   logo        String?
   description String?
   industry    String?
+  location    String?
   size        CompanySize
   foundedYear Int?
   isVerified  Boolean  @default(false)
