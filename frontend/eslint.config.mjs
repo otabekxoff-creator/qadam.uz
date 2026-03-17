@@ -1,5 +1,5 @@
 import { defineConfig, globalIgnores } from 'eslint/config';
-import nextCoreWebVitals from 'eslint-config-next/core-web-vitals';
+import nextCoreWebVitals from 'eslint-config-next/core-web-vitals.js';
 
 const config = defineConfig([
   ...nextCoreWebVitals,
@@ -12,4 +12,3 @@ const config = defineConfig([
 ]);
 
 export default config;
-
