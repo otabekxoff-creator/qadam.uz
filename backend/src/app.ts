@@ -96,6 +96,7 @@ app.use(cookieParser());
 // 🌐 CORS - Enhanced Security
 const allowedOrigins = [
   process.env.FRONTEND_URL,
+  'https://step-uz-1.onrender.com',
   'https://stepuz-frontend.onrender.com',
   'http://localhost:5173',
   'http://localhost:3000'
