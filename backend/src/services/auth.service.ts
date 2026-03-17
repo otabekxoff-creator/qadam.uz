@@ -1,7 +1,7 @@
 import prisma from '@/config/database';
 import { hashPassword, comparePassword, generateToken } from '@/utils/helpers';
 import { ConflictError, UnauthorizedError, NotFoundError } from '@/utils/errors';
-import { UserRole, EducationLevel } from '@prisma/client';
+import { UserRole, EducationLevel, CompanySize } from '@prisma/client';
 import { RegisterInput } from '@/validators/auth.validator';
 import fs from 'fs';
 import path from 'path';
@@ -55,7 +55,7 @@ export class AuthService {
               email: data.email,
               industry: data.industry!,
               location: data.location!,
-              size: '1-10',
+              size: CompanySize.SMALL,
             },
           },
         }),
