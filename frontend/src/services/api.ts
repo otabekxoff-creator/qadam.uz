@@ -122,31 +122,31 @@ export const api = new ApiClient(API_BASE_URL);
 
 export const authApi = {
   login: (email: string, password: string) =>
-    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/login', { email, password }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/login', { email, password }),
 
   register: (data: { email: string; password: string; role: import('@/types').UserRole; firstName?: string; lastName?: string; companyName?: string; industry?: string; location?: string }) =>
-    api.post<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company; token: string }>('/auth/register', data),
+    api.post<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company; token: string }>('/api/auth/register', data),
 
   verifyRegister: (email: string, code: string) =>
-    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/register/verify', { email, code }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/register/verify', { email, code }),
 
   verifyLogin: (email: string, code: string) =>
-    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/login/verify', { email, code }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/login/verify', { email, code }),
 
   logout: () =>
-    api.post('/auth/logout'),
+    api.post('/api/auth/logout'),
 
   me: () =>
-    api.get<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/me'),
+    api.get<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/me'),
 
   forgotPassword: (email: string) =>
-    api.post('/auth/forgot-password', { email }),
+    api.post('/api/auth/forgot-password', { email }),
 
   resetPassword: (token: string, password: string) =>
-    api.post('/auth/reset-password', { token, password }),
+    api.post('/api/auth/reset-password', { token, password }),
 
   verifyEmail: (token: string) =>
-    api.post('/auth/verify-email', { token }),
+    api.post('/api/auth/verify-email', { token }),
 };
 
 // =============================================
