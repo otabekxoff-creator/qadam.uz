@@ -13,16 +13,6 @@ const nextConfig = {
     optimizeCss: true,
     optimizeServerReact: true,
   },
-  config: {
-    turbopack: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
-      },
-    },
-  },
   images: {
     remotePatterns: [
       {

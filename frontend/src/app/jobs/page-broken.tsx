@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { 
   Search, 
@@ -176,7 +176,7 @@ export function JobsPage() {
             className="text-center max-w-4xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold mb-6">
-              O\'zbekistonning eng yaxshi ish imkoniyatlari
+              O'zbekistonning eng yaxshi ish imkoniyatlari
             </h1>
             <p className="text-xl mb-8 text-white/90">
               10,000+ vakansiya, 500+ kompaniya, professional rivojlanish
@@ -184,7 +184,7 @@ export function JobsPage() {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button size="lg" className="bg-white text-primary hover:bg-white/95">
                 <Briefcase className="mr-2 h-5 w-5" />
-                Ishlarni ko\'rish
+                Ishlarni ko'rish
               </Button>
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
                 <Building className="mr-2 h-5 w-5" />
@@ -205,7 +205,7 @@ export function JobsPage() {
                 <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 h-5 w-5 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder="Ishlar, kompaniyalar yoki kalit so\'zlar bilan qidiring..."
+                  placeholder="Ishlar, kompaniyalar yoki kalit so'zlar bilan qidiring..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 h-12 text-lg bg-muted/50 border-border/50 focus:border-primary/50 focus:ring-primary/20"
@@ -258,7 +258,7 @@ export function JobsPage() {
                       </SelectTrigger>
                       <SelectContent>
                         <SelectItem value="">Barchasi</SelectItem>
-                        <SelectItem value="FULL_TIME">To\'liq kunlik</SelectItem>
+                        <SelectItem value="FULL_TIME">To'liq kunlik</SelectItem>
                         <SelectItem value="PART_TIME">Qisman kunlik</SelectItem>
                         <SelectItem value="REMOTE">Masofaviy</SelectItem>
                         <SelectItem value="HYBRID">Gibrid</SelectItem>
@@ -268,7 +268,7 @@ export function JobsPage() {
                   </div>
 
                   <div>
-                    <label className="text-sm font-medium mb-2">Maosh oralig\'i (UZS)</label>
+                    <label className="text-sm font-medium mb-2">Maosh oralig'i (UZS)</label>
                     <div className="flex gap-4">
                       <Input
                         type="number"
@@ -362,7 +362,7 @@ export function JobsPage() {
               <div className="text-6xl text-muted-foreground mb-4">🔍</div>
               <h3 className="text-xl font-semibold mb-2">Ishlar topilmadi</h3>
               <p className="text-muted-foreground">
-                Filtrlarni o\'zgartiring yoki yangi qidiruv amalga oshiring
+                Filtrlarni o'zgartiring yoki yangi qidiruv amalga oshiring
               </p>
             </div>
           ) : (
@@ -391,11 +391,17 @@ export function JobsPage() {
                               )}
                             </div>
                           </div>
-                          <div className="text-right">
-                            <Button variant="ghost" size="sm">
-                              <Heart className="h-4 w-4" />
-                            </Button>
-                          </div>
+                          {job.isUrgent && (
+                            <Badge variant="destructive" className="shrink-0">
+                              <Clock className="h-3 w-3 mr-1" />
+                              Urgent
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="text-right">
+                          <Button variant="ghost" size="sm">
+                            <Heart className="h-4 w-4" />
+                          </Button>
                         </div>
                       </CardHeader>
                       <CardContent className="pt-0">
@@ -463,6 +469,7 @@ export function JobsPage() {
                               Urgent
                             </Badge>
                           )}
+                        </div>
                         </div>
                       </CardContent>
                     </Card>
