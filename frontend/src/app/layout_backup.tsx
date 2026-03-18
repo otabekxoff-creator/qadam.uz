@@ -1,19 +1,19 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { Header } from "@/components/layout/Header";
+import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 
-const inter = Inter({
+const geistSans = Geist({
+  variable: "--font-geist-sans",
   subsets: ["latin"],
-  variable: "--font-inter",
 });
 
-const outfit = Outfit({
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
-  variable: "--font-outfit",
 });
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     default: "Step.uz - O'zbekiston yoshlari uchun karyera platformasi",
     template: "%s | Step.uz",
   },
-  description: "Step.uz — O'zbekistonning eng yirik talabalar va startaplar platformasi. Karyerangizni biz bilan birga quring va yuksak natijalarga erishing.",
+  description: "Step.uz — talabalar, bitiruvchilar va yosh professionallar uchun yagona platforma. Ish toping, startap yarating, karyeringizni rivojlantiring.",
   keywords: ["Step.uz", "ish", "karyera", "startap", "O'zbekiston", "talabalar", "bitiruvchilar", "ish o'rinlari", "vakansiyalar"],
   authors: [{ name: "Step.uz Team" }],
   icons: {
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "Step.uz - O'zbekiston yoshlari uchun karyera platformasi",
-    description: "O'zbekistonning eng yirik talabalar va startaplar platformasi. Karyerangizni biz bilan birga quring va yuksak natijalarga erishing.",
+    description: "Ish toping, startap yarating, karyeringizni rivojlantiring.",
     url: "https://step.uz",
     siteName: "Step.uz",
     type: "website",
@@ -85,17 +85,17 @@ export default function RootLayout({
     <html lang="uz" suppressHydrationWarning>
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5, user-scalable=yes" />
-        <meta name="theme-color" content="#10b981" />
+        <meta name="theme-color" content="#000000" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Step.uz" />
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="application-name" content="Step.uz" />
-        <meta name="msapplication-TileColor" content="#10b981" />
+        <meta name="msapplication-TileColor" content="#000000" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>
       <body
-        className={`${inter.variable} ${outfit.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground min-h-screen flex flex-col`}
       >
         <ThemeProvider
           attribute="class"
@@ -103,7 +103,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
+          <Navbar />
           <main className="flex-1">
             {children}
           </main>
