@@ -37,6 +37,18 @@ export function CTASection() {
       
       <div className="container relative mx-auto px-3 sm:px-4 z-10">
         <div className="max-w-3xl mx-auto text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="inline-flex items-center rounded-full bg-white/10 px-3 sm:px-4 py-1.5 mb-6 sm:mb-8 border border-white/10"
+          >
+            <Sparkles className="mr-2 h-3 w-3 sm:h-4 sm:w-4 text-white/80" />
+            <span className="text-xs sm:text-sm text-white/90 font-medium tracking-wide">
+              Hoziroq boshlang
+            </span>
+          </motion.div>
+
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
