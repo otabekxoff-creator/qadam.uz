@@ -104,6 +104,27 @@ export function FeaturesSection() {
           </motion.p>
         </div>
 
+        {/* Statistics Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mb-16 pt-8 border-t border-border/50 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
+        >
+          {[
+            { label: 'Talabalar', value: '10,000+' },
+            { label: 'Ish o\'rinlari', value: '500+' },
+            { label: 'Startaplar', value: '120+' },
+            { label: 'Hamkorlar', value: '45+' },
+          ].map((stat, i) => (
+            <div key={i} className="flex flex-col items-center">
+              <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{stat.value}</span>
+              <span className="text-xs sm:text-sm text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</span>
+            </div>
+          ))}
+        </motion.div>
+
         {/* Features Grid */}
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
           {features.map((feature, i) => (

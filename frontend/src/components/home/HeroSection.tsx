@@ -21,12 +21,11 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
           >
             <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-4 sm:mb-6 text-balance leading-tight sm:leading-tight">
-              <span className="text-primary">Kelajak shu yerda</span>
+              <span className="text-primary">Kelajak shu yergan boshlanadi</span>
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground mb-6 sm:mb-8 max-w-2xl mx-auto leading-relaxed text-balance px-2 sm:px-0">
-              Talabalar va startaplar uchun professional ekotizim. 
-              O'z yo'lingizni biz bilan birga quring va yuksak natijalarga erishing.
+              Biz yoshlarning karyerasini qo'llab-quvvatlash uchun barcha zarur vositalarni taqdim etamiz.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center items-center px-4 sm:px-0">
@@ -53,26 +52,6 @@ export function HeroSection() {
                 </Link>
               </Button>
             </div>
-          </motion.div>
-
-          {/* Simple Stats Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border/50 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-          >
-            {[
-              { label: 'Talabalar', value: '10,000+' },
-              { label: 'Ish o\'rinlari', value: '500+' },
-              { label: 'Startaplar', value: '120+' },
-              { label: 'Hamkorlar', value: '45+' },
-            ].map((stat, i) => (
-              <div key={i} className="flex flex-col items-center">
-                <span className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">{stat.value}</span>
-                <span className="text-xs sm:text-sm text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</span>
-              </div>
-            ))}
           </motion.div>
         </div>
       </div>
