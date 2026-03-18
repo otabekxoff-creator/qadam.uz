@@ -12,7 +12,9 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
     optimizeCss: true,
     optimizeServerReact: true,
-    turbo: {
+  },
+  config: {
+    turbopack: {
       rules: {
         '*.svg': {
           loaders: ['@svgr/webpack'],
@@ -126,6 +128,7 @@ const nextConfig = {
             value: 'STUDENT',
           },
         ],
+        permanent: true,
       },
       {
         source: '/dashboard',
@@ -137,6 +140,7 @@ const nextConfig = {
             value: 'COMPANY',
           },
         ],
+        permanent: true,
       },
     ];
   },
