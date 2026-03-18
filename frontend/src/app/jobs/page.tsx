@@ -56,7 +56,7 @@ interface Job {
   matchScore?: number;
 }
 
-export function JobsPage() {
+export default function JobsPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [filters, setFilters] = useState<JobFilters>({
     search: '',
