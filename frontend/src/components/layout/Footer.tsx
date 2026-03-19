@@ -54,7 +54,7 @@ export function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t border-white/5 bg-background/50 backdrop-blur-xl">
+    <footer className="border-t border-border bg-background/50 backdrop-blur-xl">
       {/* Main Footer Content */}
       <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12">
         <div className="grid grid-cols-1 gap-8 sm:gap-12 md:grid-cols-2 lg:grid-cols-5">
@@ -76,7 +76,7 @@ export function Footer() {
                 <a
                   key={social.label}
                   href={social.href}
-                  className="p-2 sm:p-3 rounded-full glass border-white/10 text-muted-foreground hover:text-primary hover:border-primary/50 transition-all hover:-translate-y-1"
+                  className="p-2 sm:p-3 rounded-full glass border-border text-muted-foreground hover:text-primary hover:border-primary/50 transition-all hover:-translate-y-1"
                   aria-label={social.label}
                 >
                   <social.icon className="h-4 w-4 sm:h-5 sm:w-5" />
@@ -141,7 +141,7 @@ export function Footer() {
         </div>
 
         {/* Bottom Section */}
-        <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
+        <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
           <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
             © {currentYear} Step.uz. Barcha huquqlar himoyalangan.
           </p>

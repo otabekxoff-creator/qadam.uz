@@ -109,7 +109,7 @@ export function FeaturesSection() {
   const [hoveredFeature, setHoveredFeature] = useState<number | null>(null);
 
   return (
-    <section className="py-24 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800">
+    <section className="py-24 bg-gradient-to-br from-background via-background to-secondary/20 dark:from-background dark:via-background dark:to-secondary/10">
       <div className="container mx-auto px-4">
         {/* Section Header */}
         <div className="text-center mb-16 max-w-4xl mx-auto">
@@ -240,7 +240,7 @@ export function FeaturesSection() {
           transition={{ delay: 0.5 }}
           className="text-center mt-16"
         >
-          <div className="bg-gradient-to-r from-primary to-primary/80 p-8 rounded-2xl border border-border/50">
+          <div className="bg-gradient-to-r from-primary to-primary/80 p-8 rounded-2xl border border-border shadow-glow-lg">
             <h3 className="text-2xl font-bold text-white mb-4">
               Ready to Transform Your Career?
             </h3>
