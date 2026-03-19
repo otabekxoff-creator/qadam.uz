@@ -37,15 +37,22 @@ const blogPosts = [
 
 export default function BlogPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 dark:from-background dark:via-background dark:to-secondary/10">
       <div className="container mx-auto px-4 py-16 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl font-bold tracking-tight mb-4">Blog</h1>
-          <p className="text-lg text-muted-foreground">
+          <div className="flex justify-center mb-8">
+            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-glow-lg">
+              <Calendar className="h-10 w-10 text-white" />
+            </div>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4 text-foreground">
+            <span className="text-gradient">Blog</span>
+          </h1>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Karyera va startaplar haqida foydali maqolalar
           </p>
         </motion.div>
@@ -57,25 +64,29 @@ export default function BlogPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: index * 0.1 }}
+              whileHover={{ y: -5, scale: 1.02 }}
+              className="group"
             >
-              <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer">
-                <CardHeader>
-                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-                    <span className="bg-primary/10 text-primary px-2 py-1 rounded text-xs font-medium">
+              <Card className="h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300 overflow-hidden cursor-pointer">
+                <CardHeader className="pb-4">
+                  <div className="flex items-center justify-between text-sm text-muted-foreground mb-3">
+                    <span className="bg-primary/10 text-primary px-3 py-1 rounded-full text-xs font-medium border border-primary/20">
                       {post.category}
                     </span>
-                    <div className="flex items-center gap-1">
+                    <div className="flex items-center gap-1 text-muted-foreground">
                       <Clock className="h-3 w-3" />
                       {post.readTime}
                     </div>
                   </div>
-                  <CardTitle className="text-lg leading-tight">{post.title}</CardTitle>
+                  <CardTitle className="text-xl leading-tight text-foreground group-hover:text-primary transition-colors line-clamp-2">
+                    {post.title}
+                  </CardTitle>
                 </CardHeader>
-                <CardContent>
-                  <p className="text-muted-foreground mb-4 line-clamp-3">
+                <CardContent className="pt-0">
+                  <p className="text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
                     {post.excerpt}
                   </p>
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center justify-between mb-4">
                     <div className="flex items-center gap-2 text-sm text-muted-foreground">
                       <User className="h-4 w-4" />
                       {post.author}
@@ -85,9 +96,12 @@ export default function BlogPage() {
                       {post.date}
                     </div>
                   </div>
-                  <Button className="w-full mt-4" variant="outline">
+                  <Button 
+                    className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300 border-border" 
+                    variant="outline"
+                  >
                     To'liq o'qish
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </Button>
                 </CardContent>
               </Card>

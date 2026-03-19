@@ -50,15 +50,20 @@ const team = [
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-secondary/20 dark:from-background dark:via-background dark:to-secondary/10">
       <div className="container mx-auto px-4 py-16 max-w-6xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-16"
         >
-          <h1 className="text-5xl font-bold tracking-tight mb-6">
-            Biz <span className="text-primary">haqimizda</span>
+          <div className="flex justify-center mb-8">
+            <div className="flex h-20 w-20 items-center justify-center rounded-2xl bg-gradient-to-br from-primary to-primary/80 shadow-glow-lg">
+              <Users className="h-10 w-10 text-white" />
+            </div>
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold tracking-tight mb-6 text-foreground">
+            Biz <span className="text-gradient">haqimizda</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
             Step.uz - O'zbekiston yoshlari uchun yagona karyera platformasi. 
@@ -73,13 +78,28 @@ export default function AboutPage() {
           className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16"
         >
           {stats.map((stat, index) => (
-            <Card key={index} className="text-center">
-              <CardContent className="pt-6">
-                <stat.icon className="h-8 w-8 text-primary mx-auto mb-4" />
-                <div className="text-3xl font-bold text-foreground mb-2">{stat.value}</div>
-                <div className="text-muted-foreground">{stat.label}</div>
-              </CardContent>
-            </Card>
+            <motion.div
+              key={index}
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: index * 0.1 }}
+              whileHover={{ scale: 1.05, y: -5 }}
+              className="group"
+            >
+              <Card className="text-center h-full bg-card/50 backdrop-blur-sm border-border/50 hover:border-primary/30 hover:shadow-xl transition-all duration-300 overflow-hidden">
+                <CardContent className="pt-8 pb-6">
+                  <motion.div
+                    animate={{ scale: [1, 1.1, 1] }}
+                    transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
+                    className="mb-4"
+                  >
+                    <stat.icon className="h-10 w-10 text-primary mx-auto" />
+                  </motion.div>
+                  <div className="text-3xl md:text-4xl font-bold text-foreground mb-2">{stat.value}</div>
+                  <div className="text-muted-foreground font-medium">{stat.label}</div>
+                </CardContent>
+              </Card>
+            </motion.div>
           ))}
         </motion.div>
 
