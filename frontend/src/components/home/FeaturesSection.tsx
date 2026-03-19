@@ -37,67 +37,67 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 const features = [
   {
     icon: Search,
-    title: 'Smart Search',
-    description: 'AI-powered job search with advanced filtering and personalized recommendations.',
+    title: 'Aqlli Qidiruv',
+    description: 'AI yordamida ish qidirish, ilg\'or filtrlash va shaxsiy tavsiyalar.',
     color: 'text-blue-500',
     bgColor: 'bg-blue-100 dark:bg-blue-950',
-    stats: { label: '95% Match Rate', value: 'Highly Accurate' }
+    stats: { label: '95% Uyg\'unlik', value: 'Juda Aniq' }
   },
   {
     icon: Rocket,
-    title: 'Startup Ecosystem',
-    description: 'Connect with innovative startups and investors. Launch your ideas with our support.',
+    title: 'Startap Ekosistemasi',
+    description: 'Innovatsion startaplar va investorlar bilan bog\'laning. G\'oyalaringizni bizning yordamimiz bilan ishga tushing.',
     color: 'text-purple-500',
     bgColor: 'bg-purple-100 dark:bg-purple-950',
-    stats: { label: '500+ Startups', value: 'Growing Fast' }
+    stats: { label: '500+ Startap', value: 'Tez O\'sish' }
   },
   {
     icon: Users,
-    title: 'Professional Network',
-    description: 'Build meaningful connections with industry leaders and mentors.',
+    title: 'Professional Tarmoq',
+    description: 'Sanoat rahbarlari va mentollar bilan mazmunli aloqalar o\'rnatish.',
     color: 'text-emerald-500',
     bgColor: 'bg-emerald-100 dark:bg-emerald-950',
-    stats: { label: '50K+ Users', value: 'Active Community' }
+    stats: { label: '50K+ Foydalanuvchi', value: 'Faol Jamiyat' }
   },
   {
     icon: GraduationCap,
-    title: 'Career Development',
-    description: 'Access courses, workshops, and certification programs.',
+    title: 'Karyera Rivojlanishi',
+    description: 'Kurslar, seminarlar va sertifikat dasturlariga kirish.',
     color: 'text-orange-500',
     bgColor: 'bg-orange-100 dark:bg-orange-950',
-    stats: { label: '1000+ Courses', value: 'Expert Led' }
+    stats: { label: '1000+ Kurs', value: 'Mutaxassislar' }
   },
   {
     icon: FileText,
-    title: 'Resume Builder',
-    description: 'Create professional resumes with AI optimization and templates.',
+    title: 'Resume Yaratuvchisi',
+    description: 'AI optimizatsiyasi va shablonlar bilan professional resume yaratish.',
     color: 'text-pink-500',
     bgColor: 'bg-pink-100 dark:bg-pink-950',
-    stats: { label: '10K+ Resumes', value: 'AI Optimized' }
+    stats: { label: '10K+ Resume', value: 'AI Optimallashtirilgan' }
   },
   {
     icon: Award,
-    title: 'Skill Assessment',
-    description: 'Evaluate your skills and get personalized improvement recommendations.',
+    title: 'Mahorat Baholash',
+    description: 'Mahoratlaringizni baholang va shaxsiy yaxshilanish tavsiyalarini oling.',
     color: 'text-amber-500',
     bgColor: 'bg-amber-100 dark:bg-amber-950',
-    stats: { label: '25K+ Tests', value: 'Industry Validated' }
+    stats: { label: '25K+ Test', value: 'Sanoat Tasdiqlangan' }
   },
   {
     icon: TrendingUp,
-    title: 'Career Analytics',
-    description: 'Track your career progress with detailed insights and trends.',
+    title: 'Karyera Analitikasi',
+    description: 'Karyera progressingizni batafsil tahlillar va trendlar bilan kuzatib boring.',
     color: 'text-teal-500',
     bgColor: 'bg-teal-100 dark:bg-teal-950',
-    stats: { label: 'Real-time Data', value: 'Actionable Insights' }
+    stats: { label: 'Real vaqt', value: 'Amaliy Tahlillar' }
   },
   {
     icon: Building2,
-    title: 'Company Tools',
-    description: 'Advanced recruitment tools and talent management for companies.',
+    title: 'Kompaniya Vositlari',
+    description: 'Kompaniyalar uchun ilg\'or yollash vositalari va talentlarni boshqarish.',
     color: 'text-cyan-500',
     bgColor: 'bg-cyan-100 dark:bg-cyan-950',
-    stats: { label: '2000+ Companies', value: 'Trusted Platform' }
+    stats: { label: '2000+ Kompaniya', value: 'Ishonchli Platforma' }
   },
 ];
 
@@ -132,15 +132,17 @@ export function FeaturesSection() {
               Biz yoshlarning karyerasini qo'llab-quvvatlash uchun barcha zarur vositalarni taqdim etamiz.
             </motion.p>
           </motion.div>
+        </div>
 
-          {/* Statistics Grid */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="mb-16 pt-8 border-t border-border/50 grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8"
-          >
+        {/* Statistics Grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="mb-16 pt-8 border-t border-border/50"
+        >
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 md:gap-8">
             {[
               { label: 'Talabalar', value: '10,000+' },
               { label: 'Ish o\'rinlari', value: '500+' },
@@ -152,22 +154,21 @@ export function FeaturesSection() {
                 initial={{ opacity: 0, scale: 0.8 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="flex flex-col items-center p-6 rounded-xl bg-card border border-border shadow-sm hover:shadow-md hover:border-primary/20 transition-all group cursor-pointer"
-                onMouseEnter={() => setHoveredFeature(i)}
-                onMouseLeave={() => setHoveredFeature(null)}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="text-center"
               >
-                <motion.div
-                  animate={{ scale: hoveredFeature === i ? 1.05 : 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <span className="text-2xl md:text-3xl font-bold text-foreground mb-2">{stat.value}</span>
-                  <span className="text-sm text-muted-foreground font-medium uppercase tracking-wider">{stat.label}</span>
-                </motion.div>
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-2">
+                  {stat.value}
+                </div>
+                <div className="bg-primary/10 border border-primary/20 rounded-lg px-3 py-2 inline-block">
+                  <span className="text-sm font-medium text-primary">
+                    {stat.label}
+                  </span>
+                </div>
               </motion.div>
             ))}
-          </motion.div>
-        </div>
+          </div>
+        </motion.div>
 
         {/* Enhanced Features Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
@@ -242,10 +243,10 @@ export function FeaturesSection() {
         >
           <div className="bg-gradient-to-r from-primary to-primary/80 p-8 rounded-2xl border border-border shadow-glow-lg">
             <h3 className="text-2xl font-bold text-white mb-4">
-              Ready to Transform Your Career?
+              Karyerangizni O'zgartirishga Tayyormisiz?
             </h3>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Join thousands of professionals who've already accelerated their careers with Step.uz
+              Step.uz bilan karyerasini tezlashtirgan minglab professionallar qatoriga qo'shiling
             </p>
             <Button 
               size="lg" 
@@ -253,7 +254,7 @@ export function FeaturesSection() {
               asChild
             >
               <div className="flex items-center gap-2">
-                Get Started Now
+                Boshlash
                 <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </div>
             </Button>
