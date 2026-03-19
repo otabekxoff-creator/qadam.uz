@@ -31,14 +31,18 @@ export class AuthService {
 
     const hashedPassword = await hashPassword(data.password);
 
+    // Email verification uchun kod generatsiya qilish
+    const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+    const verificationCodeExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 daqiqa
+
     // Email tasdiqlashsiz to'g'ridan-to'g'ri ro'yxatdan o'tkazish
     const user = await prisma.user.create({
       data: {
         email: data.email,
         password: hashedPassword,
         role: data.role,
-        emailVerifiedAt: new Date(), // To'g'ridan-to'g'ri tasdiqlash
-        isActive: true,
+        verificationCode,
+        verificationCodeExpiresAt,
         ...(data.role === UserRole.STUDENT && {
           student: {
             create: {
@@ -73,10 +77,10 @@ export class AuthService {
         email: user.email,
         role: user.role,
         isActive: user.isActive,
-        emailVerifiedAt: user.emailVerifiedAt,
         student: user.student,
         company: user.company,
       },
+      verificationCode: verificationCode, // For testing purposes
       token: generateToken({
         userId: user.id,
         email: user.email,
