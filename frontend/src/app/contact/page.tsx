@@ -81,9 +81,13 @@ export default function ContactPage() {
               <div className="flex justify-center mb-4">
                 <MapPin className="h-8 w-8 text-primary" />
               </div>
-              <p className="text-lg text-foreground mb-2">Toshkent, Shayxontohur tumani</p>
-              <p className="text-muted-foreground">Bunyodkor ko'chasi, 15-uy</p>
-              <Button className="mt-6 group" variant="outline">
+              <p className="text-lg text-foreground mb-2">Farg'ona viloyati</p>
+              <p className="text-muted-foreground">O'zbekiston tumani, Ziyoklor ko'chasi</p>
+              <Button 
+                className="mt-6 group" 
+                variant="outline"
+                onClick={() => window.open(`https://maps.google.com/?q=40.375094,70.811702`, '_blank')}
+              >
                 Xaritada ko'rish
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </Button>
