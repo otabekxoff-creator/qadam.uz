@@ -251,12 +251,10 @@ export function FeaturesSection() {
             <Button 
               size="lg" 
               className="bg-white text-primary hover:bg-white/95 rounded-full px-8 h-14 text-base font-bold shadow-lg transition-all hover:shadow-xl active:scale-95 group"
-              asChild
+              onClick={() => window.location.href = '/register'}
             >
-              <div className="flex items-center gap-2">
-                Boshlash
-                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-              </div>
+              Boshlash
+              <ChevronRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
           </div>
         </motion.div>
