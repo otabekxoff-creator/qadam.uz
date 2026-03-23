@@ -60,7 +60,7 @@ export default function ContactPage() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-2xl font-bold text-foreground mb-2">info@step.uz</p>
+                <p className="text-2xl font-bold text-foreground mb-2">info@sinergiya.uz</p>
                 <p className="text-muted-foreground">24/7 javob beramiz</p>
               </CardContent>
             </Card>

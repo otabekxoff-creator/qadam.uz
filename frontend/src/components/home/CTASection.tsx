@@ -44,7 +44,7 @@ export function CTASection() {
             transition={{ delay: 0.1 }}
             className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 sm:mb-6 text-balance leading-tight px-2 sm:px-0"
           >
-            Nima uchun Step.uz?
+            Nima uchun Sinergiya?
           </motion.h2>
 
           <motion.p
