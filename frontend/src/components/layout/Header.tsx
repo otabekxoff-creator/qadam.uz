@@ -99,7 +99,7 @@ export function Header() {
               <GraduationCap className="h-6 w-6 text-white" />
             </motion.div>
             <span className="text-xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent group-hover:from-emerald-500 group-hover:to-teal-500 transition-all">
-              Step.uz
+              Sinergiya
             </span>
           </Link>
 

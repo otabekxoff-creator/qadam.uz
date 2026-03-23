@@ -143,11 +143,11 @@ export function Footer() {
         {/* Bottom Section */}
         <div className="mt-12 sm:mt-16 pt-6 sm:pt-8 border-t border-border flex flex-col sm:flex-row justify-between items-center gap-4 sm:gap-6">
           <p className="text-xs sm:text-sm text-muted-foreground text-center sm:text-left">
-            © {currentYear} Step.uz. Barcha huquqlar himoyalangan.
+            © {currentYear} Sinergiya. Barcha huquqlar himoyalangan.
           </p>
           <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-8 text-center sm:text-left">
-            <a href="mailto:info@step.uz" className="text-xs sm:text-sm text-muted-foreground hover:text-primary flex items-center gap-2 justify-center">
-              <Mail size={14} className="sm:size-[16px]" /> info@step.uz
+            <a href="mailto:info@sinergiya.uz" className="text-xs sm:text-sm text-muted-foreground hover:text-primary flex items-center gap-2 justify-center">
+              <Mail size={14} className="sm:size-[16px]" /> info@sinergiya.uz
             </a>
             <a href="tel:+998880016777" className="text-xs sm:text-sm text-muted-foreground hover:text-primary flex items-center gap-2 justify-center">
               <Phone size={14} className="sm:size-[16px]" /> +998 88 001 67 77

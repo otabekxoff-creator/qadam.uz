@@ -1,8 +1,8 @@
-# 🚀 Step.uz - O'zbekiston yoshlari uchun karyera platformasi
+# 🚀 Sinergiya - O'zbekiston yoshlari uchun karyera platformasi
 
 <div align="center">
 
-![Step.uz Logo](https://via.placeholder.com/200x80/1e40af/ffffff?text=Step.uz)
+![Sinergiya Logo](https://via.placeholder.com/200x80/1e40af/ffffff?text=Sinergiya)
 
 **O'zbekistonning eng zamonaviy karyera platformasi**
 
@@ -11,7 +11,7 @@
 [![Next.js Version](https://img.shields.io/badge/next.js-%5E14.0.0-black)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/typescript-%5E5.0.0-blue)](https://www.typescriptlang.org/)
 
-[▶️ Demo](https://step.uz) • [📚 Hujjatlar](https://docs.step.uz) • [🐛 Bug Report](https://github.com/otabekxoff-creator/step.uz/issues) • [💡 Feature Request](https://github.com/otabekxoff-creator/step.uz/issues/new)
+[▶️ Demo](https://sinergiya.uz) • [📚 Hujjatlar](https://docs.sinergiya.uz) • [🐛 Bug Report](https://github.com/otabekxoff-creator/sinergiya/issues) • [💡 Feature Request](https://github.com/otabekxoff-creator/sinergiya/issues/new)
 
 </div>
 
@@ -38,7 +38,7 @@
 
 ## 🌟 **Haqida**
 
-**Step.uz** - O'zbekiston yoshlari uchun yaratilgan to'liq funktsional karyera platformasi. Talabalar, bitiruvchilar va yosh professionallar uchun yagona platforma:
+**Sinergiya** - O'zbekiston yoshlari uchun yaratilgan to'liq funktsional karyera platformasi. Talabalar, bitiruvchilar va yosh professionallar uchun yagona platforma:
 
 - 🎓 **Talabalar** - Ish topish, startap yaratish, karyera rivojlantirish
 - 🏢 **Kompaniyalar** - Ishchi qidirish, startaplar bilan hamkorlik

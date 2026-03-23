@@ -18,17 +18,17 @@ const outfit = Outfit({
 
 export const metadata: Metadata = {
   title: {
-    default: "Step.uz - O'zbekiston yoshlari uchun karyera platformasi",
-    template: "%s | Step.uz",
+    default: "Sinergiya - O'zbekiston yoshlari uchun karyera platformasi",
+    template: "%s | Sinergiya",
   },
-  description: "Step.uz — O'zbekistonning eng yirik talabalar va startaplar platformasi. Karyerangizni biz bilan birga quring va yuksak natijalarga erishing.",
-  keywords: ["Step.uz", "ish", "karyera", "startap", "O'zbekiston", "talabalar", "bitiruvchilar", "ish o'rinlari", "vakansiyalar"],
-  authors: [{ name: "Step.uz Team" }],
+  description: "Sinergiya — O'zbekistonning eng yirik talabalar va startaplar platformasi. Karyerangizni biz bilan birga quring va yuksak natijalarga erishing.",
+  keywords: ["Sinergiya", "ish", "karyera", "startap", "O'zbekiston", "talabalar", "bitiruvchilar", "ish o'rinlari", "vakansiyalar"],
+  authors: [{ name: "Sinergiya Team" }],
   icons: {
     icon: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
-  metadataBase: new URL('https://step.uz'),
+  metadataBase: new URL('https://sinergiya.uz'),
   alternates: {
     canonical: '/',
     languages: {
@@ -37,10 +37,10 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Step.uz - O'zbekiston yoshlari uchun karyera platformasi",
+    title: "Sinergiya - O'zbekiston yoshlari uchun karyera platformasi",
     description: "O'zbekistonning eng yirik talabalar va startaplar platformasi. Karyerangizni biz bilan birga quring va yuksak natijalarga erishing.",
-    url: "https://step.uz",
-    siteName: "Step.uz",
+    url: "https://sinergiya.uz",
+    siteName: "Sinergiya",
     type: "website",
     locale: "uz_UZ",
     images: [
@@ -48,16 +48,16 @@ export const metadata: Metadata = {
         url: "/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "Step.uz - Karyera platformasi",
+        alt: "Sinergiya - Karyera platformasi",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Step.uz",
+    title: "Sinergiya",
     description: "O'zbekiston yoshlari uchun karyera platformasi",
     images: ["/twitter-image.jpg"],
-    creator: "@stepuz",
+    creator: "@sinergiya",
   },
   robots: {
     index: true,
@@ -88,9 +88,9 @@ export default function RootLayout({
         <meta name="theme-color" content="#10b981" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Step.uz" />
+        <meta name="apple-mobile-web-app-title" content="Sinergiya" />
         <meta name="mobile-web-app-capable" content="yes" />
-        <meta name="application-name" content="Step.uz" />
+        <meta name="application-name" content="Sinergiya" />
         <meta name="msapplication-TileColor" content="#10b981" />
         <meta name="msapplication-config" content="/browserconfig.xml" />
       </head>

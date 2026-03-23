@@ -66,7 +66,7 @@ export default function AboutPage() {
             Biz <span className="text-gradient">haqimizda</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Step.uz - O'zbekiston yoshlari uchun yagona karyera platformasi. 
+            Sinergiya - O'zbekiston yoshlari uchun yagona karyera platformasi. 
             Biz talabalar, bitiruvchilar va yosh professionallarni eng yaxshi imkoniyatlar bilan bog'laymiz.
           </p>
         </motion.div>

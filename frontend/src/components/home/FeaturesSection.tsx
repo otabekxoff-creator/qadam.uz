@@ -120,7 +120,7 @@ export function FeaturesSection() {
             className="mb-8"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6 text-foreground tracking-tight">
-              Nima uchun Step.uz?
+              Nima uchun Sinergiya?
             </h2>
             <motion.p
               initial={{ opacity: 0, y: 10 }}
@@ -246,7 +246,7 @@ export function FeaturesSection() {
               Karyerangizni O'zgartirishga Tayyormisiz?
             </h3>
             <p className="text-white/90 mb-6 max-w-2xl mx-auto">
-              Step.uz bilan karyerasini tezlashtirgan minglab professionallar qatoriga qo'shiling
+              Sinergiya bilan karyerasini tezlashtirgan minglab professionallar qatoriga qo'shiling
             </p>
             <Button 
               size="lg" 
