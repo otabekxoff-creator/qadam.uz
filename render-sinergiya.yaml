@@ -63,9 +63,7 @@ services:
       - key: PORT
         value: 5000
       - key: DATABASE_URL
-        fromDatabase:
-          name: sinergiya-db
-          property: connectionString
+        value: postgresql://sinergiya_prod_user:Ki56K8cblKDoDG0lU2nRu3pWJ5NCRr4o@dpg-d70oflf5gffc73927i5g-a.oregon-postgres.render.com/sinergiya_prod
       - key: SMTP_HOST
         value: smtp.gmail.com
       - key: SMTP_PORT
@@ -94,11 +92,5 @@ services:
         value: 100
 
 # =============================================
-# SINERGIYA DATABASE
+# SINERGIYA DATABASE - ALREADY CREATED
 # =============================================
-databases:
-  - name: sinergiya-db
-    databaseName: sinergiya_prod
-    user: sinergiya_user
-    plan: free
-    region: oregon
