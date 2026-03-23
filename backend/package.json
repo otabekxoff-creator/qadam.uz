@@ -1,11 +1,11 @@
 {
-  "name": "step-uz-backend",
+  "name": "sinergiya-backend",
   "version": "1.0.0",
-  "description": "Step.uz Backend API",
+  "description": "Sinergiya Backend API",
   "main": "dist/app.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only --require tsconfig-paths/register src/app.ts",
-    "build": "npx prisma generate && npx prisma db push && npx tsc && node fix-paths.js ; exit 0",
+    "build": "npx prisma generate && npx tsc",
     "start": "node start.js",
     "db:push": "npx prisma db push --force-reset",
     "db:generate": "prisma generate",
