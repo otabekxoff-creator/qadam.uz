@@ -11,15 +11,17 @@ datasource db {
 }
 
 // =============================================
-// Enums
+// USER ROLES
 // =============================================
-
 enum UserRole {
   STUDENT
   COMPANY
   ADMIN
 }
 
+// =============================================
+// EDUCATION LEVELS
+// =============================================
 enum EducationLevel {
   HIGH_SCHOOL
   BACHELOR
@@ -28,6 +30,9 @@ enum EducationLevel {
   OTHER
 }
 
+// =============================================
+// COMPANY SIZES
+// =============================================
 enum CompanySize {
   STARTUP
   SMALL
@@ -36,6 +41,9 @@ enum CompanySize {
   ENTERPRISE
 }
 
+// =============================================
+// JOB TYPES
+// =============================================
 enum JobType {
   FULL_TIME
   PART_TIME
@@ -45,6 +53,9 @@ enum JobType {
   HYBRID
 }
 
+// =============================================
+// JOB LEVELS
+// =============================================
 enum JobLevel {
   ENTRY_LEVEL
   MID_LEVEL
@@ -53,6 +64,9 @@ enum JobLevel {
   MANAGER
 }
 
+// =============================================
+// APPLICATION STATUS
+// =============================================
 enum ApplicationStatus {
   PENDING
   REVIEWED
@@ -62,9 +76,8 @@ enum ApplicationStatus {
 }
 
 // =============================================
-// Models
+// USER MODEL
 // =============================================
-
 model User {
   id             String    @id @default(cuid())
   email          String    @unique
@@ -85,6 +98,9 @@ model User {
   @@map("users")
 }
 
+// =============================================
+// STUDENT MODEL
+// =============================================
 model Student {
   id            String   @id @default(cuid())
   userId        String   @unique
@@ -115,6 +131,9 @@ model Student {
   @@map("students")
 }
 
+// =============================================
+// COMPANY MODEL
+// =============================================
 model Company {
   id          String   @id @default(cuid())
   userId      String   @unique
@@ -130,7 +149,6 @@ model Company {
   foundedYear Int?
   employees   Int?
   linkedin    String?
-  isVerified  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -142,6 +160,9 @@ model Company {
   @@map("companies")
 }
 
+// =============================================
+// JOB MODEL
+// =============================================
 model Job {
   id          String      @id @default(cuid())
   title       String
@@ -169,6 +190,9 @@ model Job {
   @@map("jobs")
 }
 
+// =============================================
+// JOB APPLICATION MODEL
+// =============================================
 model JobApplication {
   id        String   @id @default(cuid())
   status    ApplicationStatus @default(PENDING)
@@ -188,6 +212,9 @@ model JobApplication {
   @@map("job_applications")
 }
 
+// =============================================
+// SAVED JOB MODEL
+// =============================================
 model SavedJob {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
@@ -201,100 +228,4 @@ model SavedJob {
 
   @@unique([jobId, studentId])
   @@map("saved_jobs")
-}
-
-model Language {
-  id        String   @id @default(cuid())
-  language  String
-  level     String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  studentId String
-  student   Student @relation(fields: [studentId], references: [id])
-
-  @@map("languages")
-}
-
-model Experience {
-  id          String    @id @default(cuid())
-  company     String
-  position    String
-  startDate   String
-  endDate     String?
-  isCurrent   Boolean   @default(false)
-  description String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  // Relations
-  studentId   String
-  student     Student   @relation(fields: [studentId], references: [id])
-
-  @@map("experiences")
-}
-
-model Education {
-  id          String    @id @default(cuid())
-  institution String
-  degree      String
-  field       String
-  startDate   String
-  endDate     String?
-  gpa         Float?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  // Relations
-  studentId   String
-  student     Student   @relation(fields: [studentId], references: [id])
-
-  @@map("education")
-}
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relations
-  studentId String
-  student   Student @relation(fields: [studentId], references: [id])
-
-  @@map("languages")
-}
-
-model Certification {
-  id          String    @id @default(cuid())
-  name        String
-  issuer      String
-  issueDate   String
-  expiryDate  String?
-  credentialUrl String?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-
-  // Relations
-  studentId   String
-  student     Student   @relation(fields: [studentId], references: [id])
-
-  @@map("certifications")
-}
-
-model JobPreferences {
-  id              String    @id @default(cuid())
-  preferredRoles  String[]
-  preferredTypes  JobType[]
-  preferredLevels JobLevel[]
-  preferredLocations String[]
-  salaryMin       Float?
-  salaryMax       Float?
-  remoteOnly      Boolean   @default(false)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-
-  // Relations
-  studentId       String   @unique
-  student         Student   @relation(fields: [studentId], references: [id])
-
-  @@map("job_preferences")
 }
