@@ -204,7 +204,6 @@ model JobApplication {
   // Relations
   jobId     String
   job       Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  
   studentId  String
   student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
