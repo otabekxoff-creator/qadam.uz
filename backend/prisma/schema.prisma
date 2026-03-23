@@ -209,7 +209,7 @@ model JobApplication {
   student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   companyId  String?
-  company    Company? @relation("CompanyApplications")
+  company    Company? @relation("CompanyApplications", fields: [companyId], references: [id])
 
   userId      String?
   user        User?    @relation("UserApplications", fields: [userId], references: [id])
@@ -231,6 +231,9 @@ model SavedJob {
   
   studentId  String
   student    Student  @relation("SavedJobs", fields: [studentId], references: [id])
+
+  userId      String?
+  user        User?    @relation("SavedJobs", fields: [userId], references: [id])
 
   @@unique([jobId, studentId])
   @@map("saved_jobs")
