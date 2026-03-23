@@ -1,0 +1,104 @@
+services:
+  # =============================================
+  # SINERGIYA FRONTEND
+  # =============================================
+  - type: web
+    name: sinergiya-frontend
+    runtime: node
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    startCommand: npm run start
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_PUBLIC_API_URL
+        value: https://sinergiya-backend.onrender.com/api
+      - key: NEXT_PUBLIC_APP_NAME
+        value: Sinergiya
+      - key: NEXT_PUBLIC_APP_DESCRIPTION
+        value: O'zbekiston yoshlari uchun karyera platformasi
+      - key: NEXT_PUBLIC_ENABLE_CHAT
+        value: true
+      - key: NEXT_PUBLIC_ENABLE_NOTIFICATIONS
+        value: true
+      - key: NEXT_PUBLIC_ENABLE_VOICE_MESSAGES
+        value: true
+      - key: NEXT_PUBLIC_EMAIL
+        value: info@sinergiya.uz
+      - key: NEXT_PUBLIC_PHONE
+        value: +998880016777
+      - key: NEXT_PUBLIC_FACEBOOK_URL
+        value: https://facebook.com/sinergiya
+      - key: NEXT_PUBLIC_INSTAGRAM_URL
+        value: https://instagram.com/sinergiya
+      - key: NEXT_PUBLIC_LINKEDIN_URL
+        value: https://linkedin.com/company/sinergiya
+      - key: NEXT_PUBLIC_TWITTER_URL
+        value: https://twitter.com/sinergiya
+
+  # =============================================
+  # SINERGIYA BACKEND
+  # =============================================
+  - type: web
+    name: sinergiya-backend
+    runtime: node
+    region: oregon
+    plan: free
+    branch: main
+    rootDir: backend
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_VERSION
+        value: 22
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: sinergiya-db
+          property: connectionString
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        value: otabekxoff@gmail.com
+      - key: SMTP_PASS
+        value: acyf sae vlob wblq
+      - key: SMTP_FROM
+        value: Sinergiya <no-reply@sinergiya.uz>
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 30d
+      - key: FRONTEND_URL
+        value: https://sinergiya-frontend.onrender.com
+      - key: BACKEND_URL
+        value: https://sinergiya-backend.onrender.com
+      - key: LOG_LEVEL
+        value: warn
+      - key: MAX_FILE_SIZE
+        value: 5242880
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 100
+
+# =============================================
+# SINERGIYA DATABASE
+# =============================================
+databases:
+  - name: sinergiya-db
+    databaseName: sinergiya_prod
+    user: sinergiya_user
+    plan: free
+    region: oregon
