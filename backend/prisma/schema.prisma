@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,15 +20,12 @@ enum UserRole {
   ADMIN
 }
 
-enum Gender {
-  MALE
-  FEMALE
-}
-
 enum EducationLevel {
+  HIGH_SCHOOL
   BACHELOR
   MASTER
   PHD
+  OTHER
 }
 
 enum CompanySize {
@@ -39,8 +39,8 @@ enum CompanySize {
 enum JobType {
   FULL_TIME
   PART_TIME
-  CONTRACT
   INTERNSHIP
+  FREELANCE
   REMOTE
   HYBRID
 }
@@ -49,52 +49,16 @@ enum JobLevel {
   ENTRY_LEVEL
   MID_LEVEL
   SENIOR_LEVEL
-  EXECUTIVE
+  LEAD
+  MANAGER
 }
 
 enum ApplicationStatus {
   PENDING
-  REVIEWING
+  REVIEWED
   ACCEPTED
   REJECTED
-  WITHDRAWN
-}
-
-enum StartupStage {
-  IDEA
-  VALIDATION
-  MVP
-  GROWTH
-  SCALING
-}
-
-enum StartupStatus {
-  DRAFT
-  PENDING
-  APPROVED
-  REJECTED
-  FUNDED
-  COMPLETED
-}
-
-enum MessageType {
-  TEXT
-  VOICE
-  IMAGE
-  FILE
-}
-
-enum NotificationType {
-  APPLICATION
-  MESSAGE
-  JOB_ALERT
-  STARTUP_UPDATE
-  SYSTEM
-}
-
-enum FundingCurrency {
-  UZS
-  USD
+  HIRED
 }
 
 // =============================================
@@ -102,71 +66,51 @@ enum FundingCurrency {
 // =============================================
 
 model User {
-  id                     String    @id @default(cuid())
-  email                  String    @unique
-  password               String
-  role                   UserRole  @default(STUDENT)
-  isVerified             Boolean   @default(false)
-  isActive               Boolean   @default(true)
-  emailVerifiedAt        DateTime?
-  verificationCode       String?
-  verificationCodeExpiresAt DateTime?
-  createdAt              DateTime  @default(now())
-  updatedAt              DateTime  @updatedAt
+  id             String    @id @default(cuid())
+  email          String    @unique
+  password       String
+  role           UserRole  @default(STUDENT)
+  isVerified     Boolean   @default(false)
+  isActive       Boolean   @default(true)
+  emailVerifiedAt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
 
   // Relations
-  student     Student?
-  company     Company?
-  applications Application[] @relation("UserApplications")
-  startups    Startup[] @relation("StartupOwner")
-  chatsAsParticipant1 Chat[] @relation("ChatParticipant1")
-  chatsAsParticipant2 Chat[] @relation("ChatParticipant2")
-  messages    Message[]
-  notifications Notification[]
+  student        Student?
+  company        Company?
+  applications   JobApplication[]
+  savedJobs      SavedJob[]
 
   @@map("users")
 }
 
 model Student {
-  id              String    @id @default(cuid())
-  userId          String    @unique
-  firstName       String
-  lastName        String
-  middleName      String?
-  avatar          String?
-  phone           String?
-  birthDate       String?
-  gender          Gender?
-  city            String?
-  address         String?
-  university      String?
-  faculty         String?
-  specialty       String?
-  major           String?
-  gpa             Float?
-  course          Int?
-  graduationYear  Int?
-  educationLevel  EducationLevel
-  skills          String[]
-  resumeUrl       String?
-  portfolioUrl    String?
-  linkedinUrl     String?
-  githubUrl       String?
-  telegramUrl     String?
-  about           String?
-  isLookingForJob Boolean   @default(true)
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  firstName     String
+  lastName      String
+  phone         String?
+  birthDate     DateTime?
+  educationLevel EducationLevel @default(BACHELOR)
+  university    String?
+  faculty       String?
+  graduationYear Int?
+  skills        String[]
+  avatar        String?
+  resume        String?
+  bio           String?
+  location      String?
+  portfolio     String?
+  github        String?
+  linkedin      String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
-  user          User         @relation(fields: [userId], references: [id])
-  applications   Application[]
-  startups       Startup[]
-  experience     Experience[]
-  education      Education[]
-  languages      Language[]
-  certifications Certification[]
-  jobPreferences JobPreferences?
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications   JobApplication[]
+  savedJobs      SavedJob[]
 
   @@map("students")
 }
@@ -175,189 +119,104 @@ model Company {
   id          String   @id @default(cuid())
   userId      String   @unique
   name        String
-  email       String   @unique
-  phone       String?
+  email        String
+  phone        String?
   website     String?
-  logo        String?
   description String?
-  industry    String?
+  logo        String?
   location    String?
-  size        CompanySize
+  size        CompanySize @default(SMALL)
+  industry    String?
   foundedYear Int?
+  employees   Int?
+  linkedin    String?
   isVerified  Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   // Relations
-  user        User         @relation(fields: [userId], references: [id])
-  jobs        Job[]
-  applications Application[]
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs         Job[]
+  applications  JobApplication[]
 
   @@map("companies")
 }
 
 model Job {
-  id          String     @id @default(cuid())
+  id          String      @id @default(cuid())
   title       String
   description String
-  requirements String?
-  responsibilities String?
-  benefits    String?
+  requirements String[]
+  responsibilities String[]
+  skills      String[]
   salary      String?
-  location    String?
+  location    String
   type        JobType    @default(FULL_TIME)
   level       JobLevel   @default(ENTRY_LEVEL)
-  industry    String
-  skills      String[]
-  isActive    Boolean    @default(true)
-  viewsCount  Int        @default(0)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  industry    String?
+  experience  String?
+  isActive    Boolean     @default(true)
+  views       Int         @default(0)
+  companyId   String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
 
   // Relations
-  companyId   String
-  company     Company    @relation(fields: [companyId], references: [id])
-  applications Application[]
+  company     Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  applications JobApplication[]
+  savedJobs   SavedJob[]
 
   @@map("jobs")
 }
 
-model Application {
-  id          String           @id @default(cuid())
-  status      ApplicationStatus @default(PENDING)
+model JobApplication {
+  id        String   @id @default(cuid())
+  status    ApplicationStatus @default(PENDING)
   coverLetter String?
-  resumeUrl   String?
-  notes       String?
-  createdAt   DateTime         @default(now())
-  updatedAt   DateTime         @updatedAt
+  resume    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  jobId       String
-  job         Job              @relation(fields: [jobId], references: [id])
-  studentId   String
-  student     Student          @relation(fields: [studentId], references: [id])
-  companyId   String
-  company     Company          @relation(fields: [companyId], references: [id])
-  userId      String
-  user        User             @relation("UserApplications", fields: [userId], references: [id])
+  jobId     String
+  job       Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  studentId  String
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
   @@unique([jobId, studentId])
-  @@map("applications")
+  @@map("job_applications")
 }
 
-model Startup {
-  id                   String        @id @default(cuid())
-  studentId            String
-  name                 String
-  logo                 String?
-  pitchDeck            String?
-  description          String
-  problem              String
-  solution             String
-  marketAnalysis       String?
-  businessModel        String?
-  competitiveAdvantage String?
-  industry             String?
-  stage                StartupStage
-  fundingNeeded        Float?
-  fundingCurrency      FundingCurrency @default(USD)
-  fundingRaised        Float?
-  equityOffered        Float?
-  status               StartupStatus @default(DRAFT)
-  rejectionReason      String?
-  viewsCount           Int?          @default(0)
-  likesCount           Int?          @default(0)
-  tags                 String[]
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
-
-  // Additional properties for enhanced functionality
-  website              String?
-  founderName          String?
-  founderEmail         String?
-  founderUniversity    String?
-  teamSize             String?
-  category             String?
+model SavedJob {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
 
   // Relations
-  student              Student        @relation(fields: [studentId], references: [id], map: "startups_student_fkey")
-  user                 User           @relation(name: "StartupOwner", fields: [studentId], references: [id], map: "startups_user_fkey")
-  team                 StartupTeamMember[]
+  jobId     String
+  job       Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  studentId  String
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
 
-  @@map("startups")
+  @@unique([jobId, studentId])
+  @@map("saved_jobs")
 }
 
-model StartupTeamMember {
-  id          String  @id @default(cuid())
-  name        String
-  role        String
-  email       String?
-  linkedinUrl String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+model Language {
+  id        String   @id @default(cuid())
+  language  String
+  level     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  startupId   String
-  startup     Startup @relation(fields: [startupId], references: [id])
+  studentId String
+  student   Student @relation(fields: [studentId], references: [id])
 
-  @@map("startup_team_members")
+  @@map("languages")
 }
 
-model Chat {
-  id            String    @id @default(cuid())
-  participant1Id String
-  participant2Id String
-  lastMessage   String?
-  lastMessageAt DateTime?
-  isActive      Boolean   @default(true)
-  unreadCount   Int?      @default(0)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-
-  // Relations
-  participant1  User      @relation("ChatParticipant1", fields: [participant1Id], references: [id])
-  participant2  User      @relation("ChatParticipant2", fields: [participant2Id], references: [id])
-  messages      Message[]
-
-  @@unique([participant1Id, participant2Id])
-  @@map("chats")
-}
-
-model Message {
-  id        String      @id @default(uuid())
-  chatId    String
-  senderId  String
-  content   String      @db.Text
-  type      MessageType @default(TEXT)
-  isRead    Boolean     @default(false)
-  metadata  Json?       // For voice messages (duration, url), images (url, size), etc.
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-
-  // Relations
-  chat      Chat        @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  sender    User        @relation(fields: [senderId], references: [id], onDelete: Cascade)
-
-  @@map("messages")
-}
-
-model Notification {
-  id        String           @id @default(cuid())
-  title     String
-  message   String
-  type      NotificationType
-  isRead    Boolean          @default(false)
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
-
-  // Relations
-  userId    String
-  user      User             @relation(fields: [userId], references: [id])
-
-  @@map("notifications")
-}
-
-// Supporting Models
 model Experience {
   id          String    @id @default(cuid())
   company     String
@@ -394,10 +253,6 @@ model Education {
   @@map("education")
 }
 
-model Language {
-  id        String   @id @default(cuid())
-  language  String
-  level     String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
