@@ -1,8 +1,8 @@
 {
-  "name": "step-uz",
+  "name": "sinergiya-frontend",
   "version": "1.0.0",
   "private": true,
-  "description": "Step.uz - Career platform for Uzbekistan youth connecting students with jobs and startups",
+  "description": "Sinergiya - Career platform for Uzbekistan youth connecting students with jobs and startups",
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
