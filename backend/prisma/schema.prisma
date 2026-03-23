@@ -86,6 +86,10 @@ model User {
   isVerified     Boolean   @default(false)
   isActive       Boolean   @default(true)
   emailVerifiedAt DateTime?
+  verificationCode String?
+  verificationCodeExpiresAt DateTime?
+  loginCode String?
+  loginCodeExpiresAt DateTime?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
 
@@ -106,20 +110,22 @@ model Student {
   userId        String   @unique
   firstName     String
   lastName      String
+  birthDate     DateTime
   phone         String?
-  birthDate     DateTime?
-  educationLevel EducationLevel @default(BACHELOR)
   university    String?
-  faculty       String?
-  graduationYear Int?
-  skills        String[]
-  avatar        String?
-  resume        String?
+  major         String?
+  gpa           Float?
   bio           String?
   location      String?
   portfolio     String?
   github        String?
   linkedin      String?
+  resume        String?
+  educationLevel EducationLevel @default(BACHELOR)
+  faculty       String?
+  graduationYear Int?
+  skills        String[]
+  avatar        String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 

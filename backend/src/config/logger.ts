@@ -27,7 +27,7 @@ const format = winston.format.combine(
   winston.format.colorize({ all: true }),
   winston.format.printf(
     (info) => `${info.timestamp} ${info.level}: ${info.message}${
-      info.stack || info.splat !== undefined && info.splat.length > 0
+      info.stack || (info.splat && info.splat.length > 0)
         ? ' ' + JSON.stringify(info.splat)
         : ''
     }`
@@ -84,7 +84,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Performance monitoring
-logger.performance = (message: string, meta?: any) => {
+(logger as any).performance = (message: string, meta?: any) => {
   logger.info(`[PERFORMANCE] ${message}`, {
     ...meta,
     type: 'performance',
@@ -93,7 +93,7 @@ logger.performance = (message: string, meta?: any) => {
 };
 
 // Security logging
-logger.security = (message: string, meta?: any) => {
+(logger as any).security = (message: string, meta?: any) => {
   logger.warn(`[SECURITY] ${message}`, {
     ...meta,
     type: 'security',
@@ -102,7 +102,7 @@ logger.security = (message: string, meta?: any) => {
 };
 
 // API logging
-logger.api = (method: string, url: string, statusCode: number, responseTime: number, meta?: any) => {
+(logger as any).api = (method: string, url: string, statusCode: number, responseTime: number, meta?: any) => {
   const level = statusCode >= 400 ? 'warn' : 'http';
   logger[level](`[API] ${method} ${url} - ${statusCode} - ${responseTime}ms`, {
     method,
@@ -116,7 +116,7 @@ logger.api = (method: string, url: string, statusCode: number, responseTime: num
 };
 
 // Error tracking with context
-logger.trackError = (error: Error, context?: any) => {
+(logger as any).trackError = (error: Error, context?: any) => {
   logger.error(`[ERROR] ${error.message}`, {
     message: error.message,
     stack: error.stack,
@@ -143,7 +143,7 @@ export const requestLogger = (req: any, res: any, next: any) => {
       userId: req.user?.userId,
     };
     
-    logger.api(req.method, req.originalUrl, res.statusCode, duration, logData);
+    (logger as any).api(req.method, req.originalUrl, res.statusCode, duration, logData);
   });
   
   next();
