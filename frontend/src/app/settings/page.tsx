@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { User, Mail, Phone, Lock, Save, Eye, EyeOff, Download } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -17,14 +17,47 @@ export default function SettingsPage() {
   const [showNewPassword, setShowNewPassword] = useState(false);
   
   const [formData, setFormData] = useState({
-    firstName: user?.firstName || '',
-    lastName: user?.lastName || '',
+    firstName: '',
+    lastName: '',
     email: user?.email || '',
-    phone: user?.phone || '',
+    phone: '',
     currentPassword: '',
     newPassword: '',
     confirmPassword: ''
   });
+  
+  useEffect(() => {
+    if (user) {
+      let firstName = '';
+      let lastName = '';
+      let phone = '';
+      
+      if (user.role === 'STUDENT' && (user as any).student) {
+        const student = (user as any).student;
+        firstName = student.firstName || '';
+        lastName = student.lastName || '';
+        phone = student.phone || '';
+      } else if (user.role === 'COMPANY' && (user as any).company) {
+        const company = (user as any).company;
+        // For company, we might want to show company name in firstName field or handle differently
+        // For now, we'll leave firstName/lastName empty and maybe show company name elsewhere
+        phone = company.phone || '';
+      } else if (user.role === 'ADMIN') {
+        // Admin might not have firstName/lastName in the base user object
+        // We'll leave them empty for now
+      }
+      
+      setFormData({
+        firstName,
+        lastName,
+        email: user.email || '',
+        phone,
+        currentPassword: '',
+        newPassword: '',
+        confirmPassword: ''
+      });
+    }
+  }, [user]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({
@@ -33,32 +66,78 @@ export default function SettingsPage() {
     }));
   };
 
-  const handleSave = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
+   const handleSave = async (e: React.FormEvent) => {
+     e.preventDefault();
+     setIsLoading(true);
 
-    try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Update user in store
-      if (user) {
-        setUser({
-          ...user,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          phone: formData.phone
-        });
-      }
+     try {
+       // Simulate API call
+       await new Promise(resolve => setTimeout(resolve, 1000));
+       
+       // Update user in store based on role
+       if (user) {
+         if (user.role === 'STUDENT' && (user as any).student) {
+           // Update student profile
+           setUser(
+             {
+               ...user,
+               email: formData.email,
+             },
+             {
+               ...(user as any).student,
+               firstName: formData.firstName,
+               lastName: formData.lastName,
+               phone: formData.phone,
+             } as Student,
+             undefined // company remains unchanged
+           );
+         } else if (user.role === 'COMPANY' && (user as any).company) {
+           // Update company profile
+           setUser(
+             {
+               ...user,
+               email: formData.email,
+             },
+             undefined, // student remains unchanged
+             {
+               ...(user as any).company,
+               phone: formData.phone,
+               // For company, we might want to update name in firstName/lastName fields
+               // but let's keep it simple and just update phone for now
+             } as Company
+           );
+         } else if (user.role === 'ADMIN') {
+           // Update admin user (if admin has firstName/lastName in base user object)
+           setUser(
+             {
+               ...user,
+               email: formData.email,
+               firstName: formData.firstName,
+               lastName: formData.lastName,
+             },
+             undefined, // student
+             undefined  // company
+           );
+         } else {
+           // Fallback - just update base user fields
+           setUser(
+             {
+               ...user,
+               email: formData.email,
+             },
+             undefined, // student
+             undefined  // company
+           );
+         }
+       }
 
-      toast.success('Sozlamalar saqlandi!');
-    } catch (error) {
-      toast.error('Sozlamalarni saqlashda xatolik yuz berdi');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+       toast.success('Sozlamalar saqlandi!');
+     } catch (error) {
+       toast.error('Sozlamalarni saqlashda xatolik yuz berdi');
+     } finally {
+       setIsLoading(false);
+     }
+   };
 
   const handlePasswordChange = async (e: React.FormEvent) => {
     e.preventDefault();

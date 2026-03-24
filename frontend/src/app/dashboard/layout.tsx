@@ -13,11 +13,11 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
-  const { user, setToken, setUser } = useAuthStore();
+  const user = useAuthStore(state => state.user);
+  const logout = useAuthStore(state => state.logout);
 
   const handleLogout = () => {
-    setToken(null);
-    setUser(null, null, null);
+    logout();
     window.location.href = '/';
   };
 
@@ -78,10 +78,34 @@ export default function DashboardLayout({
               <div className="h-6 lg:h-10 w-6 lg:w-10 rounded-full bg-primary/10 flex items-center justify-center">
                 <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
               </div>
-              <div className="flex-1 min-w-0 hidden lg:block">
-                <p className="text-xs lg:text-sm font-medium truncate">{user?.firstName} {user?.lastName}</p>
-                <p className="text-xs lg:text-xs text-muted-foreground truncate">{user?.email}</p>
-              </div>
+             <div className="flex-1 min-w-0 hidden lg:block">
+               {user && (
+                 <>
+                   {user.role === 'STUDENT' && (
+                     <>
+                       <p className="text-xs lg:text-sm font-medium truncate">
+                         {(user as any).student?.firstName} {(user as any).student?.lastName}
+                       </p>
+                       <p className="text-xs lg:text-xs text-muted-foreground truncate">{user.email}</p>
+                     </>
+                   )}
+                   {user.role === 'COMPANY' && (
+                     <>
+                       <p className="text-xs lg:text-sm font-medium truncate">
+                         {(user as any).company?.name}
+                       </p>
+                       <p className="text-xs lg:text-xs text-muted-foreground truncate">{user.email}</p>
+                     </>
+                   )}
+                   {user.role === 'ADMIN' && (
+                     <>
+                       <p className="text-xs lg:text-sm font-medium truncate">Admin User</p>
+                       <p className="text-xs lg:text-xs text-muted-foreground truncate">{user.email}</p>
+                     </>
+                   )}
+                 </>
+               )}
+             </div>
             </div>
             
             <Button
@@ -110,17 +134,37 @@ export default function DashboardLayout({
             </Button>
           </div>
           
-          <div className="flex items-center gap-1 lg:gap-2">
-            <div className="container mx-auto">
-              <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
-                {user?.firstName} {user?.lastName}
-              </span>
-              <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
-              </div>
-              <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
-            </div>
-          </div>
+           <div className="flex items-center gap-1 lg:gap-2">
+             <div className="container mx-auto">
+               {user && (
+                 <>
+                   {user.role === 'STUDENT' && (
+                     <>
+                       <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
+                         {(user as any).student?.firstName} {(user as any).student?.lastName}
+                       </span>
+                     </>
+                   )}
+                   {user.role === 'COMPANY' && (
+                     <>
+                       <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
+                         {(user as any).company?.name}
+                       </span>
+                     </>
+                   )}
+                   {user.role === 'ADMIN' && (
+                     <>
+                       <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">Admin User</span>
+                     </>
+                   )}
+                 </>
+               )}
+               <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                 <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
+               </div>
+               <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
+             </div>
+           </div>
         </div>
 
         {/* Page Content */}
