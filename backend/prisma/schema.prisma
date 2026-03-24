@@ -163,6 +163,7 @@ model Student {
   graduationYear Int?
   skills        String[]
   avatar        String?
+  email         String?  // Add email field
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
 
@@ -310,6 +311,7 @@ model Startup {
   teamSize    Int?
   funding     String?
   fundingGoal String?
+  lookingFor  String?
   likesCount  Int      @default(0)
   industry    String?
   location    String?
@@ -353,6 +355,7 @@ model Message {
   type      MessageType  @default(TEXT)
   senderId  String?
   isRead    Boolean      @default(false)
+  metadata  Json?
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 
