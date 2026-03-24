@@ -319,7 +319,9 @@ model Startup {
   lookingFor  String?
   timeline    String?
   founderName String?
+  founderEmail String?
   likesCount  Int      @default(0)
+  viewsCount  Int      @default(0)
   industry    String?
   location    String?
   isActive    Boolean  @default(true)
