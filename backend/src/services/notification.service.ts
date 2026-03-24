@@ -15,6 +15,7 @@ export class NotificationService {
         type: notificationData.type,
         title: notificationData.title,
         content: notificationData.message,
+        message: notificationData.message, // Add message field
         data: notificationData.data || {},
       },
     });
@@ -84,6 +85,7 @@ export class NotificationService {
       type: 'JOB_POSTED',
       title: 'Yangi vakansiya!',
       content: `${jobData.company.name} kompaniyasi "${jobData.title}" lavozimiga ishchi qidirmoqda`,
+      message: `${jobData.company.name} kompaniyasi "${jobData.title}" lavozimiga ishchi qidirmoqda`,
       data: {
         jobId: jobData.id,
         companyId: jobData.companyId,

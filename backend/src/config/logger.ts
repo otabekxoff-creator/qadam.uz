@@ -83,26 +83,41 @@ if (process.env.NODE_ENV !== 'production') {
   }));
 }
 
+// Logger interface
+interface Logger {
+  info: (message: string, meta?: any, context?: string) => void;
+  warn: (message: string, meta?: any, context?: string) => void;
+  error: (message: string, meta?: any, context?: string) => void;
+  debug: (message: string, meta?: any, context?: string) => void;
+  performance: (message: string, meta?: any, context?: string) => void;
+  security: (message: string, meta?: any, context?: string) => void;
+  api: (message: string, meta?: any, context?: string) => void;
+  trackError: (message: string, meta?: any, context?: string) => void;
+  cache: (message: string, meta?: any, context?: string) => void;
+}
+
 // Performance monitoring
-(logger as any).performance = (message: string, meta?: any) => {
+(logger as any).performance = (message: string, meta?: any, context?: string) => {
   logger.info(`[PERFORMANCE] ${message}`, {
     ...meta,
     type: 'performance',
     timestamp: new Date().toISOString(),
+    context,
   });
 };
 
 // Security logging
-(logger as any).security = (message: string, meta?: any) => {
+(logger as any).security = (message: string, meta?: any, context?: string) => {
   logger.warn(`[SECURITY] ${message}`, {
     ...meta,
     type: 'security',
     timestamp: new Date().toISOString(),
+    context,
   });
 };
 
 // API logging
-(logger as any).api = (method: string, url: string, statusCode: number, responseTime: number, meta?: any) => {
+(logger as any).api = (method: string, url: string, statusCode: number, responseTime: number, meta?: any, context?: string) => {
   const level = statusCode >= 400 ? 'warn' : 'http';
   logger[level](`[API] ${method} ${url} - ${statusCode} - ${responseTime}ms`, {
     method,
@@ -112,6 +127,7 @@ if (process.env.NODE_ENV !== 'production') {
     ...meta,
     type: 'api',
     timestamp: new Date().toISOString(),
+    context,
   });
 };
 
@@ -124,6 +140,16 @@ if (process.env.NODE_ENV !== 'production') {
     ...context,
     type: 'error',
     timestamp: new Date().toISOString(),
+  });
+};
+
+// Cache logging
+(logger as any).cache = (message: string, meta?: any, context?: string) => {
+  logger.info(`[CACHE] ${message}`, {
+    ...meta,
+    type: 'cache',
+    timestamp: new Date().toISOString(),
+    context,
   });
 };
 
