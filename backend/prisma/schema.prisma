@@ -134,6 +134,9 @@ model User {
   savedJobs      SavedJob[] @relation("SavedJobs")
   notifications  Notification[]
   startups       Startup[] @relation("UserStartups")
+  chats1         Chat[] @relation("ChatParticipant1")
+  chats2         Chat[] @relation("ChatParticipant2")
+  sentMessages   Message[] @relation("MessageSender")
 
   @@map("users")
 }
@@ -342,6 +345,8 @@ model Chat {
 
   // Relations
   messages Message[]
+  participant1 User? @relation("ChatParticipant1", fields: [participant1Id], references: [id])
+  participant2 User? @relation("ChatParticipant2", fields: [participant2Id], references: [id])
 
   @@map("chats")
 }
@@ -361,6 +366,7 @@ model Message {
 
   chatId    String
   chat      Chat         @relation(fields: [chatId], references: [id])
+  sender    User?        @relation("MessageSender", fields: [senderId], references: [id])
 
   @@map("messages")
 }
