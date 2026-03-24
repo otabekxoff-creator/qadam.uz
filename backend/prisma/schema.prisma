@@ -320,6 +320,7 @@ model Startup {
   timeline    String?
   founderName String?
   founderEmail String?
+  founderUniversity String?
   likesCount  Int      @default(0)
   viewsCount  Int      @default(0)
   industry    String?
