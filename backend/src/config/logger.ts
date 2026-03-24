@@ -84,7 +84,7 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 // Logger interface
-interface Logger {
+export interface Logger {
   info: (message: string, meta?: any, context?: string) => void;
   warn: (message: string, meta?: any, context?: string) => void;
   error: (message: string, meta?: any, context?: string) => void;

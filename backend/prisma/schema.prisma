@@ -314,7 +314,9 @@ model Startup {
   teamSize    Int?
   funding     String?
   fundingGoal String?
+  fundingNeeded String?
   lookingFor  String?
+  timeline    String?
   likesCount  Int      @default(0)
   industry    String?
   location    String?
