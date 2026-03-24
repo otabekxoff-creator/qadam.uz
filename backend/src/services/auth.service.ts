@@ -48,6 +48,7 @@ export class AuthService {
             create: {
               firstName: data.firstName!,
               lastName: data.lastName!,
+              birthDate: new Date('2000-01-01'), // Default birthDate
               educationLevel: EducationLevel.BACHELOR,
             },
           },

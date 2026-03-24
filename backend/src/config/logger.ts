@@ -27,7 +27,7 @@ const format = winston.format.combine(
   winston.format.colorize({ all: true }),
   winston.format.printf(
     (info) => `${info.timestamp} ${info.level}: ${info.message}${
-      info.stack || (info.splat && info.splat.length > 0)
+      info.stack || (info.splat && Array.isArray(info.splat) && info.splat.length > 0)
         ? ' ' + JSON.stringify(info.splat)
         : ''
     }`

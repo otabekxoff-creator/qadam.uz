@@ -12,10 +12,9 @@ export class NotificationService {
   async create(notificationData: NotificationData) {
     const notification = await prisma.notification.create({
       data: {
-        userId: notificationData.userId,
         type: notificationData.type,
         title: notificationData.title,
-        message: notificationData.message,
+        content: notificationData.message,
         data: notificationData.data || {},
       },
     });
@@ -84,7 +83,7 @@ export class NotificationService {
       userId: student.userId,
       type: 'JOB_POSTED',
       title: 'Yangi vakansiya!',
-      message: `${jobData.company.name} kompaniyasi "${jobData.title}" lavozimiga ishchi qidirmoqda`,
+      content: `${jobData.company.name} kompaniyasi "${jobData.title}" lavozimiga ishchi qidirmoqda`,
       data: {
         jobId: jobData.id,
         companyId: jobData.companyId,
