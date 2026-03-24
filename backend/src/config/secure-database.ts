@@ -235,7 +235,7 @@ export class DatabaseSecurity {
       // Check if critical tables exist and have data
       const userCount = await client.user.count();
       const jobCount = await client.job.count();
-      const applicationCount = await client.application.count();
+      const applicationCount = await client.jobApplication.count();
 
       if (userCount === 0 && jobCount === 0 && applicationCount === 0) {
         logger.warn('Database appears to be empty');
@@ -243,7 +243,7 @@ export class DatabaseSecurity {
       }
 
       // Check for data consistency
-      const orphanedApplications = await client.application.count({
+      const orphanedApplications = await client.jobApplication.count({
         where: {
           OR: [
             { job: undefined },

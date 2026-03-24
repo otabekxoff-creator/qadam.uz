@@ -202,7 +202,7 @@ export class OptimizedQueryService {
     let applications = await cacheService.getCachedApplications(userId);
     
     if (!applications) {
-      applications = await prisma.application.findMany({
+      applications = await prisma.jobApplication.findMany({
         where: { userId },
         select: {
           id: true,
@@ -263,10 +263,10 @@ export class OptimizedQueryService {
               skills: true,
             },
           }),
-          prisma.application.count({
+          prisma.jobApplication.count({
             where: { userId },
           }),
-          prisma.application.findMany({
+          prisma.jobApplication.findMany({
             where: { userId, status: 'PENDING' },
             take: 5,
             select: {
@@ -295,7 +295,7 @@ export class OptimizedQueryService {
           prisma.job.count({
             where: { companyId: (await prisma.company.findUnique({ where: { userId } }))?.id },
           }),
-          prisma.application.count({
+          prisma.jobApplication.count({
             where: {
               job: {
                 companyId: (await prisma.company.findUnique({ where: { userId } }))?.id,
@@ -360,7 +360,7 @@ export class OptimizedQueryService {
         prisma.company.count(),
         prisma.job.count({ where: { isActive: true } }),
         prisma.startup.count({ where: { status: 'APPROVED' } }),
-        prisma.application.count(),
+        prisma.jobApplication.count(),
         prisma.user.count({
           where: {
             createdAt: {

@@ -158,7 +158,7 @@ export const getJobApplications = asyncHandler(async (req: AuthenticatedRequest,
   }
 
   const [applications, total] = await Promise.all([
-    prisma.application.findMany({
+    prisma.jobApplication.findMany({
       where: whereClause,
       include: {
         student: {
@@ -180,7 +180,7 @@ export const getJobApplications = asyncHandler(async (req: AuthenticatedRequest,
       skip,
       take: Number(limit),
     }),
-    prisma.application.count({ where: whereClause }),
+    prisma.jobApplication.count({ where: whereClause }),
   ]);
 
   res.json({
@@ -212,7 +212,7 @@ export const updateApplicationStatus = asyncHandler(async (req: AuthenticatedReq
     throw new NotFoundError('Kompaniya profili topilmadi');
   }
 
-  const application = await prisma.application.findUnique({
+  const application = await prisma.jobApplication.findUnique({
     where: { id },
     include: { job: true }
   });
@@ -230,7 +230,7 @@ export const updateApplicationStatus = asyncHandler(async (req: AuthenticatedReq
     throw new ValidationError('Status noto\'g\'ri');
   }
 
-  const updatedApplication = await prisma.application.update({
+  const updatedApplication = await prisma.jobApplication.update({
     where: { id },
     data: { status },
   });
@@ -267,16 +267,16 @@ export const getCompanyDashboard = asyncHandler(async (req: AuthenticatedRequest
   ] = await Promise.all([
     prisma.job.count({ where: { companyId: company.id } }),
     prisma.job.count({ where: { companyId: company.id, status: 'ACTIVE' } }),
-    prisma.application.count({
+    prisma.jobApplication.count({
       where: { job: { companyId: company.id } }
     }),
-    prisma.application.count({
+    prisma.jobApplication.count({
       where: { job: { companyId: company.id }, status: 'PENDING' }
     }),
-    prisma.application.count({
+    prisma.jobApplication.count({
       where: { job: { companyId: company.id }, status: 'ACCEPTED' }
     }),
-    prisma.application.findMany({
+    prisma.jobApplication.findMany({
       where: { job: { companyId: company.id } },
       include: {
         student: {

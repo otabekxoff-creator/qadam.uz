@@ -152,6 +152,7 @@ model Student {
   major         String?
   gpa           Float?
   bio           String?
+  about         String?
   location      String?
   portfolio     String?
   github        String?
@@ -192,6 +193,7 @@ model Company {
   foundedYear Int?
   employees   Int?
   linkedin    String?
+  verified    Boolean  @default(false)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -216,6 +218,7 @@ model Job {
   salary      String?
   salaryMin   String?
   salaryMax   String?
+  currency    String?
   location    String
   type        JobType    @default(FULL_TIME)
   level       JobLevel   @default(ENTRY_LEVEL)
@@ -306,6 +309,8 @@ model Startup {
   foundedAt   DateTime?
   teamSize    Int?
   funding     String?
+  fundingGoal String?
+  likesCount  Int      @default(0)
   industry    String?
   location    String?
   isActive    Boolean  @default(true)
@@ -325,9 +330,13 @@ model Startup {
 // CHAT MODEL
 // =============================================
 model Chat {
-  id        String   @id @default(cuid())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String   @id @default(cuid())
+  participant1Id String?
+  participant2Id String?
+  lastMessageAt DateTime?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
 
   // Relations
   messages Message[]
@@ -342,6 +351,8 @@ model Message {
   id        String       @id @default(cuid())
   content   String
   type      MessageType  @default(TEXT)
+  senderId  String?
+  isRead    Boolean      @default(false)
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
 
