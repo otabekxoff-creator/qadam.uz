@@ -20,7 +20,7 @@ export class ApplicationService {
       throw new ForbiddenError('Ariza topshirish muddati tugagan');
     }
 
-    const existing = await prisma.application.findUnique({
+    const existing = await prisma.jobApplication.findUnique({
       where: {
         jobId_studentId: {
           jobId,
@@ -33,7 +33,7 @@ export class ApplicationService {
       throw new ConflictError('Siz allaqachon bu ish o\'rni uchun ariza topshirgansiz');
     }
 
-    const application = await prisma.application.create({
+    const application = await prisma.jobApplication.create({
       data: {
         jobId,
         studentId,
@@ -66,7 +66,7 @@ export class ApplicationService {
       throw new NotFoundError('Student profile not found');
     }
     
-    const applications = await prisma.application.findMany({
+    const applications = await prisma.jobApplication.findMany({
       where: { studentId: student.id },
       orderBy: { createdAt: 'desc' },
       include: {
@@ -110,7 +110,7 @@ export class ApplicationService {
     const skip = (page - 1) * limit;
 
     const [applications, total] = await Promise.all([
-      prisma.application.findMany({
+      prisma.jobApplication.findMany({
         where: { jobId },
         skip,
         take: limit,
@@ -134,7 +134,7 @@ export class ApplicationService {
           },
         },
       }),
-      prisma.application.count({ where: { jobId } })
+      prisma.jobApplication.count({ where: { jobId } })
     ]);
 
     return {
@@ -161,7 +161,7 @@ export class ApplicationService {
       throw new NotFoundError('Company profile not found');
     }
     
-    const application = await prisma.application.findFirst({
+    const application = await prisma.jobApplication.findFirst({
       where: {
         id: applicationId,
         job: {
@@ -174,7 +174,7 @@ export class ApplicationService {
       throw new NotFoundError('Ariza topilmadi');
     }
 
-    const updated = await prisma.application.update({
+    const updated = await prisma.jobApplication.update({
       where: { id: applicationId },
       data: { status },
       include: {

@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { 
   Briefcase, FileText, Eye, Clock, CheckCircle, XCircle,
   TrendingUp, Calendar, MapPin, Building2, ArrowRight,
-  Plus, Edit, Settings, Award, Download
+  Plus, Edit, Settings, Award, Download, Rocket
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -30,6 +30,87 @@ const mockStats = {
   pendingApplications: 8,
   savedJobsCount: 24,
 };
+
+const mockJobs = [
+  {
+    id: '1',
+    companyId: '1',
+    title: 'Senior Frontend Developer',
+    description: 'React, TypeScript, Next.js bilan modern web ilovalar ishlab chiqish',
+    jobType: 'FULL_TIME',
+    location: 'Toshkent',
+    salaryMin: 8000000,
+    salaryMax: 15000000,
+    currency: 'UZS',
+    status: 'ACTIVE',
+    applicationsCount: 28,
+    viewsCount: 156,
+    isRemote: true,
+    skills: ['React', 'TypeScript', 'Next.js', 'Tailwind CSS'],
+    createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    company: {
+      id: '1',
+      name: 'TechPark Solutions',
+      logo: undefined,
+      industry: 'IT',
+      size: '51-200',
+      isVerified: true,
+    },
+  },
+  {
+    id: '2',
+    companyId: '2',
+    title: 'Backend Developer',
+    description: 'Node.js, PostgreSQL, API development',
+    jobType: 'FULL_TIME',
+    location: 'Toshkent',
+    salaryMin: 6000000,
+    salaryMax: 12000000,
+    currency: 'UZS',
+    status: 'ACTIVE',
+    applicationsCount: 19,
+    viewsCount: 98,
+    isRemote: false,
+    skills: ['Node.js', 'PostgreSQL', 'Express', 'MongoDB'],
+    createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    company: {
+      id: '2',
+      name: 'Digital Agency',
+      logo: undefined,
+      industry: 'Marketing',
+      size: '11-50',
+      isVerified: true,
+    },
+  },
+  {
+    id: '3',
+    companyId: '3',
+    title: 'Mobile App Developer',
+    description: 'React Native yoki Flutter bilan mobil ilovalar ishlab chiqish',
+    jobType: 'PART_TIME',
+    location: 'Masofaviy',
+    salaryMin: 4000000,
+    salaryMax: 8000000,
+    currency: 'UZS',
+    status: 'ACTIVE',
+    applicationsCount: 15,
+    viewsCount: 67,
+    isRemote: true,
+    skills: ['React Native', 'Flutter', 'iOS', 'Android'],
+    createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
+    updatedAt: new Date().toISOString(),
+    company: {
+      id: '3',
+      name: 'StartupHub',
+      logo: undefined,
+      industry: 'Startup',
+      size: '2-10',
+      isVerified: false,
+    },
+  },
+];
 
 const mockApplications: Application[] = [
   {
@@ -254,7 +335,7 @@ export default function StudentDashboard() {
         animate={{ y: 0, opacity: 1 }}
         className="relative overflow-hidden bg-card border border-border/50 rounded-3xl p-8 shadow-sm"
       >
-        <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8 relative z-10">
+        <div className="flex flex-col lg:flex-col lg:items-start justify-between gap-8 relative z-10">
           <div className="flex items-center gap-6">
             <Avatar className="h-24 w-24 border-4 border-background shadow-xl rounded-2xl">
               <AvatarImage src={student?.avatar} />
@@ -348,8 +429,14 @@ export default function StudentDashboard() {
               <TabsTrigger value="overview" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Arizalar
               </TabsTrigger>
+              <TabsTrigger value="jobs" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
+                Vakansiyalar
+              </TabsTrigger>
               <TabsTrigger value="saved" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Saqlanganlar
+              </TabsTrigger>
+              <TabsTrigger value="startup" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
+                Startap
               </TabsTrigger>
             </TabsList>
             
@@ -392,6 +479,75 @@ export default function StudentDashboard() {
                 </motion.div>
               ))}
             </TabsContent>
+
+            <TabsContent value="jobs" className="mt-6 space-y-4">
+              {mockJobs.map((job, i) => (
+                <motion.div
+                  key={job.id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  className="bg-card p-5 rounded-xl border border-border flex items-center justify-between group hover:border-primary/30 transition-all shadow-sm"
+                >
+                  <div className="flex items-center gap-4">
+                    <div className="h-12 w-12 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20 flex items-center justify-center border border-border text-lg font-bold text-blue-600">
+                      {job.company.name[0]}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="text-lg font-semibold text-foreground">{job.title}</h4>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-0.5">
+                        <span className="flex items-center gap-1">
+                          <Building2 size={12} /> {job.company.name}
+                        </span>
+                        <span>•</span>
+                        <span className="flex items-center gap-1">
+                          <MapPin size={12} /> {job.location}
+                        </span>
+                        {job.isRemote && (
+                          <>
+                            <span>•</span>
+                            <Badge variant="outline" className="text-xs">Masofaviy</Badge>
+                          </>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-muted-foreground mt-1">
+                        <span className="font-medium text-green-600">
+                          {job.salaryMin.toLocaleString()} - {job.salaryMax.toLocaleString()} {job.currency}
+                        </span>
+                        <span>•</span>
+                        <span>{job.jobType === 'FULL_TIME' ? 'To\'liq stavka' : 'Qisman'}</span>
+                      </div>
+                      <div className="flex gap-1 mt-2">
+                        {job.skills.slice(0, 3).map((skill, index) => (
+                          <Badge key={index} variant="secondary" className="text-xs">
+                            {skill}
+                          </Badge>
+                        ))}
+                        {job.skills.length > 3 && (
+                          <Badge variant="outline" className="text-xs">
+                            +{job.skills.length - 3}
+                          </Badge>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <div className="text-xs text-muted-foreground">
+                        {job.applicationsCount} ariza
+                      </div>
+                      <div className="text-xs text-muted-foreground">
+                        {job.viewsCount} ko'rish
+                      </div>
+                    </div>
+                    <Button size="sm" className="bg-primary hover:bg-primary/90">
+                      Ariza yuborish
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </TabsContent>
+
             <TabsContent value="saved" className="mt-6 space-y-4">
               <div className="text-center py-12 border rounded-lg border-dashed">
                 <Briefcase className="mx-auto h-12 w-12 text-muted-foreground" />
@@ -400,6 +556,28 @@ export default function StudentDashboard() {
                 <Button className="mt-4" variant="outline" asChild>
                   <Link href="/jobs">Ishlarni ko'rish</Link>
                 </Button>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="startup" className="mt-6 space-y-4">
+              <div className="text-center py-12 border rounded-lg border-dashed">
+                <Rocket className="mx-auto h-12 w-12 text-muted-foreground" />
+                <h3 className="mt-4 text-lg font-semibold">Startap loyihasini yarating</h3>
+                <p className="text-muted-foreground mb-6">O'z startap loyihangizni platformada joylashtiring va investorlarni jalb qiling.</p>
+                <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                  <Button className="bg-primary" asChild>
+                    <Link href="/startups/create">
+                      <Plus className="h-4 w-4 mr-2" />
+                      Yangi startap
+                    </Link>
+                  </Button>
+                  <Button variant="outline" asChild>
+                    <Link href="/startups">
+                      <Rocket className="h-4 w-4 mr-2" />
+                      Startaplar
+                    </Link>
+                  </Button>
+                </div>
               </div>
             </TabsContent>
           </Tabs>

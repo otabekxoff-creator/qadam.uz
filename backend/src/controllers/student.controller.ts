@@ -94,7 +94,7 @@ export const getStudentApplications = asyncHandler(async (req: AuthenticatedRequ
   }
 
   const [applications, total] = await Promise.all([
-    prisma.application.findMany({
+    prisma.jobApplication.findMany({
       where: whereClause,
       include: {
         job: {
@@ -109,7 +109,7 @@ export const getStudentApplications = asyncHandler(async (req: AuthenticatedRequ
       skip,
       take: Number(limit),
     }),
-    prisma.application.count({ where: whereClause }),
+    prisma.jobApplication.count({ where: whereClause }),
   ]);
 
   res.json({
@@ -148,13 +148,13 @@ export const getStudentDashboard = asyncHandler(async (req: AuthenticatedRequest
     approvedStartups,
     recentApplications
   ] = await Promise.all([
-    prisma.application.count({ where: { studentId: student.id } }),
-    prisma.application.count({ where: { studentId: student.id, status: 'PENDING' } }),
-    prisma.application.count({ where: { studentId: student.id, status: 'ACCEPTED' } }),
-    prisma.application.count({ where: { studentId: student.id, status: 'REJECTED' } }),
+    prisma.jobApplication.count({ where: { studentId: student.id } }),
+    prisma.jobApplication.count({ where: { studentId: student.id, status: 'PENDING' } }),
+    prisma.jobApplication.count({ where: { studentId: student.id, status: 'ACCEPTED' } }),
+    prisma.jobApplication.count({ where: { studentId: student.id, status: 'REJECTED' } }),
     prisma.startup.count({ where: { studentId: student.id } }),
     prisma.startup.count({ where: { studentId: student.id, status: 'APPROVED' } }),
-    prisma.application.findMany({
+    prisma.jobApplication.findMany({
       where: { studentId: student.id },
       include: {
         job: {

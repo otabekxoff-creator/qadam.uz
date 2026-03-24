@@ -10,7 +10,7 @@ export async function GET(request: NextRequest) {
 
     const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';
     
-    const response = await fetch(`${API_URL}/auth/me`, {
+    const response = await fetch(`${API_URL}/api/auth/me`, {
       headers: { 'Authorization': `Bearer ${token}` },
     });
 

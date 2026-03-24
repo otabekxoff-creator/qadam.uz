@@ -1,3 +1,6 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -7,144 +10,391 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum StartupStatus {
-  PENDING    // Ko'rib chiqilmoqda
-  APPROVED   // Tasdiqlangan
-  REJECTED   // Rad etilgan
-  FUNDED     // Moliyalashtirilgan
-}
-
+// =============================================
+// USER ROLES
+// =============================================
 enum UserRole {
   STUDENT
   COMPANY
   ADMIN
 }
 
-enum JobStatus {
-  ACTIVE
-  CLOSED
-  DRAFT
+// =============================================
+// EDUCATION LEVELS
+// =============================================
+enum EducationLevel {
+  HIGH_SCHOOL
+  BACHELOR
+  MASTER
+  PHD
+  OTHER
 }
 
+// =============================================
+// COMPANY SIZES
+// =============================================
+enum CompanySize {
+  STARTUP
+  SMALL
+  MEDIUM
+  LARGE
+  ENTERPRISE
+}
+
+// =============================================
+// JOB TYPES
+// =============================================
+enum JobType {
+  FULL_TIME
+  PART_TIME
+  INTERNSHIP
+  FREELANCE
+  REMOTE
+  HYBRID
+}
+
+// =============================================
+// JOB LEVELS
+// =============================================
+enum JobLevel {
+  ENTRY_LEVEL
+  MID_LEVEL
+  SENIOR_LEVEL
+  LEAD
+  MANAGER
+}
+
+// =============================================
+// APPLICATION STATUS
+// =============================================
 enum ApplicationStatus {
   PENDING
-  REVIEWING
+  REVIEWED
   ACCEPTED
   REJECTED
-  INTERVIEW
-  OFFERED
+  HIRED
 }
 
+// =============================================
+// JOB STATUS
+// =============================================
+enum JobStatus {
+  ACTIVE
+  INACTIVE
+  DRAFT
+  CLOSED
+}
+
+// =============================================
+// STARTUP STATUS
+// =============================================
+enum StartupStatus {
+  IDEA
+  PENDING
+  APPROVED
+  REJECTED
+  DEVELOPMENT
+  LAUNCH
+  GROWTH
+  ESTABLISHED
+}
+
+// =============================================
+// MESSAGE TYPE
+// =============================================
+enum MessageType {
+  TEXT
+  FILE
+  IMAGE
+  LINK
+}
+
+// =============================================
+// USER MODEL
+// =============================================
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  role      UserRole
-  isActive  Boolean  @default(true)
-  // Email tasdiqlash va kirish kodi uchun maydonlar
-  emailVerifiedAt          DateTime?
-  verificationCode         String?
+  id             String    @id @default(cuid())
+  email          String    @unique
+  password       String
+  role           UserRole  @default(STUDENT)
+  isVerified     Boolean   @default(false)
+  isActive       Boolean   @default(true)
+  emailVerifiedAt DateTime?
+  verificationCode String?
   verificationCodeExpiresAt DateTime?
-  loginCode                String?
-  loginCodeExpiresAt       DateTime?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  student   Student?
-  company   Company?
+  loginCode String?
+  loginCodeExpiresAt DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  // Relations
+  student        Student?
+  company        Company?
+  applications   JobApplication[] @relation("UserApplications")
+  savedJobs      SavedJob[] @relation("SavedJobs")
+  notifications  Notification[]
+  startups       Startup[] @relation("UserStartups")
+  chats1         Chat[] @relation("ChatParticipant1")
+  chats2         Chat[] @relation("ChatParticipant2")
+  sentMessages   Message[] @relation("MessageSender")
+
   @@map("users")
 }
 
+// =============================================
+// STUDENT MODEL
+// =============================================
 model Student {
-  id           String        @id @default(uuid())
-  userId       String        @unique
-  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  firstName    String
-  lastName     String
-  phone        String?
-  university   String?
-  major        String?
-  gpa          Float?
-  about        String?       @db.Text
-  avatar       String?
-  resume       String?
-  skills       String[]
-  applications Application[]
-  
-  // SHU QATOR QO'SHILDI (Startaplar bilan bog'lanish uchun)
-  startups     Startup[]     
-  
-  createdAt    DateTime      @default(now())
-  updatedAt    DateTime      @updatedAt
+  id            String   @id @default(cuid())
+  userId        String   @unique
+  firstName     String
+  lastName      String
+  birthDate     DateTime
+  phone         String?
+  university    String?
+  major         String?
+  gpa           Float?
+  bio           String?
+  about         String?
+  location      String?
+  portfolio     String?
+  github        String?
+  linkedin      String?
+  resume        String?
+  educationLevel EducationLevel @default(BACHELOR)
+  faculty       String?
+  graduationYear Int?
+  skills        String[]
+  avatar        String?
+  email         String?  // Add email field
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  user          User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  applications   JobApplication[]
+  savedJobs      SavedJob[] @relation("SavedJobs")
+  startups       Startup[]
+
   @@map("students")
 }
 
+// =============================================
+// COMPANY MODEL
+// =============================================
 model Company {
-  id          String   @id @default(uuid())
+  id          String   @id @default(cuid())
   userId      String   @unique
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   name        String
-  description String?  @db.Text
-  industry    String
+  email        String
+  phone        String?
   website     String?
-  location    String
-  size        String
+  description String?
   logo        String?
+  location    String?
+  size        CompanySize @default(SMALL)
+  industry    String?
+  foundedYear Int?
+  employees   Int?
+  linkedin    String?
   verified    Boolean  @default(false)
-  jobs        Job[]
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  // Relations
+  user         User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobs         Job[]
+  applications  JobApplication[] @relation("CompanyApplications")
+
   @@map("companies")
 }
 
+// =============================================
+// JOB MODEL
+// =============================================
 model Job {
-  id               String        @id @default(uuid())
-  companyId        String
-  company          Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  title            String
-  description      String        @db.Text
-  requirements     String        @db.Text
-  responsibilities String?       @db.Text
-  location         String
-  type             String
-  salaryMin        Int?
-  salaryMax        Int?
-  currency         String        @default("UZS")
-  skills           String[]
-  status           JobStatus     @default(ACTIVE)
-  deadline         DateTime?
-  applications     Application[]
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  id          String      @id @default(cuid())
+  title       String
+  description String
+  requirements String[]
+  responsibilities String[]
+  skills      String[]
+  salary      String?
+  salaryMin   String?
+  salaryMax   String?
+  currency    String?
+  location    String
+  type        JobType    @default(FULL_TIME)
+  level       JobLevel   @default(ENTRY_LEVEL)
+  industry    String?
+  experience  String?
+  status      JobStatus  @default(ACTIVE)
+  deadline    DateTime?
+  isActive    Boolean     @default(true)
+  views       Int         @default(0)
+  viewsCount  Int         @default(0)
+  companyId   String
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  // Relations
+  company     Company         @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  applications JobApplication[]
+  savedJobs   SavedJob[]
+
   @@map("jobs")
 }
 
-model Application {
-  id          String            @id @default(uuid())
-  jobId       String
-  job         Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
-  studentId   String
-  student     Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  coverLetter String?           @db.Text
-  resume      String?
-  status      ApplicationStatus @default(PENDING)
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+// =============================================
+// JOB APPLICATION MODEL
+// =============================================
+model JobApplication {
+  id        String   @id @default(cuid())
+  status    ApplicationStatus @default(PENDING)
+  coverLetter String?
+  resume    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  jobId     String
+  job       Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  studentId  String
+  student    Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+
+  companyId  String?
+  company    Company? @relation("CompanyApplications", fields: [companyId], references: [id])
+
+  userId      String?
+  user        User?    @relation("UserApplications", fields: [userId], references: [id])
+
   @@unique([jobId, studentId])
-  @@map("applications")
+  @@map("job_applications")
 }
 
+// =============================================
+// SAVED JOB MODEL
+// =============================================
+model SavedJob {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+
+  // Relations
+  jobId     String
+  job       Job     @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  studentId  String
+  student    Student  @relation("SavedJobs", fields: [studentId], references: [id])
+
+  userId      String?
+  user        User?    @relation("SavedJobs", fields: [userId], references: [id])
+
+  @@unique([jobId, studentId])
+  @@map("saved_jobs")
+}
+
+// =============================================
+// STARTUP MODEL
+// =============================================
 model Startup {
-  id          String        @id @default(uuid())
+  id          String   @id @default(cuid())
+  name        String
   title       String
-  description String        @db.Text
-  goalAmount  Float         // Kerakli sarmoya miqdori (so'mda yoki dollarda)
-  status      StartupStatus @default(PENDING)
-  
-  studentId   String
-  student     Student       @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  description String
+  pitch       String?
+  problem     String?
+  solution    String?
+  tags        String[]
+  stage       String?
+  status      StartupStatus @default(IDEA)
+  website     String?
+  logo        String?
+  foundedAt   DateTime?
+  teamSize    Int?
+  funding     String?
+  fundingGoal String?
+  fundingNeeded String?
+  fundingCurrency String?
+  lookingFor  String?
+  timeline    String?
+  founderName String?
+  founderEmail String?
+  founderUniversity String?
+  likesCount  Int      @default(0)
+  viewsCount  Int      @default(0)
+  industry    String?
+  location    String?
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relations
+  studentId   String?
+  student     Student? @relation(fields: [studentId], references: [id])
+  userId      String?
+  user        User?    @relation("UserStartups", fields: [userId], references: [id])
 
   @@map("startups")
+}
+
+// =============================================
+// CHAT MODEL
+// =============================================
+model Chat {
+  id            String   @id @default(cuid())
+  participant1Id String?
+  participant2Id String?
+  lastMessageAt DateTime?
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  // Relations
+  messages Message[]
+  participant1 User? @relation("ChatParticipant1", fields: [participant1Id], references: [id])
+  participant2 User? @relation("ChatParticipant2", fields: [participant2Id], references: [id])
+
+  @@map("chats")
+}
+
+// =============================================
+// MESSAGE MODEL
+// =============================================
+model Message {
+  id        String       @id @default(cuid())
+  content   String
+  type      MessageType  @default(TEXT)
+  senderId  String?
+  isRead    Boolean      @default(false)
+  metadata  Json?
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  chatId    String
+  chat      Chat         @relation(fields: [chatId], references: [id])
+  sender    User?        @relation("MessageSender", fields: [senderId], references: [id])
+
+  @@map("messages")
+}
+
+// =============================================
+// NOTIFICATION MODEL
+// =============================================
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  message   String
+  type      String
+  data      Json?
+  isRead    Boolean  @default(false)
+  userId    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relations
+  user      User?    @relation(fields: [userId], references: [id])
+
+  @@map("notifications")
 }

@@ -122,31 +122,31 @@ export const api = new ApiClient(API_BASE_URL);
 
 export const authApi = {
   login: (email: string, password: string) =>
-    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/login', { email, password }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/login', { email, password }),
 
-  register: (data: { email: string; password: string; role: import('@/types').UserRole; firstName?: string; lastName?: string; name?: string }) =>
-    api.post<{ email: string }>('/auth/register', data),
+  register: (data: { email: string; password: string; role: import('@/types').UserRole; firstName?: string; lastName?: string; companyName?: string; industry?: string; location?: string }) =>
+    api.post<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company; token: string }>('/api/auth/register', data),
 
   verifyRegister: (email: string, code: string) =>
-    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/register/verify', { email, code }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/register/verify', { email, code }),
 
   verifyLogin: (email: string, code: string) =>
-    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/login/verify', { email, code }),
+    api.post<{ token: string; user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/login/verify', { email, code }),
 
   logout: () =>
-    api.post('/auth/logout'),
+    api.post('/api/auth/logout'),
 
   me: () =>
-    api.get<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/auth/me'),
+    api.get<{ user: import('@/types').User; student?: import('@/types').Student; company?: import('@/types').Company }>('/api/auth/me'),
 
   forgotPassword: (email: string) =>
-    api.post('/auth/forgot-password', { email }),
+    api.post('/api/auth/forgot-password', { email }),
 
   resetPassword: (token: string, password: string) =>
-    api.post('/auth/reset-password', { token, password }),
+    api.post('/api/auth/reset-password', { token, password }),
 
   verifyEmail: (token: string) =>
-    api.post('/auth/verify-email', { token }),
+    api.post('/api/auth/verify-email', { token }),
 };
 
 // =============================================
@@ -261,4 +261,84 @@ export const studentsApi = {
 
   getApplications: (params?: { page?: number; limit?: number; status?: string }) =>
     api.get<import('@/types').PaginatedResponse<import('@/types').Application>>('/students/applications', params as Record<string, string | number | boolean | undefined>),
+};
+
+// =============================================
+// Chat API
+// =============================================
+
+export const chatApi = {
+  getChats: (params?: { limit?: number; offset?: number }) =>
+    api.get<import('@/types').Chat[]>('/chats', params as Record<string, string | number | boolean | undefined>),
+
+  getChatById: (chatId: string) =>
+    api.get<import('@/types').Chat>(`/chats/${chatId}`),
+
+  createChat: (data: { participant2Id: string }) =>
+    api.post<import('@/types').Chat>('/chats', data),
+
+  createMessage: (chatId: string, data: { content: string; type?: string; metadata?: any }) =>
+    api.post<import('@/types').Message>(`/chats/${chatId}/messages`, data),
+
+  getMessages: (chatId: string, params?: { limit?: number; offset?: number }) =>
+    api.get<import('@/types').Message[]>(`/chats/${chatId}/messages`, params as Record<string, string | number | boolean | undefined>),
+
+  markAsRead: (chatId: string) =>
+    api.put(`/chats/${chatId}/read`),
+
+  getUnreadCount: () =>
+    api.get<{ unreadCount: number }>('/chats/unread-count'),
+
+  deleteChat: (chatId: string) =>
+    api.delete(`/chats/${chatId}`),
+};
+
+// =============================================
+// Notifications API
+// =============================================
+
+export const notificationsApi = {
+  getNotifications: (params?: { limit?: number; offset?: number }) =>
+    api.get<import('@/types').Notification[]>('/notifications', params as Record<string, string | number | boolean | undefined>),
+
+  markAsRead: (notificationId: string) =>
+    api.put(`/notifications/${notificationId}/read`),
+
+  markAllAsRead: () =>
+    api.put('/notifications/read-all'),
+
+  deleteNotification: (notificationId: string) =>
+    api.delete(`/notifications/${notificationId}`),
+
+  getUnreadCount: () =>
+    api.get<{ unreadCount: number }>('/notifications/unread-count'),
+};
+
+// =============================================
+// Audio API
+// =============================================
+
+export const audioApi = {
+  uploadAudio: (file: File, duration?: number) => {
+    const formData = new FormData();
+    formData.append('audio', file);
+    if (duration) {
+      formData.append('duration', duration.toString());
+    }
+    return api.post<{ id: string; filename: string; url: string }>('/audio/upload', formData, {
+      headers: { 'Content-Type': 'multipart/form-data' },
+    });
+  },
+
+  getAudio: (filename: string) =>
+    api.get<Blob>(`/audio/${filename}`, undefined, { responseType: 'blob' }),
+
+  getAudioInfo: (filename: string) =>
+    api.get<{ filename: string; size: number; formattedSize: string; uploadedAt: string }>(`/audio/${filename}/info`),
+
+  deleteAudio: (filename: string) =>
+    api.delete(`/audio/${filename}`),
+
+  checkExists: (filename: string) =>
+    api.get<{ exists: boolean }>(`/audio/${filename}/exists`),
 };

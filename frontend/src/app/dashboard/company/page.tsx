@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { 
   Briefcase, Users, Eye, Clock, CheckCircle, Plus,
   TrendingUp, Calendar, MapPin, Building2, ArrowRight,
-  Edit, Settings, FileText, UserCheck
+  Edit, Settings, FileText, UserCheck, Rocket, Lightbulb
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -130,6 +130,57 @@ const mockApplications: (Omit<Application, 'student'> & { student: { firstName: 
   },
 ];
 
+const mockStartups = [
+  {
+    id: '1',
+    title: 'EduTech Platform',
+    description: 'AI-powered education platform for personalized learning',
+    stage: 'SEED',
+    fundingGoal: '$50,000',
+    teamSize: '3-5',
+    website: 'edutech.uz',
+    logo: undefined,
+    founderName: 'Azizbek Toshmatov',
+    founderEmail: 'azizbek@edutech.uz',
+    founderUniversity: 'TUIT',
+    status: 'PENDING',
+    createdAt: '2024-01-10',
+    updatedAt: '2024-01-10',
+    student: {
+      id: '1',
+      firstName: 'Azizbek',
+      lastName: 'Toshmatov',
+      university: 'TUIT',
+      major: 'Software Engineering',
+      avatar: undefined,
+    },
+  },
+  {
+    id: '2',
+    title: 'HealthConnect',
+    description: 'Telemedicine platform connecting patients with doctors',
+    stage: 'IDEA',
+    fundingGoal: '$25,000',
+    teamSize: '2-3',
+    website: 'healthconnect.uz',
+    logo: undefined,
+    founderName: 'Dilnoza Saidova',
+    founderEmail: 'dilnoza@healthconnect.uz',
+    founderUniversity: 'BMU',
+    status: 'PENDING',
+    createdAt: '2024-01-12',
+    updatedAt: '2024-01-12',
+    student: {
+      id: '2',
+      firstName: 'Dilnoza',
+      lastName: 'Saidova',
+      university: 'BMU',
+      major: 'Medicine',
+      avatar: undefined,
+    },
+  },
+];
+
 // =============================================
 // Constants
 // =============================================
@@ -166,7 +217,7 @@ const formatDate = (date: string) => {
 // =============================================
 
 function JobCard({ job }: { job: Job }) {
-  const config = jobStatusConfig[job.status];
+  const config = jobStatusConfig[job.status] || { label: 'Noma\'lum', color: 'bg-gray-100 text-gray-700' };
 
   return (
     <Card className="hover:shadow-md transition-all">
@@ -367,6 +418,9 @@ export default function CompanyDashboard() {
               <TabsTrigger value="jobs" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 Ish e'lonlari
               </TabsTrigger>
+              <TabsTrigger value="startups" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
+                Startaplar
+              </TabsTrigger>
               <TabsTrigger value="applications" className="rounded-md data-[state=active]:bg-background data-[state=active]:shadow-sm h-full px-6 text-sm font-medium transition-all">
                 So'nggi arizalar
               </TabsTrigger>
@@ -399,6 +453,48 @@ export default function CompanyDashboard() {
                     </Badge>
                     <Button variant="ghost" size="icon" className="rounded-full hover:bg-primary/20 hover:text-primary">
                       <Edit size={20} />
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </TabsContent>
+
+            <TabsContent value="startups" className="mt-6 space-y-4">
+              {mockStartups.map((startup, i) => (
+                <motion.div
+                  key={startup.id}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.1 }}
+                  className="glass p-6 rounded-3xl border border-white/10 flex items-center justify-between group hover:bg-white/5 transition-all"
+                >
+                  <div className="flex items-center gap-6">
+                    <div className="h-12 w-12 rounded-2xl flex items-center justify-center border border-white/10 bg-gradient-to-br from-purple-500/20 to-pink-500/20 text-purple-400">
+                      <Rocket size={20} />
+                    </div>
+                    <div>
+                      <h4 className="text-xl font-semibold">{startup.title}</h4>
+                      <p className="text-sm text-muted-foreground mt-1 line-clamp-2">{startup.description}</p>
+                      <div className="flex items-center gap-4 mt-2 text-xs text-muted-foreground">
+                        <span className="flex items-center gap-1">
+                          <Lightbulb className="h-3 w-3" />
+                          {startup.stage}
+                        </span>
+                        <span className="flex items-center gap-1">
+                          <Users className="h-3 w-3" />
+                          {startup.teamSize}
+                        </span>
+                        <span>{startup.fundingGoal}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <div className="text-right">
+                      <p className="text-sm font-medium">{startup.founderName}</p>
+                      <p className="text-xs text-muted-foreground">{startup.founderUniversity}</p>
+                    </div>
+                    <Button size="sm" className="bg-white/5 hover:bg-white/10 rounded-full px-4">
+                      Ko'rish
                     </Button>
                   </div>
                 </motion.div>

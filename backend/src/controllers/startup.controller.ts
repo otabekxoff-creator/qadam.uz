@@ -5,6 +5,29 @@ import asyncHandler from '@/utils/asyncHandler';
 import { StartupStatus } from '@prisma/client';
 
 /**
+ * @desc    Yangi startap yaratish (Faqat talabalar uchun)
+ * @route   POST /api/startups
+ * @access  Private (Student)
+ */
+export const createStartup = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
+  const startupData = {
+    ...req.body,
+    studentId: req.user?.userId,
+    founderName: `${req.body.firstName} ${req.body.lastName}`,
+    founderEmail: req.body.email,
+    founderUniversity: req.body.university
+  };
+
+  const startup = await startupService.create(startupData);
+
+  res.status(201).json({
+    success: true,
+    data: startup,
+    message: 'Startap muvaffaqiyatli yaratildi. Tasdiqlash uchun ariza yuborildi.'
+  });
+});
+
+/**
  * @desc    Barcha tasdiqlangan startaplarni olish (Ochiq)
  * @route   GET /api/startups
  * @access  Public
@@ -36,21 +59,6 @@ export const getStartupById = asyncHandler(async (req: Request, res: Response) =
   res.json({
     success: true,
     data: startup,
-  });
-});
-
-/**
- * @desc    Yangi startap yaratish
- * @route   POST /api/startups
- * @access  Private (Faqat Student)
- */
-export const createStartup = asyncHandler(async (req: AuthenticatedRequest, res: Response) => {
-  const startup = await startupService.create(req.user!.userId, req.body);
-
-  res.status(201).json({
-    success: true,
-    data: startup,
-    message: 'Startap muvaffaqiyatli yuborildi. Admin tomonidan ko\'rib chiqiladi.',
   });
 });
 

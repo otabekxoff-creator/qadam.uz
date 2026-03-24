@@ -96,7 +96,9 @@ function RegistrationForm({
     confirmPassword: '',
     firstName: '',
     lastName: '',
-    name: '', // for company
+    companyName: '', // for company
+    industry: '',
+    location: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -139,14 +141,18 @@ function RegistrationForm({
           lastName: formData.lastName,
         }),
         ...(isCompany && {
-          name: formData.name,
+          companyName: formData.companyName,
+          industry: formData.industry,
+          location: formData.location,
         }),
       };
 
       const response = await authApi.register(requestData);
-      setEmailForVerify(response.email);
+      
+      // Email verification kerak
+      setEmailForVerify(formData.email);
       setStep('code');
-      toast.success('Tasdiqlash kodi yuborildi!');
+      toast.success('Tasdiqlash kodi emailingizga yuborildi!');
     } catch (err: any) {
       const msg = err.message || 'Ro\'yxatdan o\'tishda xatolik yuz berdi';
       setError(msg);
@@ -224,17 +230,41 @@ function RegistrationForm({
         )}
 
         {isCompany && (
-          <div className="space-y-2">
-            <Label htmlFor="companyName" className="text-sm font-semibold">Kompaniya nomi</Label>
-            <Input
-              id="companyName"
-              placeholder="Kompaniya nomi"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="h-11 border-border/60 focus:border-primary/50"
-              required
-            />
-          </div>
+          <>
+            <div className="space-y-2">
+              <Label htmlFor="companyName" className="text-sm font-semibold">Kompaniya nomi</Label>
+              <Input
+                id="companyName"
+                placeholder="Kompaniya nomi"
+                value={formData.companyName}
+                onChange={(e) => setFormData({ ...formData, companyName: e.target.value })}
+                className="h-11 border-border/60 focus:border-primary/50"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="industry" className="text-sm font-semibold">Soxa</Label>
+              <Input
+                id="industry"
+                placeholder="IT, Marketing, Finance va h.k."
+                value={formData.industry}
+                onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
+                className="h-11 border-border/60 focus:border-primary/50"
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="location" className="text-sm font-semibold">Manzil</Label>
+              <Input
+                id="location"
+                placeholder="Shahar, viloyat"
+                value={formData.location}
+                onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                className="h-11 border-border/60 focus:border-primary/50"
+                required
+              />
+            </div>
+          </>
         )}
 
         <div className="space-y-2">

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -46,6 +46,7 @@ const navLinks = [
 export function Navbar() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   
   const { isAuthenticated, user, student, company, logout } = useAuthStore();
   const fullName = getUserFullName();
@@ -56,6 +57,16 @@ export function Navbar() {
     logout();
     router.push('/');
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 50;
+      setScrolled(isScrolled);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const getDashboardPath = () => {
     if (userIsStudent) return '/dashboard/student';
@@ -75,14 +86,14 @@ export function Navbar() {
   };
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
-      <nav className="container mx-auto px-6 h-16 flex items-center justify-between">
+    <header className={`fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-sm border-b border-border/50 shadow-[0_1px_2px_rgba(0,0,0,0.03)] transition-all duration-300 ${scrolled ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-full'}`}>
+      <nav className="container mx-auto px-3 sm:px-4 md:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center space-x-2.5 group transition-opacity hover:opacity-90">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary text-white shadow-sm active:scale-95 transition-transform">
-            <GraduationCap className="h-6 w-6" />
+        <Link href="/" className="flex items-center space-x-2 sm:space-x-2.5 group transition-opacity hover:opacity-90">
+          <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-xl bg-primary text-white shadow-sm active:scale-95 transition-transform">
+            <GraduationCap className="h-4 w-4 sm:h-6 sm:w-6" />
           </div>
-          <span className="text-xl font-bold text-foreground tracking-tight">
+          <span className="text-lg sm:text-xl font-bold text-foreground tracking-tight hidden sm:block">
             Step.uz
           </span>
         </Link>

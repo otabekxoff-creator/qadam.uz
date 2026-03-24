@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { authenticate, authorize } from '@/middleware/auth.middleware';
 import { validate } from '@/middleware/validation.middleware';
+import { upload } from '@/middleware/upload.middleware';
 import * as startupController from '@/controllers/startup.controller';
 import { 
   createStartupSchema, 
@@ -57,6 +58,10 @@ router.post(
   '/', 
   authenticate, 
   authorize('STUDENT'),
+  upload.fields([
+    { name: 'logo', maxCount: 1 },
+    { name: 'pitchDeck', maxCount: 1 }
+  ]),
   validate(createStartupSchema),
   startupController.createStartup
 );
