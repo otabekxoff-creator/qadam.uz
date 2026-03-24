@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
-import logger from '@/config/logger';
+import logger, { Logger } from '@/config/logger';
 import { 
   passwordComplexitySchema, 
   emailSchema, 
