@@ -133,7 +133,7 @@ model User {
   applications   JobApplication[] @relation("UserApplications")
   savedJobs      SavedJob[] @relation("SavedJobs")
   notifications  Notification[]
-  startups       Startup[]
+  startups       Startup[] @relation("UserStartups")
 
   @@map("users")
 }
@@ -315,6 +315,8 @@ model Startup {
   // Relations
   studentId   String?
   student     Student? @relation(fields: [studentId], references: [id])
+  userId      String?
+  user        User?    @relation("UserStartups", fields: [userId], references: [id])
 
   @@map("startups")
 }
