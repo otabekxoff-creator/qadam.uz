@@ -58,139 +58,156 @@ export class OptimizedQueryService {
   async getJobsOptimized(filters: any, pagination: any) {
     const cacheKey = `jobs:${JSON.stringify(filters)}:${JSON.stringify(pagination)}`;
     
-    // Try cache first
-    let jobs = await cacheService.getCachedJobs({ ...filters, ...pagination });
-    
-    if (!jobs) {
-      // Build where clause efficiently
-      const where: any = { isActive: true };
-      
-      if (filters.industry) {
-        where.industry = { contains: filters.industry, mode: 'insensitive' };
-      }
-      
-      if (filters.type) {
-        where.type = filters.type;
-      }
-      
-      if (filters.level) {
-        where.level = filters.level;
-      }
-      
-      if (filters.location) {
-        where.location = { contains: filters.location, mode: 'insensitive' };
-      }
-      
-      if (filters.skills && filters.skills.length > 0) {
-        where.skills = { hasSome: filters.skills };
-      }
-      
-      // Execute optimized query
-      const [jobsData, totalCount] = await Promise.all([
-        prisma.job.findMany({
-          where,
-          select: {
-            id: true,
-            title: true,
-            description: true,
-            salary: true,
-            location: true,
-            type: true,
-            level: true,
-            industry: true,
-            skills: true,
-            viewsCount: true,
-            createdAt: true,
-            company: {
-              select: {
-                id: true,
-                name: true,
-                logo: true,
-              },
-            },
-          },
-          orderBy: { createdAt: 'desc' },
-          skip: pagination.offset || 0,
-          take: pagination.limit || 20,
-        }),
-        prisma.job.count({ where }),
-      ]);
-      
-      jobs = {
-        data: jobsData,
-        total: totalCount,
-        page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
-        totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
-      };
-      
-      // Cache the result
-      await cacheService.cacheJobs(jobsData, { ...filters, ...pagination }, 180); // 3 minutes
-    }
-    
-    return jobs;
+     // Try cache first
+     let cachedJobs = await cacheService.getCachedJobs({ ...filters, ...pagination });
+     
+     if (cachedJobs) {
+       // Return cached data in the expected format
+       return {
+         data: cachedJobs,
+         total: cachedJobs.length, // For cached data, we don't have total count, so use array length
+         page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
+         totalPages: Math.ceil(cachedJobs.length / (pagination.limit || 20)),
+       };
+     }
+     
+     // Build where clause efficiently
+     const where: any = { isActive: true };
+     
+     if (filters.industry) {
+       where.industry = { contains: filters.industry, mode: 'insensitive' };
+     }
+     
+     if (filters.type) {
+       where.type = filters.type;
+     }
+     
+     if (filters.level) {
+       where.level = filters.level;
+     }
+     
+     if (filters.location) {
+       where.location = { contains: filters.location, mode: 'insensitive' };
+     }
+     
+     if (filters.skills && filters.skills.length > 0) {
+       where.skills = { hasSome: filters.skills };
+     }
+     
+     // Execute optimized query
+     const [jobsData, totalCount] = await Promise.all([
+       prisma.job.findMany({
+         where,
+         select: {
+           id: true,
+           title: true,
+           description: true,
+           salary: true,
+           location: true,
+           type: true,
+           level: true,
+           industry: true,
+           skills: true,
+           viewsCount: true,
+           createdAt: true,
+           company: {
+             select: {
+               id: true,
+               name: true,
+               logo: true,
+             },
+           },
+         },
+         orderBy: { createdAt: 'desc' },
+         skip: pagination.offset || 0,
+         take: pagination.limit || 20,
+       }),
+       prisma.job.count({ where }),
+     ]);
+     
+     const jobs = {
+       data: jobsData,
+       total: totalCount,
+       page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
+       totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
+     };
+     
+     // Cache the result (cache only the jobs data array)
+     await cacheService.cacheJobs(jobsData, { ...filters, ...pagination }, 180); // 3 minutes
+     
+     return jobs;
   }
 
   // Optimized startups query
   async getStartupsOptimized(filters: any, pagination: any) {
     const cacheKey = `startups:${JSON.stringify(filters)}:${JSON.stringify(pagination)}`;
     
-    let startups = await cacheService.getCachedStartups({ ...filters, ...pagination });
+    let cachedStartups = await cacheService.getCachedStartups({ ...filters, ...pagination });
     
-    if (!startups) {
-      const where: any = { status: 'APPROVED' };
-      
-      if (filters.stage) {
-        where.stage = filters.stage;
-      }
-      
-      if (filters.category) {
-        where.category = { contains: filters.category, mode: 'insensitive' };
-      }
-      
-      if (filters.tags && filters.tags.length > 0) {
-        where.tags = { hasSome: filters.tags };
-      }
-      
-      const [startupsData, totalCount] = await Promise.all([
-        prisma.startup.findMany({
-          where,
-          select: {
-            id: true,
-            name: true,
-            description: true,
-            problem: true,
-            solution: true,
-            stage: true,
-            fundingNeeded: true,
-            fundingCurrency: true,
-            viewsCount: true,
-            likesCount: true,
-            tags: true,
-            createdAt: true,
-            student: {
-              select: {
-                firstName: true,
-                lastName: true,
-                avatar: true,
-              },
+    if (cachedStartups) {
+      // Return cached data in the expected format
+      return {
+        data: cachedStartups,
+        total: cachedStartups.length, // For cached data, we don't have total count, so use array length
+        page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
+        totalPages: Math.ceil(cachedStartups.length / (pagination.limit || 20)),
+      };
+    }
+    
+    const where: any = { status: 'APPROVED' };
+    
+    if (filters.stage) {
+      where.stage = filters.stage;
+    }
+    
+    if (filters.category) {
+      where.category = { contains: filters.category, mode: 'insensitive' };
+    }
+    
+    if (filters.tags && filters.tags.length > 0) {
+      where.tags = { hasSome: filters.tags };
+    }
+    
+    const [startupsData, totalCount] = await Promise.all([
+      prisma.startup.findMany({
+        where,
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          problem: true,
+          solution: true,
+          stage: true,
+          fundingNeeded: true,
+          fundingCurrency: true,
+          viewsCount: true,
+          likesCount: true,
+          tags: true,
+          createdAt: true,
+          student: {
+            select: {
+              firstName: true,
+              lastName: true,
+              avatar: true,
             },
           },
-          orderBy: { createdAt: 'desc' },
-          skip: pagination.offset || 0,
-          take: pagination.limit || 20,
-        }),
-        prisma.startup.count({ where }),
-      ]);
-      
-      startups = {
-        data: startupsData,
-        total: totalCount,
-        page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
-        totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
-      };
-      
-      await cacheService.cacheStartups(startupsData, { ...filters, ...pagination }, 180);
-    }
+        },
+        orderBy: { createdAt: 'desc' },
+        skip: pagination.offset || 0,
+        take: pagination.limit || 20,
+      }),
+      prisma.startup.count({ where }),
+    ]);
+    
+    const startups = {
+      data: startupsData,
+      total: totalCount,
+      page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
+      totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
+    };
+    
+    // Cache the result (cache only the startups data array)
+    await cacheService.cacheStartups(startupsData, { ...filters, ...pagination }, 180);
     
     return startups;
   }

@@ -65,6 +65,17 @@ export class CacheService {
     }
   }
 
+  async invalidateStartups(): Promise<void> {
+    try {
+      const pattern = 'startups:*';
+      // Note: This would require implementing a pattern-based deletion
+      // For now, we'll just log it
+      logger.info('Invalidating startups cache (pattern-based deletion needed)');
+    } catch (error) {
+      logger.error('Error invalidating startups cache:', error);
+    }
+  }
+
   // Startup caching
   async cacheStartups(startups: any[], filters: any, ttl: number = this.defaultTTL): Promise<void> {
     try {

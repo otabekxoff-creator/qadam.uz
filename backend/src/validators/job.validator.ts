@@ -4,12 +4,18 @@ import { JobStatus } from '@prisma/client';
 export const createJobSchema = z.object({
   title: z.string().min(5, 'Title too short').max(100),
   description: z.string().min(50, 'Description too short'),
-  requirements: z.string().min(20, 'Requirements too short'),
-  responsibilities: z.string().optional(),
+  requirements: z.array(z.string()).min(1, 'At least one requirement required'),
+  responsibilities: z.array(z.string()).optional(),
   location: z.string().min(2),
-  type: z.enum(['FULL_TIME', 'PART_TIME', 'INTERNSHIP', 'REMOTE', 'CONTRACT']),
-  salaryMin: z.number().int().positive().optional(),
-  salaryMax: z.number().int().positive().optional(),
+  type: z.enum(['FULL_TIME', 'PART_TIME', 'INTERNSHIP', 'FREELANCE', 'REMOTE', 'HYBRID']),
+  salaryMin: z.union([z.string(), z.number()]).optional().transform((val) => {
+    if (val === undefined) return undefined;
+    return typeof val === 'number' ? val.toString() : val;
+  }),
+  salaryMax: z.union([z.string(), z.number()]).optional().transform((val) => {
+    if (val === undefined) return undefined;
+    return typeof val === 'number' ? val.toString() : val;
+  }),
   currency: z.string().default('UZS'),
   skills: z.array(z.string()).min(1, 'At least one skill required'),
   deadline: z.string().datetime().optional(),

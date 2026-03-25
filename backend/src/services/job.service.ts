@@ -15,9 +15,18 @@ export class JobService {
     
     const job = await prisma.job.create({
       data: {
-        ...data,
-        companyId: company.id,
+        title: data.title,
+        description: data.description,
+        requirements: data.requirements,
+        responsibilities: data.responsibilities,
+        location: data.location,
+        type: data.type,
+        salaryMin: data.salaryMin,
+        salaryMax: data.salaryMax,
+        currency: data.currency,
+        skills: data.skills,
         deadline: data.deadline ? new Date(data.deadline) : null,
+        companyId: company.id,
       },
       include: {
         company: {
@@ -154,7 +163,16 @@ export class JobService {
     const updated = await prisma.job.update({
       where: { id: jobId },
       data: {
-        ...data,
+        title: data.title,
+        description: data.description,
+        requirements: data.requirements,
+        responsibilities: data.responsibilities,
+        location: data.location,
+        type: data.type,
+        salaryMin: data.salaryMin,
+        salaryMax: data.salaryMax,
+        currency: data.currency,
+        skills: data.skills,
         deadline: data.deadline ? new Date(data.deadline) : undefined,
       },
       include: {

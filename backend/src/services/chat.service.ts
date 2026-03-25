@@ -207,14 +207,13 @@ export class ChatService {
       },
     });
 
-    // Update chat's last message
-    await prisma.chat.update({
-      where: { id: messageData.chatId },
-      data: {
-        lastMessage: messageData.content,
-        lastMessageAt: new Date(),
-      },
-    });
+     // Update chat's last message time
+     await prisma.chat.update({
+       where: { id: messageData.chatId },
+       data: {
+         lastMessageAt: new Date(),
+       },
+     });
 
     // Get chat info to determine recipient
     const chat = await prisma.chat.findUnique({

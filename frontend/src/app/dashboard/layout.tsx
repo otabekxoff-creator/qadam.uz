@@ -61,30 +61,6 @@ export default function DashboardLayout({
     window.location.href = '/';
   };
 
-    fetchCounts();
-  }, []);
-
-  const getUserName = () => {
-    if (student) {
-      return `${student.firstName} ${student.lastName}`;
-    }
-    if (company) {
-      return company.name;
-    }
-    return 'Foydalanuvchi';
-  };
-
-  const getUserEmail = () => {
-    return user?.email || '';
-  };
-
-  const handleLogout = () => {
-    const { logout } = useAuthStore.getState();
->>>>>>> a725c9cc6780d278a47b3ede5b7c9a483c30cce8
-    logout();
-    window.location.href = '/';
-  };
-
   return (
     <div className="min-h-screen bg-background">
       {/* Sidebar */}
@@ -170,15 +146,14 @@ export default function DashboardLayout({
 
           {/* User Info */}
           <div className="p-2 lg:p-4 border-t border-border/50">
-             <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-4">
-               <div className="h-6 lg:h-10 w-6 lg:w-10 rounded-full bg-primary/10 flex items-center justify-center">
-                 <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
-               </div>
-               <div className="flex-1 min-w-0 hidden lg:block">
-                 <p className="text-xs lg:text-sm font-medium truncate">{getUserName()}</p>
-                 <p className="text-xs lg:text-xs text-muted-foreground truncate">{getUserEmail()}</p>
-               </div>
-             </div>
+            <div className="flex items-center gap-2 lg:gap-3 mb-2 lg:mb-4">
+              <div className="h-6 lg:h-10 w-6 lg:w-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
+              </div>
+              <div className="flex-1 min-w-0 hidden lg:block">
+                <p className="text-xs lg:text-sm font-medium truncate">{getUserName()}</p>
+                <p className="text-xs lg:text-xs text-muted-foreground truncate">{getUserEmail()}</p>
+              </div>
             </div>
             
             <Button
@@ -207,17 +182,16 @@ export default function DashboardLayout({
             </Button>
           </div>
           
-<<<<<<< HEAD
-            <div className="flex items-center gap-1 lg:gap-2">
-              <div className="container mx-auto flex items-center gap-2">
-                <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
-                  {getUserName()}
-                </span>
-                <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
-                  <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
-                </div>
+          <div className="flex items-center gap-1 lg:gap-2">
+            <div className="container mx-auto flex items-center gap-2">
+              <span className="text-xs lg:text-sm text-muted-foreground hidden sm:block">
+                {getUserName()}
+              </span>
+              <div className="h-6 lg:h-8 w-6 lg:w-8 rounded-full bg-primary/10 flex items-center justify-center">
+                <User className="h-3 w-3 lg:h-4 lg:w-4 text-primary" />
               </div>
             </div>
+          </div>
         </div>
 
         {/* Page Content */}

@@ -16,7 +16,8 @@ export class StartupService {
     // Create startup
     const startup = await prisma.startup.create({
       data: {
-        title: data.name,
+        name: data.name, // Required field
+        title: data.name, // Optional field, can be same as name
         description: data.description,
         stage: data.stage,
         fundingGoal: data.fundingGoal,
@@ -25,12 +26,16 @@ export class StartupService {
         pitch: data.pitch,
         lookingFor: data.lookingFor,
         timeline: data.timeline,
-        studentId: data.studentId,
         founderName: data.founderName,
         founderEmail: data.founderEmail,
         founderUniversity: data.founderUniversity,
         status: StartupStatus.PENDING,
-        logo: data.logo || null
+        logo: data.logo || null,
+        student: {
+          connect: {
+            id: data.studentId
+          }
+        }
       },
       include: {
         student: {

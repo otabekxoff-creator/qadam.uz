@@ -5,12 +5,12 @@ import { StartupStatus } from '@prisma/client';
  * Yangi startap yaratish uchun validatsiya
  */
 export const createStartupSchema = z.object({
-  title: z.string({
-    required_error: 'Sarlavha kiritilishi shart',
-    invalid_type_error: 'Sarlavha matn bo\'lishi kerak',
+  name: z.string({
+    required_error: 'Startup nomi kiritilishi shart',
+    invalid_type_error: 'Startup nomi matn bo\'lishi kerak',
   })
-    .min(5, 'Sarlavha kamida 5 ta belgidan iborat bo\'lishi kerak')
-    .max(100, 'Sarlavha 100 ta belgidan oshmasligi kerak')
+    .min(3, 'Startup nomi kamida 3 ta belgidan iborat bo\'lishi kerak')
+    .max(100, 'Startup nomi 100 ta belgidan oshmasligi kerak')
     .trim(),
 
   description: z.string({
@@ -21,13 +21,66 @@ export const createStartupSchema = z.object({
     .max(5000, 'Tavsif 5000 ta belgidan oshmasligi kerak')
     .trim(),
 
-  goalAmount: z.union([
-    z.string().transform((val) => parseFloat(val)),
-    z.number(),
-  ]).refine((val) => !isNaN(val) && val > 0, {
-    message: 'Maqsad miqdori musbat son bo\'lishi kerak',
-  }).refine((val) => val <= 300000000, {
-    message: 'Maqsad miqdori 300 million so\'mdan oshmasligi kerak',
+  stage: z.string()
+    .min(1, 'Stage kamida 1 ta belgidan iborat bo\'lishi kerak')
+    .max(50, 'Stage 50 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  fundingGoal: z.string()
+    .refine((val) => !val || !isNaN(Number(val)), {
+      message: 'Finansiying maqdori raqam bo\'lishi kerak',
+    })
+    .refine((val) => !val || Number(val) > 0, {
+      message: 'Finansiying maqdori musbat son bo\'lishi kerak',
+    })
+    .optional(),
+
+  teamSize: z.number()
+    .int()
+    .positive()
+    .optional(),
+
+  website: z.string()
+    .url({
+      message: 'Website noto\'g\'ri URL formatda',
+    })
+    .optional(),
+
+  pitch: z.string()
+    .max(500, 'Pitch 500 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  lookingFor: z.string()
+    .max(200, 'Looking for 200 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  timeline: z.string()
+    .max(200, 'Timeline 200 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  founderName: z.string()
+    .max(100, 'Founder nomi 100 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  founderEmail: z.string()
+    .email({
+      message: 'Noto\'g\'ri email format',
+    })
+    .optional(),
+
+  founderUniversity: z.string()
+    .max(100, 'Founder universiteti 100 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  logo: z.string()
+    .url({
+      message: 'Logo noto\'g\'ri URL formatda',
+    })
+    .optional(),
+
+  studentId: z.string({
+    required_error: 'Talaba ID kiritilishi shart',
+    invalid_type_error: 'Talaba ID matn bo\'lishi kerak',
   }),
 });
 
@@ -35,9 +88,9 @@ export const createStartupSchema = z.object({
  * Startapni yangilash uchun validatsiya
  */
 export const updateStartupSchema = z.object({
-  title: z.string()
-    .min(5, 'Sarlavha kamida 5 ta belgidan iborat bo\'lishi kerak')
-    .max(100, 'Sarlavha 100 ta belgidan oshmasligi kerak')
+  name: z.string()
+    .min(3, 'Startup nomi kamida 3 ta belgidan iborat bo\'lishi kerak')
+    .max(100, 'Startup nomi 100 ta belgidan oshmasligi kerak')
     .trim()
     .optional(),
 
@@ -47,14 +100,62 @@ export const updateStartupSchema = z.object({
     .trim()
     .optional(),
 
-  goalAmount: z.union([
-    z.string().transform((val) => parseFloat(val)),
-    z.number(),
-  ]).refine((val) => !isNaN(val) && val > 0, {
-    message: 'Maqsad miqdori musbat son bo\'lishi kerak',
-  }).refine((val) => val <= 300000000, {
-    message: 'Maqsad miqdori 300 million so\'mdan oshmasligi kerak',
-  }).optional(),
+  stage: z.string()
+    .min(1, 'Stage kamida 1 ta belgidan iborat bo\'lishi kerak')
+    .max(50, 'Stage 50 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  fundingGoal: z.string()
+    .refine((val) => !val || !isNaN(Number(val)), {
+      message: 'Finansiying maqdori raqam bo\'lishi kerak',
+    })
+    .refine((val) => !val || Number(val) > 0, {
+      message: 'Finansiying maqdori musbat son bo\'lishi kerak',
+    })
+    .optional(),
+
+  teamSize: z.number()
+    .int()
+    .positive()
+    .optional(),
+
+  website: z.string()
+    .url({
+      message: 'Website noto\'g\'ri URL formatda',
+    })
+    .optional(),
+
+  pitch: z.string()
+    .max(500, 'Pitch 500 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  lookingFor: z.string()
+    .max(200, 'Looking for 200 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  timeline: z.string()
+    .max(200, 'Timeline 200 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  founderName: z.string()
+    .max(100, 'Founder nomi 100 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  founderEmail: z.string()
+    .email({
+      message: 'Noto\'g\'ri email format',
+    })
+    .optional(),
+
+  founderUniversity: z.string()
+    .max(100, 'Founder universiteti 100 ta belgidan oshmasligi kerak')
+    .optional(),
+
+  logo: z.string()
+    .url({
+      message: 'Logo noto\'g\'ri URL formatda',
+    })
+    .optional(),
 });
 
 /**

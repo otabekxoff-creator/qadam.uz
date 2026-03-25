@@ -67,37 +67,26 @@ const transports = [
   }),
 ];
 
-// Create logger
+// Define the Logger interface with our custom methods
+export interface Logger extends winston.Logger {
+  performance: (message: string, meta?: any, context?: string) => void;
+  security: (message: string, meta?: any, context?: string) => void;
+  api: (method: string, url: string, statusCode: number, responseTime: number, meta?: any, context?: string) => void;
+  trackError: (error: Error, context?: any) => void;
+  cache: (message: string, meta?: any, context?: string) => void;
+}
+
+// Create logger instance and cast to our Logger interface
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   levels,
   format: fileFormat,
   transports,
   exitOnError: false,
-});
-
-// Add console transport in development
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new winston.transports.Console({
-    format,
-  }));
-}
-
-// Logger interface
-export interface Logger {
-  info: (message: string, meta?: any, context?: string) => void;
-  warn: (message: string, meta?: any, context?: string) => void;
-  error: (message: string, meta?: any, context?: string) => void;
-  debug: (message: string, meta?: any, context?: string) => void;
-  performance: (message: string, meta?: any, context?: string) => void;
-  security: (message: string, meta?: any, context?: string) => void;
-  api: (message: string, meta?: any, context?: string) => void;
-  trackError: (message: string, meta?: any, context?: string) => void;
-  cache: (message: string, meta?: any, context?: string) => void;
-}
+}) as Logger;
 
 // Performance monitoring
-(logger as any).performance = (message: string, meta?: any, context?: string) => {
+logger.performance = (message: string, meta?: any, context?: string) => {
   logger.info(`[PERFORMANCE] ${message}`, {
     ...meta,
     type: 'performance',
@@ -107,7 +96,7 @@ export interface Logger {
 };
 
 // Security logging
-(logger as any).security = (message: string, meta?: any, context?: string) => {
+logger.security = (message: string, meta?: any, context?: string) => {
   logger.warn(`[SECURITY] ${message}`, {
     ...meta,
     type: 'security',
@@ -117,7 +106,7 @@ export interface Logger {
 };
 
 // API logging
-(logger as any).api = (method: string, url: string, statusCode: number, responseTime: number, meta?: any, context?: string) => {
+logger.api = (method: string, url: string, statusCode: number, responseTime: number, meta?: any, context?: string) => {
   const level = statusCode >= 400 ? 'warn' : 'http';
   logger[level](`[API] ${method} ${url} - ${statusCode} - ${responseTime}ms`, {
     method,
@@ -132,7 +121,7 @@ export interface Logger {
 };
 
 // Error tracking with context
-(logger as any).trackError = (error: Error, context?: any) => {
+logger.trackError = (error: Error, context?: any) => {
   logger.error(`[ERROR] ${error.message}`, {
     message: error.message,
     stack: error.stack,
@@ -144,7 +133,7 @@ export interface Logger {
 };
 
 // Cache logging
-(logger as any).cache = (message: string, meta?: any, context?: string) => {
+logger.cache = (message: string, meta?: any, context?: string) => {
   logger.info(`[CACHE] ${message}`, {
     ...meta,
     type: 'cache',
@@ -169,7 +158,7 @@ export const requestLogger = (req: any, res: any, next: any) => {
       userId: req.user?.userId,
     };
     
-    (logger as any).api(req.method, req.originalUrl, res.statusCode, duration, logData);
+    logger.api(req.method, req.originalUrl, res.statusCode, duration, logData);
   });
   
   next();
