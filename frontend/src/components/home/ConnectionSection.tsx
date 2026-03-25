@@ -2,67 +2,7 @@
 
 import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Building2, GraduationCap, Handshake, Sparkles, Zap, Users, Trophy, Heart } from 'lucide-react';
-
-const statsData = [
-  { number: '500+', label: 'Kompaniyalar', icon: Building2, gradient: 'from-primary to-primary/70' },
-  { number: '10,000+', label: 'Talabalar', icon: Users, gradient: 'from-teal-500 to-cyan-500' },
-  { number: '2,000+', label: 'Muvaffaqiyat', icon: Trophy, gradient: 'from-amber-500 to-orange-500' },
-  { number: '95%', label: 'Qoniqish', icon: Heart, gradient: 'from-pink-500 to-rose-500' },
-];
-
-function StatCard({ stat, index }: { stat: typeof statsData[0]; index: number }) {
-  return (
-    <motion.div
-      className="relative group"
-      initial={{ opacity: 0, y: 50, scale: 0.8 }}
-      whileInView={{ opacity: 1, y: 0, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.8, delay: index * 0.15, type: 'spring', stiffness: 100 }}
-      whileHover={{ scale: 1.05, y: -5 }}
-    >
-      {/* Glow Effect */}
-      <motion.div
-        className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-teal-500/30 rounded-3xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"
-        animate={{ scale: [1, 1.1, 1] }}
-        transition={{ duration: 3, repeat: Infinity }}
-      />
-      
-      <div className="relative bg-card/80 backdrop-blur-xl border border-border rounded-3xl p-6 sm:p-8 overflow-hidden">
-        {/* Background Gradient */}
-        <div className={`absolute inset-0 bg-gradient-to-br ${stat.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-500`} />
-        
-        {/* Icon */}
-        <motion.div
-          className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-br ${stat.gradient} flex items-center justify-center mb-4 sm:mb-6 shadow-lg`}
-          whileHover={{ rotate: [0, -10, 10, 0] }}
-          transition={{ duration: 0.5 }}
-        >
-          <stat.icon className="w-6 h-6 sm:w-7 sm:h-7 text-white" />
-        </motion.div>
-
-        {/* Number */}
-        <motion.div 
-          className="text-3xl sm:text-5xl font-black bg-gradient-to-r from-foreground to-foreground/80 bg-clip-text text-transparent mb-2"
-          initial={{ scale: 0.5, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.3 + index * 0.15, type: 'spring' }}
-        >
-          {stat.number}
-        </motion.div>
-
-        {/* Label */}
-        <div className="text-sm sm:text-base font-semibold text-muted-foreground">
-          {stat.label}
-        </div>
-
-        {/* Decorative Elements */}
-        <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-br from-transparent to-primary/5 rounded-full blur-2xl" />
-      </div>
-    </motion.div>
-  );
-}
+import { Building2, GraduationCap, Handshake, Sparkles } from 'lucide-react';
 
 export function ConnectionSection() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,48 +57,8 @@ export function ConnectionSection() {
         className="container relative z-10 mx-auto px-4 sm:px-6"
         style={{ y }}
       >
-        {/* Title Section */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16 sm:mb-20"
-        >
-          <motion.div
-            className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full mb-6"
-            initial={{ scale: 0 }}
-            whileInView={{ scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
-          >
-            <Zap className="w-4 h-4 text-primary" />
-            <span className="text-sm font-semibold text-primary">Kuchli Aloqa</span>
-          </motion.div>
-          
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-foreground mb-6">
-            Karyera Bosqichida{' '}
-            <span className="relative inline-block">
-              <span className="bg-gradient-to-r from-primary via-teal-500 to-cyan-500 bg-clip-text text-transparent">
-                Uchrashing
-              </span>
-              <motion.span
-                className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-primary to-teal-500 rounded-full"
-                initial={{ scaleX: 0 }}
-                whileInView={{ scaleX: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1, delay: 0.5 }}
-              />
-            </span>
-          </h2>
-          
-          <p className="text-lg sm:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Kompaniyalar va talabalar bir joyda - kelajagingizni birga quring
-          </p>
-        </motion.div>
-
         {/* 3D Scene */}
-        <div className="relative h-[450px] sm:h-[550px] lg:h-[600px] mb-20 sm:mb-24">
+        <div className="relative h-[450px] sm:h-[550px] lg:h-[600px]">
           {/* Enhanced Platform with Glow */}
           <div className="absolute bottom-16 sm:bottom-20 left-1/2 -translate-x-1/2 w-[500px] sm:w-[700px] lg:w-[900px] h-1">
             <motion.div
@@ -426,19 +326,6 @@ export function ConnectionSection() {
             </defs>
           </svg>
         </div>
-
-        {/* Stats Grid - Enhanced */}
-        <motion.div
-          className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-        >
-          {statsData.map((stat, i) => (
-            <StatCard key={stat.label} stat={stat} index={i} />
-          ))}
-        </motion.div>
       </motion.div>
     </section>
   );
