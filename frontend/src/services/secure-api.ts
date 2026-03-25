@@ -100,7 +100,9 @@ class ApiClient {
       if (parts.length !== 3) return false;
 
       // Decode payload (without verification)
-      const payload = JSON.parse(atob(parts[1]));
+      const payloadPart = parts[1];
+      if (!payloadPart) return false;
+      const payload = JSON.parse(atob(payloadPart));
       const now = Date.now() / 1000;
 
       // Check expiration

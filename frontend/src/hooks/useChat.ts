@@ -27,41 +27,43 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
   const fetchChats = useCallback(async () => {
     try {
       setLoading(true);
-      const response = await chatApi.getChats({ limit: 50 });
-      setChats(response.data || []);
+      const response = await chatApi.getChats({ limit: 50 }) as unknown as { data?: Chat[] };
+      setChats(response?.data || []);
     } catch (error) {
-      logger.error('Failed to fetch chats', { error: error.message, userId: user?.userId }, 'useChat');
+      const err = error as Error;
+      logger.error('Failed to fetch chats', { error: err.message, userId: user?.id }, 'useChat');
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [user?.id]);
 
   // Fetch messages for specific chat
   const fetchMessages = useCallback(async (chatId: string) => {
     try {
       setLoading(true);
-      const response = await chatApi.getMessages(chatId, { limit: 100 });
-      setMessages(response.data || []);
+      const response = await chatApi.getMessages(chatId, { limit: 100 }) as unknown as { data?: Message[] };
+      setMessages(response?.data || []);
     } catch (error) {
-      logger.error('Failed to fetch messages', { error: error.message, chatId }, 'useChat');
+      const err = error as Error;
+      logger.error('Failed to fetch messages', { error: err.message, chatId }, 'useChat');
     } finally {
       setLoading(false);
     }
   }, []);
 
   // Send message
-  const sendMessage = useCallback(async (chatId: string, content: string, type: string = 'TEXT', metadata?: any) => {
+  const sendMessage = useCallback(async (chatId: string, content: string, type: string = 'TEXT', metadata?: Record<string, unknown>) => {
     try {
       setSending(true);
       const response = await chatApi.createMessage(chatId, {
         content,
         type,
         metadata
-      });
+      }) as unknown as Message;
 
       const newMessage: Message = {
-        ...response.data,
-        sender: user
+        ...response,
+        sender: user || undefined
       };
 
       setMessages(prev => [...prev, newMessage]);
@@ -75,12 +77,24 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
 
       return newMessage;
     } catch (error) {
-      logger.error('Failed to send message', { error: error.message, chatId, content }, 'useChat');
+      const err = error as Error;
+      logger.error('Failed to send message', { error: err.message, chatId, content }, 'useChat');
       throw error;
     } finally {
       setSending(false);
     }
   }, [user]);
+
+  // Fetch unread count
+  const fetchUnreadCount = useCallback(async () => {
+    try {
+      const response = await chatApi.getUnreadCount() as unknown as { data?: { unreadCount: number } };
+      setUnreadCount(response?.data?.unreadCount || 0);
+    } catch (error) {
+      const err = error as Error;
+      logger.error('Failed to fetch unread count', { error: err.message }, 'useChat');
+    }
+  }, []);
 
   // Mark messages as read
   const markAsRead = useCallback(async (chatId: string) => {
@@ -89,7 +103,7 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       
       // Update local state
       setMessages(prev => prev.map(msg => 
-        msg.senderId !== user?.userId ? { ...msg, isRead: true } : msg
+        msg.senderId !== user?.id ? { ...msg, isRead: true } : msg
       ));
       
       setChats(prev => prev.map(chat => 
@@ -98,89 +112,86 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
       
       fetchUnreadCount();
     } catch (error) {
-      logger.error('Failed to mark as read', { error: error.message, chatId }, 'useChat');
+      const err = error as Error;
+      logger.error('Failed to mark as read', { error: err.message, chatId }, 'useChat');
     }
-  }, [user]);
-
-  // Fetch unread count
-  const fetchUnreadCount = useCallback(async () => {
-    try {
-      const response = await chatApi.getUnreadCount();
-      setUnreadCount(response.data?.unreadCount || 0);
-    } catch (error) {
-      logger.error('Failed to fetch unread count', { error: error.message }, 'useChat');
-    }
-  }, []);
+  }, [user?.id, fetchUnreadCount]);
 
   // Create new chat
   const createChat = useCallback(async (participant2Id: string) => {
     try {
-      const response = await chatApi.createChat({ participant2Id });
-      const newChat = response.data;
+      const response = await chatApi.createChat({ participant2Id }) as unknown as Chat;
       
-      setChats(prev => [newChat, ...prev]);
-      return newChat;
+      setChats(prev => [response, ...prev]);
+      return response;
     } catch (error) {
-      logger.error('Failed to create chat', { error: error.message, participant2Id }, 'useChat');
+      const err = error as Error;
+      logger.error('Failed to create chat', { error: err.message, participant2Id }, 'useChat');
       throw error;
     }
   }, []);
 
   // WebSocket connection
   const connectWebSocket = useCallback(() => {
-    if (!enableRealTime || !user?.userId) return;
+    if (!enableRealTime || !user?.id) return;
 
-    const wsUrl = `${process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:5000'}/ws/chat/${user.userId}`;
+    const wsUrl = `${process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:5000'}/ws/chat/${user.id}`;
     
     try {
       wsRef.current = new WebSocket(wsUrl);
       
       wsRef.current.onopen = () => {
-        logger.info('WebSocket connected', { userId: user?.userId }, 'useChat');
+        logger.info('WebSocket connected', { userId: user?.id }, 'useChat');
         setIsConnected(true);
         reconnectAttempts.current = 0;
       };
       
       wsRef.current.onmessage = (event) => {
         try {
-          const data = JSON.parse(event.data);
+          const data = JSON.parse(event.data) as Record<string, unknown>;
           
           switch (data.type) {
-            case 'NEW_MESSAGE':
-              if (data.message.chatId === chatId) {
-                setMessages(prev => [...prev, data.message]);
+            case 'NEW_MESSAGE': {
+              const msg = data.message as Message;
+              if (msg.chatId === chatId) {
+                setMessages(prev => [...prev, msg]);
               }
               setChats(prev => prev.map(chat => 
-                chat.id === data.message.chatId 
-                  ? { ...chat, lastMessage: data.message.content, lastMessageAt: data.message.createdAt }
+                chat.id === msg.chatId 
+                  ? { ...chat, lastMessage: msg.content, lastMessageAt: msg.createdAt }
                   : chat
               ));
-              if (data.message.senderId !== user?.userId) {
+              if (msg.senderId !== user?.id) {
                 fetchUnreadCount();
               }
               break;
+            }
               
-            case 'MESSAGE_READ':
+            case 'MESSAGE_READ': {
+              const messageId = data.messageId as string;
               setMessages(prev => prev.map(msg => 
-                msg.id === data.messageId ? { ...msg, isRead: true } : msg
+                msg.id === messageId ? { ...msg, isRead: true } : msg
               ));
               break;
+            }
               
-            case 'CHAT_CREATED':
-              setChats(prev => [data.chat, ...prev]);
+            case 'CHAT_CREATED': {
+              const chat = data.chat as Chat;
+              setChats(prev => [chat, ...prev]);
               break;
+            }
               
             case 'TYPING':
-              // Handle typing indicator
               break;
           }
         } catch (error) {
-          logger.error('WebSocket message error', { error: error.message, data: event.data }, 'useChat');
+          const err = error as Error;
+          logger.error('WebSocket message error', { error: err.message, data: event.data }, 'useChat');
         }
       };
       
       wsRef.current.onclose = () => {
-        logger.info('WebSocket disconnected', { userId: user?.userId, reconnectAttempts: reconnectAttempts.current }, 'useChat');
+        logger.info('WebSocket disconnected', { userId: user?.id, reconnectAttempts: reconnectAttempts.current }, 'useChat');
         setIsConnected(false);
         
         // Attempt to reconnect
@@ -192,14 +203,15 @@ export function useChat({ chatId, enableRealTime = true }: UseChatOptions = {}) 
         }
       };
       
-      wsRef.current.onerror = (error) => {
-        logger.error('WebSocket error', { error: error?.message || 'Unknown WebSocket error', userId: user?.userId }, 'useChat');
+      wsRef.current.onerror = () => {
+        logger.error('WebSocket error', { error: 'WebSocket error occurred', userId: user?.id }, 'useChat');
       };
       
     } catch (error) {
-      logger.error('Failed to connect WebSocket', { error: error.message, wsUrl, userId: user?.userId }, 'useChat');
+      const err = error as Error;
+      logger.error('Failed to connect WebSocket', { error: err.message, wsUrl, userId: user?.id }, 'useChat');
     }
-  }, [enableRealTime, user?.userId, chatId, fetchUnreadCount]);
+  }, [enableRealTime, user?.id, chatId, fetchUnreadCount]);
 
   // Disconnect WebSocket
   const disconnectWebSocket = useCallback(() => {

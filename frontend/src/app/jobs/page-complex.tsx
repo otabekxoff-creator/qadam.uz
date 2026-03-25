@@ -136,13 +136,14 @@ export default function JobsPage() {
                            job.description.toLowerCase().includes(searchQuery.toLowerCase());
       
       const matchesCategory = !filters.category || job.category === filters.category;
-      const matchesLocation = !filters.location || job.location.toLowerCase().includes(filters.location.toLowerCase());
+      const matchesLocation = !filters.location || job.location?.toLowerCase().includes(filters.location.toLowerCase());
       const matchesType = !filters.jobType || job.type === filters.jobType;
+      const salaryStr = job.salary || '';
+      const parsedSalary = salaryStr.includes('$') ? (parseInt(salaryStr.replace(/[^0-9]/g, '') || '0', 10) || 0) : 0;
       const matchesSalary = filters.salary[1] === 0 || 
-                           (!job.salary ? true :
-                            job.salary.includes('$') ? 
-                            parseInt(job.salary.replace(/[^0-9]/g, '')) >= filters.salary[0] && 
-                            parseInt(job.salary.replace(/[^0-9]/g, '')) <= filters.salary[1] :
+                           (!salaryStr ? true :
+                            salaryStr.includes('$') ? 
+                            parsedSalary >= (filters.salary[0] ?? 0) && parsedSalary <= (filters.salary[1] ?? 0) :
                             true);
       const matchesRemote = !filters.remote || job.isRemote === filters.remote;
 

@@ -1,7 +1,5 @@
 // Security utilities for input sanitization and validation
 
-import DOMPurify from 'dompurify';
-
 // Input sanitization
 export function sanitizeInput(input: string): string {
   if (typeof input !== 'string') return '';
@@ -17,11 +15,20 @@ export function sanitizeInput(input: string): string {
 export function sanitizeHtml(html: string): string {
   if (typeof html !== 'string') return '';
   
-  return DOMPurify.sanitize(html, {
-    ALLOWED_TAGS: ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li'],
-    ALLOWED_ATTR: ['href', 'target', 'rel'],
-    ALLOW_DATA_ATTR: false,
+  // Simple HTML sanitization without external library
+  const allowedTags = ['b', 'i', 'em', 'strong', 'a', 'p', 'br', 'ul', 'ol', 'li'];
+  const allowedAttrs = ['href', 'target', 'rel'];
+  
+  // Remove all HTML tags first
+  let sanitized = html.replace(/<[^>]*>/g, '');
+  
+  // Then allow only specific tags
+  allowedTags.forEach(tag => {
+    const regex = new RegExp(`&lt;${tag}&gt;`, 'gi');
+    sanitized = sanitized.replace(regex, `<${tag}>`);
   });
+  
+  return sanitized;
 }
 
 // URL validation

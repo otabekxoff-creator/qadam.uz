@@ -40,7 +40,7 @@ class ApiClient {
     return headers;
   }
 
-  private async request<T>(method: string, endpoint: string, data?: unknown, params?: Record<string, string | number | boolean | undefined>): Promise<T> {
+  private async request<T>(method: string, endpoint: string, data?: unknown, params?: Record<string, string | number | boolean | undefined>, config?: RequestInit): Promise<T> {
     let url = `${this.baseUrl}${endpoint}`;
     if (params) {
       const searchParams = new URLSearchParams();
@@ -57,11 +57,13 @@ class ApiClient {
     const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 soniya timeout
 
     try {
+      const headers = config?.headers || this.getHeaders();
       const response = await fetch(url, {
         method,
-        headers: this.getHeaders(),
-        body: data ? JSON.stringify(data) : undefined,
+        headers,
+        body: data instanceof FormData ? data : (data ? JSON.stringify(data) : undefined),
         signal: controller.signal,
+        ...config,
       });
 
       clearTimeout(timeoutId);
@@ -72,29 +74,35 @@ class ApiClient {
         throw new Error(error.message || 'Xatolik yuz berdi');
       }
 
-      const jsonResponse = await response.json();
-      
-      // Agar backend data wrapper qaytarsa, uni ochamiz
-      if (jsonResponse && typeof jsonResponse === 'object' && 'data' in jsonResponse) {
-        return jsonResponse.data;
+      const contentType = response.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        const jsonResponse = await response.json();
+        
+        // Agar backend data wrapper qaytarsa, uni ochamiz
+        if (jsonResponse && typeof jsonResponse === 'object' && 'data' in jsonResponse) {
+          return jsonResponse.data;
+        }
+        
+        return jsonResponse;
       }
       
-      return jsonResponse;
-    } catch (error: any) {
+      return {} as T;
+    } catch (error: unknown) {
       clearTimeout(timeoutId);
-      if (error.name === 'AbortError') {
+      const err = error as Error & { name?: string };
+      if (err.name === 'AbortError') {
         throw new Error('So\'rov vaqti tugadi (Timeout). Internet aloqasini tekshiring.');
       }
       throw error;
     }
   }
 
-  async get<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined>): Promise<T> {
-    return this.request<T>('GET', endpoint, undefined, params);
+  async get<T>(endpoint: string, params?: Record<string, string | number | boolean | undefined>, config?: RequestInit): Promise<T> {
+    return this.request<T>('GET', endpoint, undefined, params, config);
   }
 
-  async post<T>(endpoint: string, data?: unknown): Promise<T> {
-    return this.request<T>('POST', endpoint, data);
+  async post<T>(endpoint: string, data?: unknown, config?: RequestInit): Promise<T> {
+    return this.request<T>('POST', endpoint, data, undefined, config);
   }
 
   async put<T>(endpoint: string, data?: unknown): Promise<T> {
@@ -330,8 +338,15 @@ export const audioApi = {
     });
   },
 
-  getAudio: (filename: string) =>
-    api.get<Blob>(`/audio/${filename}`, undefined, { responseType: 'blob' }),
+  getAudio: async (filename: string): Promise<Blob> => {
+    const url = `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api'}/audio/${filename}`;
+    const response = await fetch(url, {
+      headers: {
+        Authorization: `Bearer ${typeof window !== 'undefined' ? localStorage.getItem('token') : ''}`,
+      },
+    });
+    return response.blob();
+  },
 
   getAudioInfo: (filename: string) =>
     api.get<{ filename: string; size: number; formattedSize: string; uploadedAt: string }>(`/audio/${filename}/info`),

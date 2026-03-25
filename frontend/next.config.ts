@@ -134,8 +134,9 @@ const nextConfig = {
     ];
   },
   // Performance monitoring
-  webpack: (config, { isServer }) => {
+  webpack: (config: { resolve?: { fallback?: Record<string, boolean> } }, { isServer }: { isServer: boolean }) => {
     if (!isServer) {
+      config.resolve = config.resolve || { fallback: {} };
       config.resolve.fallback = {
         fs: false,
         path: false,
@@ -146,8 +147,9 @@ const nextConfig = {
   },
   // Bundle analyzer
   ...(process.env.ANALYZE === 'true' && {
-    webpack: (config) => {
+    webpack: (config: { plugins?: unknown[] }) => {
       const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+      config.plugins = config.plugins || [];
       config.plugins.push(
         new BundleAnalyzerPlugin({
           analyzerMode: 'static',
