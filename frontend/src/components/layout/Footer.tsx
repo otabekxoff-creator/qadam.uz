@@ -93,10 +93,10 @@ export function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href} 
-                    className="text-muted-foreground hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
+                    className="text-muted-foreground hover:text-primary transition-colors group text-sm sm:text-base inline-flex items-center"
                   >
-                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary mr-0 group-hover:mr-2 transition-all" />
-                    {link.label}
+                    <span className="inline-block w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300 flex-shrink-0 mr-2" />
+                    <span className="flex-shrink-0">{link.label}</span>
                   </Link>
                 </li>
               ))}
@@ -111,10 +111,10 @@ export function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href} 
-                    className="text-muted-foreground hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
+                    className="text-muted-foreground hover:text-primary transition-colors group text-sm sm:text-base inline-flex items-center"
                   >
-                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary mr-0 group-hover:mr-2 transition-all" />
-                    {link.label}
+                    <span className="inline-block w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300 flex-shrink-0 mr-2" />
+                    <span className="flex-shrink-0">{link.label}</span>
                   </Link>
                 </li>
               ))}
@@ -129,10 +129,10 @@ export function Footer() {
                 <li key={link.label}>
                   <Link 
                     href={link.href} 
-                    className="text-muted-foreground hover:text-primary transition-colors flex items-center group text-sm sm:text-base"
+                    className="text-muted-foreground hover:text-primary transition-colors group text-sm sm:text-base inline-flex items-center"
                   >
-                    <span className="w-0 group-hover:w-2 h-0.5 bg-primary mr-0 group-hover:mr-2 transition-all" />
-                    {link.label}
+                    <span className="inline-block w-0 group-hover:w-2 h-0.5 bg-primary transition-all duration-300 flex-shrink-0 mr-2" />
+                    <span className="flex-shrink-0">{link.label}</span>
                   </Link>
                 </li>
               ))}
