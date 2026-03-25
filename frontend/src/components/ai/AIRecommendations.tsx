@@ -179,7 +179,7 @@ export function AIRecommendations() {
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
                         <div className={`w-10 h-10 rounded-lg flex items-center justify-center bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900 dark:to-purple-900`}>
-                          <recommendation.type === 'job' && <Brain className="h-5 w-5 text-blue-600 dark:text-blue-400" />}
+                          {recommendation.type === 'job' && <Brain className="h-5 w-5 text-blue-600 dark:text-blue-400" />}
                           {recommendation.type === 'skill' && <TrendingUp className="h-5 w-5 text-purple-600 dark:text-purple-400" />}
                           {recommendation.type === 'salary' && <BarChart3 className="h-5 w-5 text-green-600 dark:text-green-400" />}
                           {recommendation.type === 'course' && <Lightbulb className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />}

@@ -139,7 +139,8 @@ export default function JobsPage() {
       const matchesLocation = !filters.location || job.location.toLowerCase().includes(filters.location.toLowerCase());
       const matchesType = !filters.jobType || job.type === filters.jobType;
       const matchesSalary = filters.salary[1] === 0 || 
-                           (job.salary.includes('$') ? 
+                           (!job.salary ? true :
+                            job.salary.includes('$') ? 
                             parseInt(job.salary.replace(/[^0-9]/g, '')) >= filters.salary[0] && 
                             parseInt(job.salary.replace(/[^0-9]/g, '')) <= filters.salary[1] :
                             true);

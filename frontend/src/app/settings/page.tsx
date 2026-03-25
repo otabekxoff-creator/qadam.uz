@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { useAuthStore } from '@/stores';
 import { toast } from 'sonner';
 import { logger } from '@/utils/logger';
+import type { Student, Company } from '@/types';
 
 export default function SettingsPage() {
   const { user, student, company, setUser } = useAuthStore();
@@ -109,16 +110,13 @@ export default function SettingsPage() {
               } as Company
             );
           } else if (user.role === 'ADMIN') {
-            // Update admin user (if admin has firstName/lastName in base user object)
             setUser(
               {
                 ...user,
                 email: formData.email,
-                firstName: formData.firstName,
-                lastName: formData.lastName,
-              },
-              undefined, // student
-              undefined  // company
+              } as any,
+              undefined,
+              undefined
             );
           } else {
             // Fallback - just update base user fields

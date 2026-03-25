@@ -277,7 +277,7 @@ export function ContentStrategy() {
                     <div className="flex items-start justify-between mb-3">
                       <div className="flex items-center gap-3">
                         <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${getDifficultyColor(resource.difficulty)}`}>
-                          <getResourceIcon(resource.type) className="h-6 w-6 text-white" />
+                          {(() => { const Icon = getResourceIcon(resource.type); return <Icon className="h-6 w-6 text-white" />; })()}
                         </div>
                         <div className="flex-1">
                           <Badge variant="outline" className="text-xs mb-2">

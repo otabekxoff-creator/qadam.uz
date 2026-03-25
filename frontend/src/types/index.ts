@@ -238,7 +238,9 @@ export interface Startup {
   status: StartupStatus;
   rejectionReason?: string;
   views?: number;
+  viewsCount?: number;
   likes?: number;
+  likesCount?: number;
   investors?: number;
   tags?: string[];
   // Additional properties for enhanced functionality
