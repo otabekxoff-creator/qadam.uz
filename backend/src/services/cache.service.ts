@@ -239,6 +239,19 @@ export class CacheService {
       redis: redisStatus,
     };
   }
+
+  // Invalidate startups cache
+  async invalidateStartups(): Promise<void> {
+    try {
+      // Simple cache invalidation - clear specific patterns
+      await redisService.del('startups:popular');
+      await redisService.del('startups:recent');
+      logger.info('Invalidated startups cache');
+    } catch (error) {
+      logger.error('Error invalidating startups cache:', error);
+      throw error;
+    }
+  }
 }
 
 export const cacheService = new CacheService();
