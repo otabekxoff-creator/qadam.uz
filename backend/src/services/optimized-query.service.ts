@@ -117,7 +117,7 @@ export class OptimizedQueryService {
       ]);
       
       jobs = {
-        data: jobsData,
+        items: jobsData,
         total: totalCount,
         page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
         totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
@@ -183,7 +183,7 @@ export class OptimizedQueryService {
       ]);
       
       startups = {
-        data: startupsData,
+        items: startupsData,
         total: totalCount,
         page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
         totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
@@ -490,7 +490,7 @@ export class OptimizedQueryService {
         break;
     }
     
-    logger.cache(`Cache invalidated for ${type}:${id || 'all'}`);
+    (logger as any).cache(`Cache invalidated for ${type}:${id || 'all'}`);
   }
 }
 

@@ -15,9 +15,22 @@ export class JobService {
     
     const job = await prisma.job.create({
       data: {
-        ...data,
-        companyId: company.id,
+        title: data.title,
+        description: data.description,
+        requirements: Array.isArray(data.requirements) ? data.requirements : [data.requirements],
+        responsibilities: Array.isArray(data.responsibilities) ? data.responsibilities : [data.responsibilities],
+        skills: data.skills || [],
+        salaryMin: data.salaryMin?.toString(),
+        salaryMax: data.salaryMax?.toString(),
+        currency: data.currency,
+        location: data.location,
+        type: data.type,
         deadline: data.deadline ? new Date(data.deadline) : null,
+        company: {
+          connect: {
+            id: company.id,
+          },
+        },
       },
       include: {
         company: {
