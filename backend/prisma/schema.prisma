@@ -47,6 +47,7 @@ enum CompanySize {
 enum JobType {
   FULL_TIME
   PART_TIME
+  CONTRACT
   INTERNSHIP
   FREELANCE
   REMOTE

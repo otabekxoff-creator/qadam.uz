@@ -167,7 +167,16 @@ export class JobService {
     const updated = await prisma.job.update({
       where: { id: jobId },
       data: {
-        ...data,
+        title: data.title,
+        description: data.description,
+        requirements: Array.isArray(data.requirements) ? data.requirements : [data.requirements],
+        responsibilities: Array.isArray(data.responsibilities) ? data.responsibilities : [data.responsibilities],
+        skills: data.skills || [],
+        salaryMin: data.salaryMin?.toString(),
+        salaryMax: data.salaryMax?.toString(),
+        currency: data.currency,
+        location: data.location,
+        type: data.type,
         deadline: data.deadline ? new Date(data.deadline) : undefined,
       },
       include: {

@@ -116,12 +116,7 @@ export class OptimizedQueryService {
         prisma.job.count({ where }),
       ]);
       
-      jobs = {
-        items: jobsData,
-        total: totalCount,
-        page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
-        totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
-      };
+      jobs = jobsData;
       
       // Cache the result
       await cacheService.cacheJobs(jobsData, { ...filters, ...pagination }, 180); // 3 minutes
@@ -182,12 +177,7 @@ export class OptimizedQueryService {
         prisma.startup.count({ where }),
       ]);
       
-      startups = {
-        items: startupsData,
-        total: totalCount,
-        page: Math.floor((pagination.offset || 0) / (pagination.limit || 20)) + 1,
-        totalPages: Math.ceil(totalCount / (pagination.limit || 20)),
-      };
+      startups = startupsData;
       
       await cacheService.cacheStartups(startupsData, { ...filters, ...pagination }, 180);
     }
