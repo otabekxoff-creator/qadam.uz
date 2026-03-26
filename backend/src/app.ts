@@ -213,8 +213,13 @@ const startServer = async () => {
       logger.info(`🔒 Security: Enhanced with multiple layers`);
       logger.info(`📊 Rate Limiting: Active`);
       logger.info(`🛡️ CORS: Configured`);
-      logger.info(`🗄️ Database: Connected`);
+      logger.info(`🗄️ Database: ${process.env.DATABASE_URL ? 'Connected' : 'Demo Mode'}`);
       logger.info(`🔴 Redis: ${redisService.isRedisConnected() ? 'Connected' : 'Disconnected'}`);
+      
+      if (!process.env.DATABASE_URL) {
+        logger.info('🎭 Running in DEMO MODE - Auth endpoints use in-memory mock data');
+        logger.info('   Demo credentials: student@demo.com / company@demo.com (password: demo123)');
+      }
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

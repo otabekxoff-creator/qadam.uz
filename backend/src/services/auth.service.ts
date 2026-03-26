@@ -6,6 +6,7 @@ import { RegisterInput } from '@/validators/auth.validator';
 import fs from 'fs';
 import path from 'path';
 import logger from '@/config/logger';
+import { demoDataStore, isDemoMode } from '@/config/demo-mode';
 
 const deleteOldFile = (fileUrl?: string | null) => {
   if (!fileUrl) return;
@@ -21,6 +22,62 @@ const deleteOldFile = (fileUrl?: string | null) => {
 
 export class AuthService {
   async register(data: RegisterInput) {
+    if (isDemoMode) {
+      logger.info('🎭 DEMO MODE: Using mock database for registration');
+      
+      const existingUser = await demoDataStore.findUserByEmail(data.email);
+      if (existingUser) {
+        throw new ConflictError('Email allaqachon ro\'yxatdan o\'tgan');
+      }
+
+      const hashedPassword = await hashPassword(data.password);
+      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+      const verificationCodeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
+
+      const user = await demoDataStore.createUser({
+        email: data.email,
+        password: hashedPassword,
+        role: data.role,
+        verificationCode,
+        verificationCodeExpiresAt,
+        student: data.role === UserRole.STUDENT ? {
+          id: `student-${Date.now()}`,
+          firstName: data.firstName!,
+          lastName: data.lastName!,
+          email: data.email,
+          birthDate: new Date('2000-01-01'),
+          educationLevel: 'BACHELOR',
+        } : null,
+        company: data.role === UserRole.COMPANY ? {
+          id: `company-${Date.now()}`,
+          name: data.companyName!,
+          email: data.email,
+          industry: data.industry!,
+          location: data.location!,
+          size: 'SMALL',
+        } : null,
+      });
+
+      logger.info(`🎭 Demo user registered: ${user.email}`);
+
+      return {
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          isActive: user.isActive,
+          student: user.student,
+          company: user.company,
+        },
+        verificationCode,
+        token: generateToken({
+          userId: user.id,
+          email: user.email,
+          role: user.role,
+        }),
+      };
+    }
+
     const existingUser = await prisma.user.findUnique({
       where: { email: data.email },
     });
@@ -30,12 +87,9 @@ export class AuthService {
     }
 
     const hashedPassword = await hashPassword(data.password);
-
-    // Email verification uchun kod generatsiya qilish
     const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-    const verificationCodeExpiresAt = new Date(Date.now() + 10 * 60 * 1000); // 10 daqiqa
+    const verificationCodeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
 
-    // Email tasdiqlashsiz to'g'ridan-to'g'ri ro'yxatdan o'tkazish
     const user = await prisma.user.create({
       data: {
         email: data.email,
@@ -48,7 +102,7 @@ export class AuthService {
             create: {
               firstName: data.firstName!,
               lastName: data.lastName!,
-              birthDate: new Date('2000-01-01'), // Default birthDate
+              birthDate: new Date('2000-01-01'),
               educationLevel: EducationLevel.BACHELOR,
             },
           },
@@ -71,7 +125,6 @@ export class AuthService {
       },
     });
 
-    // Return user data without email verification
     return {
       user: {
         id: user.id,
@@ -81,7 +134,7 @@ export class AuthService {
         student: user.student,
         company: user.company,
       },
-      verificationCode: verificationCode, // For testing purposes
+      verificationCode,
       token: generateToken({
         userId: user.id,
         email: user.email,
@@ -91,6 +144,43 @@ export class AuthService {
   }
 
   async loginDirect(email: string, password: string) {
+    if (isDemoMode) {
+      logger.info('🎭 DEMO MODE: Using mock database for login');
+      
+      const user = await demoDataStore.findUserByEmail(email);
+      if (!user) {
+        throw new UnauthorizedError('Email yoki parol noto\'g\'ri');
+      }
+
+      if (!user.isActive) {
+        throw new UnauthorizedError('Hisob faol emas');
+      }
+
+      const isPasswordValid = await comparePassword(password, user.password);
+      if (!isPasswordValid) {
+        throw new UnauthorizedError('Email yoki parol noto\'g\'ri');
+      }
+
+      logger.info(`🎭 Demo user logged in: ${user.email}`);
+
+      return {
+        user: {
+          id: user.id,
+          email: user.email,
+          role: user.role,
+          isActive: user.isActive,
+          emailVerifiedAt: user.emailVerifiedAt,
+          student: user.student,
+          company: user.company,
+        },
+        token: generateToken({
+          userId: user.id,
+          email: user.email,
+          role: user.role,
+        }),
+      };
+    }
+
     const user = await prisma.user.findUnique({
       where: { email },
       include: {
@@ -246,6 +336,22 @@ export class AuthService {
   }
 
   async getMe(userId: string) {
+    if (isDemoMode) {
+      const user = await demoDataStore.findUserById(userId);
+      if (!user) {
+        throw new NotFoundError('Foydalanuvchi topilmadi');
+      }
+      return {
+        id: user.id,
+        email: user.email,
+        role: user.role,
+        isActive: user.isActive,
+        emailVerifiedAt: user.emailVerifiedAt,
+        student: user.student,
+        company: user.company,
+      };
+    }
+
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: {
