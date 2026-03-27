@@ -33,12 +33,8 @@ export class ChatService {
         isActive: true,
       },
       include: {
-        participant1: {
-          include: { student: true, company: true },
-        },
-        participant2: {
-          include: { student: true, company: true },
-        },
+        participant1: true,
+        participant2: true,
         messages: {
           orderBy: { createdAt: 'desc' },
           take: 1,
@@ -71,12 +67,8 @@ export class ChatService {
         participant2Id: chatData.participant2Id,
       },
       include: {
-        participant1: {
-          include: { student: true, company: true },
-        },
-        participant2: {
-          include: { student: true, company: true },
-        },
+        participant1: true,
+        participant2: true,
         messages: true,
       },
     });
@@ -131,12 +123,8 @@ export class ChatService {
         isActive: true,
       },
       include: {
-        participant1: {
-          include: { student: true, company: true },
-        },
-        participant2: {
-          include: { student: true, company: true },
-        },
+        participant1: true,
+        participant2: true,
         messages: {
           orderBy: { createdAt: 'desc' },
           take: 1,
@@ -171,18 +159,12 @@ export class ChatService {
         isActive: true,
       },
       include: {
-        participant1: {
-          include: { student: true, company: true },
-        },
-        participant2: {
-          include: { student: true, company: true },
-        },
+        participant1: true,
+        participant2: true,
         messages: {
           orderBy: { createdAt: 'asc' },
           include: {
-            sender: {
-              include: { student: true, company: true },
-            },
+            sender: true,
           },
         },
       },
@@ -201,19 +183,17 @@ export class ChatService {
         metadata: messageData.metadata || {},
       },
       include: {
-        sender: {
-          include: { student: true, company: true },
-        },
+        sender: true,
       },
     });
 
-     // Update chat's last message time
-     await prisma.chat.update({
-       where: { id: messageData.chatId },
-       data: {
-         lastMessageAt: new Date(),
-       },
-     });
+    // Update chat's last message
+    await prisma.chat.update({
+      where: { id: messageData.chatId },
+      data: {
+        lastMessageAt: new Date(),
+      },
+    });
 
     // Get chat info to determine recipient
     const chat = await prisma.chat.findUnique({
@@ -227,9 +207,9 @@ export class ChatService {
         : chat.participant1Id;
 
       // Get sender name for notification
-      const senderName = message.sender.student 
-        ? `${message.sender.student.firstName} ${message.sender.student.lastName}`
-        : message.sender.company?.name || 'Foydalanuvchi';
+      const senderName = message.senderId 
+        ? 'Foydalanuvchi'
+        : 'Foydalanuvchi';
 
       // Send notification to recipient
       await notificationService.create({
@@ -269,9 +249,7 @@ export class ChatService {
     const messages = await prisma.message.findMany({
       where: { chatId },
       include: {
-        sender: {
-          include: { student: true, company: true },
-        },
+        sender: true,
       },
       orderBy: { createdAt: 'desc' },
       take: limit,

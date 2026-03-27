@@ -17,16 +17,20 @@ export class JobService {
       data: {
         title: data.title,
         description: data.description,
-        requirements: data.requirements,
-        responsibilities: data.responsibilities,
+        requirements: Array.isArray(data.requirements) ? data.requirements : [data.requirements],
+        responsibilities: Array.isArray(data.responsibilities) ? data.responsibilities : [data.responsibilities],
+        skills: data.skills || [],
+        salaryMin: data.salaryMin?.toString(),
+        salaryMax: data.salaryMax?.toString(),
+        currency: data.currency,
         location: data.location,
         type: data.type,
-        salaryMin: data.salaryMin,
-        salaryMax: data.salaryMax,
-        currency: data.currency,
-        skills: data.skills,
         deadline: data.deadline ? new Date(data.deadline) : null,
-        companyId: company.id,
+        company: {
+          connect: {
+            id: company.id,
+          },
+        },
       },
       include: {
         company: {
@@ -165,14 +169,14 @@ export class JobService {
       data: {
         title: data.title,
         description: data.description,
-        requirements: data.requirements,
-        responsibilities: data.responsibilities,
+        requirements: Array.isArray(data.requirements) ? data.requirements : [data.requirements],
+        responsibilities: Array.isArray(data.responsibilities) ? data.responsibilities : [data.responsibilities],
+        skills: data.skills || [],
+        salaryMin: data.salaryMin?.toString(),
+        salaryMax: data.salaryMax?.toString(),
+        currency: data.currency,
         location: data.location,
         type: data.type,
-        salaryMin: data.salaryMin,
-        salaryMax: data.salaryMax,
-        currency: data.currency,
-        skills: data.skills,
         deadline: data.deadline ? new Date(data.deadline) : undefined,
       },
       include: {

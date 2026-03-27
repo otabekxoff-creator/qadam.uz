@@ -1,8 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
 import rateLimit from 'express-rate-limit';
 import { z } from 'zod';
-import logger from '@/config/logger';
-import type { Logger } from '@/config/logger';
+import logger, { Logger } from '@/config/logger';
 import { 
   passwordComplexitySchema, 
   emailSchema, 
@@ -32,12 +31,12 @@ export const createRateLimit = (options: {
     legacyHeaders: false,
     skipSuccessfulRequests: options.skipSuccessfulRequests || false,
     handler: (req: Request, res: Response) => {
-       (logger as Logger).security('Rate limit exceeded', {
-         ip: req.ip,
-         userAgent: req.get('User-Agent'),
-         path: req.path,
-         method: req.method,
-       });
+      (logger as any).security('Rate limit exceeded', {
+        ip: req.ip,
+        userAgent: req.get('User-Agent'),
+        path: req.path,
+        method: req.method,
+      });
       res.status(429).json({
         success: false,
         message: options.message,
@@ -124,11 +123,11 @@ export const enhancedInputValidation = (req: Request, res: Response, next: NextF
     const maxContentSize = 10 * 1024 * 1024; // 10MB
 
     if (contentLength > maxContentSize) {
-       (logger as Logger).security('Request size exceeded', {
-         ip: req.ip,
-         contentLength,
-         path: req.path,
-       });
+      (logger as any).security('Request size exceeded', {
+        ip: req.ip,
+        contentLength,
+        path: req.path,
+      });
       
       return res.status(413).json({
         success: false,
@@ -140,10 +139,10 @@ export const enhancedInputValidation = (req: Request, res: Response, next: NextF
     // Validate User-Agent
     const userAgent = req.headers['user-agent'];
     if (!userAgent) {
-       (logger as Logger).security('Missing User-Agent', {
-         ip: req.ip,
-         path: req.path,
-       });
+      (logger as any).security('Missing User-Agent', {
+        ip: req.ip,
+        path: req.path,
+      });
       
       return res.status(400).json({
         success: false,
@@ -164,11 +163,11 @@ export const enhancedInputValidation = (req: Request, res: Response, next: NextF
     ];
 
     if (suspiciousPatterns.some(pattern => pattern.test(userAgent))) {
-       (logger as Logger).security('Suspicious User-Agent detected', {
-         ip: req.ip,
-         userAgent,
-         path: req.path,
-       });
+      (logger as any).security('Suspicious User-Agent detected', {
+        ip: req.ip,
+        userAgent,
+        path: req.path,
+      });
       
       return res.status(403).json({
         success: false,
@@ -179,7 +178,7 @@ export const enhancedInputValidation = (req: Request, res: Response, next: NextF
 
     next();
   } catch (error) {
-    (logger as Logger).trackError(error as Error, { context: 'enhancedInputValidation' });
+    (logger as any).trackError(error as Error, { context: 'enhancedInputValidation' });
     next();
   }
 };
@@ -195,12 +194,12 @@ export const passwordStrengthValidation = (req: Request, res: Response, next: Ne
       if (!passwordValidation.success) {
         const strength = calculatePasswordStrength(password);
         
-       (logger as Logger).security('Weak password attempt', {
-         ip: req.ip,
-         email: req.body.email,
-         strength: strength.strength,
-         path: req.path,
-       });
+        (logger as any).security('Weak password attempt', {
+          ip: req.ip,
+          email: req.body.email,
+          strength: strength.strength,
+          path: req.path,
+        });
         
         return res.status(400).json({
           success: false,
@@ -216,7 +215,7 @@ export const passwordStrengthValidation = (req: Request, res: Response, next: Ne
     
     next();
   } catch (error) {
-    (logger as Logger).trackError(error as Error, { context: 'passwordStrengthValidation' });
+    (logger as any).trackError(error as Error, { context: 'passwordStrengthValidation' });
     next();
   }
 };
@@ -227,11 +226,11 @@ export const emailValidation = (req: Request, res: Response, next: NextFunction)
     if (req.body && req.body.email) {
       const emailValidation = emailSchema.safeParse(req.body.email);
       if (!emailValidation.success) {
-       (logger as Logger).security('Invalid email attempt', {
-         ip: req.ip,
-         email: req.body.email,
-         path: req.path,
-       });
+        (logger as any).security('Invalid email attempt', {
+          ip: req.ip,
+          email: req.body.email,
+          path: req.path,
+        });
         
         return res.status(400).json({
           success: false,
@@ -243,7 +242,7 @@ export const emailValidation = (req: Request, res: Response, next: NextFunction)
     
     next();
   } catch (error) {
-    (logger as Logger).trackError(error as Error, { context: 'emailValidation' });
+    (logger as any).trackError(error as Error, { context: 'emailValidation' });
     next();
   }
 };
@@ -261,16 +260,16 @@ export const sessionSecurity = (req: Request, res: Response, next: NextFunction)
       path: '/',
     };
 
-     // Apply session security headers
-     res.setHeader('Set-Cookie', [
-       `session=${(req as any).session?.id || ''}; ${Object.entries(cookieOptions)
-         .map(([key, value]) => `${key}=${value}`)
-         .join('; ')}`
-     ]);
+    // Apply session security headers
+    res.setHeader('Set-Cookie', [
+      `session=${(req as any).session?.id || ''}; ${Object.entries(cookieOptions)
+        .map(([key, value]) => `${key}=${value}`)
+        .join('; ')}`
+    ]);
 
     next();
   } catch (error) {
-    (logger as Logger).trackError(error as Error, { context: 'sessionSecurity' });
+    (logger as any).trackError(error as Error, { context: 'sessionSecurity' });
     next();
   }
 };
@@ -288,11 +287,11 @@ export const ipFilter = (req: Request, res: Response, next: NextFunction) => {
       const allowedIPs = process.env.ADMIN_ALLOWED_IPS?.split(',') || [];
       
       if (allowedIPs.length > 0 && !allowedIPs.includes(clientIP as string)) {
-       (logger as Logger).security('Unauthorized admin access attempt', {
-         ip: clientIP,
-         path: req.path,
-         userAgent: req.get('User-Agent'),
-       });
+        (logger as any).security('Unauthorized admin access attempt', {
+          ip: clientIP,
+          path: req.path,
+          userAgent: req.get('User-Agent'),
+        });
         
         return res.status(403).json({
           success: false,
@@ -306,11 +305,11 @@ export const ipFilter = (req: Request, res: Response, next: NextFunction) => {
     const blacklistedIPs = process.env.BLACKLISTED_IPS?.split(',') || [];
     
     if (blacklistedIPs.includes(clientIP as string)) {
-       (logger as Logger).security('Blacklisted IP access attempt', {
-         ip: clientIP,
-         path: req.path,
-         userAgent: req.get('User-Agent'),
-       });
+      (logger as any).security('Blacklisted IP access attempt', {
+        ip: clientIP,
+        path: req.path,
+        userAgent: req.get('User-Agent'),
+      });
       
       return res.status(403).json({
         success: false,
@@ -321,7 +320,7 @@ export const ipFilter = (req: Request, res: Response, next: NextFunction) => {
 
     next();
   } catch (error) {
-    (logger as Logger).trackError(error as Error, { context: 'ipFilter' });
+    (logger as any).trackError(error as Error, { context: 'ipFilter' });
     next();
   }
 };
@@ -331,12 +330,12 @@ export const requestTimeout = (timeoutMs: number = 30000) => {
   return (req: Request, res: Response, next: NextFunction) => {
     const timeout = setTimeout(() => {
       if (!res.headersSent) {
-       (logger as Logger).security('Request timeout', {
-         ip: req.ip,
-         path: req.path,
-         method: req.method,
-         timeout: timeoutMs,
-       });
+        (logger as any).security('Request timeout', {
+          ip: req.ip,
+          path: req.path,
+          method: req.method,
+          timeout: timeoutMs,
+        });
         
         res.status(408).json({
           success: false,
@@ -405,7 +404,7 @@ export const securityAudit = (req: Request, res: Response, next: NextFunction) =
   const securityEvent = securityEvents.find(se => req.path.startsWith(se.path));
   
   if (securityEvent) {
-    logger.security(securityEvent.event, {
+    (logger as any).security(securityEvent.event, {
       ip: req.ip,
       userAgent: req.get('User-Agent'),
       path: req.path,
