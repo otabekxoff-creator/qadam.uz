@@ -9,6 +9,7 @@ import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
 import { useAuthStore } from '@/stores';
 import { logger } from '@/utils/logger';
+import { chatApi, notificationsApi } from '@/services/api';
 
 export default function DashboardLayout({
   children,
@@ -25,15 +26,12 @@ export default function DashboardLayout({
     // Fetch unread counts
     const fetchCounts = async () => {
       try {
-        // TODO: Implement API calls when ready
-        // const chatResponse = await chatApi.getUnreadCount();
-        // const notificationResponse = await notificationsApi.getUnreadCount();
-        // setUnreadCount(chatResponse.data?.unreadCount || 0);
-        // setNotificationCount(notificationResponse.data?.unreadCount || 0);
-        
-        // Mock data for now
-        setUnreadCount(0);
-        setNotificationCount(0);
+        const [chatResponse, notificationResponse] = await Promise.all([
+          chatApi.getUnreadCount(),
+          notificationsApi.getUnreadCount()
+        ]);
+        setUnreadCount(chatResponse.data?.unreadCount || 0);
+        setNotificationCount(notificationResponse.data?.unreadCount || 0);
       } catch (error) {
         logger.error('Failed to fetch counts', { error: error instanceof Error ? error.message : 'Unknown error' }, 'Dashboard');
       }

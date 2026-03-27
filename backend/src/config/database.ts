@@ -5,58 +5,56 @@ const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined;
 };
 
+// Enforce real database in production. DATABASE_URL must be provided.
 const databaseUrl = process.env.DATABASE_URL;
 
 if (!databaseUrl) {
-  logger.warn('⚠️ DATABASE_URL environment variable is not set');
-  logger.info('🎭 Running in DEMO mode - using in-memory mock data');
+  logger.error('⛔ DATABASE_URL environment variable is not set. Please configure it for production.');
+  // In production we should not run without a DB. Exit startup to surface missing config.
+  if (process.env.NODE_ENV === 'production') {
+    process.exit(1);
+  }
 }
 
-let prisma: PrismaClient | null = null;
-
-if (databaseUrl) {
-  prisma = globalForPrisma.prisma ?? new PrismaClient({
-    log: process.env.NODE_ENV === 'development' 
-      ? [
-          { emit: 'stdout', level: 'error' },
-          { emit: 'stdout', level: 'info' },
-          { emit: 'stdout', level: 'warn' },
-        ]
-      : [
-          { emit: 'stdout', level: 'error' },
-        ],
-    datasources: {
-      db: {
-        url: databaseUrl,
-      },
+const prisma = globalForPrisma.prisma ?? new PrismaClient({
+  log: process.env.NODE_ENV === 'development'
+    ? [
+        { emit: 'stdout', level: 'error' },
+        { emit: 'stdout', level: 'info' },
+        { emit: 'stdout', level: 'warn' },
+      ]
+    : [
+        { emit: 'stdout', level: 'error' },
+      ],
+  datasources: databaseUrl ? {
+    db: {
+      url: databaseUrl,
     },
-    errorFormat: process.env.NODE_ENV === 'development' ? 'pretty' : 'minimal',
-  });
+  } : undefined,
+  errorFormat: process.env.NODE_ENV === 'development' ? 'pretty' : 'minimal',
+});
 
-  if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
-}
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma;
 
 export const connectDatabase = async (): Promise<void> => {
-  if (!databaseUrl || !prisma) {
-    logger.info('🎭 DEMO MODE: Skipping Prisma database connection');
+  if (!databaseUrl) {
+    // Already warned above; keep function minimal for compatibility
     return;
   }
-
   try {
     await prisma.$connect();
-    
+    // Test connection
     await prisma.$queryRaw`SELECT 1`;
-    
-    logger.info('✅ Database connected successfully');
-    
   } catch (error) {
+    // Do not swallow critical startup errors in production
     logger.error('❌ Database connection failed:', error);
-    logger.warn('⚠️ Falling back to DEMO mode');
+    if (process.env.NODE_ENV === 'production') {
+      process.exit(1);
+    }
   }
 };
 
 export const disconnectDatabase = async (): Promise<void> => {
-  if (!prisma) return;
   try {
     await prisma.$disconnect();
     logger.info('Database disconnected');
@@ -65,9 +63,9 @@ export const disconnectDatabase = async (): Promise<void> => {
   }
 };
 
+// Health check function
 export const checkDatabaseHealth = async (): Promise<boolean> => {
-  if (!databaseUrl || !prisma) return false;
-  
+  if (!databaseUrl) return false;
   try {
     await prisma.$queryRaw`SELECT 1`;
     return true;

@@ -6,7 +6,6 @@ import { RegisterInput } from '@/validators/auth.validator';
 import fs from 'fs';
 import path from 'path';
 import logger from '@/config/logger';
-import { demoDataStore, isDemoMode } from '@/config/demo-mode';
 
 const deleteOldFile = (fileUrl?: string | null) => {
   if (!fileUrl) return;
@@ -22,66 +21,7 @@ const deleteOldFile = (fileUrl?: string | null) => {
 
 export class AuthService {
   async register(data: RegisterInput) {
-    if (isDemoMode) {
-      logger.info('🎭 DEMO MODE: Using mock database for registration');
-      
-      const existingUser = await demoDataStore.findUserByEmail(data.email);
-      if (existingUser) {
-        throw new ConflictError('Email allaqachon ro\'yxatdan o\'tgan');
-      }
-
-      const hashedPassword = await hashPassword(data.password);
-      const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
-      const verificationCodeExpiresAt = new Date(Date.now() + 10 * 60 * 1000);
-
-      const user = await demoDataStore.createUser({
-        email: data.email,
-        password: hashedPassword,
-        role: data.role,
-        verificationCode,
-        verificationCodeExpiresAt,
-        student: data.role === UserRole.STUDENT ? {
-          id: `student-${Date.now()}`,
-          firstName: data.firstName!,
-          lastName: data.lastName!,
-          email: data.email,
-          birthDate: new Date('2000-01-01'),
-          educationLevel: 'BACHELOR',
-        } : null,
-        company: data.role === UserRole.COMPANY ? {
-          id: `company-${Date.now()}`,
-          name: data.companyName!,
-          email: data.email,
-          industry: data.industry!,
-          location: data.location!,
-          size: 'SMALL',
-        } : null,
-      });
-
-      logger.info(`🎭 Demo user registered: ${user.email}`);
-
-      return {
-        user: {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-          isActive: user.isActive,
-          student: user.student,
-          company: user.company,
-        },
-        verificationCode,
-        token: generateToken({
-          userId: user.id,
-          email: user.email,
-          role: user.role,
-        }),
-      };
-    }
-
-    const existingUser = await prisma.user.findUnique({
-      where: { email: data.email },
-    });
-
+    const existingUser = await prisma.user.findUnique({ where: { email: data.email } });
     if (existingUser) {
       throw new ConflictError('Email allaqachon ro\'yxatdan o\'tgan');
     }
@@ -134,53 +74,12 @@ export class AuthService {
         student: user.student,
         company: user.company,
       },
-      verificationCode,
-      token: generateToken({
-        userId: user.id,
-        email: user.email,
-        role: user.role,
-      }),
+      verificationCode: verificationCode,
+      token: generateToken({ userId: user.id, email: user.email, role: user.role }),
     };
   }
 
   async loginDirect(email: string, password: string) {
-    if (isDemoMode) {
-      logger.info('🎭 DEMO MODE: Using mock database for login');
-      
-      const user = await demoDataStore.findUserByEmail(email);
-      if (!user) {
-        throw new UnauthorizedError('Email yoki parol noto\'g\'ri');
-      }
-
-      if (!user.isActive) {
-        throw new UnauthorizedError('Hisob faol emas');
-      }
-
-      const isPasswordValid = await comparePassword(password, user.password);
-      if (!isPasswordValid) {
-        throw new UnauthorizedError('Email yoki parol noto\'g\'ri');
-      }
-
-      logger.info(`🎭 Demo user logged in: ${user.email}`);
-
-      return {
-        user: {
-          id: user.id,
-          email: user.email,
-          role: user.role,
-          isActive: user.isActive,
-          emailVerifiedAt: user.emailVerifiedAt,
-          student: user.student,
-          company: user.company,
-        },
-        token: generateToken({
-          userId: user.id,
-          email: user.email,
-          role: user.role,
-        }),
-      };
-    }
-
     const user = await prisma.user.findUnique({
       where: { email },
       include: {
@@ -336,22 +235,6 @@ export class AuthService {
   }
 
   async getMe(userId: string) {
-    if (isDemoMode) {
-      const user = await demoDataStore.findUserById(userId);
-      if (!user) {
-        throw new NotFoundError('Foydalanuvchi topilmadi');
-      }
-      return {
-        id: user.id,
-        email: user.email,
-        role: user.role,
-        isActive: user.isActive,
-        emailVerifiedAt: user.emailVerifiedAt,
-        student: user.student,
-        company: user.company,
-      };
-    }
-
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: {
@@ -412,11 +295,7 @@ export class AuthService {
       if (data.skills) studentData.skills = data.skills;
       if (files?.avatar) studentData.avatar = files.avatar[0]?.path;
       if (files?.resume) studentData.resume = files.resume[0]?.path;
-
-      await prisma.student.update({
-        where: { id: user.student.id },
-        data: studentData,
-      });
+      await prisma.student.update({ where: { id: user.student.id }, data: studentData });
     }
 
     // Company ma'lumotlarini yangilash
@@ -430,10 +309,7 @@ export class AuthService {
       if (data.size) companyData.size = data.size;
       if (files?.logo) companyData.logo = files.logo[0]?.path;
 
-      await prisma.company.update({
-        where: { id: user.company.id },
-        data: companyData,
-      });
+      await prisma.company.update({ where: { id: user.company.id }, data: companyData });
     }
 
     // Yangilangan ma'lumotlarni qaytarish
