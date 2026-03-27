@@ -1,5 +1,7 @@
 // =============================================
 // API Configuration
+// ⚠️ ESLATMA: Yangi kod uchun secure-api.ts ishlatilsin
+// Bu fayl backward compatibility uchun saqlanadi
 // =============================================
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api';

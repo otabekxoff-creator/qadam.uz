@@ -63,15 +63,17 @@ services:
       - key: PORT
         value: 5000
       - key: DATABASE_URL
-        value: postgresql://sinergiya_prod_user:Ki56K8cblKDoDG0lU2nRu3pWJ5NCRr4o@dpg-d70oflf5gffc73927i5g-a.oregon-postgres.render.com/sinergiya_prod
+        fromDatabase:
+          name: sinergiya-db
+          property: connectionString
       - key: SMTP_HOST
         value: smtp.gmail.com
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: otabekxoff@gmail.com
+        sync: false  # Render Dashboard orqali qo'lda kiriting
       - key: SMTP_PASS
-        value: acyf sae vlob wblq
+        sync: false  # Render Dashboard orqali qo'lda kiriting
       - key: SMTP_FROM
         value: Sinergiya <no-reply@sinergiya.uz>
       - key: JWT_SECRET

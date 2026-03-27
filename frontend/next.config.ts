@@ -4,10 +4,10 @@ const nextConfig = {
   turbopack: {},
   output: 'standalone',
   eslint: {
-    ignoreDuringBuilds: true,
+    ignoreDuringBuilds: false,
   },
   typescript: {
-    ignoreBuildErrors: true,
+    ignoreBuildErrors: false,
   },
   experimental: {
     optimizePackageImports: ['lucide-react', '@radix-ui/react-icons'],
@@ -32,7 +32,7 @@ const nextConfig = {
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     minimumCacheTTL: 60,
-    dangerouslyAllowSVG: true,
+    dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'self' 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https: blob:; font-src 'self' data:; connect-src 'self' https:; media-src 'self' https: blob:; object-src 'self' https: blob:; worker-src 'self' blob:;",
   },
   poweredByHeader: false,

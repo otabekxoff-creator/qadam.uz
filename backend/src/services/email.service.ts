@@ -19,7 +19,7 @@ const transporter = hasSmtpConfig
         pass: smtpPass,
       },
       tls: {
-        rejectUnauthorized: false // Render uchun TLS ni o'chirish
+        rejectUnauthorized: process.env.NODE_ENV === 'production' // Production'da TLS majburiy
       },
       connectionTimeout: 15000, // 15 sekund
       greetingTimeout: 15000,

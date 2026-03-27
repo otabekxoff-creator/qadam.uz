@@ -57,9 +57,9 @@ services:
       - key: SMTP_PORT
         value: 587
       - key: SMTP_USER
-        value: otabekxoff@gmail.com
+        sync: false  # Render Dashboard orqali qo'lda kiriting
       - key: SMTP_PASS
-        value: acyf sae vlob wblq
+        sync: false  # Render Dashboard orqali qo'lda kiriting
       - key: SMTP_FROM
         value: Step.uz <otabekxoff@gmail.com>
       - key: JWT_SECRET

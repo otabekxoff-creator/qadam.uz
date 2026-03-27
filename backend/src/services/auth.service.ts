@@ -258,7 +258,7 @@ export class AuthService {
     };
   }
 
-  async updateProfile(userId: string, data: any, files?: any) {
+  async updateProfile(userId: string, data: Record<string, string | undefined>, files?: Record<string, Array<{ path: string }> | undefined>) {
     const user = await prisma.user.findUnique({
       where: { id: userId },
       include: {
@@ -284,7 +284,7 @@ export class AuthService {
 
     // Student ma'lumotlarini yangilash
     if (user.role === UserRole.STUDENT && user.student) {
-      const studentData: any = {};
+      const studentData: Record<string, string | undefined> = {};
       if (data.firstName) studentData.firstName = data.firstName;
       if (data.lastName) studentData.lastName = data.lastName;
       if (data.phone) studentData.phone = data.phone;
@@ -300,7 +300,7 @@ export class AuthService {
 
     // Company ma'lumotlarini yangilash
     if (user.role === UserRole.COMPANY && user.company) {
-      const companyData: any = {};
+      const companyData: Record<string, string | undefined> = {};
       if (data.companyName) companyData.name = data.companyName;
       if (data.description) companyData.description = data.description;
       if (data.industry) companyData.industry = data.industry;

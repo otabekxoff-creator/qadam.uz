@@ -43,6 +43,18 @@ const PORT = process.env.PORT || 5000;
 // Render proxy uchun sozlash
 app.set('trust proxy', ['loopback', 'linklocal', 'uniquelocal']);
 
+// 🏥 Health Check (security middleware'lardan OLDIN)
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Server is healthy',
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+    environment: process.env.NODE_ENV,
+    version: process.env.npm_package_version || '1.0.0'
+  });
+});
+
 // 🔒 KUCHLI SECURITY HEADERS
 app.use(helmet({
   contentSecurityPolicy: {
@@ -98,8 +110,11 @@ const allowedOrigins = [
   process.env.FRONTEND_URL,
   'https://step-uz-1.onrender.com',
   'https://stepuz-frontend.onrender.com',
-  'http://localhost:5173',
-  'http://localhost:3000'
+  // Localhost faqat development rejimida ruxsat etiladi
+  ...(process.env.NODE_ENV !== 'production' ? [
+    'http://localhost:5173',
+    'http://localhost:3000'
+  ] : []),
 ].filter(Boolean) as string[];
 
 app.use(cors({
@@ -164,19 +179,7 @@ app.use('/api/auth', authRateLimit);
 // 🔒 UPLOAD RATE LIMITING
 app.use('/api/audio/upload', uploadRateLimit);
 
-// 🏥 Health Check (barcha security'dan oldin)
-app.get('/health', (req: any, res: any) => {
-  res.status(200).json({
-    success: true,
-    message: 'Server is healthy',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    environment: process.env.NODE_ENV,
-    version: process.env.npm_package_version || '1.0.0'
-  });
-});
-
-// � API Documentation
+// 📚 API Documentation
 setupSwagger(app);
 
 // �🛡️ API Routes with security
@@ -191,9 +194,9 @@ app.use('/api/notifications', notificationRoutes);
 app.use('/api/chats', chatRoutes);
 app.use('/api/audio', audioRoutes);
 
-// 🚨 Error Handling
-app.use(errorHandler);
+// 🚨 Error Handling (notFoundHandler birinchi, errorHandler ikkinchi)
 app.use(notFoundHandler);
+app.use(errorHandler);
 
 // 🔒 SERVER START
 const startServer = async () => {
