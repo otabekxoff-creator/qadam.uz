@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Plug, CheckCircle2, ExternalLink, Settings, Slack, Github, Trello, Calendar } from 'lucide-react';
+import { Plug, CheckCircle2, ExternalLink, Settings, MessageSquare, GitBranch, LayoutGrid, Calendar } from 'lucide-react';
 import { useState } from 'react';
 
 export default function IntegrationsDashboardPage() {
@@ -12,7 +12,7 @@ export default function IntegrationsDashboardPage() {
       id: 1,
       name: 'Slack',
       description: 'Get notifications and updates in your Slack workspace',
-      icon: Slack,
+      icon: MessageSquare,
       category: 'Communication',
       status: 'connected',
       connectedAt: '2024-02-15',
@@ -21,7 +21,7 @@ export default function IntegrationsDashboardPage() {
       id: 2,
       name: 'GitHub',
       description: 'Import repositories and showcase your code',
-      icon: Github,
+      icon: GitBranch,
       category: 'Developer Tools',
       status: 'connected',
       connectedAt: '2024-01-20',
@@ -30,7 +30,7 @@ export default function IntegrationsDashboardPage() {
       id: 3,
       name: 'Trello',
       description: 'Track job applications on Trello boards',
-      icon: Trello,
+      icon: LayoutGrid,
       category: 'Productivity',
       status: 'disconnected',
       connectedAt: null,

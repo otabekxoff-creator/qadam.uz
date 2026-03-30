@@ -42,7 +42,7 @@ export async function GET(req: NextRequest) {
       prisma.application.count({ where: { job: { companyId } } }),
       prisma.application.count({ where: { job: { companyId }, status: 'PENDING' } }),
       prisma.application.count({
-        where: { job: { companyId }, status: { in: ['REVIEWED', 'INTERVIEW'] } } },
+        where: { job: { companyId }, status: { in: ['REVIEWED', 'INTERVIEW'] } },
       }),
       prisma.application.count({ where: { job: { companyId }, status: 'HIRED' } }),
     ]);

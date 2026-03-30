@@ -63,7 +63,7 @@ const PARTNER_TYPES = [
       'Ishga joylashish dasturlari',
       'Statistika va tahlillar',
       'Xalqaro tajriba almashish',
-      'Siyosiy qo'llab-quvvatlash',
+      'Siyosiy qollab-quvvatlash',
     ],
   },
   {
@@ -74,7 +74,7 @@ const PARTNER_TYPES = [
     count: 30,
     benefits: [
       "Ko'nikmalarni rivojlantirish dasturlari",
-      'Kam ta’minlangan guruhlar uchun qo’llab-quvvatlash',
+      'Kam taminlangan guruhlar uchun qollab-quvvatlash',
       'Volontyorlik imkoniyatlari',
       'Hamkorlik tarmoqlari',
     ],
@@ -147,7 +147,7 @@ const PARTNERSHIP_PROGRAMS = [
       '10 ta aktiv vakansiya',
       'Asosiy filtrlash',
       'Standart profil',
-      'Email qo’llab-quvvatlash',
+      'Email qollab-quvvatlash',
     ],
     price: '$99/oy',
   },

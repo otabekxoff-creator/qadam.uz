@@ -28,10 +28,11 @@ import {
   Database,
   LineChart,
   Quote,
-  Facebook,
-  Twitter,
-  Linkedin,
-  Instagram
+  Rss,
+  MessageCircle,
+  Link as LinkIcon,
+  Camera,
+  Activity
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -636,7 +637,7 @@ export default function Home() {
                 2024-yildan beri xizmatdamiz.
               </p>
               <div className="flex gap-4">
-                {[Facebook, Twitter, Linkedin, Instagram].map((Icon, index) => (
+                {[Rss, MessageCircle, LinkIcon, Camera].map((Icon, index) => (
                   <a
                     key={index}
                     href="#"

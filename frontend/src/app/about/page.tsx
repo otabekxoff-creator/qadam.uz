@@ -27,9 +27,9 @@ import {
   Clock,
   Phone,
   Mail,
-  Linkedin,
-  Twitter,
-  Github,
+  Link as LinkIcon,
+  MessageSquare,
+  GitBranch,
   ExternalLink,
   ChevronRight,
   Quote

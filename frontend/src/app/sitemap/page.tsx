@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 import { 
-  Sitemap as SitemapIcon, 
+  FolderTree as SitemapIcon, 
   Home, 
   User, 
   Briefcase, 
