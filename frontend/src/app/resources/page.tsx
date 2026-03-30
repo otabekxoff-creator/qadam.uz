@@ -6,17 +6,18 @@ import Link from 'next/link';
 import {
   FileText, Video, BookOpen, Download, Calculator, Lightbulb, Users, Award,
   Search, Star, Clock, Play, FileCode, Heart, ExternalLink, ArrowRight,
-  TrendingUp, Zap, Target, CheckCircle, X, BookMarked, FileEdit, PenTool, Layout
+  TrendingUp, Zap, Target, CheckCircle, X, BookMarked, FileEdit, PenTool, Layout,
+  ArrowLeft
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const categories = [
-  { id: 'all', name: 'All Resources', icon: FileText, count: 156 },
-  { id: 'templates', name: 'Resume Templates', icon: FileCode, count: 45 },
-  { id: 'guides', name: 'Career Guides', icon: BookOpen, count: 38 },
-  { id: 'tools', name: 'Free Tools', icon: Calculator, count: 28 },
-  { id: 'videos', name: 'Video Tutorials', icon: Video, count: 25 },
-  { id: 'design', name: 'Design Assets', icon: Layout, count: 20 },
+  { id: 'all', name: 'Barchasi', icon: FileText, count: 156 },
+  { id: 'templates', name: 'Rezyume Namunalari', icon: FileCode, count: 45 },
+  { id: 'guides', name: 'Karyera Qo\'llanmalari', icon: BookOpen, count: 38 },
+  { id: 'tools', name: 'Bepul Vositalar', icon: Calculator, count: 28 },
+  { id: 'videos', name: 'Video Qo\'llanmalar', icon: Video, count: 25 },
+  { id: 'design', name: 'Dizayn Materiallari', icon: Layout, count: 20 },
 ];
 
 const featuredResources = [
@@ -88,15 +89,25 @@ export default function ResourcesPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50">
+      {/* Back Button */}
+      <div className="container mx-auto px-4 pt-6">
+        <Link href="/">
+          <Button variant="outline" size="sm" className="gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            Orqaga
+          </Button>
+        </Link>
+      </div>
+
       {/* Hero */}
       <section className="relative py-20 bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 overflow-hidden">
         <div className="absolute inset-0 bg-[url('/grid.svg')] opacity-10"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="text-center max-w-3xl mx-auto">
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Career Resources</h1>
-            <p className="text-xl text-indigo-100 mb-8">Free templates, guides, and tools to help you succeed</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">Karyera Resurslari</h1>
+            <p className="text-xl text-indigo-100 mb-8">Muvaffaqiyatga erishish uchun bepul namunalar, qo'llanmalar va vositalar</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
-              {[{ value: '156+', label: 'Free Resources' }, { value: '2M+', label: 'Downloads' }, { value: '150K+', label: 'Active Users' }, { value: '4.8', label: 'Avg Rating' }].map((stat) => (
+              {[{ value: '156+', label: 'Bepul Resurslar' }, { value: '2M+', label: 'Yuklab Olishlar' }, { value: '150K+', label: 'Faol Foydalanuvchilar' }, { value: '4.8', label: 'O\'rtacha Reyting' }].map((stat) => (
                 <div key={stat.label} className="bg-white/10 backdrop-blur-sm rounded-xl p-4">
                   <p className="text-2xl font-bold text-white">{stat.value}</p>
                   <p className="text-sm text-indigo-200">{stat.label}</p>
@@ -113,7 +124,7 @@ export default function ResourcesPage() {
           <div className="max-w-2xl mx-auto mb-12">
             <div className="relative">
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-              <input type="text" placeholder="Search resources..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-lg focus:ring-2 focus:ring-blue-500" />
+              <input type="text" placeholder="Resurslarni qidirish..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl shadow-lg focus:ring-2 focus:ring-blue-500" />
             </div>
           </div>
 
@@ -122,7 +133,7 @@ export default function ResourcesPage() {
               <motion.button key={category.id} variants={itemVariants} onClick={() => setSelectedCategory(category.id)} className={`p-6 rounded-2xl text-left transition-all ${selectedCategory === category.id ? 'bg-gradient-to-br from-blue-500 to-indigo-600 text-white shadow-lg' : 'bg-white text-slate-700 hover:shadow-md'}`}>
                 <category.icon className="w-8 h-8 mb-3" />
                 <p className="font-semibold text-sm">{category.name}</p>
-                <p className={`text-xs ${selectedCategory === category.id ? 'text-blue-100' : 'text-slate-500'}`}>{category.count} items</p>
+                <p className={`text-xs ${selectedCategory === category.id ? 'text-blue-100' : 'text-slate-500'}`}>{category.count} ta</p>
               </motion.button>
             ))}
           </motion.div>
@@ -130,7 +141,7 @@ export default function ResourcesPage() {
           {/* Featured */}
           {!searchQuery && selectedCategory === 'all' && (
             <div className="mb-16">
-              <h2 className="text-2xl font-bold text-slate-800 mb-6">Featured Resources</h2>
+              <h2 className="text-2xl font-bold text-slate-800 mb-6">Tavsiya Etilgan Resurslar</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {featuredResources.map((resource) => (
                   <motion.div key={resource.id} whileHover={{ y: -4 }} className="bg-white rounded-2xl shadow-sm border border-slate-200 overflow-hidden hover:shadow-lg transition-all">
@@ -151,7 +162,7 @@ export default function ResourcesPage() {
                           {resource.downloads?.toLocaleString() || resource.users?.toLocaleString() || resource.views?.toLocaleString()}
                         </span>
                         <Button size="sm" className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white">
-                          {resource.type === 'video' ? 'Watch' : 'Download'}
+                          {resource.type === 'video' ? 'Ko\'rish' : 'Yuklab olish'}
                         </Button>
                       </div>
                     </div>
@@ -164,8 +175,8 @@ export default function ResourcesPage() {
           {/* All Resources */}
           <div>
             <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-800">{selectedCategory === 'all' ? 'All Resources' : categories.find(c => c.id === selectedCategory)?.name}</h2>
-              <p className="text-slate-500">{filteredResources.length} resources</p>
+              <h2 className="text-2xl font-bold text-slate-800">{selectedCategory === 'all' ? 'Barcha Resurslar' : categories.find(c => c.id === selectedCategory)?.name}</h2>
+              <p className="text-slate-500">{filteredResources.length} ta resurs</p>
             </div>
             <motion.div variants={containerVariants} initial="hidden" animate="visible" className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredResources.map((resource) => (
@@ -190,7 +201,7 @@ export default function ResourcesPage() {
                     <span className="flex items-center gap-1"><Star className="w-4 h-4 text-amber-400 fill-amber-400" />{resource.rating}</span>
                   </div>
                   <Button variant="outline" className="w-full">
-                    {resource.type === 'video' ? 'Watch Now' : resource.type === 'tool' ? 'Try Tool' : 'Download Free'}
+                    {resource.type === 'video' ? 'Hozir Ko\'rish' : resource.type === 'tool' ? 'Vosita Sinash' : 'Bepul Yuklab Olish'}
                   </Button>
                 </motion.div>
               ))}
@@ -203,8 +214,8 @@ export default function ResourcesPage() {
       <section className="py-16 bg-gradient-to-br from-slate-900 to-indigo-900 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold mb-4">Success Stories</h2>
-            <p className="text-slate-300">How our resources helped others land their dream jobs</p>
+            <h2 className="text-3xl font-bold mb-4">Muvaffaqiyat Tarixlari</h2>
+            <p className="text-slate-300">Resurslarimiz boshqalarga orzularidagi ishni qanday topishga yordam berdi</p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {successStories.map((story, index) => (

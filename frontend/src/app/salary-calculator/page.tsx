@@ -1,7 +1,9 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Calculator, TrendingUp, MapPin, Building2, Briefcase, DollarSign } from 'lucide-react';
+import { Calculator, TrendingUp, MapPin, Building2, Briefcase, DollarSign, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
 export default function SalaryCalculatorPage() {
@@ -17,18 +19,28 @@ export default function SalaryCalculatorPage() {
   };
 
   const roles = [
-    'Software Engineer',
-    'Product Manager',
-    'UX Designer',
-    'Data Analyst',
-    'Marketing Manager',
-    'Sales Representative',
-    'HR Manager',
-    'DevOps Engineer',
+    'Dasturiy Ta\'minot Muhandisi',
+    'Mahsulot Menejeri',
+    'UX Dizayner',
+    'Ma\'lumotlar Tahlilchisi',
+    'Marketing Menejeri',
+    'Savdo Vakili',
+    'HR Menejeri',
+    'DevOps Muhandisi',
   ];
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
+      {/* Back Button */}
+      <div className="container mx-auto px-4 pt-6">
+        <Link href="/">
+          <Button variant="outline" size="sm" className="gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            Orqaga
+          </Button>
+        </Link>
+      </div>
+
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -37,9 +49,9 @@ export default function SalaryCalculatorPage() {
             transition={{ duration: 0.5 }}
             className="text-center mb-16"
           >
-            <h1 className="text-4xl font-bold mb-4">Salary Calculator</h1>
+            <h1 className="text-4xl font-bold mb-4">Maosh Hisoblagichi</h1>
             <p className="text-xl text-muted-foreground">
-              Estimate your market value based on role, experience, and location
+              Lavozim, tajriba va joylashuvga qarab bozor qiymatingizni baholang
             </p>
           </motion.div>
 
@@ -51,13 +63,13 @@ export default function SalaryCalculatorPage() {
           >
             <div className="space-y-6">
               <div>
-                <label className="block text-sm font-medium mb-2">Job Role</label>
+                <label className="block text-sm font-medium mb-2">Ish Lavozimi</label>
                 <select 
                   className="w-full px-4 py-2 rounded-lg border bg-background"
                   value={role}
                   onChange={(e) => setRole(e.target.value)}
                 >
-                  <option value="">Select a role</option>
+                  <option value="">Lavozim tanlang</option>
                   {roles.map((r) => (
                     <option key={r} value={r}>{r}</option>
                   ))}
@@ -65,7 +77,7 @@ export default function SalaryCalculatorPage() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Experience Level</label>
+                <label className="block text-sm font-medium mb-2">Tajriba Darajasi</label>
                 <div className="grid grid-cols-3 gap-4">
                   {['entry', 'mid', 'senior'].map((level) => (
                     <button
@@ -77,24 +89,34 @@ export default function SalaryCalculatorPage() {
                           : 'bg-background hover:bg-secondary'
                       }`}
                     >
-                      {level}
+                      {level === 'entry' ? 'Boshlang\'ich' : level === 'mid' ? 'O\'rta' : 'Senior'}
                     </button>
                   ))}
                 </div>
               </div>
 
               <div>
-                <label className="block text-sm font-medium mb-2">Location</label>
-                <select 
-                  className="w-full px-4 py-2 rounded-lg border bg-background"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                >
-                  <option value="tashkent">Tashkent</option>
-                  <option value="samarkand">Samarkand</option>
-                  <option value="bukhara">Bukhara</option>
-                  <option value="other">Other regions</option>
-                </select>
+                <label className="block text-sm font-medium mb-2">Joylashuv</label>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { id: 'tashkent', name: 'Toshkent' },
+                    { id: 'samarkand', name: 'Samarqand' },
+                    { id: 'bukhara', name: 'Buxoro' },
+                    { id: 'other', name: 'Boshqa' }
+                  ].map((loc) => (
+                    <button
+                      key={loc.id}
+                      onClick={() => setLocation(loc.id)}
+                      className={`px-4 py-2 rounded-lg border ${
+                        location === loc.id
+                          ? 'bg-primary text-white border-primary'
+                          : 'bg-background hover:bg-secondary'
+                      }`}
+                    >
+                      {loc.name}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 
@@ -104,7 +126,7 @@ export default function SalaryCalculatorPage() {
                 animate={{ opacity: 1, y: 0 }}
                 className="mt-8 p-6 bg-primary/5 rounded-xl border border-primary/20"
               >
-                <h3 className="text-lg font-semibold mb-4">Estimated Salary Range</h3>
+                <h3 className="text-lg font-semibold mb-4">Taxminiy Maosh Diapazoni</h3>
                 <div className="flex items-baseline gap-2">
                   <span className="text-3xl font-bold">${salaryData[location as keyof typeof salaryData].min.toLocaleString()}</span>
                   <span className="text-muted-foreground">-</span>
@@ -112,7 +134,7 @@ export default function SalaryCalculatorPage() {
                   <span className="text-muted-foreground">/month</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
-                  Based on market data from 1000+ {role} positions in Uzbekistan
+                  O&apos;zbekistondagi 1000+ {role} lavozimi bo&apos;yicha bozor ma&apos;lumotlari asosida
                 </p>
               </motion.div>
             )}

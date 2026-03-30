@@ -1,8 +1,10 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Search, MapPin, Briefcase, Building2, Clock, DollarSign, Filter, ChevronDown } from 'lucide-react';
+import { Search, MapPin, Briefcase, Building2, Clock, DollarSign, Filter, ChevronDown, ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
 
 export default function JobSearchPage() {
   const [filters, setFilters] = useState({
@@ -90,8 +92,18 @@ export default function JobSearchPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/20">
-      <section className="py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-background">
+      {/* Back Button */}
+      <div className="container mx-auto px-4 pt-6">
+        <Link href="/">
+          <Button variant="outline" size="sm" className="gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            Orqaga
+          </Button>
+        </Link>
+      </div>
+
+      <section className="py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           {/* Search Header */}
           <motion.div
@@ -100,14 +112,14 @@ export default function JobSearchPage() {
             transition={{ duration: 0.5 }}
             className="mb-8"
           >
-            <h1 className="text-3xl font-bold mb-6">Find Your Dream Job</h1>
+            <h1 className="text-3xl font-bold mb-6">Orzuingizdagi Ishni Toping</h1>
             
             <div className="flex flex-col md:flex-row gap-4">
               <div className="relative flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="Job title, keywords, or company"
+                  placeholder="Ish nomi, kalit so'z yoki kompaniya"
                   className="w-full pl-10 pr-4 py-3 rounded-lg border bg-background"
                 />
               </div>
@@ -115,12 +127,12 @@ export default function JobSearchPage() {
                 <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" />
                 <input
                   type="text"
-                  placeholder="City or country"
+                  placeholder="Shahar yoki mamlakat"
                   className="w-full pl-10 pr-4 py-3 rounded-lg border bg-background"
                 />
               </div>
               <button className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
-                Search Jobs
+                Ish Qidirish
               </button>
             </div>
           </motion.div>
@@ -137,7 +149,7 @@ export default function JobSearchPage() {
               className="flex items-center gap-2 px-4 py-2 border rounded-lg hover:bg-secondary transition-colors"
             >
               <Filter className="w-4 h-4" />
-              Filters
+              Filtrlar
               <ChevronDown className={`w-4 h-4 transition-transform ${showFilters ? 'rotate-180' : ''}`} />
             </button>
 
@@ -145,29 +157,29 @@ export default function JobSearchPage() {
               <div className="mt-4 p-4 bg-card rounded-xl border">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                   <div>
-                    <label className="block text-sm font-medium mb-2">Job Type</label>
+                    <label className="block text-sm font-medium mb-2">Ish Turi</label>
                     <select className="w-full px-3 py-2 rounded-lg border bg-background">
-                      <option value="">All Types</option>
-                      <option value="full-time">Full-time</option>
-                      <option value="part-time">Part-time</option>
-                      <option value="contract">Contract</option>
-                      <option value="internship">Internship</option>
+                      <option value="">Barcha turlar</option>
+                      <option value="full-time">To'liq stavka</option>
+                      <option value="part-time">Yarim stavka</option>
+                      <option value="contract">Shartnoma</option>
+                      <option value="internship">Stajirovka</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Experience</label>
+                    <label className="block text-sm font-medium mb-2">Tajriba</label>
                     <select className="w-full px-3 py-2 rounded-lg border bg-background">
-                      <option value="">Any Experience</option>
-                      <option value="entry">Entry Level</option>
-                      <option value="mid">Mid Level</option>
-                      <option value="senior">Senior Level</option>
-                      <option value="lead">Lead/Manager</option>
+                      <option value="">Har qanday tajriba</option>
+                      <option value="entry">Boshlang'ich</option>
+                      <option value="mid">O'rta</option>
+                      <option value="senior">Senior</option>
+                      <option value="lead">Rahbar</option>
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Salary Range</label>
+                    <label className="block text-sm font-medium mb-2">Maosh</label>
                     <select className="w-full px-3 py-2 rounded-lg border bg-background">
-                      <option value="">Any Salary</option>
+                      <option value="">Har qanday maosh</option>
                       <option value="0-1000">$0 - $1,000</option>
                       <option value="1000-3000">$1,000 - $3,000</option>
                       <option value="3000-5000">$3,000 - $5,000</option>
@@ -175,12 +187,12 @@ export default function JobSearchPage() {
                     </select>
                   </div>
                   <div>
-                    <label className="block text-sm font-medium mb-2">Remote Options</label>
+                    <label className="block text-sm font-medium mb-2">Ish rejimi</label>
                     <select className="w-full px-3 py-2 rounded-lg border bg-background">
-                      <option value="">Any</option>
-                      <option value="remote">Remote Only</option>
-                      <option value="hybrid">Hybrid</option>
-                      <option value="onsite">On-site</option>
+                      <option value="">Barchasi</option>
+                      <option value="remote">Masofadan</option>
+                      <option value="hybrid">Gibrid</option>
+                      <option value="onsite">Ofisda</option>
                     </select>
                   </div>
                 </div>
@@ -192,7 +204,7 @@ export default function JobSearchPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* Job List */}
             <div className="lg:col-span-2 space-y-4">
-              <p className="text-muted-foreground mb-4">{jobs.length} jobs found</p>
+              <p className="text-muted-foreground mb-4">{jobs.length} ta ish topildi</p>
               
               {jobs.map((job, index) => (
                 <motion.div
@@ -256,16 +268,16 @@ export default function JobSearchPage() {
             {/* Sidebar */}
             <div className="hidden lg:block">
               <div className="bg-card rounded-xl p-6 shadow-sm border sticky top-8">
-                <h3 className="font-semibold mb-4">Job Alerts</h3>
+                <h3 className="font-semibold mb-4">Ish E'lonlari</h3>
                 <p className="text-sm text-muted-foreground mb-4">
-                  Get notified when new jobs match your search
+                  Qidiruv bo'yicha yangi ishlar chiqishi haqida xabar oling
                 </p>
                 <button className="w-full py-2 border rounded-lg hover:bg-secondary transition-colors">
-                  Create Job Alert
+                  E'lon Yaratish
                 </button>
 
                 <div className="mt-8">
-                  <h3 className="font-semibold mb-4">Popular Searches</h3>
+                  <h3 className="font-semibold mb-4">Mashhur Qidiruvlar</h3>
                   <div className="flex flex-wrap gap-2">
                     {['React', 'Python', 'Remote', 'Tashkent', 'Full-time', 'Senior'].map((tag) => (
                       <span
