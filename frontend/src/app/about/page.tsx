@@ -28,11 +28,11 @@ import {
   Phone,
   Mail,
   Link as LinkIcon,
-  MessageSquare,
   GitBranch,
   ExternalLink,
   ChevronRight,
-  Quote
+  Quote,
+  ArrowLeft
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -41,35 +41,35 @@ import { useState } from "react";
 const timeline = [
   {
     year: "2020",
-    title: "Platform Launch",
-    description: "Step.uz platformasi ishga tushdi va ilk foydalanuvchilarimizni qabul qila boshladi.",
+    title: "Platforma Ishga Tushdi",
+    description: "SINERGIYA platformasi ishga tushdi va ilk foydalanuvchilarimizni qabul qila boshladi.",
     icon: Rocket,
     milestone: "1,000 foydalanuvchi"
   },
   {
     year: "2021",
-    title: "AI Integration",
+    title: "AI Integratsiyasi",
     description: "Sun'iy intellekt asosida ish matching tizimi joriy etildi va natijalar 3 barobar yaxshilandi.",
     icon: Zap,
     milestone: "10,000+ moslashtirish"
   },
   {
     year: "2022",
-    title: "Mobile App Launch",
+    title: "Mobil Ilova Ishga Tushdi",
     description: "iOS va Android ilovalarimiz ishga tushdi, foydalanuvchilarimiz soni keskin oshdi.",
     icon: Target,
     milestone: "50,000 yuklab olish"
   },
   {
     year: "2023",
-    title: "Enterprise Solutions",
+    title: "Korxona Yechimlari",
     description: "Katta kompaniyalar uchun maxsus yechimlar ishlab chiqildi va 500+ kompaniya a'zo bo'ldi.",
     icon: Building2,
     milestone: "500+ korporativ mijoz"
   },
   {
     year: "2024",
-    title: "International Expansion",
+    title: "Xalqaro Kengayish",
     description: "Markaziy Osiyo davlatlariga xizmat ko'rsatishni boshladik va yangi ofislar ochdik.",
     icon: Globe,
     milestone: "5 davlat"
@@ -79,32 +79,32 @@ const timeline = [
 // Extended team data
 const leadershipTeam = [
   { 
-    name: "Bekzod Khamidov", 
-    role: "Founder & CEO", 
-    bio: "Harvard Business School bitiruvchisi. 10+ yillik texnologiya va startup tajribasi.",
-    image: "/team/bekzod.jpg",
-    socials: { linkedin: "#", twitter: "#" }
+    name: "Otabek Ravshanov", 
+    role: "Asoschi & CEO", 
+    bio: "Farg'ona davlat universiteti bitiruvchisi. 10+ yillik IT va biznes boshqaruv tajribasi.",
+    image: "/team/otabek.jpg",
+    socials: { linkedin: "#" }
   },
   { 
-    name: "Dilnoza Rakhimova", 
-    role: "Chief Product Officer", 
-    bio: "Stanford Universiteti. Oldin Google va Meta kompaniyalarida ishlagan.",
-    image: "/team/dilnoza.jpg",
-    socials: { linkedin: "#", twitter: "#" }
+    name: "Yunusaliyev", 
+    role: "Bosh Direktor", 
+    bio: "Toshkent Axborot Texnologiyalari Universiteti. Texnologiya va innovatsiya sohasida mutaxassis.",
+    image: "/team/yunusaliyev.jpg",
+    socials: { linkedin: "#" }
   },
   { 
-    name: "Jasur Toshmatov", 
-    role: "Chief Technology Officer", 
-    bio: "MIT bitiruvchisi. 15+ yillik dasturiy ta'minot ishlab chiqish tajribasi.",
-    image: "/team/jasur.jpg",
+    name: "Shkurjon Baxodirov", 
+    role: "Texnologiya Direktori", 
+    bio: "15+ yillik dasturiy ta'minot ishlab chiqish tajribasi. Full-stack va cloud texnologiyalar mutaxassisi.",
+    image: "/team/shkurjon.jpg",
     socials: { linkedin: "#", github: "#" }
   },
   { 
-    name: "Alisher Karimov", 
-    role: "Chief Operating Officer", 
-    bio: "INSEAD MBA. Operations va biznes rivojlantirish bo'yicha mutaxassis.",
-    image: "/team/alisher.jpg",
-    socials: { linkedin: "#", twitter: "#" }
+    name: "Baxtiyor", 
+    role: "Operatsion Direktor", 
+    bio: "Biznes boshqaruv va operatsion samaradorlik bo'yicha 8+ yillik tajriba.",
+    image: "/team/baxtiyor.jpg",
+    socials: { linkedin: "#" }
   },
 ];
 
@@ -120,36 +120,12 @@ const engineeringTeam = [
 // Office locations
 const offices = [
   {
-    city: "Toshkent",
+    city: "Farg'ona",
     country: "O'zbekiston",
-    address: "Amir Temur shoh ko'chasi, 100A",
-    phone: "+998 71 123 4567",
-    employees: "45 ishchi",
+    address: "Farg'ona viloyati, O'zbekiston tumani, Ziyokor ko'chasi",
+    phone: "+998880016777",
+    employees: "25 ishchi",
     isHeadquarters: true
-  },
-  {
-    city: "Samarqand",
-    country: "O'zbekiston",
-    address: "Registon maydoni, 15",
-    phone: "+998 66 234 5678",
-    employees: "12 ishchi",
-    isHeadquarters: false
-  },
-  {
-    city: "Almaty",
-    country: "Qozog'iston",
-    address: "Nazarbaev prospekti, 50",
-    phone: "+7 727 345 6789",
-    employees: "18 ishchi",
-    isHeadquarters: false
-  },
-  {
-    city: "Bishkek",
-    country: "Qirg'iziston",
-    address: "Manas prospekti, 25",
-    phone: "+996 312 456 789",
-    employees: "8 ishchi",
-    isHeadquarters: false
   }
 ];
 
@@ -239,6 +215,16 @@ export default function AboutPage() {
 
   return (
     <div className="min-h-screen">
+      {/* Back Button */}
+      <div className="container mx-auto max-w-6xl px-4 pt-6">
+        <Link href="/">
+          <Button variant="outline" size="sm" className="gap-2">
+            <ArrowLeft className="w-4 h-4" />
+            Orqaga
+          </Button>
+        </Link>
+      </div>
+
       {/* Hero Section */}
       <section className="py-24 px-4 bg-gradient-to-br from-primary/10 via-background to-primary/5 relative overflow-hidden">
         <div className="absolute inset-0 overflow-hidden">
@@ -268,9 +254,9 @@ export default function AboutPage() {
               Quramiz
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-              Step.uz - O'zbekiston va Markaziy Osiyoning eng zamonaviy karyera platformasi. 
+              SINERGIYA - O&apos;zbekiston va Markaziy Osiyoning eng zamonaviy karyera platformasi. 
               Bizning maqsadimiz - har bir yoshning orzulariga erishishiga yordam berish va 
-              mamlakatimizning rivojlanishiga hissa qo'shish.
+              mamlakatimizning rivojlanishiga hissa qo&apos;shish.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -536,11 +522,6 @@ export default function AboutPage() {
                           {member.socials.linkedin && (
                             <a href={member.socials.linkedin} className="p-2 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors">
                               <LinkIcon className="w-4 h-4" />
-                            </a>
-                          )}
-                          {member.socials.twitter && (
-                            <a href={member.socials.twitter} className="p-2 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors">
-                              <MessageSquare className="w-4 h-4" />
                             </a>
                           )}
                           {member.socials.github && (
