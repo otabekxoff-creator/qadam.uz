@@ -22,7 +22,9 @@ import {
   Clock,
   Award,
   BookOpen,
-  Code
+  Code,
+  Link as LinkedinIcon,
+  GitBranch as GithubIcon
 } from "lucide-react";
 
 export default function StudentProfilePage() {
@@ -157,7 +159,7 @@ export default function StudentProfilePage() {
                     <Download className="w-4 h-4 mr-2" />
                     Rezyume
                   </Button>
-                  <Button variant="outline" size="icon" size="sm">
+                  <Button variant="outline" size="icon">
                     <Share2 className="w-4 h-4" />
                   </Button>
                 </div>
@@ -176,7 +178,7 @@ export default function StudentProfilePage() {
                 <div className="text-center p-3 bg-muted rounded-lg">
                   <Eye className="w-5 h-5 mx-auto mb-1 text-primary" />
                   <div className="font-bold">{student.stats.profileViews}</div>
-                  <div className="text-xs text-muted-foreground">Ko'rishlar</div>
+                  <div className="text-xs text-muted-foreground">Ko&apos;rishlar</div>
                 </div>
                 <div className="text-center p-3 bg-muted rounded-lg">
                   <Briefcase className="w-5 h-5 mx-auto mb-1 text-primary" />
@@ -186,7 +188,7 @@ export default function StudentProfilePage() {
                 <div className="text-center p-3 bg-muted rounded-lg">
                   <ThumbsUp className="w-5 h-5 mx-auto mb-1 text-primary" />
                   <div className="font-bold">{student.stats.connections}</div>
-                  <div className="text-xs text-muted-foreground">Bog'lanishlar</div>
+                  <div className="text-xs text-muted-foreground">Bog&apos;lanishlar</div>
                 </div>
                 <div className="text-center p-3 bg-muted rounded-lg">
                   <Award className="w-5 h-5 mx-auto mb-1 text-primary" />
@@ -204,8 +206,8 @@ export default function StudentProfilePage() {
           <TabsTrigger value="overview">Umumiy</TabsTrigger>
           <TabsTrigger value="experience">Tajriba</TabsTrigger>
           <TabsTrigger value="projects">Loyihalar</TabsTrigger>
-          <TabsTrigger value="skills">Ko'nikmalar</TabsTrigger>
-          <TabsTrigger value="education">Ta'lim</TabsTrigger>
+          <TabsTrigger value="skills">Ko&apos;nikmalar</TabsTrigger>
+          <TabsTrigger value="education">Ta&apos;lim</TabsTrigger>
         </TabsList>
 
         <TabsContent value="overview" className="space-y-6">
@@ -217,24 +219,24 @@ export default function StudentProfilePage() {
               <p className="text-muted-foreground">{student.about}</p>
               
               <div className="flex gap-2 mt-4">
-                <Button variant="outline" size="sm" asChild>
-                  <a href={`mailto:${student.email}`}>
+                <a href={`mailto:${student.email}`}>
+                  <Button variant="outline" size="sm">
                     <Mail className="w-4 h-4 mr-2" />
                     Email
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <a href={student.linkedin} target="_blank" rel="noopener noreferrer">
+                  </Button>
+                </a>
+                <a href={student.linkedin} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm">
                     <LinkedinIcon className="w-4 h-4 mr-2" />
                     LinkedIn
-                  </a>
-                </Button>
-                <Button variant="outline" size="sm" asChild>
-                  <a href={student.github} target="_blank" rel="noopener noreferrer">
+                  </Button>
+                </a>
+                <a href={student.github} target="_blank" rel="noopener noreferrer">
+                  <Button variant="outline" size="sm">
                     <GithubIcon className="w-4 h-4 mr-2" />
                     GitHub
-                  </a>
-                </Button>
+                  </Button>
+                </a>
               </div>
             </CardContent>
           </Card>
@@ -266,7 +268,7 @@ export default function StudentProfilePage() {
               <CardTitle>Ish tajribasi</CardTitle>
               <Button size="sm">
                 <Briefcase className="w-4 h-4 mr-2" />
-                Qo'shish
+                Qo&apos;shish
               </Button>
             </CardHeader>
             <CardContent className="space-y-6">
@@ -320,12 +322,12 @@ export default function StudentProfilePage() {
                       </Badge>
                     ))}
                   </div>
-                  <Button variant="outline" size="sm" asChild>
-                    <a href={project.link} target="_blank" rel="noopener noreferrer">
+                  <a href={project.link} target="_blank" rel="noopener noreferrer">
+                    <Button variant="outline" size="sm">
                       <Globe className="w-4 h-4 mr-2" />
-                      Ko'rish
-                    </a>
-                  </Button>
+                      Ko&apos;rish
+                    </Button>
+                  </a>
                 </CardContent>
               </Card>
             ))}
@@ -335,7 +337,7 @@ export default function StudentProfilePage() {
         <TabsContent value="skills">
           <Card>
             <CardHeader>
-              <CardTitle>Texnik ko'nikmalar</CardTitle>
+              <CardTitle>Texnik ko&apos;nikmalar</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
@@ -356,10 +358,10 @@ export default function StudentProfilePage() {
         <TabsContent value="education">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle>Ta'lim</CardTitle>
+              <CardTitle>Ta&apos;lim</CardTitle>
               <Button size="sm">
                 <GraduationCap className="w-4 h-4 mr-2" />
-                Qo'shish
+                Qo&apos;shish
               </Button>
             </CardHeader>
             <CardContent>

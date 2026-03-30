@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { User, Building2, Mail, Phone, MapPin, Calendar, Edit, Camera, Link as LinkIcon, Github, Linkedin, Twitter } from 'lucide-react';
+import { User, Building2, Mail, Phone, MapPin, Calendar, Edit, Camera, Link as LinkIcon, GitBranch, Link as LinkedinIcon, MessageSquare } from 'lucide-react';
 import { useState } from 'react';
 
 export default function ProfileSettingsPage() {
@@ -153,21 +153,21 @@ export default function ProfileSettingsPage() {
                     <div>
                       <label className="block text-sm font-medium mb-2">LinkedIn</label>
                       <div className="relative">
-                        <Linkedin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <LinkedinIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input type="url" defaultValue="https://linkedin.com/in/johndoe" className="w-full pl-10 pr-4 py-2 rounded-lg border bg-background" />
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2">GitHub</label>
                       <div className="relative">
-                        <Github className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <GitBranch className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input type="url" defaultValue="https://github.com/johndoe" className="w-full pl-10 pr-4 py-2 rounded-lg border bg-background" />
                       </div>
                     </div>
                     <div>
                       <label className="block text-sm font-medium mb-2">Twitter</label>
                       <div className="relative">
-                        <Twitter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                        <MessageSquare className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                         <input type="url" defaultValue="https://twitter.com/johndoe" className="w-full pl-10 pr-4 py-2 rounded-lg border bg-background" />
                       </div>
                     </div>

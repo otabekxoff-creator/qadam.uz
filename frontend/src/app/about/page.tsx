@@ -535,17 +535,17 @@ export default function AboutPage() {
                         <div className="flex justify-center gap-2">
                           {member.socials.linkedin && (
                             <a href={member.socials.linkedin} className="p-2 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors">
-                              <Linkedin className="w-4 h-4" />
+                              <LinkIcon className="w-4 h-4" />
                             </a>
                           )}
                           {member.socials.twitter && (
                             <a href={member.socials.twitter} className="p-2 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors">
-                              <Twitter className="w-4 h-4" />
+                              <MessageSquare className="w-4 h-4" />
                             </a>
                           )}
                           {member.socials.github && (
                             <a href={member.socials.github} className="p-2 rounded-full bg-secondary hover:bg-primary hover:text-white transition-colors">
-                              <Github className="w-4 h-4" />
+                              <GitBranch className="w-4 h-4" />
                             </a>
                           )}
                         </div>
