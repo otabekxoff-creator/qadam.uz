@@ -20,6 +20,7 @@ enum ApplicationStatus {
   OFFERED
   REJECTED
   HIRED
+  WITHDRAWN
 }
 
 enum JobType {
@@ -37,56 +38,91 @@ enum EducationLevel {
   PHD
 }
 
+enum NotificationPriority {
+  LOW
+  MEDIUM
+  HIGH
+}
+
+enum ReportStatus {
+  PENDING
+  REVIEWING
+  RESOLVED
+  DISMISSED
+}
+
+enum ReportReason {
+  SPAM
+  INAPPROPRIATE
+  HARASSMENT
+  FAKE
+  OTHER
+}
+
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  password      String
-  role          UserRole  @default(STUDENT)
-  isVerified    Boolean   @default(false)
-  isActive      Boolean   @default(true)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  lastLoginAt   DateTime?
+  id                      String                  @id @default(cuid())
+  email                   String                  @unique
+  password                String
+  role                    UserRole                @default(STUDENT)
+  isVerified              Boolean                 @default(false)
+  isActive                Boolean                 @default(true)
+  bannedAt                DateTime?
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
+  lastLoginAt             DateTime?
   
-  student       Student?
-  company       Company?
+  student                 Student?
+  company                 Company?
   
-  messages      Message[]
-  notifications Notification[]
-  chatMembers   ChatMember[]
+  messages                Message[]
+  notifications           Notification[]
+  chatMembers             ChatMember[]
+  notificationPreferences NotificationPreference?
   
   @@map("users")
 }
 
 model Student {
-  id              String          @id @default(cuid())
-  userId          String          @unique
-  user            User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id                String          @id @default(cuid())
+  userId            String          @unique
+  user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  firstName       String
-  lastName        String
-  phone           String?
-  avatar          String?
+  firstName         String
+  lastName          String
+  fullName          String?
+  headline          String?
+  summary           String?
+  phone             String?
+  avatar            String?
   
-  university      String?
-  faculty         String?
-  major           String?
-  educationLevel  EducationLevel?
-  course          Int?
-  gpa             Float?
+  university        String?
+  faculty           String?
+  major             String?
+  educationLevel    EducationLevel?
+  course            Int?
+  gpa               Float?
   
-  skills          String[]
-  about           String?
-  portfolio       String?
-  resume          String?
+  skills            String[]
+  about             String?
+  bio               String?
+  portfolio         String?
+  resume            String?
   
-  location        String?
-  birthDate       DateTime?
+  location          String?
+  birthDate         DateTime?
   
-  applications    Application[]
+  availableForHire  Boolean         @default(true)
+  isPublic          Boolean         @default(true)
   
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
+  applications      Application[]
+  savedJobs         SavedJob[]
+  skillsRel         Skill[]
+  experiences       Experience[]
+  educations        Education[]
+  projects          Project[]
+  
+  createdAt         DateTime        @default(now())
+  updatedAt         DateTime        @updatedAt
   
   @@map("students")
 }
@@ -106,10 +142,12 @@ model Company {
   industry        String?
   companySize     String?
   location        String?
+  foundedYear     Int?
   
   isVerified      Boolean   @default(false)
   
   jobs            Job[]
+  followers       Follower[]
   
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
@@ -134,14 +172,17 @@ model Job {
   salaryMin       Int?
   salaryMax       Int?
   salaryCurrency  String      @default("UZS")
+  salary          Json?
   
   skills          String[]
   experienceLevel String?
+  category        String?
   
   isActive        Boolean     @default(true)
   expiresAt       DateTime?
   
   applications    Application[]
+  savedBy         SavedJob[]
   
   viewsCount      Int         @default(0)
   
@@ -157,10 +198,12 @@ model Application {
   job             Job               @relation(fields: [jobId], references: [id], onDelete: Cascade)
   studentId       String
   student         Student           @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  userId          String?
   
   status          ApplicationStatus @default(PENDING)
   coverLetter     String?
   resumeUrl       String?
+  notes           String?
   
   createdAt       DateTime          @default(now())
   updatedAt       DateTime          @updatedAt
@@ -169,60 +212,304 @@ model Application {
   @@map("applications")
 }
 
+model SavedJob {
+  id          String    @id @default(cuid())
+  userId      String
+  student     Student   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  jobId       String
+  job         Job       @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  
+  createdAt   DateTime  @default(now())
+  
+  @@unique([userId, jobId])
+  @@map("saved_jobs")
+}
+
+model Skill {
+  id          String    @id @default(cuid())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  name        String
+  level       String?
+  
+  createdAt   DateTime  @default(now())
+  
+  @@map("skills")
+}
+
+model Experience {
+  id          String    @id @default(cuid())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  title       String
+  company     String
+  location    String?
+  startDate   DateTime
+  endDate     DateTime?
+  isCurrent   Boolean   @default(false)
+  description String?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@map("experiences")
+}
+
+model Education {
+  id              String          @id @default(cuid())
+  studentId       String
+  student         Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  institution     String
+  degree          String
+  field           String?
+  startDate       DateTime
+  endDate         DateTime?
+  isCurrent       Boolean         @default(false)
+  description     String?
+  
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+  
+  @@map("educations")
+}
+
+model Project {
+  id          String    @id @default(cuid())
+  studentId   String
+  student     Student   @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  
+  title       String
+  description String?
+  link        String?
+  githubLink  String?
+  technologies String[]
+  startDate   DateTime?
+  endDate     DateTime?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@map("projects")
+}
+
 model Chat {
-  id          String       @id @default(cuid())
-  name        String?
-  isGroup     Boolean      @default(false)
+  id              String       @id @default(cuid())
+  name            String?
+  description     String?
+  isGroup         Boolean      @default(false)
+  lastMessagePreview String?
   
-  members     ChatMember[]
-  messages    Message[]
+  members         ChatMember[]
+  messages        Message[]
   
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
+  createdAt       DateTime     @default(now())
+  updatedAt       DateTime     @updatedAt
   
   @@map("chats")
 }
 
 model ChatMember {
-  id        String   @id @default(cuid())
-  chatId    String
-  chat      Chat     @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String    @id @default(cuid())
+  chatId      String
+  chat        Chat      @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   
-  joinedAt  DateTime @default(now())
+  role        String    @default("MEMBER")
+  isMuted     Boolean   @default(false)
+  isArchived  Boolean   @default(false)
+  joinedAt    DateTime  @default(now())
   
   @@unique([chatId, userId])
   @@map("chat_members")
 }
 
 model Message {
-  id          String    @id @default(cuid())
-  chatId      String
-  chat        Chat      @relation(fields: [chatId], references: [id], onDelete: Cascade)
-  senderId    String
-  sender      User      @relation(fields: [senderId], references: [id], onDelete: Cascade)
+  id              String              @id @default(cuid())
+  chatId          String
+  chat            Chat                @relation(fields: [chatId], references: [id], onDelete: Cascade)
+  senderId        String
+  sender          User                @relation(fields: [senderId], references: [id], onDelete: Cascade)
   
-  content     String
-  type        String    @default("TEXT")
-  isRead      Boolean   @default(false)
+  content         String
+  type            String              @default("TEXT")
+  isRead          Boolean             @default(false)
+  isEdited        Boolean             @default(false)
+  isDeleted       Boolean             @default(false)
+  isPinned        Boolean             @default(false)
+  replyTo         String?
   
-  createdAt   DateTime  @default(now())
+  reactions       MessageReaction[]
+  attachments     MessageAttachment[]
+  
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
   
   @@map("messages")
 }
 
-model Notification {
+model MessageReaction {
   id          String    @id @default(cuid())
+  messageId   String
+  message     Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
   userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  
-  title       String
-  message     String
-  type        String
-  isRead      Boolean   @default(false)
+  emoji       String
   
   createdAt   DateTime  @default(now())
   
+  @@unique([messageId, userId, emoji])
+  @@map("message_reactions")
+}
+
+model MessageAttachment {
+  id          String    @id @default(cuid())
+  messageId   String
+  message     Message   @relation(fields: [messageId], references: [id], onDelete: Cascade)
+  
+  url         String
+  type        String
+  name        String
+  size        Int?
+  
+  createdAt   DateTime  @default(now())
+  
+  @@map("message_attachments")
+}
+
+model BlockedUser {
+  id          String    @id @default(cuid())
+  blockerId   String
+  blockedId   String
+  
+  createdAt   DateTime  @default(now())
+  
+  @@unique([blockerId, blockedId])
+  @@map("blocked_users")
+}
+
+model Notification {
+  id              String                @id @default(cuid())
+  userId          String
+  user            User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  title           String
+  message         String
+  type            String
+  isRead          Boolean               @default(false)
+  readAt          DateTime?
+  priority        NotificationPriority  @default(MEDIUM)
+  
+  createdAt       DateTime              @default(now())
+  
   @@map("notifications")
+}
+
+model NotificationPreference {
+  id                      String   @id @default(cuid())
+  userId                  String   @unique
+  user                    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  emailNotifications      Boolean  @default(true)
+  pushNotifications       Boolean  @default(true)
+  applicationUpdates      Boolean  @default(true)
+  messageNotifications    Boolean  @default(true)
+  marketingEmails       Boolean  @default(false)
+  
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+  
+  @@map("notification_preferences")
+}
+
+model PushSubscription {
+  id          String    @id @default(cuid())
+  userId      String
+  endpoint    String
+  p256dh      String
+  auth        String
+  
+  createdAt   DateTime  @default(now())
+  
+  @@unique([userId, endpoint])
+  @@map("push_subscriptions")
+}
+
+model SearchHistory {
+  id          String    @id @default(cuid())
+  userId      String
+  query       String
+  filters     Json?
+  
+  createdAt   DateTime  @default(now())
+  
+  @@map("search_history")
+}
+
+model SavedSearch {
+  id          String    @id @default(cuid())
+  userId      String
+  query       String
+  filters     Json?
+  name        String?
+  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  @@map("saved_searches")
+}
+
+model Report {
+  id          String        @id @default(cuid())
+  reporterId  String
+  targetId    String
+  targetType  String
+  reason      ReportReason
+  description String?
+  status      ReportStatus  @default(PENDING)
+  
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  resolvedAt  DateTime?
+  resolvedBy  String?
+  
+  @@map("reports")
+}
+
+model Follower {
+  id          String    @id @default(cuid())
+  companyId   String
+  company     Company   @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  userId      String
+  
+  createdAt   DateTime  @default(now())
+  
+  @@unique([companyId, userId])
+  @@map("followers")
+}
+
+model EmailLog {
+  id          String    @id @default(cuid())
+  to          String
+  subject     String
+  template    String?
+  status      String
+  error       String?
+  sentAt      DateTime?
+  
+  createdAt   DateTime  @default(now())
+  
+  @@map("email_logs")
+}
+
+model SuppressedEmail {
+  id          String    @id @default(cuid())
+  email       String    @unique
+  reason      String?
+  
+  createdAt   DateTime  @default(now())
+  
+  @@map("suppressed_emails")
 }
