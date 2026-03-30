@@ -1,0 +1,63 @@
+services:
+  - type: web
+    name: sinergiya-backend
+    runtime: node
+    plan: free
+    buildCommand: cd backend && npm install && npm run build
+    startCommand: cd backend && npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_URL
+        value: postgresql://sinergiya_prod_user:Ki56K8cblKDoDG0lU2nRu3pWJ5NCRr4o@dpg-d70oflf5gffc73927i5g-a.oregon-postgres.render.com/sinergiya_prod
+      - key: JWT_SECRET
+        value: stepuz_secret_key_2024_secure_random_string_for_jwt_tokens
+      - key: JWT_EXPIRES_IN
+        value: 7d
+      - key: FRONTEND_URL
+        value: https://sinergiya-frontend.onrender.com
+      - key: API_URL
+        value: https://sinergiya-backend.onrender.com/api
+      - key: SMTP_HOST
+        value: smtp.gmail.com
+      - key: SMTP_PORT
+        value: 587
+      - key: SMTP_USER
+        sync: false
+      - key: SMTP_PASS
+        sync: false
+      - key: FROM_EMAIL
+        value: noreply@step.uz
+      - key: VAPID_PUBLIC_KEY
+        sync: false
+      - key: VAPID_PRIVATE_KEY
+        sync: false
+      - key: OPENAI_API_KEY
+        sync: false
+    autoDeploy: true
+
+  - type: web
+    name: sinergiya-frontend
+    runtime: static
+    plan: free
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://sinergiya-backend.onrender.com/api
+      - key: NEXT_PUBLIC_WS_URL
+        value: wss://sinergiya-backend.onrender.com
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://sinergiya-frontend.onrender.com
+    autoDeploy: true
+
+databases:
+  - name: sinergiya-db
+    plan: free
+    databaseName: sinergiya_prod
+    user: sinergiya_prod_user
+
+version: "1"
