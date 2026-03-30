@@ -1,4 +1,4 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import * as searchController from '../controllers/search.controller';
 import { authenticate } from '../middleware/auth.middleware';
 
@@ -20,12 +20,12 @@ router.get('/popular', searchController.getPopularSearches);
 router.get('/recent', authenticate, searchController.getRecentSearches || searchController.globalSearch);
 
 // Save search (requires auth) - stub with 501
-router.post('/save', authenticate, (req, res) => {
+router.post('/save', authenticate, (req: Request, res: Response) => {
   res.status(501).json({ success: false, message: 'Save search not implemented' });
 });
 
 // Delete saved search
-router.delete('/save/:id', authenticate, (req, res) => {
+router.delete('/save/:id', authenticate, (req: Request, res: Response) => {
   res.status(501).json({ success: false, message: 'Delete saved search not implemented' });
 });
 
