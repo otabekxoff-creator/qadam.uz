@@ -107,7 +107,7 @@ function CategoryCard({ icon: Icon, title, count, color }: {
         <Icon className="w-7 h-7 text-white" />
       </div>
       <h3 className="font-semibold text-lg mb-2">{title}</h3>
-      <p className="text-muted-foreground">{count.toLocaleString()} open positions</p>
+      <p className="text-muted-foreground">{count.toLocaleString()} ochiq vakansiya</p>
     </motion.div>
   );
 }
@@ -190,58 +190,58 @@ function JobCard({ title, company, location, salary, type, postedAt, logo, tags 
 
 export default function Home() {
   const stats = [
-    { value: 15000, suffix: '+', label: 'Active Jobs', icon: Briefcase, color: 'from-blue-500 to-blue-600' },
-    { value: 8500, suffix: '+', label: 'Companies', icon: Building2, color: 'from-green-500 to-green-600' },
-    { value: 50000, suffix: '+', label: 'Job Seekers', icon: Users, color: 'from-purple-500 to-purple-600' },
-    { value: 95, suffix: '%', label: 'Success Rate', icon: TrendingUp, color: 'from-orange-500 to-orange-600' },
+    { value: 15000, suffix: '+', label: 'Aktiv Ish O\'rinlari', icon: Briefcase, color: 'from-blue-500 to-blue-600' },
+    { value: 8500, suffix: '+', label: 'Kompaniyalar', icon: Building2, color: 'from-green-500 to-green-600' },
+    { value: 50000, suffix: '+', label: 'Ish Qidiruvchilar', icon: Users, color: 'from-purple-500 to-purple-600' },
+    { value: 95, suffix: '%', label: 'Muvaffaqiyat', icon: TrendingUp, color: 'from-orange-500 to-orange-600' },
   ];
 
   const categories = [
-    { icon: Code, title: 'Software Development', count: 3240, color: 'bg-blue-500' },
-    { icon: Palette, title: 'Design & Creative', count: 1850, color: 'bg-purple-500' },
-    { icon: Database, title: 'Data Science', count: 920, color: 'bg-green-500' },
+    { icon: Code, title: 'Dasturiy Ta\'minot', count: 3240, color: 'bg-blue-500' },
+    { icon: Palette, title: 'Dizayn va Kreativ', count: 1850, color: 'bg-purple-500' },
+    { icon: Database, title: 'Ma\'lumotlar Ilimi', count: 920, color: 'bg-green-500' },
     { icon: LineChart, title: 'Marketing', count: 1450, color: 'bg-orange-500' },
-    { icon: Shield, title: 'Cybersecurity', count: 680, color: 'bg-red-500' },
-    { icon: Activity, title: 'Healthcare', count: 2100, color: 'bg-teal-500' },
-    { icon: GraduationCap, title: 'Education', count: 1680, color: 'bg-indigo-500' },
-    { icon: Briefcase, title: 'Business', count: 2340, color: 'bg-pink-500' },
+    { icon: Shield, title: 'Kiberxavfsizlik', count: 680, color: 'bg-red-500' },
+    { icon: Activity, title: 'Sog\'liqni Saqlash', count: 2100, color: 'bg-teal-500' },
+    { icon: GraduationCap, title: 'Ta\'lim', count: 1680, color: 'bg-indigo-500' },
+    { icon: Briefcase, title: 'Biznes', count: 2340, color: 'bg-pink-500' },
   ];
 
   const features = [
     { 
       icon: Sparkles, 
-      title: 'AI-Powered Matching', 
-      description: 'Our intelligent algorithm matches you with the perfect jobs based on your skills and preferences.',
+      title: 'AI Yordamida Moslash', 
+      description: 'Sun\'iy intellekt algoritmi sizning ko\'nikmalaringiz va afzalliklaringiz asosida ideal ishni tanlaydi.',
       color: 'bg-gradient-to-br from-purple-500 to-indigo-600'
     },
     { 
       icon: Zap, 
-      title: 'One-Click Apply', 
-      description: 'Apply to multiple jobs instantly with your saved profile and resume.',
+      title: 'Bir Marta Bosishda Ariza', 
+      description: 'Profil va rezyumengiz bilan bir zumda bir nechta ish o\'rinlariga ariza yuboring.',
       color: 'bg-gradient-to-br from-yellow-500 to-orange-600'
     },
     { 
       icon: Shield, 
-      title: 'Verified Companies', 
-      description: 'All employers are thoroughly vetted to ensure safe and legitimate opportunities.',
+      title: 'Tekshirilgan Kompaniyalar', 
+      description: 'Barcha ish beruvchilar xavfsiz va ishonchli imkoniyatlarni ta\'minlash uchun qat\'iy tekshiriladi.',
       color: 'bg-gradient-to-br from-green-500 to-emerald-600'
     },
     { 
       icon: Globe, 
-      title: 'Remote Opportunities', 
-      description: 'Access thousands of remote jobs from companies around the world.',
+      title: 'Masofadan Ishlash', 
+      description: 'Dunyo bo\'ylab kompaniyalardan minglab masofadan ish o\'rinlariga kirish imkoniyati.',
       color: 'bg-gradient-to-br from-blue-500 to-cyan-600'
     },
     { 
       icon: Target, 
-      title: 'Career Analytics', 
-      description: 'Track your applications, profile views, and get insights to improve your job search.',
+      title: 'Karyera Tahlili', 
+      description: 'Arizalaringiz, profil ko\'rishlarizni kuzatib boring va ish qidirishingizni yaxshilash uchun tavsiyalar oling.',
       color: 'bg-gradient-to-br from-pink-500 to-rose-600'
     },
     { 
       icon: HeartHandshake, 
-      title: 'Direct Messaging', 
-      description: 'Connect directly with recruiters and hiring managers through our built-in chat.',
+      title: 'To\'g\'ridan-To\'g\'ri Aloqa', 
+      description: 'Platformamizning o\'z ichki chat orqali ish beruvchilar va HR menejerlari bilan bevosita bog\'laning.',
       color: 'bg-gradient-to-br from-teal-500 to-cyan-600'
     },
   ];
@@ -357,10 +357,10 @@ export default function Home() {
             SINERGIYA
           </Link>
           <div className="hidden md:flex items-center gap-8">
-            <Link href="/jobs/search" className="text-muted-foreground hover:text-foreground transition-colors">Find Jobs</Link>
-            <Link href="/companies" className="text-muted-foreground hover:text-foreground transition-colors">Companies</Link>
-            <Link href="/salary-calculator" className="text-muted-foreground hover:text-foreground transition-colors">Salaries</Link>
-            <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors">Resources</Link>
+            <Link href="/jobs/search" className="text-muted-foreground hover:text-foreground transition-colors">Ish Qidirish</Link>
+            <Link href="/companies" className="text-muted-foreground hover:text-foreground transition-colors">Kompaniyalar</Link>
+            <Link href="/salary-calculator" className="text-muted-foreground hover:text-foreground transition-colors">Maoshlar</Link>
+            <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors">Resurslar</Link>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login">
