@@ -24,6 +24,19 @@
   "type": "commonjs",
   "dependencies": {
     "@prisma/client": "^5.22.0",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/compression": "^1.7.5",
+    "@types/cookie-parser": "^1.4.6",
+    "@types/cors": "^2.8.19",
+    "@types/express": "^5.0.0",
+    "@types/hpp": "^0.2.6",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^22.0.0",
+    "@types/nodemailer": "^6.4.14",
+    "@types/swagger-jsdoc": "^6.0.4",
+    "@types/swagger-ui-express": "^4.1.6",
+    "@types/web-push": "^3.6.3",
     "bcryptjs": "^3.0.3",
     "compression": "^1.7.4",
     "cookie-parser": "^1.4.6",
@@ -45,26 +58,13 @@
     "socket.io": "^4.8.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0",
+    "typescript": "^5.0.0",
     "web-push": "^3.6.6",
     "xss-clean": "^0.1.4",
     "zod": "^4.3.6"
   },
   "devDependencies": {
-    "@types/bcryptjs": "^2.4.6",
-    "@types/compression": "^1.7.5",
-    "@types/cookie-parser": "^1.4.6",
-    "@types/cors": "^2.8.19",
-    "@types/express": "^5.0.0",
-    "@types/hpp": "^0.2.6",
-    "@types/jsonwebtoken": "^9.0.0",
-    "@types/morgan": "^1.9.10",
-    "@types/node": "^22.0.0",
-    "@types/nodemailer": "^6.4.14",
-    "@types/swagger-jsdoc": "^6.0.4",
-    "@types/swagger-ui-express": "^4.1.6",
-    "@types/web-push": "^3.6.3",
     "nodemon": "^3.1.14",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.0.0"
+    "ts-node": "^10.9.2"
   }
 }
