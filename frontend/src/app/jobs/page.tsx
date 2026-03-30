@@ -18,7 +18,8 @@ import {
   DollarSign,
   Heart,
   Star,
-  Zap
+  Zap,
+  ArrowLeft
 } from 'lucide-react';
 
 // Mock jobs data
@@ -109,6 +110,16 @@ export default function JobsPage() {
   return (
     <div className="min-h-screen bg-slate-50 py-8">
       <div className="container mx-auto px-4">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Link href="/">
+            <Button variant="outline" size="sm" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Orqaga
+            </Button>
+          </Link>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -186,16 +197,16 @@ export default function JobsPage() {
                     {job.isFeatured && (
                       <Badge className="bg-primary">
                         <Star className="w-3 h-3 mr-1" />
-                        Featured
+                        Tavsiya etilgan
                       </Badge>
                     )}
                     {job.isHot && (
                       <Badge variant="destructive">
                         <Zap className="w-3 h-3 mr-1" />
-                        Hot
+                        Qaynoq
                       </Badge>
                     )}
-                    {job.isNew && <Badge variant="secondary">New</Badge>}
+                    {job.isNew && <Badge variant="secondary">Yangi</Badge>}
                   </div>
 
                   <div className="space-y-2 text-sm text-muted-foreground mb-4">
