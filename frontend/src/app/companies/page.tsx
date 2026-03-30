@@ -30,6 +30,7 @@ import {
   Loader2,
   X,
   SlidersHorizontal,
+  ArrowLeft,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -285,16 +286,25 @@ export default function CompaniesPage() {
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
         
         <div className="container mx-auto px-4 relative z-10">
+          {/* Back Button */}
+          <div className="mb-6">
+            <Link href="/">
+              <Button variant="outline" size="sm" className="gap-2 bg-white/10 text-white border-white/20 hover:bg-white/20">
+                <ArrowLeft className="w-4 h-4" />
+                Orqaga
+              </Button>
+            </Link>
+          </div>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="text-center max-w-3xl mx-auto"
           >
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
-              Discover Great Companies
+              Ajoyib Kompaniyalarni Kashf Eting
             </h1>
             <p className="text-xl text-blue-100 mb-8">
-              Find your next career move at top companies hiring now
+              Ish o'rinlari ochiq bo'lgan top kompaniyalarda keyingi karyera qadamini toping
             </p>
             
             {/* Stats */}
@@ -302,17 +312,17 @@ export default function CompaniesPage() {
               <div className="flex items-center gap-2">
                 <Building2 className="w-5 h-5" />
                 <span className="font-semibold">500+</span>
-                <span className="text-blue-200">Companies</span>
+                <span className="text-blue-200">Kompaniyalar</span>
               </div>
               <div className="flex items-center gap-2">
                 <Briefcase className="w-5 h-5" />
                 <span className="font-semibold">10,000+</span>
-                <span className="text-blue-200">Open Jobs</span>
+                <span className="text-blue-200">Ochiq Ishlar</span>
               </div>
               <div className="flex items-center gap-2">
                 <Users className="w-5 h-5" />
                 <span className="font-semibold">2M+</span>
-                <span className="text-blue-200">Employees</span>
+                <span className="text-blue-200">Xodimlar</span>
               </div>
             </div>
           </motion.div>
@@ -328,7 +338,7 @@ export default function CompaniesPage() {
               <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
               <input
                 type="text"
-                placeholder="Search companies, industries, or keywords..."
+                placeholder="Kompaniya, soha yoki kalit so'zlarni qidiring..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
@@ -349,7 +359,7 @@ export default function CompaniesPage() {
               className="lg:hidden flex items-center justify-center gap-2 px-4 py-3 border border-slate-200 rounded-xl hover:bg-slate-50"
             >
               <SlidersHorizontal className="w-5 h-5" />
-              Filters
+              Filtrlar
             </button>
 
             {/* Desktop Filters */}
