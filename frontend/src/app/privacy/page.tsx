@@ -263,7 +263,7 @@ export default function PrivacyPage() {
                     <CardContent className="p-8">
                       <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Kirish</h2>
                       <p className="text-gray-600 mb-4 leading-relaxed">
-                        Step.uz ("biz", "bizning" yoki "platforma") foydalanuvchilarimizning maxfiyligini jiddiy qabul qiladi. Ushbu Maxfiylik Siyosati biz shaxsiy ma'lumotlaringizni qanday yig'amiz, ishlatamiz, saqlaymiz va himoya qilishimizni tushuntiradi.
+                        SINERGIYA ("biz", "bizning" yoki "platforma") foydalanuvchilarimizning maxfiyligini jiddiy qabul qiladi. Ushbu Maxfiylik Siyosati biz shaxsiy ma'lumotlaringizni qanday yig'amiz, ishlatamiz, saqlaymiz va himoya qilishimizni tushuntiradi.
                       </p>
                       <p className="text-gray-600 mb-4 leading-relaxed">
                         Platformamizdan foydalanish orqali siz ushbu siyosat shartlarini qabul qilasiz. Agar siz ushbu siyosatning biron bir qismiga rozi bo'lmasangiz, iltimos, platformadan foydalanishni to'xtating.
@@ -450,7 +450,7 @@ export default function PrivacyPage() {
                         </p>
                         <div className="flex items-center gap-2 text-sm text-indigo-800">
                           <Mail className="w-4 h-4" />
-                          <span>privacy@step.uz</span>
+                          <span>privacy@SINERGIYA</span>
                         </div>
                       </div>
                     </CardContent>
@@ -519,7 +519,7 @@ export default function PrivacyPage() {
                           </div>
                           <div>
                             <p className="text-sm text-blue-200">Email</p>
-                            <p className="font-medium">privacy@step.uz</p>
+                            <p className="font-medium">privacy@SINERGIYA</p>
                           </div>
                         </div>
 

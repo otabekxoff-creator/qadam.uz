@@ -22,7 +22,7 @@ export default function AffiliatePage() {
   ];
 
   const copyLink = () => {
-    navigator.clipboard.writeText('https://step.uz/?ref=AFFILIATE123');
+    navigator.clipboard.writeText('https://SINERGIYA/?ref=AFFILIATE123');
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -39,7 +39,7 @@ export default function AffiliatePage() {
           >
             <h1 className="text-4xl font-bold mb-4">Affiliate Program</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Partner with Step.uz and earn commission for every new user you refer
+              Partner with SINERGIYA and earn commission for every new user you refer
             </p>
           </motion.div>
 
@@ -70,7 +70,7 @@ export default function AffiliatePage() {
             <div className="flex gap-4">
               <input
                 type="text"
-                value="https://step.uz/?ref=AFFILIATE123"
+                value="https://SINERGIYA/?ref=AFFILIATE123"
                 readOnly
                 className="flex-1 px-4 py-3 rounded-lg border bg-secondary"
               />

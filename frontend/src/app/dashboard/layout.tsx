@@ -16,7 +16,7 @@ export default function DashboardLayout({
       <aside className="w-64 border-r bg-card hidden md:flex flex-col">
         <div className="p-6">
           <Link href="/" className="text-2xl font-bold">
-            Step.uz
+            SINERGIYA
           </Link>
         </div>
         

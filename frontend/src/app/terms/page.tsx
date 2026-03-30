@@ -163,10 +163,10 @@ export default function TermsPage() {
                     <CardContent className="p-8">
                       <h2 className="text-2xl font-bold text-gray-900 mb-4">1. Shartlarni qabul qilish</h2>
                       <p className="text-gray-600 mb-4 leading-relaxed">
-                        Step.uz platformasiga kirish va undan foydalanish orqali siz quyidagi foydalanish shartlarini qabul qilasiz. Agar siz ushbu shartlarning biron biriga rozi bo'lmasangiz, iltimos, platformadan foydalanishni to'xtating.
+                        SINERGIYA platformasiga kirish va undan foydalanish orqali siz quyidagi foydalanish shartlarini qabul qilasiz. Agar siz ushbu shartlarning biron biriga rozi bo'lmasangiz, iltimos, platformadan foydalanishni to'xtating.
                       </p>
                       <p className="text-gray-600 mb-4 leading-relaxed">
-                        Ushbu shartlar siz va Step.uz o'rtasidagi to'liq shartnoma shakllantiradi va platformadan foydalanish bo'yicha barcha oldingi kelishuvlarni almashtiradi.
+                        Ushbu shartlar siz va SINERGIYA o'rtasidagi to'liq shartnoma shakllantiradi va platformadan foydalanish bo'yicha barcha oldingi kelishuvlarni almashtiradi.
                       </p>
                       <div className="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-r-lg">
                         <p className="text-sm text-blue-800">
@@ -188,7 +188,7 @@ export default function TermsPage() {
 
                       <div className="grid gap-4">
                         {[
-                          { term: '"Platforma"', def: 'Step.uz veb-sayti va unga tegishli barcha xizmatlar.' },
+                          { term: '"Platforma"', def: 'SINERGIYA veb-sayti va unga tegishli barcha xizmatlar.' },
                           { term: '"Foydalanuvchi"', def: 'Platformaga ro\'yxatdan o\'tgan va undan foydalanayotgan har qanday shaxs.' },
                           { term: '"Talaba"', def: "O'z karyerasini boshlash yoki rivojlantirishni istagan o'quvchi yoki bitiruvchi." },
                           { term: '"Kompaniya"', def: "Platformada ish o'rinlari e'lon qiluvchi ish beruvchi yoki tashkilot." },
@@ -289,7 +289,7 @@ export default function TermsPage() {
                     <CardContent className="p-8">
                       <h2 className="text-2xl font-bold text-gray-900 mb-4">5. Xizmatlar ta'rifi</h2>
                       <p className="text-gray-600 mb-6 leading-relaxed">
-                        Step.uz quyidagi asosiy xizmatlarni taqdim etadi:
+                        SINERGIYA quyidagi asosiy xizmatlarni taqdim etadi:
                       </p>
 
                       <div className="grid md:grid-cols-2 gap-4">
@@ -576,7 +576,7 @@ export default function TermsPage() {
                         <div>
                           <h3 className="font-semibold text-gray-900 mb-2">12.5 Aloqa</h3>
                           <p className="text-gray-600 text-sm leading-relaxed">
-                            Shartlar bo'yicha savollar uchun iltimos, biz bilan quyidagi manzil orqali bog'laning: legal@step.uz
+                            Shartlar bo'yicha savollar uchun iltimos, biz bilan quyidagi manzil orqali bog'laning: legal@SINERGIYA
                           </p>
                         </div>
                       </div>

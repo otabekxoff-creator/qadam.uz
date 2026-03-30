@@ -7,7 +7,7 @@ export default function PressPage() {
   const pressReleases = [
     {
       id: 1,
-      title: 'Step.uz Raises $5M Series A to Expand Across Central Asia',
+      title: 'SINERGIYA Raises $5M Series A to Expand Across Central Asia',
       date: 'March 15, 2024',
       category: 'Funding',
       excerpt: 'The leading career platform in Uzbekistan announces major expansion plans...',
@@ -17,7 +17,7 @@ export default function PressPage() {
       title: 'Partnership with Ministry of Higher Education Announced',
       date: 'February 28, 2024',
       category: 'Partnership',
-      excerpt: 'Step.uz to provide career services to all university students nationwide...',
+      excerpt: 'SINERGIYA to provide career services to all university students nationwide...',
     },
     {
       id: 3,
@@ -31,7 +31,7 @@ export default function PressPage() {
   const mediaCoverage = [
     {
       outlet: 'TechCrunch',
-      title: 'How Step.uz is Transforming the Uzbek Job Market',
+      title: 'How SINERGIYA is Transforming the Uzbek Job Market',
       date: 'March 2024',
       link: '#',
     },
@@ -73,7 +73,7 @@ export default function PressPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Press & Media</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Latest news, press releases, and media coverage about Step.uz
+              Latest news, press releases, and media coverage about SINERGIYA
             </p>
           </motion.div>
 

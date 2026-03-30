@@ -103,7 +103,7 @@ export default function HireTalentPage() {
           >
             <h2 className="text-2xl font-bold mb-4">Ready to transform your hiring?</h2>
             <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
-              Join thousands of companies already using Step.uz to build their teams
+              Join thousands of companies already using SINERGIYA to build their teams
             </p>
           </motion.div>
         </div>

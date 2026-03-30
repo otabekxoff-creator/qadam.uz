@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Step.uz - O'zbekiston yoshlari uchun karyera platformasi",
+  title: "SINERGIYA - O'zbekiston yoshlari uchun karyera platformasi",
   description: "Talabalar va kompaniyalar uchun ish topish va ishchi topish platformasi",
 };
 

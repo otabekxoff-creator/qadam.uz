@@ -8,7 +8,7 @@ export default function CertificatePage() {
     {
       id: 1,
       title: 'JavaScript Fundamentals',
-      issuer: 'Step.uz Academy',
+      issuer: 'SINERGIYA Academy',
       date: 'March 15, 2024',
       skills: ['JavaScript', 'ES6+', 'Async Programming'],
       verified: true,
@@ -17,7 +17,7 @@ export default function CertificatePage() {
     {
       id: 2,
       title: 'React Development',
-      issuer: 'Step.uz Academy',
+      issuer: 'SINERGIYA Academy',
       date: 'February 28, 2024',
       skills: ['React', 'Hooks', 'State Management'],
       verified: true,

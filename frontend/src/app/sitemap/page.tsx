@@ -318,7 +318,7 @@ export default function SitemapPage() {
                     <Mail className="w-6 h-6 text-blue-400" />
                   </div>
                   <h3 className="font-semibold mb-2">Email</h3>
-                  <p className="text-sm text-slate-400">support@step.uz</p>
+                  <p className="text-sm text-slate-400">support@SINERGIYA</p>
                 </CardContent>
               </Card>
 
@@ -358,7 +358,7 @@ export default function SitemapPage() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-gray-600">
-              © 2026 Step.uz. Barcha huquqlar himoyalangan.
+              © 2026 SINERGIYA. Barcha huquqlar himoyalangan.
             </p>
             <div className="flex items-center gap-6 text-sm">
               <Link href="/privacy" className="text-gray-600 hover:text-blue-600 transition-colors">

@@ -10,7 +10,7 @@ export default function TestimonialsPage() {
       name: 'Sardor Mukhtorov',
       role: 'Software Engineer',
       company: 'Google',
-      content: 'Step.uz orqali Google kompaniyasiga ishga kirdim. Platformada karyera markazi va rezyume yordamchisi juda foydali boldi.',
+      content: 'SINERGIYA orqali Google kompaniyasiga ishga kirdim. Platformada karyera markazi va rezyume yordamchisi juda foydali boldi.',
       image: '/testimonials/1.jpg',
     },
     {
@@ -18,7 +18,7 @@ export default function TestimonialsPage() {
       name: 'Dilshoda Karimova',
       role: 'Product Manager',
       company: 'EPAM Systems',
-      content: 'Step.uz tarkibida top kompaniyalar va yaxshi imkoniyatlar bor. Ishga kirish jarayonida toliq qollab-quvvatlash oldim.',
+      content: 'SINERGIYA tarkibida top kompaniyalar va yaxshi imkoniyatlar bor. Ishga kirish jarayonida toliq qollab-quvvatlash oldim.',
       image: '/testimonials/2.jpg',
     },
     {
@@ -50,7 +50,7 @@ export default function TestimonialsPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Mijozlarimiz Fikrlari</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Step.uz platformasi yordamida minglab talabalar orzularidagi ishni topdi
+              SINERGIYA platformasi yordamida minglab talabalar orzularidagi ishni topdi
             </p>
           </motion.div>
 

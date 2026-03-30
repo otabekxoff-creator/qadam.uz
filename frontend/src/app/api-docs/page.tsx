@@ -168,7 +168,7 @@ export default function ApiDocsPage() {
           >
             <h2 className="text-xl font-semibold mb-4">Base URL</h2>
             <code className="block p-4 bg-secondary rounded-lg font-mono text-sm">
-              https://api.step.uz/v1
+              https://api.SINERGIYA/v1
             </code>
           </motion.div>
         </div>

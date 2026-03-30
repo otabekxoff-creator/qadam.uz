@@ -7,7 +7,7 @@ export default function TutorialsPage() {
   const tutorials = [
     {
       title: 'Getting Started',
-      description: 'Learn the basics of using Step.uz platform',
+      description: 'Learn the basics of using SINERGIYA platform',
       icon: BookOpen,
       articles: [
         { title: 'Creating Your Profile', readTime: '5 min' },
@@ -65,7 +65,7 @@ export default function TutorialsPage() {
       answer: 'Use the Applications Dashboard to see all your submitted applications, their current status, and any updates from employers.',
     },
     {
-      question: 'Is Step.uz free to use?',
+      question: 'Is SINERGIYA free to use?',
       answer: 'Yes, the basic features are completely free. We also offer premium plans with additional features like priority applications and advanced analytics.',
     },
   ];
@@ -82,7 +82,7 @@ export default function TutorialsPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Tutorials & Guides</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Everything you need to know to succeed on Step.uz
+              Everything you need to know to succeed on SINERGIYA
             </p>
           </motion.div>
 

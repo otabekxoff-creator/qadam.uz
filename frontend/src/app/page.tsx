@@ -311,7 +311,7 @@ export default function Home() {
 
   const testimonials = [
     {
-      quote: "Step.uz helped me land my dream job at a top tech company within just 3 weeks. The AI matching feature is incredibly accurate!",
+      quote: "SINERGIYA helped me land my dream job at a top tech company within just 3 weeks. The AI matching feature is incredibly accurate!",
       author: "Sarah Johnson",
       role: "Senior Developer",
       company: "Google"
@@ -354,7 +354,7 @@ export default function Home() {
       <nav className="fixed top-0 left-0 right-0 z-50 border-b bg-background/80 backdrop-blur-md">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
-            Step.uz
+            SINERGIYA
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link href="/jobs/search" className="text-muted-foreground hover:text-foreground transition-colors">Find Jobs</Link>
@@ -559,7 +559,7 @@ export default function Home() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-4xl font-bold mb-4">Nima Uchun Step.uz?</h2>
+            <h2 className="text-4xl font-bold mb-4">Nima Uchun SINERGIYA?</h2>
             <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
               Biz sizga eng yaxshi ish qidirish tajribasini taqdim etish uchun ishlab chiqilgan xususiyatlar
             </p>
@@ -630,7 +630,7 @@ export default function Home() {
           <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
             <div className="col-span-2">
               <Link href="/" className="text-2xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent inline-block mb-4">
-                Step.uz
+                SINERGIYA
               </Link>
               <p className="text-muted-foreground mb-4 max-w-xs">
                 O&apos;zbekiston yoshlari uchun eng yaxshi ish topish platformasi. 
@@ -682,7 +682,7 @@ export default function Home() {
 
           <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm">
-              © 2024 Step.uz. Barcha huquqlar himoyalangan.
+              © 2024 SINERGIYA. Barcha huquqlar himoyalangan.
             </p>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <Link href="/privacy" className="hover:text-primary transition-colors">Maxfiylik Siyosati</Link>

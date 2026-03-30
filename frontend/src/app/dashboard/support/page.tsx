@@ -189,7 +189,7 @@ export default function SupportPage() {
                   <Ticket className="w-6 h-6 text-primary" />
                 </div>
                 <h3 className="font-semibold mb-1">Email Support</h3>
-                <p className="text-sm text-muted-foreground">support@step.uz</p>
+                <p className="text-sm text-muted-foreground">support@SINERGIYA</p>
               </div>
             </div>
           </div>

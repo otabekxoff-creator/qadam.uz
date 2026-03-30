@@ -175,7 +175,7 @@ const BENEFITS = [
 
 const TEAM_QUOTES = [
   {
-    quote: "Working at Step.uz has been the most rewarding experience of my career. We're literally changing lives every day.",
+    quote: "Working at SINERGIYA has been the most rewarding experience of my career. We're literally changing lives every day.",
     author: 'Sarah K.',
     role: 'Senior Developer',
   },
@@ -300,7 +300,7 @@ export default function CareersPage() {
             className="text-center max-w-3xl mx-auto mb-16"
           >
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why work at Step.uz?
+              Why work at SINERGIYA?
             </h2>
             <p className="text-lg text-gray-600">
               We're building something meaningful, and we want passionate people to join us on this journey
@@ -516,7 +516,7 @@ export default function CareersPage() {
               What our team says
             </h2>
             <p className="text-lg text-slate-400">
-              Hear from the people who make Step.uz great
+              Hear from the people who make SINERGIYA great
             </p>
           </motion.div>
 

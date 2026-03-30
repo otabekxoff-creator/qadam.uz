@@ -93,7 +93,7 @@ const FEATURED_PARTNERS = [
 const SUCCESS_STORIES = [
   {
     company: 'Inha University',
-    quote: "Step.uz orqali bizning talabalarimiz dunyoning eng yaxshi kompaniyalarida ishga kirish imkoniyatiga ega bo'lishmoqda.",
+    quote: "SINERGIYA orqali bizning talabalarimiz dunyoning eng yaxshi kompaniyalarida ishga kirish imkoniyatiga ega bo'lishmoqda.",
     result: '85% talaba ishga joylashdi',
     author: 'Dr. Kim',
     role: 'Rektor',
@@ -107,7 +107,7 @@ const SUCCESS_STORIES = [
   },
   {
     company: 'Youth Union',
-    quote: "Ko'plab yoshlarimiz Step.uz orqali o'z karyerasini boshladi. Bu platforma haqiqiy o'zgarishlar olib kelmoqda.",
+    quote: "Ko'plab yoshlarimiz SINERGIYA orqali o'z karyerasini boshladi. Bu platforma haqiqiy o'zgarishlar olib kelmoqda.",
     result: '10,000+ yosh ishga joylashdi',
     author: 'Sardor Umurzakov',
     role: 'Direktor',

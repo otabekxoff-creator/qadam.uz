@@ -62,7 +62,7 @@ export default function TeamPage() {
     { name: 'Engineering', count: 25, description: 'Building the platform of the future' },
     { name: 'Product', count: 12, description: 'Designing intuitive user experiences' },
     { name: 'Sales', count: 18, description: 'Connecting companies with talent' },
-    { name: 'Marketing', count: 10, description: 'Spreading the word about Step.uz' },
+    { name: 'Marketing', count: 10, description: 'Spreading the word about SINERGIYA' },
     { name: 'Customer Success', count: 15, description: 'Supporting our users 24/7' },
     { name: 'Data Science', count: 8, description: 'Powering AI-driven matching' },
   ];
@@ -79,7 +79,7 @@ export default function TeamPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Our Team</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Meet the passionate people behind Step.uz who are dedicated to transforming careers
+              Meet the passionate people behind SINERGIYA who are dedicated to transforming careers
             </p>
           </motion.div>
 

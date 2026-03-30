@@ -120,7 +120,7 @@ export default function SecurityPage() {
               {[
                 'Enable two-factor authentication (2FA) for your account',
                 'Use a strong, unique password and update it regularly',
-                'Be cautious of phishing emails claiming to be from Step.uz',
+                'Be cautious of phishing emails claiming to be from SINERGIYA',
                 'Keep your browser and operating system up to date',
                 'Log out of your account when using shared computers',
                 'Review your account activity regularly',

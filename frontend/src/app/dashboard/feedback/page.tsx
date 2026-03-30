@@ -54,7 +54,7 @@ export default function FeedbackPage() {
         transition={{ duration: 0.5 }}
       >
         <h1 className="text-3xl font-bold mb-2">Share Feedback</h1>
-        <p className="text-muted-foreground mb-8">Help us improve Step.uz with your suggestions and feedback</p>
+        <p className="text-muted-foreground mb-8">Help us improve SINERGIYA with your suggestions and feedback</p>
 
         {/* Feedback Form */}
         <div className="bg-card rounded-xl p-6 shadow-sm border mb-8">

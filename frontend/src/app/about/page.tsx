@@ -141,7 +141,7 @@ const awards = [
 // Testimonials
 const testimonials = [
   {
-    quote: "Step.uz platformasi bizning kompaniyamizga ajoyib mutaxassislarni topishga yordam berdi. HR jarayonlarimiz 60% tezlashtirildi.",
+    quote: "SINERGIYA platformasi bizning kompaniyamizga ajoyib mutaxassislarni topishga yordam berdi. HR jarayonlarimiz 60% tezlashtirildi.",
     author: "Aziz Yusupov",
     role: "HR Director",
     company: "UzbekTech Solutions",

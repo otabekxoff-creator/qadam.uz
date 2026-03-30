@@ -61,7 +61,7 @@ Intervyu - bu jarayon, unga tayyorgarlik talab qiladi. Keng tarqalgan savollarga
 
 Karyera muhim, lekin sog'ligingiz va shaxsiy hayotingiz ham shunchalik qimmatli. Ish va hayot o'rtasida sog'lom muvozanatni saqlang.
 
-Xulosa qilib aytganda, karyerani boshlash - bu doimiy rivojlanish jarayoni. Sabr-toqat, ijodkorlik va ishtiyoq bilan siz o'z maqsadlaringizga erishasiz. Step.uz platformasi sizga bu yo'lda yordam berishga tayyor!`,
+Xulosa qilib aytganda, karyerani boshlash - bu doimiy rivojlanish jarayoni. Sabr-toqat, ijodkorlik va ishtiyoq bilan siz o'z maqsadlaringizga erishasiz. SINERGIYA platformasi sizga bu yo'lda yordam berishga tayyor!`,
       author: "Dr. Alisher Karimov",
       date: "2024-03-20",
       readTime: "8 daqiqa",

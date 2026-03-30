@@ -71,7 +71,7 @@ export default function IntegrationsPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Integrations</h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Connect Step.uz with your favorite tools and streamline your workflow
+              Connect SINERGIYA with your favorite tools and streamline your workflow
             </p>
           </motion.div>
 

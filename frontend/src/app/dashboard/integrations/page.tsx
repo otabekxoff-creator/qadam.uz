@@ -56,7 +56,7 @@ export default function IntegrationsDashboardPage() {
         transition={{ duration: 0.5 }}
       >
         <h1 className="text-3xl font-bold mb-2">Integrations</h1>
-        <p className="text-muted-foreground mb-8">Connect your favorite tools with Step.uz</p>
+        <p className="text-muted-foreground mb-8">Connect your favorite tools with SINERGIYA</p>
 
         {/* Search and Filter */}
         <div className="flex flex-col md:flex-row gap-4 mb-8">

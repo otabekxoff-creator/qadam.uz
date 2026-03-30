@@ -132,8 +132,8 @@ const POPULAR_ARTICLES = [
 const FAQ_ITEMS = [
   {
     id: 1,
-    question: "Step.uz dan foydalanish bepulmi?",
-    answer: "Ha, Step.uz da asosiy xizmatlar bepul. Ish qidirish, profil yaratish va arizalar topshirish bepul. Biroq, Premium obuna orqali qo'shimcha imkoniyatlarga ega bo'lishingiz mumkin.",
+    question: "SINERGIYA dan foydalanish bepulmi?",
+    answer: "Ha, SINERGIYA da asosiy xizmatlar bepul. Ish qidirish, profil yaratish va arizalar topshirish bepul. Biroq, Premium obuna orqali qo'shimcha imkoniyatlarga ega bo'lishingiz mumkin.",
     category: 'general',
   },
   {
@@ -175,7 +175,7 @@ const FAQ_ITEMS = [
   {
     id: 8,
     question: "Mobil ilovangiz bormi?",
-    answer: "Ha, iOS va Android uchun mobil ilovalarimiz mavjud. App Store yoki Google Play dan 'Step.uz' ni qidirib topishingiz mumkin.",
+    answer: "Ha, iOS va Android uchun mobil ilovalarimiz mavjud. App Store yoki Google Play dan 'SINERGIYA' ni qidirib topishingiz mumkin.",
     category: 'general',
   },
 ];
@@ -183,7 +183,7 @@ const FAQ_ITEMS = [
 const VIDEO_TUTORIALS = [
   {
     id: 1,
-    title: "Step.uz dan ilk foydalanish",
+    title: "SINERGIYA dan ilk foydalanish",
     duration: "5:32",
     thumbnail: "/tutorials/tutorial-1.jpg",
     views: 12543,
@@ -529,7 +529,7 @@ export default function HelpPage() {
                       </div>
                       <div>
                         <p className="text-sm text-blue-200">Email</p>
-                        <p className="font-medium">support@step.uz</p>
+                        <p className="font-medium">support@SINERGIYA</p>
                       </div>
                     </div>
                     

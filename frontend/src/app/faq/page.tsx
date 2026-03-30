@@ -15,8 +15,8 @@ export default function FAQPage() {
       category: "Umumiy savollar",
       questions: [
         {
-          q: "Step.uz nima?",
-          a: "Step.uz - O'zbekiston yoshlari uchun yaratilgan zamonaviy karyera platformasi. Biz talabalar va kompaniyalar o'rtasida ko'prik vazifasini bajaramiz, ish topish va ishchi topish jarayonini osonlashtiramiz.",
+          q: "SINERGIYA nima?",
+          a: "SINERGIYA - O'zbekiston yoshlari uchun yaratilgan zamonaviy karyera platformasi. Biz talabalar va kompaniyalar o'rtasida ko'prik vazifasini bajaramiz, ish topish va ishchi topish jarayonini osonlashtiramiz.",
         },
         {
           q: "Platformadan qanday foydalanish mumkin?",

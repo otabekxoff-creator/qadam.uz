@@ -43,7 +43,7 @@ export default function LegalPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Legal Information</h1>
             <p className="text-xl text-muted-foreground">
-              Important documents and policies governing the use of Step.uz
+              Important documents and policies governing the use of SINERGIYA
             </p>
           </motion.div>
 

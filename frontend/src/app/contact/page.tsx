@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from "lucide-react";
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle, ArrowLeft } from "lucide-react";
+import Link from "next/link";
 
 export default function ContactPage() {
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -28,20 +29,20 @@ export default function ContactPage() {
     {
       icon: Mail,
       title: "Email",
-      value: "support@step.uz",
+      value: "info@sinergiya.uz",
       description: "24 soat ichida javob beramiz",
     },
     {
       icon: Phone,
       title: "Telefon",
-      value: "+998 71 123 45 67",
+      value: "+998880016777",
       description: "Dushanba-Juma, 9:00-18:00",
     },
     {
       icon: MapPin,
       title: "Manzil",
-      value: "Toshkent, Amir Temur ko'chasi 108",
-      description: "IT Park binosi, 3-qavat",
+      value: "Farg'ona viloyati, O'zbekiston tumani, Ziyokor ko'chasi",
+      description: "Asosiy ofis",
     },
     {
       icon: Clock,
@@ -54,6 +55,16 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen py-12 px-4">
       <div className="container mx-auto max-w-6xl">
+        {/* Back Button */}
+        <div className="mb-6">
+          <Link href="/">
+            <Button variant="outline" size="sm" className="gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Orqaga
+            </Button>
+          </Link>
+        </div>
+
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

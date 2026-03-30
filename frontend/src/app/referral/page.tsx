@@ -7,7 +7,7 @@ import { useState } from 'react';
 export default function ReferralPage() {
   const [copied, setCopied] = useState(false);
   const referralCode = 'STEP2024';
-  const referralLink = `https://step.uz/register?ref=${referralCode}`;
+  const referralLink = `https://SINERGIYA/register?ref=${referralCode}`;
 
   const stats = [
     { label: 'Total Referrals', value: 12 },
@@ -41,7 +41,7 @@ export default function ReferralPage() {
           >
             <h1 className="text-4xl font-bold mb-4">Refer & Earn</h1>
             <p className="text-xl text-muted-foreground">
-              Invite friends to join Step.uz and earn rewards for each successful referral
+              Invite friends to join SINERGIYA and earn rewards for each successful referral
             </p>
           </motion.div>
 
