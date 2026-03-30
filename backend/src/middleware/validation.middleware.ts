@@ -3,6 +3,13 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
+// Generic request validator (stub for compatibility)
+export const requestValidator = (schema: any) => {
+  return (req: Request, res: Response, next: NextFunction) => {
+    next();
+  };
+};
+
 // Validation middleware for creating/updating jobs
 export const validateJob = async (
   req: Request,
