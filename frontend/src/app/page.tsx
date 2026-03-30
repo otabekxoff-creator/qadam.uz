@@ -152,37 +152,46 @@ function JobCard({ title, company, location, salary, type, postedAt, logo, tags 
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      className="p-6 rounded-2xl border bg-card hover:shadow-lg transition-all duration-300 group cursor-pointer"
+      className="p-6 rounded-2xl border bg-card hover:shadow-lg transition-all duration-300 group"
     >
-      <div className="flex items-start gap-4">
-        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center text-primary font-bold text-xl flex-shrink-0">
-          {logo}
-        </div>
-        <div className="flex-1 min-w-0">
-          <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors truncate">{title}</h3>
-          <p className="text-muted-foreground mb-3">{company}</p>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
-            <span className="flex items-center gap-1">
-              <MapPin className="w-4 h-4" />
-              {location}
-            </span>
-            <span className="flex items-center gap-1">
-              <DollarSign className="w-4 h-4" />
-              {salary}
-            </span>
-            <span className="flex items-center gap-1">
-              <Clock className="w-4 h-4" />
-              {postedAt}
-            </span>
+      <Link href="/jobs/search" className="block cursor-pointer">
+        <div className="flex items-start gap-4">
+          <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center text-primary font-bold text-xl flex-shrink-0">
+            {logo}
           </div>
-          <div className="flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <span key={tag} className="px-3 py-1 bg-secondary rounded-full text-xs">
-                {tag}
+          <div className="flex-1 min-w-0">
+            <h3 className="font-semibold text-lg mb-1 group-hover:text-primary transition-colors truncate">{title}</h3>
+            <p className="text-muted-foreground mb-3">{company}</p>
+            <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-4">
+              <span className="flex items-center gap-1">
+                <MapPin className="w-4 h-4" />
+                {location}
               </span>
-            ))}
+              <span className="flex items-center gap-1">
+                <DollarSign className="w-4 h-4" />
+                {salary}
+              </span>
+              <span className="flex items-center gap-1">
+                <Clock className="w-4 h-4" />
+                {postedAt}
+              </span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <span key={tag} className="px-3 py-1 bg-secondary rounded-full text-xs">
+                  {tag}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
+      </Link>
+      <div className="mt-4 pt-4 border-t">
+        <Link href="/jobs/search">
+          <Button className="w-full" variant="outline">
+            Ariza Yuborish
+          </Button>
+        </Link>
       </div>
     </motion.div>
   );
@@ -311,39 +320,39 @@ export default function Home() {
 
   const testimonials = [
     {
-      quote: "SINERGIYA helped me land my dream job at a top tech company within just 3 weeks. The AI matching feature is incredibly accurate!",
-      author: "Sarah Johnson",
-      role: "Senior Developer",
+      quote: "SINERGIYA menga atigi 3 haftada orzuyimdagi ishni topishga yordam berdi. AI moslash xususiyati ajoyib aniqlikda ishlaydi!",
+      author: "Nodira Karimova",
+      role: "Senior Dasturchi",
       company: "Google"
     },
     {
-      quote: "As an employer, we've found amazing talent through this platform. The quality of candidates is consistently high.",
-      author: "Michael Chen",
-      role: "HR Director",
+      quote: "Ish beruvchi sifatida, bu platforma orqali ajoyib talentlarni topdik. Nomzodlarning sifatlari doimo yuqori darajada.",
+      author: "Jasur Toshmatov",
+      role: "HR Direktor",
       company: "TechCorp"
     },
     {
-      quote: "The career resources and interview preparation tools helped me transition from a junior to a senior role. Highly recommended!",
-      author: "David Kim",
-      role: "Product Manager",
+      quote: "Karyera resurslari va suhbatga tayyorgarlik vositalari menga juniordan senior lavozimga o'tishga yordam berdi. Tavsiya etaman!",
+      author: "Davron Kimsanov",
+      role: "Mahsulot Menejeri",
       company: "StartupXYZ"
     },
     {
-      quote: "I love how easy it is to apply with just one click. The platform saves me so much time in my job search.",
-      author: "Emily Davis",
-      role: "UX Designer",
+      quote: "Bir marta bosish orqali ariza yuborish juda oson. Platforma ish qidirishimda menga ko'p vaqt tejaydi.",
+      author: "Dilnoza Rahimova",
+      role: "UX Dizayner",
       company: "DesignStudio"
     },
     {
-      quote: "The salary insights and company reviews helped me negotiate a better offer. Transparency is key!",
-      author: "James Wilson",
-      role: "Data Scientist",
+      quote: "Maosh tahlili va kompaniya sharhlari menga yaxshiroq taklif olishga yordam berdi. Shaffoflik muhim!",
+      author: "Bekzod Mirzaev",
+      role: "Ma'lumotlar Tahlilchisi",
       company: "DataCorp"
     },
     {
-      quote: "Found a remote job that perfectly matches my skills and lifestyle. Couldn't be happier with the experience.",
-      author: "Lisa Anderson",
-      role: "Frontend Developer",
+      quote: "Ko'nikmalarim va turmush tarzimga mos keladigan masofadan ish topdim. Tajribadan juda mamnunman.",
+      author: "Laylo Abdullayeva",
+      role: "Frontend Dasturchi",
       company: "CloudTech"
     }
   ];
@@ -394,7 +403,7 @@ export default function Home() {
               className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6"
             >
               <Sparkles size={16} />
-              <span className="text-sm font-medium">O&apos;zbekiston yoshlari uchun #1 ish topish platformasi</span>
+              <span className="text-sm font-medium">Sizning karyerangiz - bizning vazifamiz</span>
             </motion.div>
             
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
@@ -433,7 +442,7 @@ export default function Home() {
                     className="flex-1 py-3 bg-transparent outline-none"
                   />
                 </div>
-                <Button size="lg" className="px-8 rounded-xl">
+                <Button size="lg" className="px-8 rounded-xl" onClick={() => window.location.href='/jobs/search'}>
                   <Search className="w-5 h-5 mr-2" />
                   Qidirish
                 </Button>
@@ -542,10 +551,12 @@ export default function Home() {
           </div>
 
           <div className="text-center mt-12">
-            <Button size="lg">
-              Barcha Ishlarni Ko&apos;rish
-              <ArrowRight className="w-4 h-4 ml-2" />
-            </Button>
+            <Link href="/jobs/search">
+              <Button size="lg">
+                Barcha Ishlarni Ko&apos;rish
+                <ArrowRight className="w-4 h-4 ml-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -612,13 +623,17 @@ export default function Home() {
               50,000+ dan ortiq ish o&apos;rinlari sizni kutmoqda. Bepul ro&apos;yxatdan o&apos;ting va karerangizni boshlang.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button size="lg" variant="secondary" className="text-primary font-semibold px-8">
-                Bepul Boshlash
-                <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8">
-                Ish Reklama Qilish
-              </Button>
+              <Link href="/register">
+                <Button size="lg" variant="secondary" className="text-primary font-semibold px-8">
+                  Bepul Boshlash
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+              <Link href="/post-job">
+                <Button size="lg" variant="outline" className="border-white text-white hover:bg-white hover:text-primary px-8">
+                  Ish Reklama Qilish
+                </Button>
+              </Link>
             </div>
           </motion.div>
         </div>
@@ -633,8 +648,7 @@ export default function Home() {
                 SINERGIYA
               </Link>
               <p className="text-muted-foreground mb-4 max-w-xs">
-                O&apos;zbekiston yoshlari uchun eng yaxshi ish topish platformasi. 
-                2024-yildan beri xizmatdamiz.
+                Sizning karyerangiz - bizning vazifamiz.
               </p>
               <div className="flex gap-4">
                 {[Rss, MessageCircle, LinkIcon, Camera].map((Icon, index) => (
@@ -655,7 +669,7 @@ export default function Home() {
                 <li><Link href="/jobs/search" className="hover:text-primary transition-colors">Ish Qidirish</Link></li>
                 <li><Link href="/companies" className="hover:text-primary transition-colors">Kompaniyalar</Link></li>
                 <li><Link href="/salary-calculator" className="hover:text-primary transition-colors">Maosh Hisoblagichi</Link></li>
-                <li><Link href="/career-resources" className="hover:text-primary transition-colors">Karyera Resurslari</Link></li>
+                <li><Link href="/resources" className="hover:text-primary transition-colors">Karyera Resurslari</Link></li>
               </ul>
             </div>
 
@@ -682,7 +696,7 @@ export default function Home() {
 
           <div className="pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-muted-foreground text-sm">
-              © 2024 SINERGIYA. Barcha huquqlar himoyalangan.
+              © 2026 SINERGIYA. Barcha huquqlar himoyalangan.
             </p>
             <div className="flex gap-6 text-sm text-muted-foreground">
               <Link href="/privacy" className="hover:text-primary transition-colors">Maxfiylik Siyosati</Link>

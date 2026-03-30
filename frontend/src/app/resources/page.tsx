@@ -40,20 +40,20 @@ const featuredResources = [
 ];
 
 const allResources = [
-  { id: '5', title: 'Boshlang\'ich Daraja Rezyume Namunasi', category: 'Rezyume Namunalari', type: 'template', downloads: 34200, rating: 4.6, format: 'PDF, DOCX', size: '2.5 MB' },
-  { id: '6', title: 'Rahbariyat Rezyume Namunasi', category: 'Rezyume Namunalari', type: 'template', downloads: 18900, rating: 4.8, format: 'PDF, DOCX', size: '2.8 MB' },
-  { id: '7', title: 'Murojaat Xati Yozish Qo\'llanmasi', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 56700, rating: 4.7, pages: 45, readTime: '25 daqiqa' },
-  { id: '8', title: 'LinkedIn Profil Optimallashtirish', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 42300, rating: 4.8, pages: 32, readTime: '18 daqiqa' },
-  { id: '9', title: 'Ish Qidirish Strategiyasi Qo\'llanmasi', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 28900, rating: 4.5, pages: 68, readTime: '40 daqiqa' },
-  { id: '10', title: 'Texnik Suhbat Yozuvlari', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 67800, rating: 4.9, pages: 25, readTime: '15 daqiqa' },
-  { id: '11', title: 'Maosh Hisoblagichi 2024', category: 'Bepul Vositalar', type: 'tool', users: 89200, rating: 4.8 },
-  { id: '12', title: 'Rezyume Kalit So\'z Optimizatori', category: 'Bepul Vositalar', type: 'tool', users: 45600, rating: 4.6 },
-  { id: '13', title: 'Suhbat Amaliyoti Simulyatori', category: 'Bepul Vositalar', type: 'tool', users: 23400, rating: 4.7 },
-  { id: '14', title: 'Samarali Tarmoqlash Usullari', category: 'Video Qo\'llanmalar', type: 'video', duration: '45 daqiqa', views: 12300, rating: 4.6 },
-  { id: '15', title: 'Shaxsiy Brendingni Rivojlantirish', category: 'Video Qo\'llanmalar', type: 'video', duration: '1 soat 15 daqiqa', views: 8900, rating: 4.8 },
-  { id: '16', title: 'Rezyume Ikonkalari To\'plami', category: 'Dizayn Materiallari', type: 'design', downloads: 23400, rating: 4.5, format: 'SVG, PNG', size: '15 MB' },
-  { id: '17', title: 'Professional Sertifikat Namunalari', category: 'Dizayn Materiallari', type: 'design', downloads: 15600, rating: 4.7, format: 'AI, PSD', size: '45 MB' },
-  { id: '18', title: 'Vizitka Namunalari', category: 'Dizayn Materiallari', type: 'design', downloads: 18900, rating: 4.6, format: 'AI, PSD', size: '32 MB' },
+  { id: '5', title: 'Boshlang\'ich Daraja Rezyume Namunasi', category: 'Rezyume Namunalari', categoryId: 'templates', type: 'template', downloads: 34200, rating: 4.6, format: 'PDF, DOCX', size: '2.5 MB' },
+  { id: '6', title: 'Rahbariyat Rezyume Namunasi', category: 'Rezyume Namunalari', categoryId: 'templates', type: 'template', downloads: 18900, rating: 4.8, format: 'PDF, DOCX', size: '2.8 MB' },
+  { id: '7', title: 'Murojaat Xati Yozish Qo\'llanmasi', category: 'Karyera Qo\'llanmalari', categoryId: 'guides', type: 'guide', downloads: 56700, rating: 4.7, pages: 45, readTime: '25 daqiqa' },
+  { id: '8', title: 'LinkedIn Profil Optimallashtirish', category: 'Karyera Qo\'llanmalari', categoryId: 'guides', type: 'guide', downloads: 42300, rating: 4.8, pages: 32, readTime: '18 daqiqa' },
+  { id: '9', title: 'Ish Qidirish Strategiyasi Qo\'llanmasi', category: 'Karyera Qo\'llanmalari', categoryId: 'guides', type: 'guide', downloads: 28900, rating: 4.5, pages: 68, readTime: '40 daqiqa' },
+  { id: '10', title: 'Texnik Suhbat Yozuvlari', category: 'Karyera Qo\'llanmalari', categoryId: 'guides', type: 'guide', downloads: 67800, rating: 4.9, pages: 25, readTime: '15 daqiqa' },
+  { id: '11', title: 'Maosh Hisoblagichi 2024', category: 'Bepul Vositalar', categoryId: 'tools', type: 'tool', users: 89200, rating: 4.8 },
+  { id: '12', title: 'Rezyume Kalit So\'z Optimizatori', category: 'Bepul Vositalar', categoryId: 'tools', type: 'tool', users: 45600, rating: 4.6 },
+  { id: '13', title: 'Suhbat Amaliyoti Simulyatori', category: 'Bepul Vositalar', categoryId: 'tools', type: 'tool', users: 23400, rating: 4.7 },
+  { id: '14', title: 'Samarali Tarmoqlash Usullari', category: 'Video Qo\'llanmalar', categoryId: 'videos', type: 'video', duration: '45 daqiqa', views: 12300, rating: 4.6 },
+  { id: '15', title: 'Shaxsiy Brendingni Rivojlantirish', category: 'Video Qo\'llanmalar', categoryId: 'videos', type: 'video', duration: '1 soat 15 daqiqa', views: 8900, rating: 4.8 },
+  { id: '16', title: 'Rezyume Ikonkalari To\'plami', category: 'Dizayn Materiallari', categoryId: 'design', type: 'design', downloads: 23400, rating: 4.5, format: 'SVG, PNG', size: '15 MB' },
+  { id: '17', title: 'Professional Sertifikat Namunalari', category: 'Dizayn Materiallari', categoryId: 'design', type: 'design', downloads: 15600, rating: 4.7, format: 'AI, PSD', size: '45 MB' },
+  { id: '18', title: 'Vizitka Namunalari', category: 'Dizayn Materiallari', categoryId: 'design', type: 'design', downloads: 18900, rating: 4.6, format: 'AI, PSD', size: '32 MB' },
 ];
 
 const successStories = [
@@ -76,7 +76,7 @@ export default function ResourcesPage() {
 
   const filteredResources = allResources.filter((resource) => {
     const matchesSearch = resource.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || resource.category.toLowerCase().replace(/\s+/g, '-') === selectedCategory;
+    const matchesCategory = selectedCategory === 'all' || resource.categoryId === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
