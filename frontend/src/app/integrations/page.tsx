@@ -12,7 +12,7 @@ import {
   MessageSquare,
   Video,
   Database,
-  Github,
+  GitBranch,
   Globe
 } from 'lucide-react';
 
@@ -45,9 +45,9 @@ export default function IntegrationsPage() {
     {
       category: 'Developer Tools',
       items: [
-        { name: 'GitHub', icon: Github, description: 'Showcase your GitHub repositories' },
-        { name: 'GitLab', icon: Github, description: 'Connect GitLab projects to your profile' },
-        { name: 'Bitbucket', icon: Github, description: 'Import Bitbucket repositories' },
+        { name: 'GitHub', icon: GitBranch, description: 'Showcase your GitHub repositories' },
+        { name: 'GitLab', icon: GitBranch, description: 'Connect GitLab projects to your profile' },
+        { name: 'Bitbucket', icon: GitBranch, description: 'Import Bitbucket repositories' },
       ],
     },
   ];
