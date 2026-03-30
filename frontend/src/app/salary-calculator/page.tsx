@@ -131,7 +131,7 @@ export default function SalaryCalculatorPage() {
                   <span className="text-3xl font-bold">${salaryData[location as keyof typeof salaryData].min.toLocaleString()}</span>
                   <span className="text-muted-foreground">-</span>
                   <span className="text-3xl font-bold">${salaryData[location as keyof typeof salaryData].max.toLocaleString()}</span>
-                  <span className="text-muted-foreground">/month</span>
+                  <span className="text-muted-foreground">/oy</span>
                 </div>
                 <p className="text-sm text-muted-foreground mt-2">
                   O&apos;zbekistondagi 1000+ {role} lavozimi bo&apos;yicha bozor ma&apos;lumotlari asosida

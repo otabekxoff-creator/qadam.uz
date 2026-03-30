@@ -22,50 +22,50 @@ const categories = [
 
 const featuredResources = [
   {
-    id: '1', title: 'Complete Interview Preparation Kit', description: 'Everything you need to ace your next interview - from common questions to negotiation strategies.', type: 'guide', category: 'Career Guides',
-    downloads: 45600, rating: 4.9, reviews: 1234, tags: ['Interview', 'Career', 'Free'], isNew: true, isFeatured: true,
+    id: '1', title: 'Suhbatga Tayyorgarlik To\'liq Qo\'llanmasi', description: 'Suhbatdan muvaffaqiyatli o\'tish uchun barcha kerakli narsalar - umumiy savollardan tortib, muzokara strategiyalarigacha.', type: 'guide', category: 'Karyera Qo\'llanmalari',
+    downloads: 45600, rating: 4.9, reviews: 1234, tags: ['Suhbat', 'Karyera', 'Bepul'], isNew: true, isFeatured: true,
   },
   {
-    id: '2', title: 'ATS-Friendly Resume Template 2024', description: 'Modern resume template optimized for Applicant Tracking Systems. Fully customizable in Word and PDF.', type: 'template', category: 'Resume Templates',
-    downloads: 89300, rating: 4.8, reviews: 2567, tags: ['Resume', 'ATS', 'Template'], isNew: false, isFeatured: true,
+    id: '2', title: 'ATS Mos Rezyume Namunasi 2024', description: 'Applicant Tracking Systems uchun optimallashtirilgan zamonaviy rezyume namunasi. Word va PDF formatlarda to\'liq moslashtirilishi mumkin.', type: 'template', category: 'Rezyume Namunalari',
+    downloads: 89300, rating: 4.8, reviews: 2567, tags: ['Rezyume', 'ATS', 'Namuna'], isNew: false, isFeatured: true,
   },
   {
-    id: '3', title: 'Salary Negotiation Masterclass', description: 'Video course on how to negotiate your salary effectively. Includes scripts and real examples.', type: 'video', category: 'Video Tutorials',
-    duration: '2h 30m', views: 23400, rating: 4.9, reviews: 892, tags: ['Salary', 'Negotiation', 'Video'], isNew: true, isFeatured: true,
+    id: '3', title: 'Maosh Muzokaralari Master-klassi', description: 'Maoshingizni samarali muzokara qilish bo\'yicha video kurs. Skriptlar va haqiqiy misollarni o\'z ichiga oladi.', type: 'video', category: 'Video Qo\'llanmalar',
+    duration: '2 soat 30 daqiqa', views: 23400, rating: 4.9, reviews: 892, tags: ['Maosh', 'Muzokara', 'Video'], isNew: true, isFeatured: true,
   },
   {
-    id: '4', title: 'Developer Portfolio Generator', description: 'Generate a stunning developer portfolio in minutes. No coding required.', type: 'tool', category: 'Free Tools',
-    users: 15600, rating: 4.7, reviews: 456, tags: ['Portfolio', 'Developer', 'Tool'], isNew: false, isFeatured: true,
+    id: '4', title: 'Dasturchi Portfeli Generatori', description: 'Daqiqalarda ajoyib dasturchi portfelini yaratish. Kod yozish talab qilinmaydi.', type: 'tool', category: 'Bepul Vositalar',
+    users: 15600, rating: 4.7, reviews: 456, tags: ['Portfel', 'Dasturchi', 'Vosita'], isNew: false, isFeatured: true,
   },
 ];
 
 const allResources = [
-  { id: '5', title: 'Entry-Level Resume Template', category: 'Resume Templates', type: 'template', downloads: 34200, rating: 4.6, format: 'PDF, DOCX', size: '2.5 MB' },
-  { id: '6', title: 'Executive Resume Template', category: 'Resume Templates', type: 'template', downloads: 18900, rating: 4.8, format: 'PDF, DOCX', size: '2.8 MB' },
-  { id: '7', title: 'Cover Letter Writing Guide', category: 'Career Guides', type: 'guide', downloads: 56700, rating: 4.7, pages: 45, readTime: '25 min' },
-  { id: '8', title: 'LinkedIn Profile Optimization', category: 'Career Guides', type: 'guide', downloads: 42300, rating: 4.8, pages: 32, readTime: '18 min' },
-  { id: '9', title: 'Job Search Strategy Workbook', category: 'Career Guides', type: 'guide', downloads: 28900, rating: 4.5, pages: 68, readTime: '40 min' },
-  { id: '10', title: 'Technical Interview Cheat Sheet', category: 'Career Guides', type: 'guide', downloads: 67800, rating: 4.9, pages: 25, readTime: '15 min' },
-  { id: '11', title: 'Salary Calculator 2024', category: 'Free Tools', type: 'tool', users: 89200, rating: 4.8 },
-  { id: '12', title: 'Resume Keyword Optimizer', category: 'Free Tools', type: 'tool', users: 45600, rating: 4.6 },
-  { id: '13', title: 'Interview Practice Simulator', category: 'Free Tools', type: 'tool', users: 23400, rating: 4.7 },
-  { id: '14', title: 'How to Network Effectively', category: 'Video Tutorials', type: 'video', duration: '45 min', views: 12300, rating: 4.6 },
-  { id: '15', title: 'Building Your Personal Brand', category: 'Video Tutorials', type: 'video', duration: '1h 15m', views: 8900, rating: 4.8 },
-  { id: '16', title: 'Resume Icons Pack', category: 'Design Assets', type: 'design', downloads: 23400, rating: 4.5, format: 'SVG, PNG', size: '15 MB' },
-  { id: '17', title: 'Professional Certificate Templates', category: 'Design Assets', type: 'design', downloads: 15600, rating: 4.7, format: 'AI, PSD', size: '45 MB' },
-  { id: '18', title: 'Business Card Templates', category: 'Design Assets', type: 'design', downloads: 18900, rating: 4.6, format: 'AI, PSD', size: '32 MB' },
+  { id: '5', title: 'Boshlang\'ich Daraja Rezyume Namunasi', category: 'Rezyume Namunalari', type: 'template', downloads: 34200, rating: 4.6, format: 'PDF, DOCX', size: '2.5 MB' },
+  { id: '6', title: 'Rahbariyat Rezyume Namunasi', category: 'Rezyume Namunalari', type: 'template', downloads: 18900, rating: 4.8, format: 'PDF, DOCX', size: '2.8 MB' },
+  { id: '7', title: 'Murojaat Xati Yozish Qo\'llanmasi', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 56700, rating: 4.7, pages: 45, readTime: '25 daqiqa' },
+  { id: '8', title: 'LinkedIn Profil Optimallashtirish', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 42300, rating: 4.8, pages: 32, readTime: '18 daqiqa' },
+  { id: '9', title: 'Ish Qidirish Strategiyasi Qo\'llanmasi', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 28900, rating: 4.5, pages: 68, readTime: '40 daqiqa' },
+  { id: '10', title: 'Texnik Suhbat Yozuvlari', category: 'Karyera Qo\'llanmalari', type: 'guide', downloads: 67800, rating: 4.9, pages: 25, readTime: '15 daqiqa' },
+  { id: '11', title: 'Maosh Hisoblagichi 2024', category: 'Bepul Vositalar', type: 'tool', users: 89200, rating: 4.8 },
+  { id: '12', title: 'Rezyume Kalit So\'z Optimizatori', category: 'Bepul Vositalar', type: 'tool', users: 45600, rating: 4.6 },
+  { id: '13', title: 'Suhbat Amaliyoti Simulyatori', category: 'Bepul Vositalar', type: 'tool', users: 23400, rating: 4.7 },
+  { id: '14', title: 'Samarali Tarmoqlash Usullari', category: 'Video Qo\'llanmalar', type: 'video', duration: '45 daqiqa', views: 12300, rating: 4.6 },
+  { id: '15', title: 'Shaxsiy Brendingni Rivojlantirish', category: 'Video Qo\'llanmalar', type: 'video', duration: '1 soat 15 daqiqa', views: 8900, rating: 4.8 },
+  { id: '16', title: 'Rezyume Ikonkalari To\'plami', category: 'Dizayn Materiallari', type: 'design', downloads: 23400, rating: 4.5, format: 'SVG, PNG', size: '15 MB' },
+  { id: '17', title: 'Professional Sertifikat Namunalari', category: 'Dizayn Materiallari', type: 'design', downloads: 15600, rating: 4.7, format: 'AI, PSD', size: '45 MB' },
+  { id: '18', title: 'Vizitka Namunalari', category: 'Dizayn Materiallari', type: 'design', downloads: 18900, rating: 4.6, format: 'AI, PSD', size: '32 MB' },
 ];
 
 const successStories = [
-  { name: 'Sarah Chen', role: 'Software Engineer at Google', story: 'Used the interview prep kit and landed my dream job at Google after 3 months of preparation. The structured approach made all the difference.', avatar: '/avatars/sarah.jpg' },
-  { name: 'Michael Roberts', role: 'Product Manager at Meta', story: 'The salary negotiation guide helped me increase my offer by 25%. Absolutely invaluable resource that paid for itself many times over.', avatar: '/avatars/michael.jpg' },
-  { name: 'Emily Watson', role: 'UX Designer at Airbnb', story: 'The portfolio generator helped me create a stunning portfolio that got me 5 interviews in a week. Highly recommended!', avatar: '/avatars/emily.jpg' },
+  { name: 'Nodira Karimova', role: 'Dasturchi, Google', story: 'Suhbatga tayyorgarlik to\'plamidan foydalandim va 3 oylik tayyorgarlikdan so\'ng orzuyimdagi ishni qo\'lga kiritdim. Tuzilma usuli katta ahamiyatga ega bo\'ldi.', avatar: '/avatars/nodira.jpg' },
+  { name: 'Jasur Toshmatov', role: 'Mahsulot Menejeri, Meta', story: 'Maosh muzokaralari qo\'llanmasi menga taklifimni 25% ga oshirishga yordam berdi. Mutlaqo bebaho resurs bo\'ldi.', avatar: '/avatars/jasur.jpg' },
+  { name: 'Nilufar Saidova', role: 'UX Dizayner, Airbnb', story: 'Portfel generatori menga bir haftada 5 ta suhbat olishim mumkin bo\'lgan ajoyib portfel yaratishga yordam berdi. Tavsiya etaman!', avatar: '/avatars/nilufar.jpg' },
 ];
 
 const recentDownloads = [
-  { name: 'Emma Thompson', resource: 'ATS Resume Template', time: '2 min ago', avatar: 'ET' },
-  { name: 'James Wilson', resource: 'Interview Guide', time: '5 min ago', avatar: 'JW' },
-  { name: 'Maria Garcia', resource: 'Salary Calculator', time: '8 min ago', avatar: 'MG' },
+  { name: 'Dilnoza Rahimova', resource: 'ATS Rezyume Namunasi', time: '2 daqiqa oldin', avatar: 'DR' },
+  { name: 'Bekzod Mirzaev', resource: 'Suhbat Qo\'llanmasi', time: '5 daqiqa oldin', avatar: 'BM' },
+  { name: 'Gulnora Aliyeva', resource: 'Maosh Hisoblagichi', time: '8 daqiqa oldin', avatar: 'GA' },
 ];
 
 export default function ResourcesPage() {

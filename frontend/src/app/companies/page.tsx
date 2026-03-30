@@ -40,9 +40,9 @@ const mockCompanies = [
     id: '1',
     name: 'Google',
     logo: '/logos/google.svg',
-    description: 'Google LLC is an American multinational technology company focusing on artificial intelligence, online advertising, search engine technology, cloud computing, computer software, quantum computing, e-commerce, and consumer electronics.',
-    industry: 'Technology',
-    location: 'Mountain View, CA',
+    description: 'Google LLC - sun\'iy intellekt, onlayn reklama, qidiruv tizimi, bulutli hisoblash, dasturiy ta\'minot, kvant hisoblash, elektron tijorat va elektronika sohalarida faoliyat yurituvchi kompaniya.',
+    industry: 'Axborot Texnologiyalari',
+    location: 'AQSh, Kaliforniya',
     companySize: '10000+',
     isVerified: true,
     isFeatured: true,
@@ -52,16 +52,16 @@ const mockCompanies = [
     totalEmployees: 156500,
     rating: 4.8,
     reviewCount: 15234,
-    benefits: ['Health Insurance', '401(k)', 'Free Meals', 'Gym', 'Remote Work'],
-    tags: ['AI', 'Cloud', 'Search', 'Innovation'],
+    benefits: ['Sog\'liq sug\'urtasi', 'Pensiya rejasi', 'Bepul ovqat', 'Sport zali', 'Masofadan ish'],
+    tags: ['Sun\'iy Intellekt', 'Bulut', 'Qidiruv', 'Innovatsiya'],
   },
   {
     id: '2',
     name: 'Microsoft',
     logo: '/logos/microsoft.svg',
-    description: 'Microsoft Corporation is an American multinational technology corporation producing computer software, consumer electronics, personal computers, and related services.',
-    industry: 'Technology',
-    location: 'Redmond, WA',
+    description: 'Microsoft Corporation - dasturiy ta\'minot, elektronika, shaxsiy kompyuterlar va xizmatlarni ishlab chiqaruvchi kompaniya.',
+    industry: 'Axborot Texnologiyalari',
+    location: 'AQSh, Vashington',
     companySize: '10000+',
     isVerified: true,
     isFeatured: true,
@@ -71,16 +71,16 @@ const mockCompanies = [
     totalEmployees: 221000,
     rating: 4.6,
     reviewCount: 12890,
-    benefits: ['Health Insurance', 'Stock Options', 'Parental Leave', 'Education Assistance'],
-    tags: ['Cloud', 'Software', 'Gaming', 'Enterprise'],
+    benefits: ['Sog\'liq sug\'urtasi', 'Aksiyalar', 'Bolalar parvarishi', 'Ta\'lim yordami'],
+    tags: ['Bulut', 'Dasturiy ta\'minot', 'O\'yinlar', 'Korxonalar'],
   },
   {
     id: '3',
     name: 'Amazon',
     logo: '/logos/amazon.svg',
-    description: 'Amazon.com, Inc. is an American multinational technology company focusing on e-commerce, cloud computing, online advertising, digital streaming, and artificial intelligence.',
-    industry: 'E-commerce & Cloud',
-    location: 'Seattle, WA',
+    description: 'Amazon.com, Inc. - elektron tijorat, bulutli hisoblash, onlayn reklama, raqamli oqim va sun\'iy intellekt sohalarida faoliyat yurituvchi kompaniya.',
+    industry: 'Elektron Tijorat va Bulut',
+    location: 'AQSh, Sietl',
     companySize: '10000+',
     isVerified: true,
     isFeatured: false,
@@ -90,16 +90,16 @@ const mockCompanies = [
     totalEmployees: 1541000,
     rating: 4.2,
     reviewCount: 28934,
-    benefits: ['Health Insurance', 'Stock Options', 'Employee Discount', 'Career Growth'],
-    tags: ['E-commerce', 'AWS', 'Logistics', 'AI'],
+    benefits: ['Sog\'liq sug\'urtasi', 'Aksiyalar', 'Xodimlar chegirmasi', 'Karyera o\'sishi'],
+    tags: ['Elektron tijorat', 'AWS', 'Logistika', 'Sun\'iy Intellekt'],
   },
   {
     id: '4',
     name: 'Meta',
     logo: '/logos/meta.svg',
-    description: 'Meta Platforms, Inc., formerly known as Facebook, Inc., is an American multinational technology conglomerate.',
-    industry: 'Social Media & VR',
-    location: 'Menlo Park, CA',
+    description: 'Meta Platforms, Inc. - ilgari Facebook, Inc. nomi bilan tanilgan, ijtimoiy media va virtual reallik sohalaridagi texnologiya konglomerati.',
+    industry: 'Ijtimoiy Media va VR',
+    location: 'AQSh, Kaliforniya',
     companySize: '10000+',
     isVerified: true,
     isFeatured: true,
@@ -109,16 +109,16 @@ const mockCompanies = [
     totalEmployees: 67317,
     rating: 4.4,
     reviewCount: 9876,
-    benefits: ['Health Insurance', '401(k)', 'Free Meals', 'Wellness Programs'],
-    tags: ['Social Media', 'VR', 'Metaverse', 'AI'],
+    benefits: ['Sog\'liq sug\'urtasi', 'Pensiya rejasi', 'Bepul ovqat', 'Salomatlik dasturlari'],
+    tags: ['Ijtimoiy Media', 'VR', 'Metaverse', 'Sun\'iy Intellekt'],
   },
   {
     id: '5',
     name: 'Apple',
     logo: '/logos/apple.svg',
-    description: 'Apple Inc. is an American multinational technology company specializing in consumer electronics, software, and online services.',
-    industry: 'Consumer Electronics',
-    location: 'Cupertino, CA',
+    description: 'Apple Inc. - istemol elektronikasi, dasturiy ta\'minot va onlayn xizmatlarga ixtisoslashgan kompaniya.',
+    industry: 'Elektronika',
+    location: 'AQSh, Kaliforniya',
     companySize: '10000+',
     isVerified: true,
     isFeatured: true,
@@ -128,16 +128,16 @@ const mockCompanies = [
     totalEmployees: 161000,
     rating: 4.7,
     reviewCount: 18234,
-    benefits: ['Health Insurance', 'Product Discounts', 'Education Support', 'Gym'],
-    tags: ['Hardware', 'Software', 'Design', 'Innovation'],
+    benefits: ['Sog\'liq sug\'urtasi', 'Mahsulot chegirmalari', 'Ta\'lim qo\'llab-quvvatlash', 'Sport zali'],
+    tags: ['Uskuna', 'Dasturiy ta\'minot', 'Dizayn', 'Innovatsiya'],
   },
   {
     id: '6',
     name: 'Netflix',
     logo: '/logos/netflix.svg',
-    description: 'Netflix, Inc. is an American subscription video on-demand over-the-top streaming service.',
-    industry: 'Entertainment',
-    location: 'Los Gatos, CA',
+    description: 'Netflix, Inc. - obuna asosidagi video oqim xizmati.',
+    industry: 'O\'yin-Kulgi',
+    location: 'AQSh, Kaliforniya',
     companySize: '5001-10000',
     isVerified: true,
     isFeatured: false,
@@ -147,16 +147,16 @@ const mockCompanies = [
     totalEmployees: 12800,
     rating: 4.5,
     reviewCount: 5432,
-    benefits: ['Unlimited PTO', 'Health Insurance', 'Free Streaming', 'Parental Leave'],
-    tags: ['Streaming', 'Entertainment', 'Content', 'Tech'],
+    benefits: ['Cheksiz ta\'til', 'Sog\'liq sug\'urtasi', 'Bepul tomosha', 'Bolalar parvarishi'],
+    tags: ['Oqim', 'O\'yin-Kulgi', 'Kontent', 'Texnologiya'],
   },
   {
     id: '7',
     name: 'Tesla',
     logo: '/logos/tesla.svg',
-    description: 'Tesla, Inc. is an American multinational automotive and clean energy company.',
-    industry: 'Automotive & Energy',
-    location: 'Austin, TX',
+    description: 'Tesla, Inc. - avtomobil va toza energiya sohalaridagi ko\'p millatli kompaniya.',
+    industry: 'Avtomobil va Energiya',
+    location: 'AQSh, Texas',
     companySize: '10000+',
     isVerified: true,
     isFeatured: false,
@@ -166,16 +166,16 @@ const mockCompanies = [
     totalEmployees: 127855,
     rating: 4.1,
     reviewCount: 7654,
-    benefits: ['Stock Options', 'Health Insurance', 'Employee Discount', 'Innovation Culture'],
-    tags: ['EV', 'Energy', 'Autonomous', 'Manufacturing'],
+    benefits: ['Aksiyalar', 'Sog\'liq sug\'urtasi', 'Xodimlar chegirmasi', 'Innovatsiya muhiti'],
+    tags: ['Elektromobil', 'Energiya', 'Avtonom', 'Ishlab chiqarish'],
   },
   {
     id: '8',
     name: 'Salesforce',
     logo: '/logos/salesforce.svg',
-    description: 'Salesforce, Inc. is an American cloud-based software company.',
-    industry: 'Enterprise Software',
-    location: 'San Francisco, CA',
+    description: 'Salesforce, Inc. - bulutli dasturiy ta\'minot kompaniyasi.',
+    industry: 'Korxona Dasturiy Ta\'minoti',
+    location: 'AQSh, San-Fransisko',
     companySize: '5001-10000',
     isVerified: true,
     isFeatured: false,
@@ -185,26 +185,26 @@ const mockCompanies = [
     totalEmployees: 79000,
     rating: 4.6,
     reviewCount: 8765,
-    benefits: ['1-1-1 Model', 'Health Insurance', 'Wellness', 'Education'],
-    tags: ['CRM', 'Cloud', 'SaaS', 'AI'],
+    benefits: ['1-1-1 Model', 'Sog\'liq sug\'urtasi', 'Salomatlik', 'Ta\'lim'],
+    tags: ['CRM', 'Bulut', 'SaaS', 'Sun\'iy Intellekt'],
   },
 ];
 
 const industries = [
-  'All Industries',
-  'Technology',
-  'E-commerce & Cloud',
-  'Social Media & VR',
-  'Consumer Electronics',
-  'Entertainment',
-  'Automotive & Energy',
-  'Enterprise Software',
-  'Finance',
-  'Healthcare',
+  'Barcha Sohalar',
+  'Axborot Texnologiyalari',
+  'Elektron Tijorat va Bulut',
+  'Ijtimoiy Media va VR',
+  'Elektronika',
+  'O\'yin-Kulgi',
+  'Avtomobil va Energiya',
+  'Korxona Dasturiy Ta\'minoti',
+  'Moliya',
+  'Sog\'liqni Saqlash',
 ];
 
 const companySizes = [
-  'All Sizes',
+  'Barcha O\'lchamlar',
   '1-50',
   '51-200',
   '201-500',
@@ -215,17 +215,17 @@ const companySizes = [
 ];
 
 const sortOptions = [
-  { label: 'Most Relevant', value: 'relevant' },
-  { label: 'Most Jobs', value: 'jobs' },
-  { label: 'Highest Rated', value: 'rating' },
-  { label: 'Recently Added', value: 'recent' },
-  { label: 'Alphabetical', value: 'name' },
+  { label: 'Eng Mos', value: 'relevant' },
+  { label: 'Eng Ko\'p Ishlar', value: 'jobs' },
+  { label: 'Eng Yuqori Reyting', value: 'rating' },
+  { label: 'Yaqinda Qo\'shilgan', value: 'recent' },
+  { label: 'Alifbo Bo\'yicha', value: 'name' },
 ];
 
 export default function CompaniesPage() {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedIndustry, setSelectedIndustry] = useState('All Industries');
-  const [selectedSize, setSelectedSize] = useState('All Sizes');
+  const [selectedIndustry, setSelectedIndustry] = useState('Barcha Sohalar');
+  const [selectedSize, setSelectedSize] = useState('Barcha O\'lchamlar');
   const [sortBy, setSortBy] = useState('relevant');
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [showFilters, setShowFilters] = useState(false);
@@ -238,8 +238,8 @@ export default function CompaniesPage() {
     const matchesSearch = company.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          company.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          company.industry.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesIndustry = selectedIndustry === 'All Industries' || company.industry === selectedIndustry;
-    const matchesSize = selectedSize === 'All Sizes' || company.companySize === selectedSize;
+    const matchesIndustry = selectedIndustry === 'Barcha Sohalar' || company.industry === selectedIndustry;
+    const matchesSize = selectedSize === 'Barcha O\'lchamlar' || company.companySize === selectedSize;
     return matchesSearch && matchesIndustry && matchesSize;
   });
 
@@ -464,19 +464,19 @@ export default function CompaniesPage() {
           {/* Active Filters */}
           <div className="flex items-center gap-2 mt-4 flex-wrap">
             <span className="text-sm text-slate-500">
-              {sortedCompanies.length} companies found
+              {sortedCompanies.length} ta kompaniya topildi
             </span>
-            {(selectedIndustry !== 'All Industries' || selectedSize !== 'All Sizes' || searchQuery) && (
+            {(selectedIndustry !== 'Barcha Sohalar' || selectedSize !== 'Barcha O\'lchamlar' || searchQuery) && (
               <button
                 onClick={() => {
-                  setSelectedIndustry('All Industries');
-                  setSelectedSize('All Sizes');
+                  setSelectedIndustry('Barcha Sohalar');
+                  setSelectedSize('Barcha O\'lchamlar');
                   setSearchQuery('');
                 }}
                 className="text-sm text-blue-600 hover:text-blue-700 flex items-center gap-1"
               >
                 <X className="w-4 h-4" />
-                Clear all filters
+                Filtrlarni tozalash
               </button>
             )}
           </div>
@@ -484,12 +484,12 @@ export default function CompaniesPage() {
       </section>
 
       {/* Featured Companies */}
-      {!searchQuery && selectedIndustry === 'All Industries' && selectedSize === 'All Sizes' && (
+      {!searchQuery && selectedIndustry === 'Barcha Sohalar' && selectedSize === 'Barcha O\'lchamlar' && (
         <section className="py-8 bg-gradient-to-r from-amber-50 to-orange-50">
           <div className="container mx-auto px-4">
             <div className="flex items-center gap-2 mb-6">
               <Star className="w-5 h-5 text-amber-500 fill-amber-500" />
-              <h2 className="text-xl font-semibold text-slate-800">Featured Companies</h2>
+              <h2 className="text-xl font-semibold text-slate-800">Tavsiya Etilgan Kompaniyalar</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
               {mockCompanies.filter(c => c.isFeatured).slice(0, 4).map((company) => (
@@ -507,7 +507,7 @@ export default function CompaniesPage() {
                       <p className="text-sm text-slate-500">{company.industry}</p>
                       <div className="flex items-center gap-2 mt-1">
                         <Briefcase className="w-3 h-3 text-blue-500" />
-                        <span className="text-sm text-blue-600 font-medium">{company.totalJobs} jobs</span>
+                        <span className="text-sm text-blue-600 font-medium">{company.totalJobs} ish</span>
                       </div>
                     </div>
                   </div>
@@ -589,7 +589,7 @@ export default function CompaniesPage() {
                     </div>
                     <div className="flex items-center gap-1 text-slate-500">
                       <Calendar className="w-4 h-4" />
-                      Est. {company.foundedYear}
+                      {company.foundedYear} yilda tashkil etilgan
                     </div>
                     <div className="flex items-center gap-1 text-slate-500">
                       <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
@@ -609,7 +609,7 @@ export default function CompaniesPage() {
                     ))}
                     {company.benefits.length > 4 && (
                       <span className="px-3 py-1 bg-slate-100 text-slate-600 text-xs rounded-full">
-                        +{company.benefits.length - 4} more
+                        +{company.benefits.length - 4} ta boshqa
                       </span>
                     )}
                   </div>
@@ -642,7 +642,7 @@ export default function CompaniesPage() {
                         ))}
                       </div>
                       <span className="text-sm text-slate-500">
-                        {company.totalJobs} open positions
+                        {company.totalJobs} ochiq vakansiya
                       </span>
                     </div>
                     <Link href={`/companies/${company.id}`}>
@@ -651,7 +651,7 @@ export default function CompaniesPage() {
                           viewMode === 'list' ? 'w-full mt-2' : ''
                         }`}
                       >
-                        View Jobs
+                        Ishlarni Ko'rish
                         <ArrowRight className="w-4 h-4 ml-2" />
                       </Button>
                     </Link>
@@ -672,20 +672,20 @@ export default function CompaniesPage() {
                 <Building2 className="w-12 h-12 text-slate-400" />
               </div>
               <h3 className="text-xl font-semibold text-slate-800 mb-2">
-                No companies found
+                Kompaniyalar topilmadi
               </h3>
               <p className="text-slate-500 mb-6">
-                Try adjusting your search or filters to find what you're looking for.
+                Izlagan narsangizni topish uchun qidiruv yoki filtrlarni sozlang.
               </p>
               <Button
                 onClick={() => {
                   setSearchQuery('');
-                  setSelectedIndustry('All Industries');
-                  setSelectedSize('All Sizes');
+                  setSelectedIndustry('Barcha Sohalar');
+                  setSelectedSize('Barcha O\'lchamlar');
                 }}
                 variant="outline"
               >
-                Clear Filters
+                Filtrlarni Tozalash
               </Button>
             </motion.div>
           )}
@@ -697,19 +697,19 @@ export default function CompaniesPage() {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl font-bold mb-4">
-              Get Company Updates
+              Kompaniya Yangiliklari
             </h2>
             <p className="text-slate-400 mb-8">
-              Subscribe to receive weekly updates about new companies joining our platform
+              Platformamizga yangi qo'shilayotgan kompaniyalar haqida haftalik yangiliklarni oling
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
               <input
                 type="email"
-                placeholder="Enter your email"
+                placeholder="Email manzilingiz"
                 className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-slate-400 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <Button className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white px-8">
-                Subscribe
+                Obuna Bo'lish
               </Button>
             </div>
           </div>
