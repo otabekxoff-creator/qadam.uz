@@ -40,10 +40,11 @@ const app = express();
 const httpServer = createServer(app);
 
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'https://sinergiya-frontend.onrender.com',
+  process.env.FRONTEND_URL || 'https://step-uz-1.onrender.com',
   'http://localhost:3000',
   'http://localhost:3001',
   'https://sinergiya-frontend.onrender.com',
+  'https://step-uz-1.onrender.com',
   'https://step.uz',
   'https://www.step.uz'
 ].filter(Boolean);
@@ -98,7 +99,8 @@ app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 app.use(cookieParser());
 
-app.use(mongoSanitize());
+// Temporarily disable mongoSanitize due to Express 5 compatibility issues
+// app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
 
