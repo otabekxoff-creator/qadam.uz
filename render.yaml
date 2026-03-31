@@ -5,7 +5,7 @@ services:
     plan: free
     buildCommand: cd backend && npm install && npm run build
     startCommand: cd backend && npm start
-    healthCheckPath: /api/health
+    healthCheckPath: /health
     envVars:
       - key: NODE_ENV
         value: production
@@ -18,7 +18,7 @@ services:
       - key: JWT_EXPIRES_IN
         value: 7d
       - key: FRONTEND_URL
-        value: https://sinergiya-frontend.onrender.com
+        value: https://step-uz-1.onrender.com
       - key: API_URL
         value: https://sinergiya-backend.onrender.com/api
       - key: SMTP_HOST
