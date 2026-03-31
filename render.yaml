@@ -3,7 +3,7 @@ services:
     name: sinergiya-backend
     runtime: node
     plan: free
-    buildCommand: cd backend && npm install && npm run build
+    buildCommand: cd backend && npm install && npx prisma generate && npx prisma db push --accept-data-loss && npm run build
     startCommand: cd backend && npm start
     healthCheckPath: /health
     envVars:
@@ -18,7 +18,7 @@ services:
       - key: JWT_EXPIRES_IN
         value: 7d
       - key: FRONTEND_URL
-        value: https://step-uz-1.onrender.com
+        value: https://sinergiya-frontend.onrender.com
       - key: API_URL
         value: https://sinergiya-backend.onrender.com/api
       - key: SMTP_HOST
