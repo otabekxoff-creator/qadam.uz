@@ -82,6 +82,29 @@ class ApiClient {
 
 export const api = new ApiClient(API_URL);
 
+// Admin API
+export const adminApi = {
+  // Stats
+  getStats: () => api.get('/admin/stats'),
+  
+  // Users
+  getUsers: (params?: { page?: number; limit?: number; search?: string; role?: string }) =>
+    api.get(`/admin/users?${new URLSearchParams(params as any).toString()}`),
+  
+  verifyUser: (id: string) => api.put(`/admin/users/${id}/verify`, {}),
+  
+  deleteUser: (id: string) => api.delete(`/admin/users/${id}`),
+  
+  // Jobs
+  getAllJobs: (params?: { page?: number; limit?: number; status?: string; search?: string }) =>
+    api.get(`/admin/jobs?${new URLSearchParams(params as any).toString()}`),
+  
+  deleteJob: (id: string) => api.delete(`/admin/jobs/${id}`),
+  
+  // Reports
+  getReports: () => api.get('/admin/reports'),
+};
+
 // Auth API
 export const authApi = {
   register: (data: { email: string; password: string; role: string; firstName?: string; lastName?: string; companyName?: string }) =>

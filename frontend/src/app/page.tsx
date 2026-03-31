@@ -370,6 +370,7 @@ export default function Home() {
             <Link href="/companies" className="text-muted-foreground hover:text-foreground transition-colors">Kompaniyalar</Link>
             <Link href="/salary-calculator" className="text-muted-foreground hover:text-foreground transition-colors">Maoshlar</Link>
             <Link href="/resources" className="text-muted-foreground hover:text-foreground transition-colors">Resurslar</Link>
+            <Link href="/startups" className="text-muted-foreground hover:text-foreground transition-colors">Startuplar</Link>
           </div>
           <div className="flex items-center gap-4">
             <Link href="/login">
