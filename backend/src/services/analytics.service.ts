@@ -118,7 +118,7 @@ export const analyticsService = {
       prisma.application.count({
         where: {
           job: { companyId },
-          status: { in: ['REVIEWED', 'INTERVIEW', 'OFFERED', 'HIRED'] },
+          status: { in: ['REVIEWING', 'INTERVIEW', 'OFFERED', 'HIRED'] },
         },
       }),
       prisma.application.count({

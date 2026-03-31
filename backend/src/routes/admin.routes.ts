@@ -1,13 +1,13 @@
-import { Router } from 'express';
+import { Router, Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
-import { authenticate } from '../middleware/auth.middleware';
+import { authenticate, AuthRequest } from '../middleware/auth.middleware';
 import { analyticsService } from '../services/analytics.service';
 
 const router = Router();
 const prisma = new PrismaClient();
 
 // GET /api/admin/stats - Get platform statistics
-router.get('/stats', authenticate, async (req, res) => {
+router.get('/stats', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
@@ -22,7 +22,7 @@ router.get('/stats', authenticate, async (req, res) => {
 });
 
 // GET /api/admin/users - Get all users
-router.get('/users', authenticate, async (req, res) => {
+router.get('/users', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
@@ -52,11 +52,6 @@ router.get('/users', authenticate, async (req, res) => {
         include: {
           student: true,
           company: true,
-          _count: {
-            select: {
-              applications: true,
-            },
-          },
         },
         skip,
         take: limit,
@@ -82,7 +77,7 @@ router.get('/users', authenticate, async (req, res) => {
 });
 
 // PUT /api/admin/users/:id/verify - Toggle user verification
-router.put('/users/:id/verify', authenticate, async (req, res) => {
+router.put('/users/:id/verify', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
@@ -113,7 +108,7 @@ router.put('/users/:id/verify', authenticate, async (req, res) => {
 });
 
 // DELETE /api/admin/users/:id - Delete user
-router.delete('/users/:id', authenticate, async (req, res) => {
+router.delete('/users/:id', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
@@ -131,7 +126,7 @@ router.delete('/users/:id', authenticate, async (req, res) => {
 });
 
 // GET /api/admin/jobs - Get all jobs (admin view)
-router.get('/jobs', authenticate, async (req, res) => {
+router.get('/jobs', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
@@ -164,9 +159,6 @@ router.get('/jobs', authenticate, async (req, res) => {
               logo: true,
             },
           },
-          _count: {
-            select: { applications: true },
-          },
         },
         skip,
         take: limit,
@@ -192,7 +184,7 @@ router.get('/jobs', authenticate, async (req, res) => {
 });
 
 // DELETE /api/admin/jobs/:id - Delete job
-router.delete('/jobs/:id', authenticate, async (req, res) => {
+router.delete('/jobs/:id', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
@@ -210,7 +202,7 @@ router.delete('/jobs/:id', authenticate, async (req, res) => {
 });
 
 // GET /api/admin/reports - Get admin reports
-router.get('/reports', authenticate, async (req, res) => {
+router.get('/reports', authenticate, async (req: AuthRequest, res: Response) => {
   try {
     if (req.user?.role !== 'ADMIN') {
       return res.status(403).json({ success: false, message: 'Forbidden' });
