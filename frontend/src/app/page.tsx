@@ -397,16 +397,6 @@ export default function Home() {
             transition={{ duration: 0.5 }}
             className="text-center"
           >
-            <motion.div
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              transition={{ delay: 0.2, type: "spring" }}
-              className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-6"
-            >
-              <Sparkles size={16} />
-              <span className="text-sm font-medium">Sizning karyerangiz - bizning vazifamiz</span>
-            </motion.div>
-            
             <h1 className="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent leading-tight">
               Karyerangizni<br />
               <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">
