@@ -46,8 +46,13 @@ const allowedOrigins = [
   'https://sinergiya-frontend.onrender.com',
   'https://step-uz-1.onrender.com',
   'https://step.uz',
-  'https://www.step.uz'
-].filter(Boolean);
+  'https://www.step.uz',
+  // Vercel deployments
+  process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : null,
+  /^https:\/\/.*\.vercel\.app$/.test(process.env.NEXT_PUBLIC_APP_URL || '') 
+    ? process.env.NEXT_PUBLIC_APP_URL 
+    : null,
+].filter(Boolean) as string[];
 
 const io = new Server(httpServer, {
   cors: {
